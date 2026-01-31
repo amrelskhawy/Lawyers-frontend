@@ -1,0 +1,18 @@
+<div class="wrapper-header">
+  <i (click)="OnToggelMenue()" class="fa-solid fa-bars"></i>
+  <div class="nav-header">
+    <ul [ngClass]="{'toggel-menue': StatusMenue()}">
+      <li class="active">الرئيسية</li>
+      <li>من نحن؟</li>
+      <li>خدماتنا</li>
+      <li>فريق العمل</li>
+      <li>الأحصائيات</li>
+      <li>تواصل معنا</li>
+    </ul>
+  </div>
+
+  <div class="logo-header">
+    <h2>المكتب القانوني المحترف</h2>
+    <p><i class="fa-solid fa-scale-balanced"></i></p>
+  </div>
+</div>

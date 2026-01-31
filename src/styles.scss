@@ -1,1 +1,63 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap');
+
+body{
+  background-color: var(--black-color);
+  color: var(--white-color) ;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+    backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+  font-family: 'Cairo', sans-serif;
+  user-select: none;
+}
+
+:root{
+  --black-color:black;
+  --white-color:white;
+  --golden-bronze:rgb(150, 122, 62);
+
+}
+.Group {
+  position: relative;
+  margin-top: 15px;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 10px;
+  outline: none;
+  border: 0;
+  border-radius: 7px;
+}
+
+
+
+li {
+  list-style: none;
+}
+
+button {
+  border: 0;
+  background-color: transparent;
+  padding: 10px;
+  border-radius: 5px;
+    font-family: 'Cairo', sans-serif;
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+  font-weight: bold;
+}
+.requierd {
+  color: red;
+  font-weight: bold;
+}
+
