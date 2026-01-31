@@ -5,6 +5,9 @@ import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { RouterModule } from '@angular/router';
 import { CoreModule } from './core/core-module';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { SharedModule } from './shared/shared-module';
 
 @NgModule({
   declarations: [
@@ -14,10 +17,14 @@ import { CoreModule } from './core/core-module';
     BrowserModule,
     AppRoutingModule,
     RouterModule.forRoot([]),
-    CoreModule
+    CoreModule,
+    SharedModule
   ],
   providers: [
-    provideBrowserGlobalErrorListeners()
+    provideBrowserGlobalErrorListeners(),
+      provideBrowserGlobalErrorListeners(),
+    provideHttpClient(withInterceptorsFromDi()),
+    provideAnimationsAsync(),
   ],
   bootstrap: [App]
 })

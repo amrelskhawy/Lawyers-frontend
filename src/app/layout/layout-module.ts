@@ -7,6 +7,7 @@ import { HeroSection } from './Components/hero-section/hero-section';
 import { SharedModule } from '../shared/shared-module';
 import { About } from './Components/about/about';
 import { Servies } from './Components/servies/servies';
+import { SliderServes } from './Components/slider-serves/slider-serves';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { Servies } from './Components/servies/servies';
     MainPage,
     HeroSection,
     About,
-    Servies
+    Servies,
+    SliderServes
   ],
   imports: [
     CommonModule,

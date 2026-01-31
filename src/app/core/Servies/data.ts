@@ -1,12 +1,13 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment.pord';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Data {
-    private baseUrl: string = "environment.baseApi";
+    private baseUrl: string = environment.baseApi;
   constructor(private http: HttpClient) {}
 
   // ============================================== GET Request ============================================== //

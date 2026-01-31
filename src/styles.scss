@@ -22,7 +22,11 @@ body{
   --black-color:black;
   --white-color:white;
   --golden-bronze:rgb(150, 122, 62);
+  --deep-purple: #1a0033;
     --primary-dark: #1a1a1a;
+    --secondary-color:#888;
+    --tertiary-color:#666
+
 }
 .Group {
   position: relative;
@@ -35,9 +39,24 @@ select {
   width: 100%;
   padding: 10px;
   outline: none;
-  border: 0;
+  border: 1px solid var(--golden-bronze);
   border-radius: 7px;
+  background-color: transparent;
 }
+
+input:focus{
+    background-color: transparent;
+}
+
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #000 inset !important;
+}
+
+
 
 
 
@@ -56,11 +75,15 @@ button {
   }
 }
 
+
 .error-message {
   color: red;
   text-align: center;
   font-weight: bold;
+  position: relative;
 }
+
+
 .requierd {
   color: red;
   font-weight: bold;

@@ -1,1 +1,98 @@
-<p>register works!</p>
+<section class="auth-container">
+  <div class="welcome-panel">
+    <div class="welcome-text">
+      <h1>WELCOME BACK!</h1>
+      <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+    </div>
+  </div>
+
+  <div class="form-panel">
+    <form class="form" [formGroup]="Form()" (ngSubmit)="onSubmit()">
+      <h2>Sign Up</h2>
+
+      <div class="Group">
+        <label for="username">Username</label>
+        <div class="input-wrapper">
+          <input
+            formControlName="name"
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Username"
+            required
+          />
+          <i class="icon-user"></i>
+        </div>
+
+        <div class="wrapper-error">
+          <small
+            class="error-message"
+            *ngIf="
+              getControlName('name')?.invalid &&
+              getControlName('name')?.touched &&
+              getControlName('name')?.errors?.['required']
+            "
+            >هذا الحقل مطلوب*</small
+          >
+        </div>
+      </div>
+
+      <div class="Group">
+        <label for="email">Email</label>
+        <div class="input-wrapper">
+          <input
+            formControlName="email"
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Email"
+            required
+          />
+          <i class="icon-mail"></i>
+        </div>
+
+          <div class="wrapper-error">
+          <small
+            class="error-message"
+            *ngIf="
+              getControlName('email')?.invalid &&
+              getControlName('email')?.touched &&
+              getControlName('email')?.errors?.['required']
+            "
+            >هذا الحقل مطلوب*</small
+          >
+        </div>
+      </div>
+
+      <div class="Group">
+        <label for="password">password</label>
+        <div class="input-wrapper">
+          <input
+            formControlName="password"
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Password"
+            required
+          />
+          <i class="icon-lock"></i>
+        </div>
+         <div class="wrapper-error">
+          <small
+            class="error-message"
+            *ngIf="
+              getControlName('password')?.invalid &&
+              getControlName('password')?.touched &&
+              getControlName('password')?.errors?.['required']
+            "
+            >هذا الحقل مطلوب*</small
+          >
+        </div>
+      </div>
+
+      <button type="submit" class="btn-signup">Sign Up</button>
+
+      <p [routerLink]="'/login'" class="login-link">Already have an account? <a>Login</a></p>
+    </form>
+  </div>
+</section>

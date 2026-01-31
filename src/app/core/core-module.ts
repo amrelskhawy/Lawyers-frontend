@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { CoreRoutingModule } from './core-routing-module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './Interceptor/authcathion.interceptor';
+import { LoaderInterceptor } from './Interceptor/loding-spaner.interceptor';
 
 
 @NgModule({
@@ -18,6 +19,14 @@ import { AuthInterceptor } from './Interceptor/authcathion.interceptor';
       useClass: AuthInterceptor,
       multi: true,
     },
+
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptor,
+      multi: true,
+    },
+
+
   ],
 })
 export class CoreModule { }

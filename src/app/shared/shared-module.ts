@@ -3,18 +3,21 @@ import { CommonModule } from '@angular/common';
 
 import { SharedRoutingModule } from './shared-routing-module';
 import { Header } from './header/header';
+import { Loader } from './loader/loader';
 
 
 @NgModule({
   declarations: [
-    Header
+    Header,
+    Loader
   ],
   imports: [
     CommonModule,
     SharedRoutingModule
   ],
   exports:[
-    Header
+    Header,
+    Loader
   ]
 })
 export class SharedModule { }
