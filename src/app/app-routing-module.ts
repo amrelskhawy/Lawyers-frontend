@@ -3,14 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
 
-{
-    path: '',
-    loadChildren: () =>
-      import('./authcation/authcation-module').then((m) => m.AuthcationModule),
-  },
+// {
+//     path: '',
+//     loadChildren: () =>
+//       import('./authcation/authcation-module').then((m) => m.AuthcationModule),
+//   },
 
   {
-    path: 'mainLayout',
+    path: '',
     loadChildren: () =>
       import('./layout/layout-module').then((m) => m.LayoutModule),
   },

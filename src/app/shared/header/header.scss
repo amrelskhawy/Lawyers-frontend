@@ -1,90 +1,63 @@
-.wrapper-header {
-  position: relative;
+.content-header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   padding: 10px 30px;
+  padding-bottom: 5px;
   position: sticky;
   top: 0;
   z-index: 100;
-  overflow: hidden;
-  background-color: var(--black-color);
-  border-bottom: 2px solid var(--golden-bronze);
+  background-color: var(--white-color);
 }
-.fa-bars {
-  position: absolute;
-  right: 10px;
-  cursor: pointer;
-  top: 10px;
-  font-size: 20px;
-  display: none;
-}
+
 ul {
   display: flex;
   align-items: center;
-  gap: 30px;
-  padding: 0;
-  margin: 0;
-  font-size: 20px;
-  cursor: pointer;
-  li {
-    transition: all 0.3s ease;
-  }
-  li:hover {
-    color: var(--golden-bronze);
-  }
-}
-.logo-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  i {
-    color: var(--golden-bronze);
-    font-size: 30px;
+  gap:30px;
+  li{
+    padding: 0 20px;
+    a{
+      color: var(--primary-navy);
+      text-decoration: none;
+      font-size: 20px;
+      font-weight: bold;
+    }
   }
 }
 
-.toggel-menue {
-  max-height: 100%;
-  opacity: 1;
+.btn-header-div {
+  width: 15%;
+  text-align: right;
 }
 
-.active {
-  font-weight: bold;
-  color: var(--golden-bronze);
-}
+.btn-header {
+background: linear-gradient(90deg, #b5a863 0%, #8b7a3a 100%);
+  width: 100%;
+  border-radius: 30px;
+  padding: 10px;
+  color: var(--white-color);
+  font-weight: bold;}
 
-@media (max-width: 767px) {
-  .wrapper-header {
+
+
+
+@media (max-width: 768px) {
+  img{
+    display: none;
+  }
+  .content-header {
     flex-direction: column;
-    gap: 10px;
+    gap: 20px;
   }
-  .nav-header {
-    order: 2;
+  .btn-header-div {
+    text-align: center;
+    width: 100%;
   }
-
   ul {
-    flex-direction: column;
+    flex-wrap: wrap;
     gap: 10px;
-    font-size: 18px;
-    max-height: 0;
-    opacity: 0;
-    overflow: hidden;
-    transition:
-      max-height 0.4s ease,
-      opacity 0.3s ease;
-  }
-  .fa-bars {
-    display: block;
-  }
-}
-
-@media (max-width: 1200px) {
-  .wrapper-header {
-    flex-direction: column;
-    gap: 10px;
-  }
-  .nav-header {
-    order: 2;
+    li{
+      padding: 0;
+    }
   }
 }

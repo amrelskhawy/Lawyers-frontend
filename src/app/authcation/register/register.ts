@@ -1,6 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Data } from '../../core/Servies/data';
+import { Translation } from '../../core/Servies/translation';
 
 @Component({
   selector: 'app-register',
@@ -15,7 +16,8 @@ export class Register implements OnInit {
 
   constructor(
     private FB: FormBuilder,
-    private Data:Data
+    private Data:Data,
+    public translationService: Translation
   ) {}
 
   //************************************Varibels***************************************//
@@ -48,5 +50,10 @@ export class Register implements OnInit {
   getControlName(controlName: string) {
     return this.Form().get(controlName);
   }
+
+
+  changeLang(lang: string) {
+  this.translationService.setLanguage(lang);
+}
   //************************************Implemantion Methods***************************************//
 }

@@ -4,12 +4,14 @@ import { CommonModule } from '@angular/common';
 import { SharedRoutingModule } from './shared-routing-module';
 import { Header } from './header/header';
 import { Loader } from './loader/loader';
+import { TopHeader } from './top-header/top-header';
 
 
 @NgModule({
   declarations: [
     Header,
-    Loader
+    Loader,
+    TopHeader
   ],
   imports: [
     CommonModule,
@@ -17,7 +19,8 @@ import { Loader } from './loader/loader';
   ],
   exports:[
     Header,
-    Loader
+    Loader,
+    TopHeader
   ]
 })
 export class SharedModule { }

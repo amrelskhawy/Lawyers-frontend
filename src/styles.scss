@@ -1,32 +1,28 @@
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap');
-*{
-box-sizing: border-box;
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Mukta:wght@200;300;400;500;600;700;800&family=Playwrite+IT+Trad:wght@100..400&display=swap');
+
+* {
+  box-sizing: border-box;
   padding: 0;
   margin: 0;
 }
-body{
-  background-color: var(--black-color);
-  color: var(--white-color) ;
-    backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
-  font-family: 'Cairo', sans-serif;
+body {
+  background-color: var(--white-color);
+  backdrop-filter: blur(10px);
   user-select: none;
   overflow-x: hidden;
+  font-family: 'Cairo', sans-serif;
 }
 
-
-
-
-:root{
-  --black-color:black;
-  --white-color:white;
-  --golden-bronze:rgb(150, 122, 62);
+:root {
+  --black-color: black;
+  --white-color: white;
+  --golden-bronze: rgb(150, 122, 62);
   --deep-purple: #1a0033;
-    --primary-dark: #1a1a1a;
-    --secondary-color:#888;
-    --tertiary-color:#666
-
+  --primary-dark: #1a1a1a;
+  --secondary-color: #888;
+  --tertiary-color: #666;
+  --primary-navy: #14143a;
+  --accent-gold: #93853f;
 }
 .Group {
   position: relative;
@@ -44,21 +40,16 @@ select {
   background-color: transparent;
 }
 
-input:focus{
-    background-color: transparent;
+input:focus {
+  background-color: transparent;
 }
 
-
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 30px #000 inset !important;
-}
-
-
-
-
+// input:-webkit-autofill,
+// input:-webkit-autofill:hover,
+// input:-webkit-autofill:focus,
+// input:-webkit-autofill:active {
+//     -webkit-box-shadow: 0 0 0 30px #000 inset !important;
+// }
 
 li {
   list-style: none;
@@ -69,12 +60,11 @@ button {
   background-color: transparent;
   padding: 10px;
   border-radius: 5px;
-    font-family: 'Cairo', sans-serif;
+  font-family: 'Cairo', sans-serif;
   &:hover {
     opacity: 0.7;
   }
 }
-
 
 .error-message {
   color: red;
@@ -83,9 +73,21 @@ button {
   position: relative;
 }
 
-
 .requierd {
   color: red;
   font-weight: bold;
+}
+
+
+
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--accent-gold)!important;
+    border-radius: 10px;
 }
 

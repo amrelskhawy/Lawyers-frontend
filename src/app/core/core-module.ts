@@ -5,10 +5,13 @@ import { CoreRoutingModule } from './core-routing-module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './Interceptor/authcathion.interceptor';
 import { LoaderInterceptor } from './Interceptor/loding-spaner.interceptor';
+import { TranslatePipe } from './Pipes/translate-pipe';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+
+  ],
   imports: [
     CommonModule,
     CoreRoutingModule

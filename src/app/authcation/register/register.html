@@ -1,4 +1,4 @@
-<section class="auth-container">
+<!-- <section class="auth-container">
   <div class="welcome-panel">
     <div class="welcome-text">
       <h1>WELCOME BACK!</h1>
@@ -95,4 +95,14 @@
       <p [routerLink]="'/login'" class="login-link">Already have an account? <a>Login</a></p>
     </form>
   </div>
-</section>
+</section> -->
+
+
+
+
+<h1> {{ 'welcome' | translate: translationService.currentLang }} </h1>
+
+<!-- <h1>{{translationService.translate('welcome')}}</h1> -->
+
+<button (click)="changeLang('en')">English</button>
+<button (click)="changeLang('ar')">عربي</button>

@@ -1,18 +1,19 @@
-<div class="wrapper-header">
-  <i (click)="OnToggelMenue()" class="fa-solid fa-bars"></i>
-  <div class="nav-header">
-    <ul [ngClass]="{'toggel-menue': StatusMenue()}">
-      <li>فريق العمل</li>
-      <li>الأحصائيات</li>
-      <li>تواصل معنا</li>
-      <li>خدماتنا</li>
-      <li>من نحن؟</li>
-      <li class="active">الرئيسية</li>
+<section class="content-header">
+  <div>
+    <img height="80" width="80" src="/assets/Img/sophisticated-law-firm-logo-on-transparent-background-png.webp" alt="Logo" class="logo-header" />
+  </div>
+
+  <div>
+    <ul>
+      <li><a routerLink="/home">Home</a></li>
+      <li><a routerLink="/about">About</a></li>
+      <li><a routerLink="/services">Services</a></li>
+      <li><a routerLink="/contact">Contact</a></li>
     </ul>
   </div>
 
-  <div class="logo-header">
-    <h2>المكتب القانوني المحترف</h2>
-    <p><i class="fa-solid fa-scale-balanced"></i></p>
+  <div class="btn-header-div">
+    <button class="btn-header">Login</button>
   </div>
-</div>
+
+</section>

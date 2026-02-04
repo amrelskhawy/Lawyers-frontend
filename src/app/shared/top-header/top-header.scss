@@ -1,0 +1,51 @@
+.section-top-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--primary-navy);
+  padding: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  color: var(--white-color);
+}
+
+.links-top-header {
+  display: flex;
+  align-items: center;
+  li {
+    padding: 0 10px;
+  }
+  li:not(:last-child) {
+    border-right: 2px solid var(--white-color);
+  }
+}
+
+.icon-contact {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  li{
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 767px) {
+  .section-top-header {
+    flex-direction: column;
+    justify-content: center;
+  }
+  .links-top-header {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0px;
+    li {
+      padding: 5px 10px;
+    }
+    li:not(:last-child) {
+      border-right: none;
+      padding-bottom: 5px;
+    }
+  }
+}
