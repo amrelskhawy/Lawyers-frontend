@@ -1,11 +1,12 @@
 <app-top-header></app-top-header>
-<app-header></app-header>
+<app-header (EventRoute)="onEventRoute($event)"></app-header>
 
 
 <div>
-  <app-hero-section></app-hero-section>
+  <app-hero-section id="Home"></app-hero-section>
   <div class="content-main-page">
-    <app-about></app-about>
-    <app-servies></app-servies>
+    <app-about id="About"></app-about>
+    <app-how-it-work id="HowWork"></app-how-it-work>
+    <app-servies id="Services"></app-servies>
   </div>
 </div>

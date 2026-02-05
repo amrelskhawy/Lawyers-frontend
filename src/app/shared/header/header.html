@@ -1,14 +1,14 @@
 <section class="content-header">
   <div>
-    <img height="80" width="80" src="/assets/Img/sophisticated-law-firm-logo-on-transparent-background-png.webp" alt="Logo" class="logo-header" />
+    <img height="50" width="50" src="/assets/Img/sophisticated-law-firm-logo-on-transparent-background-png.webp" alt="Logo" class="logo-header" />
   </div>
 
   <div>
     <ul>
-      <li><a routerLink="/home">Home</a></li>
-      <li><a routerLink="/about">About</a></li>
-      <li><a routerLink="/services">Services</a></li>
-      <li><a routerLink="/contact">Contact</a></li>
+      <li (click)="onClickListActive('Home')"><a>Home</a></li>
+      <li (click)="onClickListActive('About')"><a>About</a></li>
+      <li (click)="onClickListActive('HowWork')"><a>How Work</a></li>
+      <li (click)="onClickListActive('Services')"><a>Services</a></li>
     </ul>
   </div>
 

@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, EventEmitter, Output, signal } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -7,8 +7,10 @@ import { Component, signal } from '@angular/core';
   styleUrl: './header.scss',
 })
 export class Header {
-  StatusMenue = signal(false);
-  OnToggelMenue(){
-    this.StatusMenue.update(value => !value);
+  @Output()EventRoute=new EventEmitter<string>();
+
+  onClickListActive(route:string){
+    this.EventRoute.emit(route)
   }
+
 }

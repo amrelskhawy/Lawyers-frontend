@@ -1,6 +1,11 @@
 <section class="about-section">
   <div class="img-about-container">
-    <div class="img-left">
+    <div
+      pAnimateOnScroll
+      enterClass="my-enter-animation"
+      leaveClass="my-leave-animation"
+      class="img-left"
+    >
       <img
         height="300"
         width="200"
@@ -10,7 +15,12 @@
       />
     </div>
 
-    <div class="img-right">
+    <div
+      pAnimateOnScroll
+      enterClass="my-enter-right"
+      leaveClass="my-leave-animation"
+      class="img-right"
+    >
       <img
         height="220"
         width="180"
@@ -38,8 +48,16 @@
       <i class="fa-solid fa-circle"></i>
     </div>
 
-    <h2>About Our Firm</h2>
-    <p>
+    <h2 pAnimateOnScroll enterClass="my-enter-top" leaveClass="my-leave-animation">
+      About Our Firm
+    </h2>
+
+    <p
+      pAnimateOnScroll
+      enterClass="my-enter-animation"
+      leaveClass="my-leave-animation"
+      class="animation-duration-1000"
+    >
       We are a leading law firm dedicated to providing exceptional legal services to our clients.
       Our team of experienced attorneys specializes in various areas of law, ensuring comprehensive
       solutions tailored to your needs. With a commitment to excellence and integrity, we strive to
@@ -51,6 +69,14 @@
       <li><i class="fa-solid fa-check"></i>Comprehensive Legal Services</li>
       <li><i class="fa-solid fa-check"></i>Proven Track Record of Success</li>
     </ul>
-    <button class="btn-about-section">Learn More</button>
+    <button
+      pAnimateOnScroll
+      enterClass="my-enter-zoom"
+      leaveClass="my-leave-animation"
+      class="btn-about-section"
+    >
+      Learn More
+    </button>
   </div>
+  <i class="fa-solid fa-gavel"></i>
 </section>

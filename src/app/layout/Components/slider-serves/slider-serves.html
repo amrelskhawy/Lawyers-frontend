@@ -1,37 +1,24 @@
-<div class="container">
-  <input type="radio" name="slider" id="slide1" checked />
-  <input type="radio" name="slider" id="slide2" />
 
-  <div class="slider-wrapper">
-    <div class="card-group group-1">
-      <div class="card">
-        <i class="fa-solid fa-layer-group"></i>
-        <h1>title Servies</h1>
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magnam, unde!</p>
-        <button>Learn More <i class="fa-solid fa-arrow-right"></i></button>
-      </div>
-         <div class="card">
-        <i class="fa-solid fa-layer-group"></i>
-        <h1>title Servies</h1>
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magnam, unde!</p>
-        <button>Learn More <i class="fa-solid fa-arrow-right"></i></button>
-      </div>
-          <div class="card">
-        <i class="fa-solid fa-layer-group"></i>
-        <h1>title Servies</h1>
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magnam, unde!</p>
-        <button>Learn More <i class="fa-solid fa-arrow-right"></i></button>
-      </div>
-          <div class="card">
-        <i class="fa-solid fa-layer-group"></i>
-        <h1>title Servies</h1>
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magnam, unde!</p>
-        <button>Learn More <i class="fa-solid fa-arrow-right"></i></button>
-      </div>
+<p-carousel
+  [value]="products"
+  [numVisible]="3"
+  [numScroll]="1"
+  [responsiveOptions]="responsiveOptions"
+>
+  <ng-template let-service #item>
+    <div
+      class="card animation-duration-1000"
+      pAnimateOnScroll
+      enterClass="my-enter-zoom"
+      leaveClass="my-leave-animation"
+    >
+      <i class="fa-solid fa-gavel"></i>
+      <h1 class="mb-2 font-bold text-xl">{{ service.name }}</h1>
+      <p class="text-gray-600 mb-4 text-sm leading-relaxed">
+        {{ service.description }}
+      </p>
+
+      <a href="#" class="font-semibold text-sm underline">Read More →</a>
     </div>
-  </div>
-</div>
-<div class="navigation">
-  <label for="slide1"></label>
-  <label for="slide2"></label>
-</div>
+  </ng-template>
+</p-carousel>
