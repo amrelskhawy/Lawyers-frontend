@@ -1,0 +1,16 @@
+.section-chatboot{
+  position: fixed !important;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  i{
+    background-color: var(--accent-gold);
+    color: var(--white-color);
+    font-size: 20px;
+    height: 50px;
+    width: 50px;
+    line-height:50px ;
+    border-radius: 50%;
+
+  }
+}
