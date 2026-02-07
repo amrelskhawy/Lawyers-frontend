@@ -1,3 +1,6 @@
+@use '../../../styles' as *;
+
+
 .content-header {
   display: flex;
   justify-content: space-between;
@@ -47,30 +50,27 @@ ul {
 
 .btn-header {
   background: linear-gradient(90deg, #b5a863 0%, #8b7a3a 100%);
-  width: 100%;
+   @include button(200px);
   border-radius: 30px;
   padding: 10px;
   color: var(--white-color);
   font-weight: bold;
 }
 
-@media (max-width: 768px) {
-  img {
+
+
+
+@media (max-width: 767px) {
+  .content-header{
     display: none;
   }
-  .content-header {
-    flex-direction: column;
-    gap: 20px;
+}
+
+
+
+@media (min-width: 767px) and (max-width:1400px) {
+  .btn-header {
+    width: 130px;
   }
-  .btn-header-div {
-    text-align: center;
-    width: 100%;
-  }
-  ul {
-    flex-wrap: wrap;
-    gap: 10px;
-    li {
-      padding: 0;
-    }
-  }
+
 }

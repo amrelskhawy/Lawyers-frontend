@@ -12,8 +12,8 @@ export class SliderServes {
     {
       name: 'Criminal Law',
       description: 'Defense representations for many various criminal charges investigations.',
-      icon: 'pi-shield', // يمكنك استخدام أيقونات PrimeIcons
-      inventoryStatus: 'INSTOCK' // سنستخدمها للتحكم في حالة الخدمة (متاحة مثلاً)
+      icon: 'pi-shield',
+      inventoryStatus: 'INSTOCK' 
     },
     {
       name: 'Corporate Law',

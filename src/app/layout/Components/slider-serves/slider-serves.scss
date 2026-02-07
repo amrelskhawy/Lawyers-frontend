@@ -31,6 +31,7 @@ p {
   word-wrap: break-word;
   overflow-wrap: break-word;
   line-height: 1.6;
+  color: var(--tertiary-color);
 }
 
 .fa-gavel {
@@ -41,6 +42,10 @@ p {
   border-radius: 50%;
   color: var(--accent-gold);
   font-size: 20px;
+}
+
+h3{
+  margin-top: 10px;
 }
 
 ::ng-deep .p-carousel-indicator-active .p-carousel-indicator-button {

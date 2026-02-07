@@ -6,6 +6,8 @@ import { Header } from './header/header';
 import { Loader } from './loader/loader';
 import { TopHeader } from './top-header/top-header';
 import { ChatBoot } from './chat-boot/chat-boot';
+import { DrawerLeft } from './drawer-left/drawer-left';
+import { DrawerModule } from 'primeng/drawer';
 
 
 @NgModule({
@@ -13,17 +15,20 @@ import { ChatBoot } from './chat-boot/chat-boot';
     Header,
     Loader,
     TopHeader,
-    ChatBoot
+    ChatBoot,
+    DrawerLeft
   ],
   imports: [
     CommonModule,
-    SharedRoutingModule
+    SharedRoutingModule,
+    DrawerModule
   ],
   exports:[
     Header,
     Loader,
     TopHeader,
-    ChatBoot
+    ChatBoot,
+    DrawerLeft
   ]
 })
 export class SharedModule { }

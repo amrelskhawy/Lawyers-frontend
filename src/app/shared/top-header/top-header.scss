@@ -33,19 +33,6 @@
 
 @media (max-width: 767px) {
   .section-top-header {
-    flex-direction: column;
-    justify-content: center;
-  }
-  .links-top-header {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0px;
-    li {
-      padding: 5px 10px;
-    }
-    li:not(:last-child) {
-      border-right: none;
-      padding-bottom: 5px;
-    }
+   display: none;
   }
 }

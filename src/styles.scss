@@ -92,11 +92,18 @@ button {
     border-radius: 10px;
 }
 
+.container{
+  width: 90%;
+  margin: auto;
+}
 
 
 
-
-
+@mixin button($width: auto) {
+  width: $width;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
 
 
 

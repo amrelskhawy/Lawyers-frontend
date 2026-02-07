@@ -1,0 +1,34 @@
+<p-drawer [(visible)]="visible">
+  <ul>
+    <li (click)="onClickListActive('Home')"><a>Home</a> <i class="fa-solid fa-house"></i></li>
+    <li (click)="onClickListActive('About')">
+      <a>About</a> <i class="fa-solid fa-address-card"></i>
+    </li>
+    <li (click)="onClickListActive('HowWork')">
+      <a>How Work</a> <i class="fa-solid fa-briefcase"></i>
+    </li>
+    <li (click)="onClickListActive('Services')">
+      <a>Services</a> <i class="fa-solid fa-scale-balanced"></i>
+    </li>
+  </ul>
+  <ul class="icon-contact">
+    <li><i class="fa-brands fa-facebook-f"></i></li>
+    <li><i class="fa-brands fa-twitter"></i></li>
+    <li><i class="fa-brands fa-instagram"></i></li>
+    <li><i class="fa-brands fa-linkedin-in"></i></li>
+  </ul>
+  <div class="desc-drawer">
+    <p>Premium Corporate Services</p>
+    <p>At a new level of legal solutions</p>
+  </div>
+</p-drawer>
+
+<div class="header-drawer">
+  <div>
+    <img height="50" width="50" src="/assets/Img/sophisticated-law-firm-logo-on-transparent-background-png.webp" alt="Logo" class="logo-header" />
+  </div>
+
+  <div>
+    <button class="menue-toggel" (click)="visible = true" icon="pi pi-arrow-right"><i class="fa-solid fa-bars"></i></button>
+  </div>
+</div>

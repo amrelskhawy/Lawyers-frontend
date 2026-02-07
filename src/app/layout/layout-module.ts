@@ -12,6 +12,7 @@ import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 import { AnimateOnScrollModule } from 'primeng/animateonscroll';
 import { HowItWork } from './Components/how-it-work/how-it-work';
+
 @NgModule({
   declarations: [
     MainPage,
@@ -28,7 +29,7 @@ import { HowItWork } from './Components/how-it-work/how-it-work';
     CarouselModule,
     ButtonModule,
     TagModule,
-    AnimateOnScrollModule
+    AnimateOnScrollModule,
   ]
 })
 export class LayoutModule { }

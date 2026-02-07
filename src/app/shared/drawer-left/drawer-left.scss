@@ -1,0 +1,64 @@
+::ng-deep .p-drawer-header {
+  background-color: var(--accent-gold);
+  color: var(--white-color);
+}
+
+::ng-deep .p-drawer-left .p-drawer-content {
+  background-color: var(--accent-gold);
+  color: var(--white-color);
+}
+
+::ng-deep .p-drawer-content {
+  padding: 0;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  border-bottom: 2px solid var(--primary-navy);
+  li {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    margin: 10px;
+    transition: 0.3s linear;
+    &:hover {
+      color: var(--primary-navy);
+    }
+  }
+}
+
+.icon-contact {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 0;
+}
+
+.desc-drawer {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.header-drawer {
+  display: none;
+  padding: 5px 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+.fa-bars{
+  font-size: 20px;
+}
+
+@media (max-width: 767px) {
+  .header-drawer {
+   display: flex;
+  }
+}
+
+
+
+
+
