@@ -5,18 +5,12 @@ import { CoreRoutingModule } from './core-routing-module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './Interceptor/authcathion.interceptor';
 import { LoaderInterceptor } from './Interceptor/loding-spaner.interceptor';
-import { TranslatePipe } from './Pipes/translate-pipe';
-
+import { SuccessInterceptor } from './Interceptor/Sussess.interceptor';
 
 @NgModule({
-  declarations: [
-
-  ],
-  imports: [
-    CommonModule,
-    CoreRoutingModule
-  ],
-    providers: [
+  declarations: [],
+  imports: [CommonModule, CoreRoutingModule],
+  providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
@@ -29,7 +23,11 @@ import { TranslatePipe } from './Pipes/translate-pipe';
       multi: true,
     },
 
-
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: SuccessInterceptor,
+      multi: true,
+    },
   ],
 })
-export class CoreModule { }
+export class CoreModule {}

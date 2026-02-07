@@ -1,5 +1,6 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Data } from '../../core/Servies/data';
 
 @Component({
   selector: 'app-login',
@@ -12,29 +13,39 @@ export class Login implements OnInit {
     this.OnCreateForm();
   }
 
-  constructor(private FB: FormBuilder) {}
-
+  constructor(
+    private FB: FormBuilder,
+    private Data: Data,
+  ) {}
 
   //************************************Varibels***************************************//
   Form = signal<FormGroup>(new FormGroup({}));
   //************************************Varibels***************************************//
 
-
-
-
-
-    //************************************Implemantion Methods***************************************//
+  //************************************Implemantion Methods***************************************//
   OnCreateForm() {
     this.Form.set(
       this.FB.group({
-        email: [''],
-        password: [''],
+        email: ['', Validators.required],
+        password: ['', Validators.required],
       }),
     );
   }
-  getControl(controlName: string) {
+
+
+  onSubmit() {
+    if (this.Form().invalid) {
+      this.Form().markAllAsTouched();
+      return;
+    }
+    this.Data.post('auth/login', this.Form().value).subscribe((res) => {
+      this.Form().reset();
+    });
+  }
+  
+
+  getControlName(controlName: string) {
     return this.Form().get(controlName);
   }
-    //************************************Implemantion Methods***************************************//
-
+  //************************************Implemantion Methods***************************************//
 }

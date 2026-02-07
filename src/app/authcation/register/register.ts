@@ -1,7 +1,6 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Data } from '../../core/Servies/data';
-import { Translation } from '../../core/Servies/translation';
 
 @Component({
   selector: 'app-register',
@@ -17,7 +16,6 @@ export class Register implements OnInit {
   constructor(
     private FB: FormBuilder,
     private Data:Data,
-    public translationService: Translation
   ) {}
 
   //************************************Varibels***************************************//
@@ -29,8 +27,8 @@ export class Register implements OnInit {
     this.Form.set(
       this.FB.group({
         name: ['', Validators.required],
-        email: ['', Validators.email],
-        password: ['', Validators.minLength(6)],
+        email: ['', Validators.required],
+        password: ['', Validators.required],
       }),
     );
   }
@@ -38,22 +36,17 @@ export class Register implements OnInit {
   onSubmit() {
 
     if(this.Form().invalid){
+      this.Form().markAllAsTouched();
       return;
     }
-
     this.Data.post('auth/register',this.Form().value).subscribe((res)=>{
-      console.log(res)
+      this.Form().reset();
     })
-
   }
 
   getControlName(controlName: string) {
     return this.Form().get(controlName);
   }
 
-
-  changeLang(lang: string) {
-  this.translationService.setLanguage(lang);
-}
   //************************************Implemantion Methods***************************************//
 }

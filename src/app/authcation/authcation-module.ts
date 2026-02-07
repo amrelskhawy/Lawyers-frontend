@@ -8,7 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TranslatePipe } from '../core/Pipes/translate-pipe';
 
 @NgModule({
-  declarations: [Register, Login,TranslatePipe],
+  declarations: [Register, Login],
   imports: [CommonModule, AuthcationRoutingModule, ReactiveFormsModule],
 })
 export class AuthcationModule {}
