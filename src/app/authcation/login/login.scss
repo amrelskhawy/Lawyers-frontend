@@ -1,1 +1,336 @@
-@use "../Design.scss"
+@use "../Design.scss";
+
+
+// Variables matching or extending Design.scss
+$primary-navy: var(--primary-navy);
+$accent-gold: var(--accent-gold);
+$white: var(--white-color);
+$soft-gray: var(--soft-gray);
+$text-dark: #1f2937;
+$text-light: #6b7280;
+$error-red: #ef4444;
+
+.login-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  background-color: $white;
+  overflow-y: auto; // Allow scrolling if content is tall
+  overflow-x: hidden;
+}
+
+// Left Side - Visual
+.side-panel {
+  flex: 1;
+  // Using a hardcoded dark navy for the gradient end since we can't darken() a CSS variable
+  background: linear-gradient(135deg, $primary-navy 0%, #0a0a1a 100%);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  overflow: hidden;
+  
+  @media (max-width: 900px) {
+    display: none;
+  }
+
+  // Abstract background shapes
+  &::before {
+    content: '';
+    position: absolute;
+    top: -10%;
+    right: -10%;
+    width: 50%;
+    height: 50%;
+    background: radial-gradient(circle, rgba($accent-gold, 0.2) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+}
+
+.side-panel .visual-content {
+  color: $white;
+  text-align: center;
+  z-index: 2;
+  animation: fadeIn 1s ease-out;
+}
+
+.side-panel .visual-content .hero-image {
+  max-width: 80%;
+  height: auto;
+  margin-bottom: 2rem;
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
+  transition: transform 0.5s ease;
+  
+  &:hover {
+      transform: scale(1.02);
+  }
+}
+
+.side-panel .visual-content .visual-text {
+  h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    font-family: 'Playwrite IT Trad', serif; // Using font from styles.scss
+  }
+  p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    font-weight: 300;
+  }
+}
+
+// Right Side - Form Wrapper
+.login-form-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background-color: transparent;
+  height: 93vh; // Ensure wrapper takes full height for vertical centering
+}
+
+.modern-form {
+  width: 100% !important; // Override inherited 50% width from Design.scss
+  padding: 0 !important; // Reset padding if inherited
+  box-shadow: none !important; // Reset shadow if inherited
+  background: transparent !important; // Reset background if inherited
+}
+
+.login-card {
+  width: 100%;
+  max-width: 480px;
+  padding: 2rem;
+  background: $white;
+  border-radius: 1.5rem;
+  animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  
+  // Optional: Add card shadow if not full screen on mobile
+  @media (min-width: 901px) {
+      // box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+}
+
+.login-card .brand-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.login-card .brand-header .app-logo {
+  width: 120px;
+  height: auto; // Ensure aspect ratio
+  max-width: 100%; // Prevent overflow
+  margin-bottom: 10px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.login-card .brand-header h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-top: -2rem;
+  color: $primary-navy;
+}
+
+.login-card .brand-header .subtitle {
+  color: $text-light;
+  font-size: 0.95rem;
+  margin-top: -.5rem;
+}
+
+.modern-form .form-group {
+  margin-bottom: 1rem;
+}
+
+.modern-form .form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: $text-dark;
+}
+
+.modern-form .form-group .input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 0.65rem 1rem;
+  transition: all 0.3s ease;
+  background-color: #f9fafb;
+
+  &:focus-within {
+    border-color: $primary-navy;
+    background-color: $white;
+    box-shadow: 0 0 0 4px rgba($primary-navy, 0.1);
+    
+    .icon { color: $primary-navy; }
+  }
+
+  &.error {
+    border-color: $error-red;
+    background-color: rgba($error-red, 0.02);
+    .icon { color: $error-red; }
+  }
+}
+
+.modern-form .form-group .input-container .icon {
+  color: $text-light;
+  margin-right: 0.75rem;
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
+}
+
+.modern-form .form-group .input-container input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 1rem;
+  color: $text-dark;
+  width: 100%;
+  padding: 0;
+
+  &::placeholder {
+    color: #9ca3af;
+  }
+}
+
+.modern-form .form-group .input-container .toggle-password {
+  cursor: pointer;
+  color: $text-light;
+  margin-left: 0.5rem;
+  padding: 0.25rem;
+  transition: color 0.2s;
+
+  &:hover {
+    color: $primary-navy;
+  }
+}
+
+.modern-form .form-group .error-msg {
+  margin-top: 0.5rem;
+  small {
+      color: $error-red;
+      font-size: 0.8rem;
+      display: block;
+      animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+  }
+}
+
+.modern-form .form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1.5rem;
+}
+
+.modern-form .form-actions .forgot-password {
+  color: $primary-navy;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s;
+
+  &:hover {
+    color: $accent-gold;
+    text-decoration: underline;
+  }
+}
+
+.modern-form .btn-primary {
+  width: 100%;
+  padding: 1rem;
+  background-color: $primary-navy;
+  color: $white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+
+  &:hover:not(:disabled) {
+    // background-color: lighten($primary-navy, 5%); // Cannot use lighten on variable
+    background-color: $primary-navy;
+    filter: brightness(1.2); // CSS native way to lighten
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px -10px rgba($primary-navy, 0.5);
+  }
+  
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+.modern-form .register-link {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.modern-form .register-link p {
+  color: $text-light;
+  font-size: 0.95rem;
+}
+
+.modern-form .register-link p a {
+  color: $primary-navy;
+  font-weight: 700;
+  text-decoration: none;
+  margin-left: 0.25rem;
+  
+  &:hover {
+    text-decoration: underline;
+    color: $accent-gold;
+  }
+}
+
+// Animations Keyframes
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shake {
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+  40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+
+// Mobile Responsive Tweaks
+@media (max-width: 640px) {
+  .login-container .login-form-wrapper {
+    padding: 1.5rem;
+  }
+  
+  .login-card {
+    padding: 1.5rem;
+    box-shadow: none;
+  }
+  
+  .login-card .brand-header {
+    margin-bottom: 2rem;
+    h1 { font-size: 1.75rem; }
+  }
+}
