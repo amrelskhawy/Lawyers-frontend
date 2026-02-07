@@ -11,74 +11,13 @@ $text-light: #6b7280;
 $error-red: #ef4444;
 
 .login-container {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   min-height: 100vh;
   width: 100%;
   background-color: $white;
   overflow-y: auto; // Allow scrolling if content is tall
   overflow-x: hidden;
-}
-
-// Left Side - Visual
-.side-panel {
-  flex: 1;
-  // Using a hardcoded dark navy for the gradient end since we can't darken() a CSS variable
-  background: linear-gradient(135deg, $primary-navy 0%, #0a0a1a 100%);
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  overflow: hidden;
-  
-  @media (max-width: 900px) {
-    display: none;
-  }
-
-  // Abstract background shapes
-  &::before {
-    content: '';
-    position: absolute;
-    top: -10%;
-    right: -10%;
-    width: 50%;
-    height: 50%;
-    background: radial-gradient(circle, rgba($accent-gold, 0.2) 0%, transparent 70%);
-    border-radius: 50%;
-  }
-}
-
-.side-panel .visual-content {
-  color: $white;
-  text-align: center;
-  z-index: 2;
-  animation: fadeIn 1s ease-out;
-}
-
-.side-panel .visual-content .hero-image {
-  max-width: 80%;
-  height: auto;
-  margin-bottom: 2rem;
-  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
-  transition: transform 0.5s ease;
-  
-  &:hover {
-      transform: scale(1.02);
-  }
-}
-
-.side-panel .visual-content .visual-text {
-  h2 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    font-family: 'Playwrite IT Trad', serif; // Using font from styles.scss
-  }
-  p {
-    font-size: 1.1rem;
-    opacity: 0.9;
-    font-weight: 300;
-  }
 }
 
 // Right Side - Form Wrapper
@@ -318,6 +257,18 @@ $error-red: #ef4444;
   40%, 60% { transform: translate3d(4px, 0, 0); }
 }
 
+// Adjust side panel visibility
+@media (max-width: 900px) {
+  .login-container {
+  
+  grid-template-columns: 1fr
+}
+
+  .side-panel {
+    display: none !important; // Force hide side panel on mobile/tablet
+  }
+}  
+
 // Mobile Responsive Tweaks
 @media (max-width: 640px) {
   .login-container .login-form-wrapper {
@@ -334,3 +285,47 @@ $error-red: #ef4444;
     h1 { font-size: 1.75rem; }
   }
 }
+
+
+
+.side-panel {
+  position: relative;
+  background-color: $primary-navy;
+  overflow: hidden;
+  display: flex;            // Center content
+  align-items: center;      // Center content
+  justify-content: center;  // Center content
+}
+
+.side-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url('/assets/Img/login-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.4; // Darken slightly for better contrast
+  filter: blur(4px);
+  transform: scale(1.05); // Avoid blur edges
+  z-index: 0;
+}
+
+.side-panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+.logo-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
+    width: 400px; // Ensure explicit width matches HTML or design intent
+    position: relative;
+    height: auto;
+  }
+}
+
