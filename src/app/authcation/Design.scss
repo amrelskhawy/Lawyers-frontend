@@ -12,6 +12,7 @@
 .left-side,
 .right-side {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100%;
@@ -39,12 +40,11 @@
   margin-bottom: 30px;
 }
 
-.input-wrapper{
+.input-wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-
 
 i {
   color: var(--accent-gold);
@@ -53,18 +53,19 @@ i {
 form {
   width: 50%;
   background-color: var(--white-color);
-  padding: 10px;
+  padding: 10px 30px;
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
 input {
   border: none;
+  background-color: var(--white-color);
 }
 
 button {
   background: var(--primary-navy);
-  width: 90%;
+  width: 100%;
   margin: 30px auto;
   margin-bottom: 7px;
   color: var(--white-color);
@@ -88,40 +89,48 @@ img {
   display: block;
 }
 
+.icon-contact {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 50px;
+  cursor: pointer;
+  li {
+    padding: 0 10px;
+    font-size: 20px;
+  }
+}
 
-
-
-@media(max-width:767px){
-  .left-side{
+@media (max-width: 767px) {
+  .left-side {
     display: none;
   }
 
-  form{
+  form {
     width: 80%;
   }
 
-
-.right-side {
-  border-top-left-radius: 0px;
-  &::before {
-    display: none;
-  }}
+  .right-side {
+    border-top-left-radius: 0px;
+    &::before {
+      display: none;
+    }
+  }
 }
 
-
-@media(min-width:767px) and (max-width:1200px){
-   .left-side{
+@media (min-width: 767px) and (max-width: 1200px) {
+  .left-side {
     display: none;
   }
 
-  form{
+  form {
     width: 50%;
   }
 
-
-.right-side {
-  border-top-left-radius: 0px;
-  &::before {
-    display: none;
-  }}
+  .right-side {
+    border-top-left-radius: 0px;
+    &::before {
+      display: none;
+    }
+  }
 }
