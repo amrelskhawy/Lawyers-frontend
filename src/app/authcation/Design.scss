@@ -19,7 +19,7 @@
 }
 
 .right-side {
-  background-color: #eee;
+  background-color: var(--soft-gray);
   border-top-left-radius: 100px;
   position: relative;
   &::before {
@@ -31,7 +31,7 @@
     height: 100px;
     background-color: transparent;
     border-bottom-right-radius: 100px;
-    box-shadow: 50px 0 0 0 #eee;
+    box-shadow: 50px 0 0 0 var(--soft-gray);
   }
 }
 
