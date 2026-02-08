@@ -1,25 +1,62 @@
-<section class="section-footer">
-  <div class="container Content-footer">
-    <div>
-      <img width="200" src="/assets/Img/NAME-GOLD.svg" alt="logo"/>
-      <p>شركة سعد البقمي</p>
-      <p   enterClass="my-enter-top" >للمحاماة والاستشارات القانونية</p>
-      <p   leaveClass="my-leave-animation">خبرة - جودة - ثقة - التزام بالقانون. نقدم خدمات قانونية</p>
-      <p>احترافية ومتكاملة بأعلى معايير الجودة والشفافية.</p>
+<section class="section-footer-wrapper">
+  <div class="container footer-container">
+
+    <div class="footer-upper">
+      <!-- Left Side: Brand, Desc, Socials, Back to Top -->
+      <div class="footer-left">
+        <div class="brand-area">
+          <div class="logo-group">
+            <img width="280" src="/assets/Img/NAME-GOLD.svg" alt="logo" />
+
+          </div>
+
+          <p class="brand-desc">
+            تمكين العملاء بحلول قانونية متقدمة ومتكاملة لتحقيق العدالة وحماية الحقوق.
+          </p>
+
+          <div class="social-icons">
+            <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+          </div>
+
+          <button class="back-to-top-btn" (click)="scrollToTop()">
+            <i class="fa-solid fa-angles-up"></i>
+            BACK TO TOP
+          </button>
+        </div>
+      </div>
+
+      <!-- Right Side: Links Columns -->
+      <div class="footer-right">
+        <div class="links-column">
+          <h3>خريطة الموقع</h3>
+          <ul>
+            <li (click)="onClickListActive('Home')"><a>الرئيسية</a></li>
+            <li (click)="onClickListActive('Services')"><a>الخدمات</a></li>
+            <li (click)="onClickListActive('About')"><a>من نحن</a></li>
+            <li (click)="onClickListActive('HowWork')"><a>كيف نعمل</a></li>
+          </ul>
+        </div>
+
+        <div class="links-column">
+          <h3>معلومات قانونية</h3>
+          <ul>
+            <li><a>سياسة الخصوصية</a></li>
+            <li><a>شروط الخدمة</a></li>
+            <li><a>زاوية المحامين</a></li>
+            <li><a>بوابة العملاء</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <ul>
-      <h3>روابط سريعة</h3>
-      <li (click)="onClickListActive('Home')"><a>الرئيسية</a></li>
-        <li (click)="onClickListActive('About')"><a>من نحن</a></li>
-        <li (click)="onClickListActive('HowWork')"><a>كيف يعمل</a></li>
-        <li (click)="onClickListActive('Services')"><a>الخدمات</a></li>
-    </ul>
-    <ul>
-      <h3>معلومات التواصل</h3>
-      <li><i class="fa-solid fa-phone"></i> 055 228 3030</li>
-      <li><i class="fa-solid fa-envelope"></i> info@saadbaqami.com</li>
-      <li><i class="fa-solid fa-location-dot"></i>جدة، المملكة العربية السعودية</li>
-    </ul>
+
+
+
   </div>
-  <p class="endDesc">© 2024 شركة سعد البقمي للمحاماة والاستشارات القانونية. جميع الحقوق محفوظة.</p>
+  <!-- Bottom Bar -->
+  <div class="footer-bottom-bar">
+    <p>Copyright © 2026, Saadbqami. All Rights Reserved.</p>
+  </div>
 </section>

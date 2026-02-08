@@ -4,12 +4,16 @@ import { Component, EventEmitter, Output } from '@angular/core';
   selector: 'app-footer',
   standalone: false,
   templateUrl: './footer.html',
-  styleUrl: './footer.scss',
+  styleUrls: ['./footer.scss'],
 })
 export class Footer {
- @Output()EventRoute=new EventEmitter<string>();
+  @Output() EventRoute = new EventEmitter<string>();
 
-  onClickListActive(route:string){
+  onClickListActive(route: string) {
     this.EventRoute.emit(route)
+  }
+
+  scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }
