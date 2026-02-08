@@ -161,6 +161,19 @@ input:-webkit-autofill:active {
   }
 }
 
+// Fix navigation scroll offset for sticky header
+app-hero-section,
+app-about,
+app-how-it-work,
+app-servies {
+  scroll-margin-top: 100px;
+  display: block; // Ensure they respect margin/padding
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 
 
 
