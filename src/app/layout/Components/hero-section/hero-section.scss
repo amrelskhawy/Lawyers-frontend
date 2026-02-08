@@ -12,6 +12,13 @@
   color: var(--white-color);
 }
 
+@media (max-width: 750px) {
+  .hero-section {
+    font-size: 20px !important;
+  }
+}
+
+
 .overlay {
   position: relative;
   background-image: url('/assets/Img/court-justice-scales-gavel-generative-ai_74760-4832.avif');
@@ -104,7 +111,7 @@
   left: -12%;
   height: 120px !important;
   width: 120px !important;
-  backdrobackground: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-radius: 50% !important;
@@ -116,14 +123,60 @@
 
 @media (max-width: 1200px) {
   .hero-section {
+    flex-direction: column-reverse; // Stack: Image bottom, Text top (or vice versa depending on design)
     justify-content: center;
+    height: auto;
+    padding: 40px 0;
+    text-align: center;
   }
 
-  img {
-    display: none;
+  .img-hero-section {
+    margin-bottom: 30px; // Space between image and text
+
+    img {
+      display: block; // Show image!
+      width: 250px;
+      height: 250px;
+      margin: 0 auto;
+    }
+
+    &::before {
+      width: 100%;
+      height: 95%;
+      top: -5px;
+      right: -5px;
+    }
+
+    .logo {
+      top: -20px !important; // Adjust logo position
+      left: 10px !important;
+      height: 80px !important;
+      width: 80px !important;
+    }
   }
 
   .title-hero-section {
     text-align: center;
+
+    h2 {
+      font-size: 2rem; // Smaller font
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1rem;
+      padding: 0 15px;
+    }
+
+    button {
+      width: 100%;
+      max-width: 280px;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-section {
+    font-size: 20px !important;
   }
 }

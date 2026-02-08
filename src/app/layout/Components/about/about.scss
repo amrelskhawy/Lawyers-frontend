@@ -106,38 +106,66 @@
   color: var(--primary-navy);
 }
 
-@media (min-width: 320px) and (max-width: 767px) {
-  .img-about-container {
-    display: none;
-  }
-
-  .about-text-container,
-  .section-title {
-    text-align: center;
-    justify-content: center;
-    margin-top: 10px;
-  }
-
-
-}
-
-@media (min-width: 767px) and (max-width: 1200px) {
-  .img-about-container {
-    justify-content: center;
-  }
-
+@media (max-width: 1200px) {
   .about-section {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: 1fr; // Stack vertically
+    text-align: center;
+    gap: 40px;
+  }
+
+  .img-about-container {
+    display: flex; // Show images!
+    justify-content: center;
+    margin-bottom: 20px;
+
+    // Scale down images for smaller screens
+    .img-1 {
+      height: 250px;
+      width: 160px;
+    }
+
+    .img-2 {
+      height: 180px;
+      width: 150px;
+    }
+
+    .img-3 {
+      display: none; // Hide logo decoration on mobile if cluttered
+    }
+  }
+
+  .about-text-container {
+    padding: 0 20px;
+
+    .section-title {
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    ul {
+      display: inline-block; // Center list content block
+      text-align: right; // Keep list items aligned naturally
+
+      li {
+        justify-content: flex-start;
+        margin-bottom: 10px;
+        font-size: 0.95rem;
+      }
+    }
+
+    button {
+      margin: 30px auto 0;
+      display: block; // Center button
+    }
   }
 
   .fa-gavel {
     display: none;
   }
+}
 
-  .about-text-container,
-  .section-title {
-    text-align: center;
-    justify-content: center;
-    margin-top: 10px;
+@media (max-width: 576px) {
+  .img-about-container {
+    transform: scale(0.9); // Scale down slightly more for very small screens
   }
 }

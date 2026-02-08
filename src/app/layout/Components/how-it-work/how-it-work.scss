@@ -167,11 +167,44 @@
 
 @media (max-width: 1200px) {
   .how-it-work {
-    display: flex;
-    justify-content: center;
+    grid-template-columns: 1fr; // Single column
+    text-align: center;
+    gap: 40px;
   }
 
   .img-work {
-    display: none;
+    display: block; // Show image!
+    margin: 0 auto;
+
+    img {
+      width: 300px;
+      height: 300px;
+    }
+
+    &::before {
+      width: 300px;
+      left: 50%;
+      transform: translateX(-50%); // Center decorative border
+    }
+  }
+
+  .how-it-work-content {
+    // Ensure content (cards) take full width or centered
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 576px) {
+  .img-work {
+    img {
+      width: 250px;
+      height: 250px;
+    }
+
+    &::before {
+      width: 250px;
+    }
   }
 }

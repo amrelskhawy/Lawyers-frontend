@@ -154,8 +154,12 @@ input:-webkit-autofill:active {
   }
 }
 
-
-
+@media (max-width: 750px) {
+  .section-title h2 {
+    font-size: 20px !important;
+    text-align: center;
+  }
+}
 
 
 
