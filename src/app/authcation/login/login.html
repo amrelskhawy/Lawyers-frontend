@@ -1,61 +1,75 @@
-<section class="authintication">
-  <div class="left-side">
-    <img
-      height="400"
-      width="500"
-      src="/assets/Img/Explanation-of-the-evolution-of-Californias-laws-removebg-preview.png"
-      alt="hero-section-img"
-    />
+<section class="login-container">
+  <div class="side-panel">
+
+    <div class="logo-wrapper">
+      
+      <img src="/assets/Img/logo.svg" alt="Law Firm Logo" width="200" height="auto">
+    
+    </div>
   </div>
 
-  <div class="right-side">
-    <form [formGroup]="Form()">
-      <img
-        height="70"
-        width="70"
-        src="/assets/Img/sophisticated-law-firm-logo-on-transparent-background-png.webp"
-        alt="Logo"
-        class="logo-header"
-      />
-
-      <div class="Group">
-        <div class="input-wrapper">
-          <input formControlName="email" placeholder="Enter Email" />
-          <i class="fa-solid fa-envelope"></i>
-        </div>
-        <div class="wrapper-error">
-          <small
-            class="error-message"
-            *ngIf="getControlName('email')?.invalid && getControlName('email')?.touched"
-            >This Field Is Requierd *</small
-          >
-        </div>
+  <div class="login-form-wrapper">
+    <div class="login-card">
+      <div class="brand-header">
+        <img
+          src="/assets/Img/logo.svg"
+          alt="Law Firm Logo"
+          class="app-logo"
+          width="200"
+          height="auto"
+        />
+        <h1>Welcome Back</h1>
+        <p class="subtitle">Please sign in to your account</p>
       </div>
 
-      <div class="Group">
-        <div class="input-wrapper">
-          <input formControlName="password" type="password" placeholder="Enter Password" />
-          <i class="fa-solid fa-lock"></i>
+      <form [formGroup]="Form()" (ngSubmit)="onSubmit()" class="modern-form">
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <div class="input-container" [class.error]="getControlName('email')?.invalid && getControlName('email')?.touched">
+            <span class="icon"><i class="fa-solid fa-envelope"></i></span>
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              placeholder="Enter your email"
+            />
+          </div>
+          <div class="error-msg" *ngIf="getControlName('email')?.invalid && getControlName('email')?.touched">
+            <small *ngIf="getControlName('email')?.errors?.['required']">Email is required</small>
+            <small *ngIf="getControlName('email')?.errors?.['email']">Please enter a valid email</small>
+          </div>
         </div>
-         <div class="wrapper-error">
-          <small
-            class="error-message"
-            *ngIf="getControlName('password')?.invalid && getControlName('password')?.touched"
-            >This Field Is Requierd *</small
-          >
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="input-container" [class.error]="getControlName('password')?.invalid && getControlName('password')?.touched">
+            <span class="icon"><i class="fa-solid fa-lock"></i></span>
+            <input
+              id="password"
+              [type]="showPassword() ? 'text' : 'password'"
+              formControlName="password"
+              placeholder="Enter your password"
+            />
+            <span class="toggle-password" (click)="togglePasswordVisibility()" role="button" tabindex="0">
+              <i class="fa-solid" [class.fa-eye]="!showPassword()" [class.fa-eye-slash]="showPassword()"></i>
+            </span>
+          </div>
+          <div class="error-msg" *ngIf="getControlName('password')?.invalid && getControlName('password')?.touched">
+            <small>Password is required</small>
+          </div>
         </div>
-      </div>
-      <button (click)="onSubmit()">Login</button>
 
-      <p [routerLink]="['/auth/Register']">Don't have an account? Create account</p>
-    </form>
+        <div class="form-actions">
+          <a routerLink="/auth/forgot-password" class="forgot-password">Forgot Password?</a>
+        </div>
 
+        <button type="submit" class="btn-primary" [disabled]="Form().invalid">
+          <span>Sign In</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
 
-  <ul class="icon-contact">
-    <li><i class="fa-brands fa-facebook-f"></i></li>
-    <li><i class="fa-brands fa-twitter"></i></li>
-    <li><i class="fa-brands fa-instagram"></i></li>
-    <li><i class="fa-brands fa-linkedin-in"></i></li>
-  </ul>
+       
+      </form>
+    </div>
   </div>
 </section>

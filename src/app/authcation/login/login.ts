@@ -9,29 +9,33 @@ import { Data } from '../../core/Servies/data';
   styleUrl: './login.scss',
 })
 export class Login implements OnInit {
-  ngOnInit(): void {
-    this.OnCreateForm();
-  }
+  //************************************Varibels***************************************//
+  Form = signal<FormGroup>(new FormGroup({}));
+  showPassword = signal<boolean>(false);
+  //************************************Varibels***************************************//
 
   constructor(
     private FB: FormBuilder,
     private Data: Data,
-  ) {}
+  ) { }
 
-  //************************************Varibels***************************************//
-  Form = signal<FormGroup>(new FormGroup({}));
-  //************************************Varibels***************************************//
+  ngOnInit(): void {
+    this.OnCreateForm();
+  }
 
   //************************************Implemantion Methods***************************************//
   OnCreateForm() {
     this.Form.set(
       this.FB.group({
-        email: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
         password: ['', Validators.required],
       }),
     );
   }
 
+  togglePasswordVisibility() {
+    this.showPassword.update((val) => !val);
+  }
 
   onSubmit() {
     if (this.Form().invalid) {
@@ -39,10 +43,11 @@ export class Login implements OnInit {
       return;
     }
     this.Data.post('auth/login', this.Form().value).subscribe((res) => {
+      // Handle success appropriately, e.g., navigation or storing token
       this.Form().reset();
     });
   }
-  
+
 
   getControlName(controlName: string) {
     return this.Form().get(controlName);
