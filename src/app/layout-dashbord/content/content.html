@@ -1,0 +1,13 @@
+<section class="content">
+
+  <div class="menue" [ngClass]="{ collapsed: toggel() }">
+    <app-menue (toggelMenue)="onToggelMenue($event)"></app-menue>
+  </div>
+
+  <div class="content-dashbord" [ngClass]="{ collapsed: toggel() }">
+    <app-header></app-header>
+    <app-drawer-left (toggelMenue)="onToggelMenue($event)"></app-drawer-left>
+    <router-outlet></router-outlet>
+  </div>
+
+</section>

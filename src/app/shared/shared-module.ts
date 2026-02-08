@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { TableModule } from 'primeng/table';
 import { SharedRoutingModule } from './shared-routing-module';
 import { Header } from './header/header';
 import { Loader } from './loader/loader';
@@ -11,6 +11,7 @@ import { DrawerModule } from 'primeng/drawer';
 import { ChangeLangauage } from './change-langauage/change-langauage';
 import { TranslatePipe } from '../core/Pipes/translate-pipe';
 import { Success } from './success/success';
+import { Tabel } from './tabel/tabel';
 
 
 @NgModule({
@@ -22,12 +23,14 @@ import { Success } from './success/success';
     ChatBoot,
     DrawerLeft,
     ChangeLangauage,
-    Success
+    Success,
+    Tabel
   ],
   imports: [
     CommonModule,
     SharedRoutingModule,
-    DrawerModule
+    DrawerModule,
+    TableModule
   ],
   exports:[
     Header,
@@ -35,7 +38,8 @@ import { Success } from './success/success';
     TopHeader,
     ChatBoot,
     DrawerLeft,
-    Success
+    Success,
+    Tabel
   ]
 })
 export class SharedModule { }

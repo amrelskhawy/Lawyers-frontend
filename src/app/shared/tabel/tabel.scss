@@ -1,0 +1,10 @@
+th{
+  background: linear-gradient(180deg, var(--primary-navy)  0%, var(--dark-navy-deep) 100%) !important;
+  color: var(--white-color) !important;
+}
+
+
+::ng-deep .p-paginator-page.p-paginator-page-selected{
+  color: var(--white-color) !important;
+  background-color: var(--primary-navy) !important;
+}

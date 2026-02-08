@@ -1,0 +1,15 @@
+.action-btn{
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.edit-btn{
+  background-color: green;
+  color: var(--white-color);
+}
+
+.delete-btn{
+ background-color: var(--red-color);
+  color: var(--white-color);
+}

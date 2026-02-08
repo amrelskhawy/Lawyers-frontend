@@ -15,6 +15,12 @@ const routes: Routes = [
       import('./layout/layout-module').then((m) => m.LayoutModule),
   },
 
+  {
+    path: 'dashboard',
+    loadChildren: () =>
+      import('./layout-dashbord/layout-dashbord-module').then((m) => m.LayoutDashbordModule),
+  },
+
 ];
 
 @NgModule({

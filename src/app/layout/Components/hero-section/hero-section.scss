@@ -73,6 +73,19 @@
     z-index: -1;
   }
 }
+.imges{
+  position: relative;
+}
+.logo{
+  position: absolute !important;
+  top:35%;
+  left: -12%;
+  height: 100px !important;
+  width: 100px !important;
+   border-top-right-radius: 0px !important;
+    border-bottom-left-radius: 0px  !important;
+  }
+
 
 @media (max-width: 1200px) {
   .hero-section {

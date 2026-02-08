@@ -1,3 +1,7 @@
+.section-draweleft{
+  z-index: 100%;
+}
+
 ::ng-deep .p-drawer-header {
   background-color: var(--accent-gold);
   color: var(--white-color);

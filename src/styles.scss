@@ -25,6 +25,7 @@ body {
   --soft-gray:#eee;
   --Platinum:#dadadabf;
   --primary-navy: #14143a;
+  --dark-navy-deep: #0a0a1d;
   --accent-gold: #93853f;
   --medium-gray: #a9a9a9;
 }
@@ -96,7 +97,7 @@ input:-webkit-autofill:active {
 }
 
 .container{
-  width: 90%;
+  width: 70%;
   margin: auto;
 }
 
@@ -110,6 +111,12 @@ input:-webkit-autofill:active {
 
 
 
+
+@media (max-width: 1200px) {
+  .container {
+    width: 90%;
+  }
+}
 
 
 
