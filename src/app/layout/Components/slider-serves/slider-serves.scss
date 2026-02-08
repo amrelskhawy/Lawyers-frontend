@@ -112,3 +112,35 @@
     color: var(--accent-gold) !important;
   }
 }
+
+@media (max-width: 768px) {
+  .card {
+    height: auto; // Allow content to dictate height on mobile to prevent overflow
+    min-height: 280px; // Maintain some consistency
+    padding: 20px;
+    margin: 5px; // Reduce margin
+
+    .card-icon {
+      margin-bottom: 15px;
+
+      i {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+      }
+    }
+
+    .card-content {
+      h3 {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+      }
+
+      p {
+        font-size: 0.9rem;
+        line-height: 1.5;
+        margin-bottom: 15px;
+      }
+    }
+  }
+}
