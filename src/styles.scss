@@ -116,6 +116,35 @@ input:-webkit-autofill:active {
   border-radius: 5px;
 }
 
+@mixin section-header($line-color: var(--accent-gold)) {
+  .section-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+    }
+
+    .fa-circle {
+      color: $line-color;
+      font-size: 10px;
+    }
+  }
+
+  .line {
+    display: block;
+    height: 2px;
+    width: 80px;
+    background-color: $line-color;
+    border-radius: 2px;
+  }
+}
+
 
 
 
