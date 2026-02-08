@@ -1,12 +1,11 @@
 .section-top-header {
-  display: flex;
+  background-color: var(--primary-navy);
+}
+
+.content-top-header{
+    display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: var(--primary-navy);
-  padding: 10px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
   color: var(--white-color);
 }
 
@@ -17,14 +16,13 @@
     padding: 0 10px;
   }
   li:not(:last-child) {
-    border-right: 2px solid var(--white-color);
+    border-left: 2px solid var(--white-color);
   }
 }
 
 .icon-contact {
   display: flex;
   align-items: center;
-  gap: 14px;
 
   li{
     padding: 0 10px;

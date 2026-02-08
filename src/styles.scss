@@ -5,11 +5,14 @@
   padding: 0;
   margin: 0;
 }
+
+
 body {
   background-color: var(--white-color);
   user-select: none;
   overflow-x: hidden;
   font-family: 'Cairo', sans-serif;
+  direction: rtl;
 }
 
 :root {
@@ -97,7 +100,7 @@ input:-webkit-autofill:active {
 }
 
 .container{
-  width: 70%;
+  width: 75%;
   margin: auto;
 }
 
@@ -197,7 +200,6 @@ input:-webkit-autofill:active {
     opacity: 0 !important;
     transition: opacity 0.5s;
   }
-
 
 
 

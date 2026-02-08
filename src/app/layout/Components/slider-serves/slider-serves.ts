@@ -8,32 +8,71 @@ import { Component } from '@angular/core';
 })
 export class SliderServes {
 
- products: any[] = [
-    {
-      name: 'Criminal Law',
-      description: 'Defense representations for many various criminal charges investigations.',
-      icon: 'pi-shield',
-      inventoryStatus: 'INSTOCK' 
-    },
-    {
-      name: 'Corporate Law',
-      description: 'Legal advocacy for diverse and fine of conducting in-depth think and reviewing.',
-      icon: 'pi-briefcase',
-      inventoryStatus: 'INSTOCK'
-    },
-    {
-      name: 'Family Law',
-      description: 'Expert defense strategies for variety of criminal cases comprehensive evidence.',
-      icon: 'pi-users',
-      inventoryStatus: 'LOWSTOCK'
-    },
-    {
-      name: 'Real Estate Law',
-      description: 'Representation in numerous criminal matters, including detailed invest.',
-      icon: 'pi-home',
-      inventoryStatus: 'INSTOCK'
-    }
-  ];
+products: any[] = [
+  {
+    name: 'استشارات قانونية',
+    description: 'نقدم استشارات قانونية شاملة ومتخصصة في جميع فروع القانون السعودي، بما يضمن حصولكم على الإرشاد القانوني الصحيح لاتخاذ القرارات المناسبة.',
+    icon: 'pi-shield',
+    inventoryStatus: 'INSTOCK'
+  },
+  {
+    name: 'تعويض عن الخطأ الطبي',
+    description: 'متخصصون في قضايا الأخطاء الطبية والحصول على التعويضات المستحقة للمرضى وذويهم، مع ضمان أفضل النتائج القانونية.',
+    icon: 'pi-briefcase',
+    inventoryStatus: 'INSTOCK'
+  },
+  {
+    name: 'دراسة العقود والقضايا',
+    description: 'مراجعة وإعداد وصياغة العقود بجميع أنواعها، مع ضمان حماية حقوق عملائنا والتأكد من سلامة البنود القانونية.',
+    icon: 'pi-users',
+    inventoryStatus: 'LOWSTOCK'
+  },
+
+  {
+    name: 'الترافع أمام المحاكم',
+    description: 'تمثيل قانوني متخصص أمام جميع درجات المحاكم والهيئات القضائية، مع ضمان أفضل دفاع قانوني لعملائنا.',
+    icon: 'pi-home',
+    inventoryStatus: 'INSTOCK'
+  },
+
+   {
+    name: 'نقض الحكم',
+    description:'الطعن في الأحكام والقرارات القضائية أمام المحاكم العليا، مع دراسة دقيقة للأسباب القانونية للطعن.',
+    icon: 'pi-home',
+    inventoryStatus: 'INSTOCK'
+  }
+  ,
+
+   {
+    name: 'التحكيم التجاري وحل النزاعات',
+    description:'حل النزاعات التجارية والمدنية عن طريق التحكيم، مع ضمان سرعة الفصل وتوفير التكاليف على العملاء.',
+    icon: 'pi-home',
+    inventoryStatus: 'INSTOCK'
+  }
+   ,
+
+   {
+    name: 'جميع أنواع القضايا في القانون السعودي',
+    description:'خبرة شاملة في جميع فروع القانون السعودي، من القضايا المدنية والتجارية إلى الجزائية والإدارية.',
+    icon: 'pi-home',
+    inventoryStatus: 'INSTOCK'
+  },
+  {
+    name: 'منصة التوثيق',
+    description: 'خدمات التوثيق الرسمية للمستندات والعقود أمام الجهات المختصة، مع ضمان صحة الإجراءات وسرعة الإنجاز.',
+    icon: 'pi-home',
+    inventoryStatus: 'INSTOCK'
+  },
+  {
+    name:'الملكية الفكرية',
+    description: 'حماية حقوق الملكية الفكرية والعلامات التجارية وبراءات الاختراع، مع تقديم الاستشارات المتخصصة في هذا المجال.',
+    icon: 'pi-home',
+    inventoryStatus: 'INSTOCK'
+  },
+];
+
+
+
   responsiveOptions: any[] | undefined;
 
   ngOnInit() {

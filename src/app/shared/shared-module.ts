@@ -12,6 +12,7 @@ import { ChangeLangauage } from './change-langauage/change-langauage';
 import { TranslatePipe } from '../core/Pipes/translate-pipe';
 import { Success } from './success/success';
 import { Tabel } from './tabel/tabel';
+import { Footer } from './footer/footer';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { Tabel } from './tabel/tabel';
     DrawerLeft,
     ChangeLangauage,
     Success,
-    Tabel
+    Tabel,
+    Footer
   ],
   imports: [
     CommonModule,
@@ -39,7 +41,8 @@ import { Tabel } from './tabel/tabel';
     ChatBoot,
     DrawerLeft,
     Success,
-    Tabel
+    Tabel,
+    Footer
   ]
 })
 export class SharedModule { }

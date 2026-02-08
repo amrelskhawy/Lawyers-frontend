@@ -1,16 +1,17 @@
 @use '../../../styles' as *;
 
-
-.content-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 30px;
+.section-header {
+  padding: 10px 0;
   padding-bottom: 5px;
   position: sticky;
   top: 0;
   z-index: 100;
   background-color: var(--white-color);
+}
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 ul {
@@ -37,7 +38,7 @@ ul {
       font-size: 20px;
       font-weight: bold;
     }
-     &:hover::before {
+    &:hover::before {
       width: 100%;
     }
   }
@@ -50,27 +51,21 @@ ul {
 
 .btn-header {
   background: linear-gradient(90deg, #b5a863 0%, #8b7a3a 100%);
-   @include button(200px);
+  @include button(200px);
   border-radius: 30px;
   padding: 10px;
   color: var(--white-color);
   font-weight: bold;
 }
 
-
-
-
 @media (max-width: 767px) {
-  .content-header{
+ .section-header {
     display: none;
   }
 }
 
-
-
-@media (min-width: 767px) and (max-width:1400px) {
+@media (min-width: 767px) and (max-width: 1400px) {
   .btn-header {
     width: 130px;
   }
-
 }

@@ -1,7 +1,7 @@
 <section class="content">
 
   <div class="menue" [ngClass]="{ collapsed: toggel() }">
-    <app-menue (toggelMenue)="onToggelMenue($event)"></app-menue>
+    <app-menue [toggel]="toggel()" (toggelMenue)="onToggelMenue($event)"></app-menue>
   </div>
 
   <div class="content-dashbord" [ngClass]="{ collapsed: toggel() }">

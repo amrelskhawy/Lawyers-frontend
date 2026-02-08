@@ -2,9 +2,9 @@
   <div class="side-panel">
 
     <div class="logo-wrapper">
-      
+
       <img src="/assets/Img/logo.svg" alt="Law Firm Logo" width="200" height="auto">
-    
+
     </div>
   </div>
 
@@ -18,13 +18,13 @@
           width="200"
           height="auto"
         />
-        <h1>Welcome Back</h1>
-        <p class="subtitle">Please sign in to your account</p>
+        <h1>مرحباً بعودتك</h1>
+        <p class="subtitle">الرجاء تسجيل الدخول إلى حسابك</p>
       </div>
 
       <form [formGroup]="Form()" (ngSubmit)="onSubmit()" class="modern-form">
         <div class="form-group">
-          <label for="email">Email Address</label>
+          <label for="email">البريد الإلكتروني</label>
           <div class="input-container" [class.error]="getControlName('email')?.invalid && getControlName('email')?.touched">
             <span class="icon"><i class="fa-solid fa-envelope"></i></span>
             <input
@@ -35,13 +35,13 @@
             />
           </div>
           <div class="error-msg" *ngIf="getControlName('email')?.invalid && getControlName('email')?.touched">
-            <small *ngIf="getControlName('email')?.errors?.['required']">Email is required</small>
-            <small *ngIf="getControlName('email')?.errors?.['email']">Please enter a valid email</small>
+            <small *ngIf="getControlName('email')?.errors?.['required']">البريد الإلكتروني مطلوب</small>
+            <small *ngIf="getControlName('email')?.errors?.['email']">الرجاء إدخال بريد إلكتروني صحيح</small>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="password">Password</label>
+          <label for="password">كلمة المرور</label>
           <div class="input-container" [class.error]="getControlName('password')?.invalid && getControlName('password')?.touched">
             <span class="icon"><i class="fa-solid fa-lock"></i></span>
             <input
@@ -55,20 +55,20 @@
             </span>
           </div>
           <div class="error-msg" *ngIf="getControlName('password')?.invalid && getControlName('password')?.touched">
-            <small>Password is required</small>
+            <small>كلمة المرور مطلوبة</small>
           </div>
         </div>
 
         <div class="form-actions">
-          <a routerLink="/auth/forgot-password" class="forgot-password">Forgot Password?</a>
+          <a routerLink="/auth/forgot-password" class="forgot-password">هل نسيت الباسورد؟</a>
         </div>
 
         <button type="submit" class="btn-primary" [disabled]="Form().invalid">
-          <span>Sign In</span>
+          <span>تسجيل الدخول</span>
           <i class="fa-solid fa-arrow-right"></i>
         </button>
 
-       
+
       </form>
     </div>
   </div>

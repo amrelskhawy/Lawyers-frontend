@@ -1,0 +1,27 @@
+.section-footer{
+  background-color: var(--primary-navy);
+  color: var(--white-color);
+  padding: 20px 0;
+}
+
+
+.Content-footer{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+
+.endDesc{
+  text-align: center;
+  margin-top: 30px;
+}
+
+
+
+@media (max-width: 767px) {
+  .Content-footer{
+    justify-content: center;
+    gap: 20px;
+  }
+}

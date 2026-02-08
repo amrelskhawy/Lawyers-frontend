@@ -10,13 +10,15 @@
   background: linear-gradient(180deg, var(--primary-navy)  0%, var(--dark-navy-deep) 100%);
   transition: 0.3s linear;
   z-index: 8888 !important;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .content-dashbord {
   position: relative;
   width: 80%;
   padding:0 20px;
-  margin-left: 20%;
+  margin-right: 20%;
   transition: 0.3s linear;
 }
 
@@ -26,7 +28,7 @@
 
 .content-dashbord.collapsed {
   width: 95%;
-  margin-left: 5%;
+  margin-right: 5%;
 }
 
 
@@ -38,7 +40,7 @@
   }
   .content-dashbord {
     width: 100%;
-    margin-left: 0;
+    margin-right: 0;
   }
 
   .menue.collapsed {
@@ -47,7 +49,7 @@
 
   .content-dashbord.collapsed {
     width: 100%;
-    margin-left: 0;
+    margin-right: 0;
   }
 
 }
@@ -57,16 +59,16 @@
     width: 30% !important;
   }
   .content-dashbord {
-    width: 70%;
-    margin-left: 30%;
+    width: 70% !important;
+    margin-right: 30% !important;
   }
 
   .menue.collapsed {
-    width: 5% !important;
+    width: 7% !important;
   }
 
   .content-dashbord.collapsed {
-    width: 95% !important;
-    margin-left: 5% !important;
+    width: 93% !important;
+    margin-right: 7% !important;
   }
 }
