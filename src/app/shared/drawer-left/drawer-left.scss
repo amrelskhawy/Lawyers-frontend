@@ -1,68 +1,222 @@
-.section-draweleft{
-  z-index: 100%;
+// Headless Drawer Overrides
+::ng-deep .p-drawer {
+  border: 0;
+  width: 320px !important;
+  max-width: 90vw; // Responsive safety
 }
 
-::ng-deep .p-drawer-header {
-  background-color: var(--accent-gold);
+.close-btn {
   color: var(--white-color);
+  font-size: 16px;
+
+  width: 50px;
+  border-radius: 50%;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--accent-gold);
+    transform: rotate(90deg);
+  }
 }
 
-::ng-deep .p-drawer-left .p-drawer-content {
-  background-color: var(--accent-gold);
+// Since we use a headless template, we style our own container directly
+.drawer-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background-color: var(--primary-navy); // Main background
   color: var(--white-color);
+
+  // The 10px gold strip/fold
+  border-left: 10px solid var(--accent-gold);
+
+  // Box shadow for depth
+  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+
+  direction: ltr; // Force LTR
+  text-align: left;
 }
 
-::ng-deep .p-drawer-content {
-  padding: 0;
-}
 
-ul {
-  padding: 0;
-  margin: 0;
-  border-bottom: 2px solid var(--primary-navy);
-  li {
+
+// *** Header ***
+.drawer-header {
+  margin-bottom: 30px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  align-items: center;
+
+  .brand {
     display: flex;
-    justify-content: space-between;
-    cursor: pointer;
-    margin: 10px;
-    transition: 0.3s linear;
-    &:hover {
-      color: var(--primary-navy);
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+
+    .brand-logo {
+      height: 120px;
+      width: 120px;
+
+    }
+
+  }
+
+
+}
+
+// *** Navigation ***
+.drawer-body {
+  flex: 1; // Pushes footer down
+
+
+  .nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 10px;
+    margin: 0;
+    border: none;
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      padding: 14px 20px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: rgba(255, 255, 255, 0.85);
+
+      i {
+        width: 24px;
+        font-size: 18px;
+        margin-left: 0;
+        margin-right: 15px; // Always right margin for LTR
+        color: var(--accent-gold);
+        transition: transform 0.3s ease;
+      }
+
+      span {
+        font-size: 16px;
+        font-weight: 500;
+      }
+
+      &:hover {
+        background-color: rgba(147, 133, 63, 0.15); // Gold tint
+        color: var(--white-color);
+        transform: translateX(5px);
+
+        i {
+          transform: scale(1.1);
+        }
+      }
+
+      // Active state simulation (would need logic to toggle real active class)
+      &:active {
+        background-color: var(--accent-gold);
+        color: var(--primary-navy);
+
+        i {
+          color: var(--primary-navy);
+        }
+      }
     }
   }
 }
 
-.icon-contact {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 12px 0;
+// *** Footer / Profile ***
+.drawer-footer {
+  padding: 10px;
+  padding-bottom: 30px;
+  direction: ltr; // Ensure footer is also LTR
+
+  .user-profile {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+
+    .user-avatar {
+      height: 40px;
+      width: 40px;
+      background-color: var(--accent-gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white-color);
+      font-size: 18px;
+    }
+
+    .user-info {
+      .user-name {
+        font-size: 15px;
+        font-weight: 600;
+        margin-bottom: 2px;
+        color: var(--white-color);
+      }
+
+      .user-role {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.6);
+      }
+    }
+  }
+
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+
+    i {
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.6);
+      cursor: pointer;
+      transition: 0.3s;
+
+      &:hover {
+        color: var(--accent-gold);
+        transform: translateY(-3px);
+      }
+    }
+  }
 }
 
-.desc-drawer {
-  text-align: center;
-  margin-top: 30px;
-}
-
+// *** Mobile Toggle Button (Outside Drawer) ***
 .header-drawer {
-  display: none;
-  padding: 5px 10px;
+  display: none; // Hidden on large screens, handled by media query
+  padding: 10px 15px;
+
   align-items: center;
   justify-content: space-between;
+  background: transparent; // Clean
 }
 
+.menue-toggel {
+  color: var(--primary-navy);
+  // If the page background is white, this is visible. 
+  // If the header bar is dark, this needs to be white.
+}
 
-.fa-bars{
-  font-size: 20px;
+.fa-bars {
+  font-size: 24px;
 }
 
 @media (max-width: 767px) {
   .header-drawer {
-   display: flex;
+    display: flex;
+  }
+
+  ::ng-deep .p-drawer-left .p-drawer-content {
+    width: 85% !important;
   }
 }
-
-
-
-
-
