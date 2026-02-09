@@ -93,6 +93,29 @@
       transition: all 0.3s ease;
       color: rgba(255, 255, 255, 0.85);
 
+      // Ensure anchor links inside nav-item look like other items
+      .drawer-link {
+        display: flex;
+        align-items: center;
+
+        text-decoration: none;
+        color: inherit; // Inherit color from nav-item
+        width: 100%;
+
+        i {
+          width: 25px; // Ensure icon alignment
+          text-align: center;
+          font-size: 1.2rem;
+          top: 2px;
+          position: relative;
+        }
+
+        span {
+          font-size: 1rem;
+          font-weight: 500;
+        }
+      }
+
       i {
         width: 24px;
         font-size: 18px;
@@ -106,6 +129,7 @@
         font-size: 16px;
         font-weight: 500;
       }
+
 
       &:hover {
         background-color: rgba(147, 133, 63, 0.15); // Gold tint

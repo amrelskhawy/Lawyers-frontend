@@ -11,13 +11,12 @@
   <div class="login-form-wrapper">
     <div class="login-card">
       <div class="brand-header">
-        <img
-          src="/assets/Img/logo.svg"
-          alt="Law Firm Logo"
-          class="app-logo"
-          width="200"
-          height="auto"
-        />
+        <div class="home-nav">
+          <a routerLink="/" class="btn-home" title="العودة للرئيسية">
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+        <img src="/assets/Img/logo.svg" alt="Law Firm Logo" class="app-logo" width="200" height="auto" />
         <h1>مرحباً بعودتك</h1>
         <p class="subtitle">الرجاء تسجيل الدخول إلى حسابك</p>
       </div>
@@ -25,14 +24,10 @@
       <form [formGroup]="Form()" (ngSubmit)="onSubmit()" class="modern-form">
         <div class="form-group">
           <label for="email">البريد الإلكتروني</label>
-          <div class="input-container" [class.error]="getControlName('email')?.invalid && getControlName('email')?.touched">
+          <div class="input-container"
+            [class.error]="getControlName('email')?.invalid && getControlName('email')?.touched">
             <span class="icon"><i class="fa-solid fa-envelope"></i></span>
-            <input
-              id="email"
-              type="email"
-              formControlName="email"
-              placeholder="Enter your email"
-            />
+            <input id="email" type="email" formControlName="email" placeholder="البريد الإلكتروني" />
           </div>
           <div class="error-msg" *ngIf="getControlName('email')?.invalid && getControlName('email')?.touched">
             <small *ngIf="getControlName('email')?.errors?.['required']">البريد الإلكتروني مطلوب</small>
@@ -42,14 +37,11 @@
 
         <div class="form-group">
           <label for="password">كلمة المرور</label>
-          <div class="input-container" [class.error]="getControlName('password')?.invalid && getControlName('password')?.touched">
+          <div class="input-container"
+            [class.error]="getControlName('password')?.invalid && getControlName('password')?.touched">
             <span class="icon"><i class="fa-solid fa-lock"></i></span>
-            <input
-              id="password"
-              [type]="showPassword() ? 'text' : 'password'"
-              formControlName="password"
-              placeholder="Enter your password"
-            />
+            <input id="password" [type]="showPassword() ? 'text' : 'password'" formControlName="password"
+              placeholder="كلمة المرور" />
             <span class="toggle-password" (click)="togglePasswordVisibility()" role="button" tabindex="0">
               <i class="fa-solid" [class.fa-eye]="!showPassword()" [class.fa-eye-slash]="showPassword()"></i>
             </span>

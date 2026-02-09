@@ -19,19 +19,25 @@
           <ul class="nav-list">
             <li (click)="onClickListActive('Home')" class="nav-item">
               <i class="fa-solid fa-house"></i>
-              <span>Home</span>
+              <span>الرئيسية</span>
             </li>
             <li (click)="onClickListActive('About')" class="nav-item">
               <i class="fa-solid fa-address-card"></i>
-              <span>About</span>
+              <span>عننا</span>
             </li>
             <li (click)="onClickListActive('HowWork')" class="nav-item">
               <i class="fa-solid fa-briefcase"></i>
-              <span>How Work</span>
+              <span>كيف نعمل</span>
             </li>
             <li (click)="onClickListActive('Services')" class="nav-item">
               <i class="fa-solid fa-scale-balanced"></i>
-              <span>Services</span>
+              <span>خدماتنا</span>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/auth/login" (click)="visible = false" class="drawer-link">
+                <i class="fa-solid fa-right-to-bracket"></i>
+                <span>تسجيل الدخول</span>
+              </a>
             </li>
           </ul>
         </div>
@@ -43,8 +49,8 @@
               <i class="fa-regular fa-user"></i>
             </div>
             <div class="user-info">
-              <p class="user-name">User Name</p>
-              <p class="user-role">Premium Member</p>
+              <p class="user-name">اسم المستخدم</p>
+              <p class="user-role">عضو مميز</p>
             </div>
           </div>
           <div class="social-links">
