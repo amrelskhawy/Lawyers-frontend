@@ -1,9 +1,9 @@
 .section-top-header {
-  background-color: var(--primary-navy);
+  background: linear-gradient(to left, var(--primary-navy), var(--accent-gold));
 }
 
-.content-top-header{
-    display: flex;
+.content-top-header {
+  display: flex;
   align-items: center;
   justify-content: space-between;
   color: var(--white-color);
@@ -12,25 +12,36 @@
 .links-top-header {
   display: flex;
   align-items: center;
+  padding: 10px 0;
+  gap: 15px;
+
   li {
     padding: 0 10px;
   }
-  li:not(:last-child) {
-    border-left: 2px solid var(--white-color);
-  }
+
 }
 
 .icon-contact {
   display: flex;
   align-items: center;
+  padding: 10px 0;
+  gap: 10px;
+  transition: scale 0.3s ease-in-out;
 
-  li{
+  li {
     padding: 0 10px;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--primary-navy);
+      transform: scale(1.1);
+
+    }
   }
 }
 
 @media (max-width: 767px) {
   .section-top-header {
-   display: none;
+    display: none;
   }
 }

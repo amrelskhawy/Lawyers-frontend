@@ -1,3 +1,5 @@
+@use '../../../../styles' as *;
+
 .section-how-it-work {
   position: relative;
   background-image: url('/assets/Img/court-justice-scales-gavel-generative-ai_74760-4832.avif');
@@ -6,6 +8,7 @@
   background-position: center;
   background-repeat: no-repeat;
   z-index: 1;
+
   &::before {
     content: '';
     position: absolute;
@@ -41,44 +44,98 @@
   color: var(--white-color);
 }
 
-.section-title {
-  display: flex !important;
-  align-items: center;
-  width: 100%;
-}
+@include section-header(var(--white-color));
 
-.line {
-  display: inline-block;
-  height: 2px;
-  width: 7%;
-  background-color: var(--white-color);
-}
-
-.fa-circle {
-  color: var(--white-color);
-  font-size: 10px;
-}
-
-h1 {
-  margin-bottom: 7px;
-}
+// h1 {
+//   margin-bottom: 7px;
+// }
 
 .card {
+  position: relative;
   display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
-  i {
-    background-color: var(--accent-gold);
-    height: 30px;
-    width: 30px;
-    line-height: 30px;
-    color: var(--white-color);
-    border-radius: 50%;
-    box-shadow: 0 0 10px black;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 25px;
+  background: rgba(20, 20, 25, 0.6); // Dark transparent background
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  margin-bottom: 20px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--accent-gold);
+    opacity: 0;
+    transition: opacity 0.3s ease;
   }
-  p {
-    color: var(--medium-gray);
+
+  &:hover {
+    transform: translateY(-5px);
+    border-color: rgba(var(--accent-gold), 0.3);
+    background: rgba(30, 30, 35, 0.8);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+
+    &::before {
+      opacity: 1;
+    }
+
+    .card-icon i {
+      background: var(--accent-gold);
+      color: #000; // Contrast for icon inside gold circle
+      box-shadow: 0 0 20px var(--accent-gold);
+      transform: scale(1.1) rotate(5deg);
+    }
+  }
+
+  .card-icon {
+    flex-shrink: 0;
+
+    i {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      font-size: 22px;
+      color: var(--accent-gold);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+  }
+
+  .card-content {
+    flex: 1;
+
+    h4 {
+      color: var(--white-color);
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    p {
+      color: #ccc; // Light gray for readability
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 8px;
+      opacity: 0.9;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
   }
 }
 
@@ -93,6 +150,7 @@ h1 {
     border-top-right-radius: 150px;
     border-bottom-left-radius: 150px;
   }
+
   &::before {
     content: '';
     position: absolute;
@@ -109,10 +167,44 @@ h1 {
 
 @media (max-width: 1200px) {
   .how-it-work {
-    display: flex;
-    justify-content: center;
+    grid-template-columns: 1fr; // Single column
+    text-align: center;
+    gap: 40px;
   }
+
   .img-work {
-    display: none;
+    display: block; // Show image!
+    margin: 0 auto;
+
+    img {
+      width: 300px;
+      height: 300px;
+    }
+
+    &::before {
+      width: 300px;
+      left: 50%;
+      transform: translateX(-50%); // Center decorative border
+    }
+  }
+
+  .how-it-work-content {
+    // Ensure content (cards) take full width or centered
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 576px) {
+  .img-work {
+    img {
+      width: 250px;
+      height: 250px;
+    }
+
+    &::before {
+      width: 250px;
+    }
   }
 }

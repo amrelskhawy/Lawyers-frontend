@@ -1,37 +1,78 @@
-<section class="section-draweleft">
-<p-drawer [(visible)]="visible">
-  <ul>
-    <li (click)="onClickListActive('Home')"><a>Home</a> <i class="fa-solid fa-house"></i></li>
-    <li (click)="onClickListActive('About')">
-      <a>About</a> <i class="fa-solid fa-address-card"></i>
-    </li>
-    <li (click)="onClickListActive('HowWork')">
-      <a>How Work</a> <i class="fa-solid fa-briefcase"></i>
-    </li>
-    <li (click)="onClickListActive('Services')">
-      <a>Services</a> <i class="fa-solid fa-scale-balanced"></i>
-    </li>
-  </ul>
-  <ul class="icon-contact">
-    <li><i class="fa-brands fa-facebook-f"></i></li>
-    <li><i class="fa-brands fa-twitter"></i></li>
-    <li><i class="fa-brands fa-instagram"></i></li>
-    <li><i class="fa-brands fa-linkedin-in"></i></li>
-  </ul>
-  <div class="desc-drawer">
-    <p>Premium Corporate Services</p>
-    <p>At a new level of legal solutions</p>
-  </div>
-</p-drawer>
+<div class="card flex justify-center">
+  <p-drawer #drawerRef [(visible)]="visible">
+    <ng-template #headless>
+      <div class="drawer-container">
+        <button class="close-btn" (click)="visible = false">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <!-- Header -->
+        <div class="drawer-header">
+          <div class="brand">
+            <img src="/assets/Img/LOGO-GOLD.svg" alt="Logo" class="brand-logo" />
+          </div>
+
+        </div>
+
+        <!-- Body -->
+        <div class="drawer-body">
+          <ul class="nav-list">
+            <li (click)="onClickListActive('Home')" class="nav-item">
+              <i class="fa-solid fa-house"></i>
+              <span>الرئيسية</span>
+            </li>
+            <li (click)="onClickListActive('About')" class="nav-item">
+              <i class="fa-solid fa-address-card"></i>
+              <span>عننا</span>
+            </li>
+            <li (click)="onClickListActive('HowWork')" class="nav-item">
+              <i class="fa-solid fa-briefcase"></i>
+              <span>كيف نعمل</span>
+            </li>
+            <li (click)="onClickListActive('Services')" class="nav-item">
+              <i class="fa-solid fa-scale-balanced"></i>
+              <span>خدماتنا</span>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/auth/login" (click)="visible = false" class="drawer-link">
+                <i class="fa-solid fa-right-to-bracket"></i>
+                <span>تسجيل الدخول</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Footer -->
+        <div class="drawer-footer">
+          <div class="user-profile">
+            <div class="user-avatar">
+              <i class="fa-regular fa-user"></i>
+            </div>
+            <div class="user-info">
+              <p class="user-name">اسم المستخدم</p>
+              <p class="user-role">عضو مميز</p>
+            </div>
+          </div>
+          <div class="social-links">
+            <i class="fa-brands fa-facebook-f"></i>
+            <i class="fa-brands fa-twitter"></i>
+            <i class="fa-brands fa-instagram"></i>
+            <i class="fa-brands fa-linkedin-in"></i>
+          </div>
+        </div>
+
+      </div>
+    </ng-template>
+  </p-drawer>
+</div>
 
 <div class="header-drawer">
   <div>
-    <img height="50" width="50"  src="/assets/Img/logo.svg" alt="Logo" class="logo-header" />
+    <img height="50" width="50" src="/assets/Img/LOGO-GOLD.svg" alt="Logo" class="logo-header" />
   </div>
 
   <div>
-    <button class="menue-toggel" (click)="visible = true" icon="pi pi-arrow-right"><i class="fa-solid fa-bars"></i></button>
-    <!-- <button class="menue-toggel" (click)="onToggelMenue()" icon="pi pi-arrow-right"><i class="fa-solid fa-bars"></i></button> -->
+    <button class="menue-toggel" (click)="visible = true" icon="pi pi-arrow-right"><i
+        class="fa-solid fa-bars"></i></button>
   </div>
 </div>
-</section>

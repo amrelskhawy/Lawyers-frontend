@@ -4,11 +4,20 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 100vh;
+  height: 80vh;
+
+  max-height: 1000px;
 
   font-size: 30px;
   color: var(--white-color);
 }
+
+@media (max-width: 750px) {
+  .hero-section {
+    font-size: 20px !important;
+  }
+}
+
 
 .overlay {
   position: relative;
@@ -17,8 +26,9 @@
   object-fit: contain;
   background-position: center;
   background-repeat: no-repeat;
-  height: 100vh;
+
   z-index: 1;
+
   &::before {
     content: '';
     position: absolute;
@@ -52,16 +62,31 @@
     font-size: 15px;
     margin-top: 20px;
   }
+
+  .title_span {
+    color: var(--accent-gold);
+  }
+
+  h2 {
+    margin-bottom: 40px;
+  }
 }
+
+
 
 .img-hero-section {
   position: relative;
+
+
   img {
     height: 350px;
     width: 350px;
     border-top-right-radius: 150px;
     border-bottom-left-radius: 150px;
   }
+
+
+
   &::before {
     content: '';
     position: absolute;
@@ -75,34 +100,83 @@
     z-index: -1;
   }
 }
+
 .imges {
   position: relative;
 }
+
 .logo {
   position: absolute !important;
   top: 35%;
   left: -12%;
   height: 120px !important;
   width: 120px !important;
-    backdrobackground: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-radius: 50% !important;
 
 
-    border-radius: 50% !important;
+  border-radius: 50% !important;
 
 }
 
 @media (max-width: 1200px) {
   .hero-section {
+    flex-direction: column-reverse; // Stack: Image bottom, Text top (or vice versa depending on design)
     justify-content: center;
+    height: auto;
+    padding: 40px 0;
+    text-align: center;
   }
-  img {
-    display: none;
+
+  .img-hero-section {
+    margin-bottom: 30px; // Space between image and text
+
+    img {
+      display: block; // Show image!
+      width: 250px;
+      height: 250px;
+      margin: 0 auto;
+    }
+
+    &::before {
+      width: 100%;
+      height: 95%;
+      top: -5px;
+      right: -5px;
+    }
+
+    .logo {
+      top: -20px !important; // Adjust logo position
+      left: 10px !important;
+      height: 80px !important;
+      width: 80px !important;
+    }
   }
 
   .title-hero-section {
     text-align: center;
+
+    h2 {
+      font-size: 2rem; // Smaller font
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1rem;
+      padding: 0 15px;
+    }
+
+    button {
+      width: 100%;
+      max-width: 280px;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-section {
+    font-size: 20px !important;
   }
 }

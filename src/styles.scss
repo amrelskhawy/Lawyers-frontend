@@ -18,20 +18,21 @@ body {
 :root {
   --black-color: black;
   --white-color: white;
-  --blue-color:blue;
-  --red-color:red;
+  --blue-color: blue;
+  --red-color: red;
   --golden-bronze: rgb(150, 122, 62);
   --deep-purple: #1a0033;
   --primary-dark: #1a1a1a;
   --secondary-color: #888;
   --tertiary-color: #666;
-  --soft-gray:#eee;
-  --Platinum:#dadadabf;
+  --soft-gray: #eee;
+  --Platinum: #dadadabf;
   --primary-navy: #14143a;
   --dark-navy-deep: #0a0a1d;
   --accent-gold: #93853f;
   --medium-gray: #a9a9a9;
 }
+
 .Group {
   position: relative;
   margin-top: 15px;
@@ -60,9 +61,12 @@ button {
   padding: 10px;
   border-radius: 5px;
   font-family: 'Cairo', sans-serif;
+
   &:hover {
     opacity: 0.7;
   }
+
+  cursor: pointer;
 }
 
 .error-message {
@@ -77,7 +81,7 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-    -webkit-transition: background-color 5000s ease-in-out 0s;
+  -webkit-transition: background-color 5000s ease-in-out 0s;
 }
 
 
@@ -90,16 +94,16 @@ input:-webkit-autofill:active {
 
 
 ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+  width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: var(--accent-gold)!important;
-    border-radius: 10px;
+  background-color: var(--accent-gold) !important;
+  border-radius: 10px;
 }
 
-.container{
+.container {
   width: 75%;
   margin: auto;
 }
@@ -112,6 +116,35 @@ input:-webkit-autofill:active {
   border-radius: 5px;
 }
 
+@mixin section-header($line-color: var(--accent-gold)) {
+  .section-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+    }
+
+    .fa-circle {
+      color: $line-color;
+      font-size: 10px;
+    }
+  }
+
+  .line {
+    display: block;
+    height: 2px;
+    width: 80px;
+    background-color: $line-color;
+    border-radius: 2px;
+  }
+}
+
 
 
 
@@ -121,8 +154,25 @@ input:-webkit-autofill:active {
   }
 }
 
+@media (max-width: 750px) {
+  .section-title h2 {
+    font-size: 20px !important;
+    text-align: center;
+  }
+}
 
+// Fix navigation scroll offset for sticky header
+app-hero-section,
+app-about,
+app-how-it-work,
+app-servies {
+  scroll-margin-top: 100px;
+  display: block; // Ensure they respect margin/padding
+}
 
+html {
+  scroll-behavior: smooth;
+}
 
 
 
@@ -139,87 +189,93 @@ input:-webkit-autofill:active {
 
 
 /***********************************Anmations**********************************/
- @keyframes customFadeInLeft {
-    0% {
-      opacity: 0;
-      transform: translateX(-50px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateX(0);
-    }
+@keyframes customFadeInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-50px);
   }
 
-  .my-enter-animation {
-    animation: customFadeInLeft 1s forwards !important;
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.my-enter-animation {
+  animation: customFadeInLeft 1s forwards !important;
+}
+
+.my-leave-animation {
+  opacity: 0 !important;
+}
+
+
+
+
+@keyframes customFadeInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(50px);
+    /* يبدأ من اليمين بـ 50 بكسل */
   }
 
-  .my-leave-animation {
-    opacity: 0 !important;
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+    /* يرجع لمكانه الطبيعي */
+  }
+}
+
+/* الكلاس اللي هتستخدميه في الـ enterClass */
+.my-enter-right {
+  animation: customFadeInRight 1s forwards !important;
+}
+
+
+
+
+
+@keyframes customFadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
   }
 
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.my-enter-top {
+  animation: customFadeInDown 1s forwards !important;
+}
+
+.my-leave-animation {
+  opacity: 0 !important;
+  transition: opacity 0.5s;
+}
 
 
 
-  @keyframes customFadeInRight {
-    0% {
-      opacity: 0;
-      transform: translateX(50px); /* يبدأ من اليمين بـ 50 بكسل */
-    }
-    100% {
-      opacity: 1;
-      transform: translateX(0); /* يرجع لمكانه الطبيعي */
-    }
+
+@keyframes customZoomIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
   }
 
-  /* الكلاس اللي هتستخدميه في الـ enterClass */
-  .my-enter-right {
-    animation: customFadeInRight 1s forwards !important;
+  100% {
+    opacity: 1;
+    transform: scale(1);
   }
+}
 
+.my-enter-zoom {
+  animation: customZoomIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards !important;
+}
 
-
-
-
-  @keyframes customFadeInDown {
-    0% {
-      opacity: 0;
-      transform: translateY(-50px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .my-enter-top {
-    animation: customFadeInDown 1s forwards !important;
-  }
-
-  .my-leave-animation {
-    opacity: 0 !important;
-    transition: opacity 0.5s;
-  }
-
-
-
-
-  @keyframes customZoomIn {
-    0% {
-      opacity: 0;
-      transform: scale(0.5);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-
-  .my-enter-zoom {
-    animation: customZoomIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards !important;
-  }
-
-  .my-leave-animation {
-    opacity: 0 !important;
-    transition: opacity 0.5s;
-  }
+.my-leave-animation {
+  opacity: 0 !important;
+  transition: opacity 0.5s;
+}

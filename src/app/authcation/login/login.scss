@@ -45,17 +45,56 @@ $error-red: #ef4444;
   background: $white;
   border-radius: 1.5rem;
   animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  
+
   // Optional: Add card shadow if not full screen on mobile
   @media (min-width: 901px) {
-      // box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    // box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   }
 }
 
 .login-card .brand-header {
   text-align: center;
   margin-bottom: 1.5rem;
+  position: relative; // Context for absolute button
 }
+
+.home-nav {
+  position: absolute;
+  top: -10px;
+  right: -10px; // LTR/RTL might need adjustment (using right for RTL since direction is likely RTL)
+}
+
+.btn-home {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 45px;
+  /* Slightly larger for easier click */
+  height: 45px;
+  border-radius: 50%;
+  background-color: #f3f4f6;
+  color: $text-light;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+
+  i {
+    font-size: 1.25rem;
+    /* Ensure icon is visible and sized */
+    line-height: 1;
+    /* Prevent line-height issues */
+  }
+
+  &:hover {
+    background-color: var(--accent-gold)/40;
+    color: #ffffff !important;
+    /* Force white icon on hover */
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+}
+
 
 .login-card .brand-header .app-logo {
   width: 120px;
@@ -106,14 +145,19 @@ $error-red: #ef4444;
     border-color: $primary-navy;
     background-color: $white;
     box-shadow: 0 0 0 4px rgba($primary-navy, 0.1);
-    
-    .icon { color: $primary-navy; }
+
+    .icon {
+      color: $primary-navy;
+    }
   }
 
   &.error {
     border-color: $error-red;
     background-color: rgba($error-red, 0.02);
-    .icon { color: $error-red; }
+
+    .icon {
+      color: $error-red;
+    }
   }
 }
 
@@ -153,11 +197,12 @@ $error-red: #ef4444;
 
 .modern-form .form-group .error-msg {
   margin-top: 0.5rem;
+
   small {
-      color: $error-red;
-      font-size: 0.8rem;
-      display: block;
-      animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+    color: $error-red;
+    font-size: 0.8rem;
+    display: block;
+    animation: shake 0.4s cubic-bezier(.36, .07, .19, .97) both;
   }
 }
 
@@ -203,7 +248,7 @@ $error-red: #ef4444;
     transform: translateY(-2px);
     box-shadow: 0 10px 20px -10px rgba($primary-navy, 0.5);
   }
-  
+
   &:disabled {
     opacity: 0.7;
     cursor: not-allowed;
@@ -226,7 +271,7 @@ $error-red: #ef4444;
   font-weight: 700;
   text-decoration: none;
   margin-left: 0.25rem;
-  
+
   &:hover {
     text-decoration: underline;
     color: $accent-gold;
@@ -235,54 +280,80 @@ $error-red: #ef4444;
 
 // Animations Keyframes
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideUp {
-  from { 
+  from {
     opacity: 0;
     transform: translateY(20px);
   }
-  to { 
+
+  to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
 @keyframes shake {
-  10%, 90% { transform: translate3d(-1px, 0, 0); }
-  20%, 80% { transform: translate3d(2px, 0, 0); }
-  30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-  40%, 60% { transform: translate3d(4px, 0, 0); }
+
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
 }
 
 // Adjust side panel visibility
 @media (max-width: 900px) {
   .login-container {
-  
-  grid-template-columns: 1fr
-}
+
+    grid-template-columns: 1fr
+  }
 
   .side-panel {
     display: none !important; // Force hide side panel on mobile/tablet
   }
-}  
+}
 
 // Mobile Responsive Tweaks
 @media (max-width: 640px) {
   .login-container .login-form-wrapper {
     padding: 1.5rem;
   }
-  
+
   .login-card {
     padding: 1.5rem;
     box-shadow: none;
   }
-  
+
   .login-card .brand-header {
     margin-bottom: 2rem;
-    h1 { font-size: 1.75rem; }
+
+    h1 {
+      font-size: 1.75rem;
+    }
   }
 }
 
@@ -292,9 +363,9 @@ $error-red: #ef4444;
   position: relative;
   background-color: $primary-navy;
   overflow: hidden;
-  display: flex;            // Center content
-  align-items: center;      // Center content
-  justify-content: center;  // Center content
+  display: flex; // Center content
+  align-items: center; // Center content
+  justify-content: center; // Center content
 }
 
 .side-panel::before {
@@ -311,7 +382,7 @@ $error-red: #ef4444;
   z-index: 0;
 }
 
-.side-panel > * {
+.side-panel>* {
   position: relative;
   z-index: 1;
 }
@@ -322,10 +393,9 @@ $error-red: #ef4444;
   justify-content: center;
 
   img {
-    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2));
     width: 400px; // Ensure explicit width matches HTML or design intent
     position: relative;
     height: auto;
   }
 }
-

@@ -1,26 +1,20 @@
 <section class="section-header">
   <div class="content-header container">
     <div>
-       <img
-        height="70"
-        width="70"
-        src="/assets/Img/logo.svg"
-        alt="Logo"
-        class="logo-header"
-      />
+      <img height="70" width="70" src="/assets/Img/LOGO-GOLD.svg" alt="Logo" class="logo-header" />
 
     </div>
+    <div class="header-links">
+      <div>
+        <ul>
+          <li (click)="onClickListActive('Home')"><a>الرئيسية</a></li>
+          <li (click)="onClickListActive('About')"><a>من نحن</a></li>
+          <li (click)="onClickListActive('HowWork')"><a>كيف يعمل</a></li>
+          <li (click)="onClickListActive('Services')"><a>الخدمات</a></li>
+        </ul>
+      </div>
 
-    <div>
-      <ul>
-        <li (click)="onClickListActive('Home')"><a>الرئيسية</a></li>
-        <li (click)="onClickListActive('About')"><a>من نحن</a></li>
-        <li (click)="onClickListActive('HowWork')"><a>كيف يعمل</a></li>
-        <li (click)="onClickListActive('Services')"><a>الخدمات</a></li>
-      </ul>
-    </div>
 
-    <div class="btn-header-div">
       <button [routerLink]="['/auth/login']" class="btn-header">دخول</button>
       <!-- <h3 style="color: var(--primary-navy);"><i class="fa-solid fa-user"></i> username</h3> -->
     </div>
