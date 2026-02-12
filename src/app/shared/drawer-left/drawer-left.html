@@ -11,7 +11,6 @@
           <div class="brand">
             <img src="/assets/Img/LOGO-GOLD.svg" alt="Logo" class="brand-logo" />
           </div>
-
         </div>
 
         <!-- Body -->
@@ -19,24 +18,24 @@
           <ul class="nav-list">
             <li (click)="onClickListActive('Home')" class="nav-item">
               <i class="fa-solid fa-house"></i>
-              <span>الرئيسية</span>
+              <span>{{ 'NAV_HOME' | translate }}</span>
             </li>
             <li (click)="onClickListActive('About')" class="nav-item">
               <i class="fa-solid fa-address-card"></i>
-              <span>عننا</span>
+              <span>{{ 'NAV_ABOUT' | translate }}</span>
             </li>
             <li (click)="onClickListActive('HowWork')" class="nav-item">
               <i class="fa-solid fa-briefcase"></i>
-              <span>كيف نعمل</span>
+              <span>{{ 'NAV_HOW_IT_WORKS' | translate }}</span>
             </li>
             <li (click)="onClickListActive('Services')" class="nav-item">
               <i class="fa-solid fa-scale-balanced"></i>
-              <span>خدماتنا</span>
+              <span>{{ 'NAV_SERVICES' | translate }}</span>
             </li>
             <li class="nav-item">
               <a routerLink="/auth/login" (click)="visible = false" class="drawer-link">
                 <i class="fa-solid fa-right-to-bracket"></i>
-                <span>تسجيل الدخول</span>
+                <span>{{ 'NAV_LOGIN' | translate }}</span>
               </a>
             </li>
           </ul>
@@ -49,8 +48,8 @@
               <i class="fa-regular fa-user"></i>
             </div>
             <div class="user-info">
-              <p class="user-name">اسم المستخدم</p>
-              <p class="user-role">عضو مميز</p>
+              <p class="user-name">{{ 'USER_NAME' | translate }}</p>
+              <p class="user-role">{{ 'USER_ROLE' | translate }}</p>
             </div>
           </div>
           <div class="social-links">
@@ -60,7 +59,6 @@
             <i class="fa-brands fa-linkedin-in"></i>
           </div>
         </div>
-
       </div>
     </ng-template>
   </p-drawer>
@@ -72,7 +70,14 @@
   </div>
 
   <div>
-    <button class="menue-toggel" (click)="visible = true" icon="pi pi-arrow-right"><i
-        class="fa-solid fa-bars"></i></button>
+    @if (!getTokenInsession()) {
+      <button class="menue-toggel" (click)="visible = true" icon="pi pi-arrow-right">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    } @else {
+      <button class="menue-toggel" (click)="onToggelMenue()" icon="pi pi-arrow-right">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    }
   </div>
 </div>

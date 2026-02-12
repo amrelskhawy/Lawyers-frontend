@@ -24,7 +24,7 @@ export class Translation implements OnInit {
       this.translate.use('en');
       localStorage.setItem('Language', 'en');
     }
-  this.updateDirection(this.currentLang);
+    this.updateDirection(this.currentLang);
   }
 
   switchLanguage(lang: string) {
@@ -32,7 +32,7 @@ export class Translation implements OnInit {
     this.currentLang = lang;
     this.translate.use(lang);
 
-     this.updateDirection(lang);
+    this.updateDirection(lang);
   }
 
   private updateDirection(lang: string) {

@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, ContentChild, Input, TemplateRef } from '@angular/core';
 
 @Component({
@@ -7,6 +8,7 @@ import { Component, ContentChild, Input, TemplateRef } from '@angular/core';
   styleUrl: './tabel.scss',
 })
 export class Tabel<T extends object> {
+  constructor(private datePipe: DatePipe) {}
   tableData: T[] = [];
    @Input() hiddenColumns: string[] = [];
 
@@ -18,6 +20,13 @@ export class Tabel<T extends object> {
   isHidden(key: unknown): boolean {
    return this.hiddenColumns.includes(String(key));
   }
+
+formatCell(key: string, value: any): string {
+  if (key === 'createdAt' || key === 'updatedAt') {
+    return this.datePipe.transform(value, 'shortDate') || '';
+  }
+  return value;
+}
 
   @ContentChild(TemplateRef) actionsTpl!: TemplateRef<any>;
 }

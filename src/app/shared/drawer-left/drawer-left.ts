@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, signal } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, signal } from '@angular/core';
 
 @Component({
   selector: 'app-drawer-left',
@@ -6,7 +6,10 @@ import { Component, EventEmitter, Output, signal } from '@angular/core';
   templateUrl: './drawer-left.html',
   styleUrl: './drawer-left.scss',
 })
-export class DrawerLeft {
+export class DrawerLeft implements OnInit {
+  ngOnInit(): void {
+this.getTokenInsession()
+  }
   visible: boolean = false;
   isOpen = signal<boolean>(true);
   @Output() EventRoute = new EventEmitter<string>();
@@ -26,4 +29,8 @@ export class DrawerLeft {
       this.toggelMenue.emit(false);
     }
   }
+
+  getTokenInsession(){
+  return sessionStorage.getItem('token');
+}
 }

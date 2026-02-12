@@ -13,7 +13,10 @@ import { Success } from './success/success';
 import { Tabel } from './tabel/tabel';
 import { Footer } from './footer/footer';
 import { Translation } from './translation/translation';
-import { TranslateModule } from '@ngx-translate/core'; 
+import { TranslateModule } from '@ngx-translate/core';
+import { DatePipe } from '@angular/common';
+import { ConfirmationDelete } from './confirmation-delete/confirmation-delete';
+
 
 @NgModule({
   declarations: [
@@ -26,7 +29,8 @@ import { TranslateModule } from '@ngx-translate/core';
     Success,
     Tabel,
     Footer,
-    Translation
+    Translation,
+    ConfirmationDelete
   ],
   imports: [
     CommonModule,
@@ -44,7 +48,13 @@ import { TranslateModule } from '@ngx-translate/core';
     Success,
     Tabel,
     Translation,
+    ConfirmationDelete,
     Footer
+  ],
+
+  providers:[
+        DatePipe
   ]
+
 })
 export class SharedModule { }

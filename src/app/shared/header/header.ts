@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, signal } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, signal } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -6,11 +6,19 @@ import { Component, EventEmitter, Output, signal } from '@angular/core';
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
-export class Header {
+export class Header implements OnInit {
   @Output()EventRoute=new EventEmitter<string>();
+
+  ngOnInit(): void {
+    this.getTokenInsession()
+  }
 
   onClickListActive(route:string){
     this.EventRoute.emit(route)
   }
+
+getTokenInsession(){
+  return sessionStorage.getItem('token');
+}
 
 }

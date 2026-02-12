@@ -1,1 +1,18 @@
-<p>holidays works!</p>
+
+<app-top-grid (visibelformadd)="visibelform.set(true)"></app-top-grid>
+
+<app-form-holdays [(visible)]="visibelform"></app-form-holdays>
+
+<app-tabel [data]="HoldaysData()" [hiddenColumns]="Holdayscolumns">
+  <ng-template let-doctors>
+    <div class="action-btn">
+      <button class="edit-btn" [routerLink]="['addClink', doctors.id]">
+        <i class="fa-solid fa-pen-to-square"></i> {{ 'edit' | translate }}
+      </button>
+
+      <button class="delete-btn">
+        <i class="fa-solid fa-trash"></i> {{ 'delete' | translate }}
+      </button>
+    </div>
+  </ng-template>
+</app-tabel>

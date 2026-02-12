@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 
 @Component({
   selector: 'app-content',
@@ -6,7 +6,10 @@ import { Component, signal } from '@angular/core';
   templateUrl: './content.html',
   styleUrl: './content.scss',
 })
-export class Content {
+export class Content implements OnInit {
+  ngOnInit(): void {
+  }
+
   toggel = signal<boolean>(false);
 
   onToggelMenue(event: boolean) {

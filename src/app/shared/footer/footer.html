@@ -1,12 +1,17 @@
 <section class="section-footer">
   <div class="container Content-footer">
+
     <div>
       <img width="200" src="/assets/Img/NAME-GOLD.svg" alt="logo" />
+      <div>
+        <button (click)="scrollToTop()">Scroll To Top</button>
+      </div>
       <p>{{ 'FOOTER_COMPANY_NAME' | translate }}</p>
       <p enterClass="my-enter-top">{{ 'FOOTER_LEGAL_SLOGAN' | translate }}</p>
       <p leaveClass="my-leave-animation">{{ 'FOOTER_CORE_VALUES' | translate }}</p>
       <p>{{ 'FOOTER_PROFESSIONAL_STANDARDS' | translate }}</p>
     </div>
+
     <ul>
       <h3>{{ 'QUICK_LINKS' | translate }}</h3>
       <li (click)="onClickListActive('Home')">
@@ -22,6 +27,7 @@
         <a>{{ 'NAV_SERVICES' | translate }}</a>
       </li>
     </ul>
+
     <ul>
       <h3>{{ 'CONTACT_INFORMATION' | translate }}</h3>
       <li><i class="fa-solid fa-phone"></i> 055 228 3030</li>

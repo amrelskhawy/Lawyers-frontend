@@ -1,0 +1,125 @@
+.wrapper-confirme {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+  background-color: var(--overlay-bg);
+  z-index: 888888888;
+  display: none;
+}
+
+.content-confirme {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 30%;
+  width: 30%;
+  transform: translate(-50%,-50%);
+  background-color: var(--white-color);
+  border-radius: 10px;
+    overflow: hidden;
+
+ transform: translate(-50%, -50%) scale(0.8);
+  opacity: 0;
+  transition: transform 0.25s ease, opacity 0.25s ease;}
+
+
+.header-confirme{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--red-color);
+  color: var(--white-color) ;
+  padding: 7px 4px;
+  i{
+  color: var(--white-color) ;
+  height: 30px;
+  width: 30px;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 50%;
+  background-color: var(--soft-pink);
+  }
+  button{
+    padding: 0;
+    margin: 0;
+  }
+}
+.content-confirmed{
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.quetion-delete{
+  background-color: var(--golden-yellow);
+  border:5px;
+  border: 1px solid var(--bright-gold);
+  margin-top: 30px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+
+.btn-confirmed{
+margin-top: 30px;
+display: flex;
+gap: 10px;
+position: absolute;
+bottom: 15px;
+width: 100%;
+button{
+  width: 20%;
+  border-radius: 4px;
+  color: var(--white-color);
+}
+.yes{
+background-color: var(--vivid-green);
+}
+
+.cansel{
+  color: var(--black-color);
+  border: 1px solid var(--soft-gray);
+  &:hover{
+    background-color: var(--black-color);
+      color: var(--white-color);
+  }
+}
+
+}
+
+.visibel{
+  display: block;
+}
+
+.wrapper-confirme.visibel {
+  display: block;
+}
+
+.wrapper-confirme.visibel .content-confirme {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+
+
+@media(max-width:767px){
+.content-confirme {
+  width: 95%;
+  font-size: 14px;
+}
+
+.btn-confirmed{
+  button{
+    width: 30%;
+  }
+}
+}
+
+
+@media(min-width:767px) and (max-width:1400px){
+.content-confirme {
+  width: 40%;
+}
+}

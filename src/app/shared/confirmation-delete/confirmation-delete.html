@@ -1,0 +1,20 @@
+<div class="wrapper-confirme"
+[ngClass]="{'visibel':visibel()}"
+>
+  <div class="content-confirme">
+    <div class="header-confirme">
+      <button (click)="onControlStatusPopupConfirmation('notdelete')"><i class="fa-solid fa-xmark"></i></button>
+      <p>Deleted Confirmed <i class="fa-solid fa-triangle-exclamation"></i></p>
+    </div>
+    <div class="content-confirmed">
+      <p class="quetion-delete">
+        <i class="fa-solid fa-triangle-exclamation"></i> Are you sure you want to delete the
+        account?
+      </p>
+      <div class="btn-confirmed">
+        <button class="yes" (click)="onControlStatusPopupConfirmation('delete')">Yes</button>
+        <button class="cansel" (click)="onControlStatusPopupConfirmation('notdelete')">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

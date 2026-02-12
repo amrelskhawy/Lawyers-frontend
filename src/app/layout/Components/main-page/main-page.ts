@@ -16,4 +16,5 @@ export class MainPage {
       el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
+
 }

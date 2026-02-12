@@ -1,5 +1,6 @@
 <div class="container">
   <section class="about-section">
+
     <div class="img-about-container">
       <div
         pAnimateOnScroll
@@ -45,13 +46,15 @@
         <i class="fa-solid fa-circle"></i>
         <span class="line"></span>
         <h2 pAnimateOnScroll enterClass="my-enter-zoom" leaveClass="my-leave-animation">
-         {{ 'WORK_PROCESS' | translate }}
+          {{ 'WORK_PROCESS' | translate }}
         </h2>
         <span class="line"></span>
         <i class="fa-solid fa-circle"></i>
       </div>
 
-      <h2 pAnimateOnScroll enterClass="my-enter-top" leaveClass="my-leave-animation">{{ 'ABOUT_COMPANY' | translate }}</h2>
+      <h2 pAnimateOnScroll enterClass="my-enter-top" leaveClass="my-leave-animation">
+        {{ 'ABOUT_COMPANY' | translate }}
+      </h2>
 
       <p
         pAnimateOnScroll
@@ -59,7 +62,7 @@
         leaveClass="my-leave-animation"
         class="animation-duration-1000"
       >
-       {{ 'COMPANY_DESCRIPTION' | translate }}
+        {{ 'COMPANY_DESCRIPTION' | translate }}
       </p>
       <ul>
         <li><i class="fa-solid fa-check"></i>{{ 'FEATURE_EXPERIENCED_TEAM' | translate }}</li>
@@ -73,8 +76,9 @@
         leaveClass="my-leave-animation"
         class="btn-about-section"
       >
-      {{ 'READ_MORE' | translate }}
+        {{ 'READ_MORE' | translate }}
       </button>
     </div>
+
   </section>
 </div>
