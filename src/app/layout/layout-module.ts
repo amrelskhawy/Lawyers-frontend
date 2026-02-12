@@ -12,6 +12,7 @@ import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 import { AnimateOnScrollModule } from 'primeng/animateonscroll';
 import { HowItWork } from './Components/how-it-work/how-it-work';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { HowItWork } from './Components/how-it-work/how-it-work';
     HowItWork
   ],
   imports: [
+    TranslateModule,
     CommonModule,
     LayoutRoutingModule,
     SharedModule,

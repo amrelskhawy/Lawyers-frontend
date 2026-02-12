@@ -1,0 +1,19 @@
+.lang{
+  display: flex !important;
+  justify-content: space-between;
+   gap: 5px;
+  color: var(--primary-navy) !important;
+  align-items: center;
+  font-weight: bolder;
+  border: 2px solid var(--primary-navy);
+  padding: 5px;
+  border-radius: 5px;
+  width: 70px;
+  height: 40px;
+  transition: 0.3s linear;
+  &:hover{
+    background-color: var(--primary-navy) !important;
+    color: var(--white-color) !important;
+     opacity: 12;
+  }
+}
