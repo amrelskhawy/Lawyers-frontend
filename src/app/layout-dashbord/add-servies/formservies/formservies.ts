@@ -42,11 +42,14 @@ export class Formservies {
   onClose() {
     this.visible = false;
     this.Form().reset();
+        this.objData.set(null)
     this.visibleChange.emit(false);
   }
 
   closeDialog() {
     this.visible = false;
+    this.objData.set(null)
+    this.Form().reset()
   }
 
   createForm() {

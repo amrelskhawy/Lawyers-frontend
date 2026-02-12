@@ -44,7 +44,7 @@ export class AddServies implements OnInit {
     this.visibelConfirme.set(false);
     if (event == 'delete') {
       this.Data.delete(`services/${this.objdata().id}`).subscribe((res) => {
-        this.GetAllData()
+        this.GetAllData();
       });
     }
   }
