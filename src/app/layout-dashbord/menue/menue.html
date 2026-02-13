@@ -15,6 +15,7 @@
   <ul [ngClass]="{ collpasedMenue: statusMenue() && !widthScreen() }">
     @for (item of ListMenue(); track $index) {
       <li
+        (click)="onCloselMenue()"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }"
         [routerLink]="item.route"
@@ -35,11 +36,12 @@
     <span *ngIf="widthScreen() || !statusMenue()">{{ 'logout' | translate }}</span>
   </button>
 
-  @if(widthScreen() || !statusMenue()){
+  <button (click)="visibelform.set(true)" class="work_day_btn">Work Day</button>
+  <app-form-work-days [(visible)]="visibelform"></app-form-work-days>
+  @if (widthScreen() || !statusMenue()) {
     <div class="card">
-       <img width="100" src="/assets/Img/NAME-GOLD.svg" alt="logo" />
-      <p>{{"features_company"|translate}}</p>
+      <img width="100" src="/assets/Img/NAME-GOLD.svg" alt="logo" />
+      <p>{{ 'features_company' | translate }}</p>
     </div>
   }
-
 </div>

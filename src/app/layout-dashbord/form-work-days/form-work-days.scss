@@ -1,0 +1,91 @@
+@use '../glopalstyles.scss';
+
+.wrapper-form-work-day {
+  padding: 20px;
+}
+.header-works {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid var(--medium-gray);
+  padding-bottom: 5px;
+  i {
+    border: 2px solid var(--accent-gold);
+    height: 30px;
+    width: 30px;
+    line-height: 30px;
+    border-radius: 5px;
+  }
+}
+
+  img {
+    text-align: center;
+    margin:10px auto;
+    display: block;
+  }
+
+.work-day {
+  margin-top: 20px;
+  .card {
+    display: grid;
+    grid-template-columns: 1fr 3.5fr;
+    align-items: center;
+    margin-top: 10px;
+    align-items: center;
+    input {
+      border: none;
+      text-align: center;
+      width: 100%;
+    }
+
+    .checked-inp,
+    .time-work {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .time-work {
+      gap: 15px;
+    }
+
+    .from,
+    .to {
+      width: 100%;
+      background-color: var(--muted-gold);
+      border-radius: 4px;
+      padding: 0 5px;
+    }
+  }
+}
+
+
+.footer-workday{
+  margin: 10px 0;
+p {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: normal;
+    max-width: 100%;
+  }
+}
+
+
+::ng-deep .p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-slider {
+  background: var(--black-color) !important;
+}
+
+
+
+
+
+
+@media (max-width: 767px) {
+  .work-day {
+    .card {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+    }
+  }
+}

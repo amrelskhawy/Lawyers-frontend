@@ -52,6 +52,8 @@
   "delete": "delete",
   "searchByName": "search By Name",
   "holidays_Day": "holidays Day",
-    "features_company":"A company specialized in solving legal problems"
+    "features_company":"A company specialized in solving legal problems",
+    "OFFICE_POLICY_TITLE": "Official Firm Policy & Working Hours",
+  "OFFICE_POLICY_DESC": "These hours represent the approved schedule for receiving clients, taking into account the firm's internal holidays to ensure organized reviews and precise judicial follow-up."
 
 }

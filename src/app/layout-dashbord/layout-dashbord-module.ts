@@ -15,12 +15,14 @@ import { ButtonModule } from 'primeng/button';
 import { FormHoldays } from './holidays/form-holdays/form-holdays';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TooltipModule } from 'primeng/tooltip';
 import { TopGrid } from './top-grid/top-grid';
+import { FormWorkDays } from './form-work-days/form-work-days';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
 
 @NgModule({
-  declarations: [Menue, Content, Users, WorkDays, Holidays, AddServies, Formservies, FormHoldays, TopGrid],
+  declarations: [Menue, Content, Users, WorkDays, Holidays, AddServies, Formservies, FormHoldays, TopGrid, FormWorkDays],
   imports: [
     CommonModule,
     LayoutDashbordRoutingModule,
@@ -31,7 +33,10 @@ import { TopGrid } from './top-grid/top-grid';
     FloatLabelModule,
     DatePickerModule,
     ReactiveFormsModule,
-    TooltipModule
+    TooltipModule,
+    ToggleSwitchModule,
+    FormsModule
+
   ],
 })
 export class LayoutDashbordModule {}

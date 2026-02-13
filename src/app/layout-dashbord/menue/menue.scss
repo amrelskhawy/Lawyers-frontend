@@ -99,12 +99,28 @@ ul {
     width: 87%;
     margin: auto;
     border-radius: 20px;
-    background: linear-gradient(135deg, var(--Pale-Gold) 0%, var(--white-color) 50%, var(--Pale-Gold) 100%);
+    background: linear-gradient(
+      135deg,
+      var(--Pale-Gold) 0%,
+      var(--white-color) 50%,
+      var(--Pale-Gold) 100%
+    );
     text-align: center;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    p{
+    p {
       text-wrap: wrap;
     }
+  }
+
+
+  .work_day_btn{
+     background-color: var(--bg-cream-light);
+  color: var(--accent-gold);
+  border: 1px solid var(--accent-gold);
+  border-radius: 40px;
+    width: 87%;
+margin: auto;
+
   }
 }
 .fa-xmark {
