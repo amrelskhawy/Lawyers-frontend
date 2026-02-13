@@ -6,7 +6,7 @@
 
 <app-confirmation-delete (handelstatusConfirmation)="onHandelStatusConfirmation($event)" [visibelConfirme]="visibelConfirme()"></app-confirmation-delete>
 
-<app-tabel [data]="data()" [hiddenColumns]="['id','description_ar','description_en']">
+<app-tabel [data]="data()" [bodytabel]="bodytabel()">
   <ng-template let-item>
     <div class="action-btn">
       <button (click)="onEditData(item)" class="edit-btn">

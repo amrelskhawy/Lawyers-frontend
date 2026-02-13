@@ -1,6 +1,6 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { Data } from '../../core/Servies/data';
-
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-add-servies',
   standalone: false,
@@ -10,14 +10,20 @@ import { Data } from '../../core/Servies/data';
 export class AddServies implements OnInit {
   ngOnInit(): void {
     this.GetAllData();
+    this.getDataTabel();
   }
 
-  constructor(private Data: Data) {}
+  constructor(
+    private Data: Data,
+    private translate: TranslateService,
+  ) {}
 
   data = signal<any[]>([]);
   objdata = signal<any>({});
   visibelform = signal<boolean>(false);
   visibelConfirme = signal<boolean>(false);
+  bodytabel = signal<any>({});
+
   GetAllData() {
     this.Data.get('services').subscribe((res: any) => {
       this.data.set(res.data);
@@ -47,5 +53,18 @@ export class AddServies implements OnInit {
         this.GetAllData();
       });
     }
+  }
+
+  getDataTabel() {
+    let apiData = [
+      { key: this.translate.instant('name_ar'), value: 'name_ar' },
+      { key: this.translate.instant('name_en'), value: 'name_en' },
+      // { key: 'description Ar', value: 'description_ar' },
+      // { key: 'description En', value: 'description_en' },
+      { key: 'created_At', value: 'createdAt' },
+      { key: 'updated_At', value: 'updatedAt' },
+      { key: 'price', value: 'price' },
+    ];
+    this.bodytabel.set(apiData);
   }
 }

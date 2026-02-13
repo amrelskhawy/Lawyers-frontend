@@ -8,35 +8,34 @@
   <!-- HEADER -->
   <ng-template pTemplate="header">
     <tr>
-      <ng-container *ngFor="let item of (tableData.length ? tableData[0] : {}) | keyvalue">
-        <th *ngIf="!isHidden(item.key)">
-          {{ item.key }}
+      <ng-container *ngFor="let col of bodytabel">
+        <th>
+          {{ col.key | translate }}
         </th>
       </ng-container>
 
       <!-- Procedures column -->
-      <th *ngIf="actionsTpl" style="text-align: center">Procedures</th>
+      <th *ngIf="actionsTpl" style="text-align: center">{{"Procedures"|translate}}</th>
     </tr>
   </ng-template>
 
   <!-- BODY -->
 
- <ng-template pTemplate="body" let-row>
-  <tr>
-    <ng-container *ngFor="let item of row | keyvalue">
-      <td *ngIf="!isHidden(item.key)">
-        {{ formatCell($any(item.key), item.value) }}
+<ng-template pTemplate="body" let-row>
+    <tr>
+      <ng-container *ngFor="let col of bodytabel">
+        <td>
+          {{ formatCell(col.value, row[col.value]) }}
+        </td>
+      </ng-container>
+
+      <td *ngIf="actionsTpl">
+        <ng-container
+          *ngTemplateOutlet="actionsTpl; context: { $implicit: row }"
+        ></ng-container>
       </td>
-    </ng-container>
-
-    <td *ngIf="actionsTpl">
-      <ng-container *ngTemplateOutlet="actionsTpl; context: { $implicit: row }"></ng-container>
-    </td>
-  </tr>
-</ng-template>
-
-
-
+    </tr>
+    </ng-template>
 </p-table>
 
 <ng-content></ng-content>

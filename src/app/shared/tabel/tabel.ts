@@ -10,16 +10,13 @@ import { Component, ContentChild, Input, TemplateRef } from '@angular/core';
 export class Tabel<T extends object> {
   constructor(private datePipe: DatePipe) {}
   tableData: T[] = [];
-   @Input() hiddenColumns: string[] = [];
+   @Input() bodytabel:any [] = [];
 
   @Input()
   set data(value: T[]) {
     this.tableData = value ?? [];
   }
 
-  isHidden(key: unknown): boolean {
-   return this.hiddenColumns.includes(String(key));
-  }
 
 formatCell(key: string, value: any): string {
   if (key === 'createdAt' || key === 'updatedAt') {

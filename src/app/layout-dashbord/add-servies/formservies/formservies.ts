@@ -42,14 +42,14 @@ export class Formservies {
   onClose() {
     this.visible = false;
     this.Form().reset();
-        this.objData.set(null)
+    this.objData.set(null);
     this.visibleChange.emit(false);
   }
 
   closeDialog() {
     this.visible = false;
-    this.objData.set(null)
-    this.Form().reset()
+    this.objData.set(null);
+    this.Form().reset();
   }
 
   createForm() {
@@ -69,7 +69,7 @@ export class Formservies {
       this.Form().markAllAsTouched();
       return;
     }
-    if (!this.objData().id) {
+    if (!this.objData()?.id) {
       this.Data.post('services', this.Form().value).subscribe((res) => {
         this.HandelResponseSuccess();
       });
