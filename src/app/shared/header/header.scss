@@ -4,9 +4,9 @@
   padding: 10px 0;
   padding-bottom: 5px;
   position: sticky;
+    background-color: var(--white-color);
   top: 0;
   z-index: 100;
-  background-color: var(--white-color);
 }
 
 .content-header {
@@ -15,9 +15,13 @@
   align-items: center;
 }
 
+
+
+
 ul {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 50px;
 
   li {
@@ -63,6 +67,14 @@ ul {
   color: var(--white-color);
   font-weight: bold;
   margin-inline-start: 20px;
+}
+
+
+
+.btn-header-div{
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 @media (max-width: 767px) {

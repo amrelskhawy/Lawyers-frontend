@@ -85,7 +85,7 @@ export class Data {
    * @param body
    */
   patch<T>(endpoint: string, body: any): Observable<T> {
-    return this.http.patch<T>(`${this.baseUrl}/${endpoint}`, body);
+    return this.http.patch<T>(`${this.baseUrl}${endpoint}`, body);
   }
   // ============================================== Patch Request ============================================== //
 }

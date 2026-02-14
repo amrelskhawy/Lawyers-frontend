@@ -35,8 +35,6 @@
 
 .how-it-work {
   position: relative;
-  // display: flex;
-  // justify-content: space-around;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   padding: 10px 0;
@@ -167,14 +165,14 @@
 
 @media (max-width: 1200px) {
   .how-it-work {
-    grid-template-columns: 1fr; // Single column
+    grid-template-columns: 1fr;
     text-align: center;
     gap: 40px;
   }
 
   .img-work {
-    display: block; // Show image!
-    margin: 0 auto;
+    display: block;
+    margin: 0 auto !important;
 
     img {
       width: 300px;
@@ -182,14 +180,14 @@
     }
 
     &::before {
-      width: 300px;
-      left: 50%;
-      transform: translateX(-50%); // Center decorative border
+      // width: 300px;
+      // left: 50%;
+      // transform: translateX(-50%);
+      display: none;
     }
   }
 
   .how-it-work-content {
-    // Ensure content (cards) take full width or centered
     width: 100%;
     max-width: 600px;
     margin: 0 auto;

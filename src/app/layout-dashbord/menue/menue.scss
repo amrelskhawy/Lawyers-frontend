@@ -1,11 +1,11 @@
 .content-menue {
   position: relative;
-  color: var(--white-color);
+  color: var(--tertiary-color);
+
   .header-menue {
     text-align: center;
     margin: auto;
     font-size: 20px;
-    margin-top: 40px;
     .fa-user {
       height: 60px;
       width: 60px;
@@ -19,6 +19,9 @@
     }
   }
 }
+button {
+  cursor: pointer;
+}
 
 .fa-bars,
 .fa-xmark {
@@ -26,57 +29,121 @@
   right: 15px;
   top: 10px;
   font-size: 20px;
-  padding: 10px;
-  color: var(--white-color);
+  height: 40px;
+  width: 40px;
+  cursor: pointer;
+  line-height: 40px;
+  border-radius: 50%;
+  background-color: var(--bg-cream-light);
+  color: var(--accent-gold);
+  border: 1px solid var(--accent-gold);
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 ul {
-  margin-top: 20px;
+  padding: 10px 25px;
   li {
     padding: 10px;
     display: flex;
     gap: 10px;
+    margin-top: 10px;
     cursor: pointer;
-    border-bottom: 1px solid var(--primary-navy);
+    font-weight: bold;
     transition: all 0.3s ease;
+
+    i {
+      background-color: var(--bg-cream-light);
+      color: var(--accent-gold);
+      border: 1px solid var(--accent-gold);
+      height: 30px;
+      width: 30px;
+      line-height: 30px;
+      border-radius: 10px;
+    }
     &:hover {
-      background-color: var(--white-color);
-      color: var(--primary-navy);
+      background-color: var(--bg-cream-light);
+      color: var(--accent-gold);
+      border-radius: 35px;
     }
   }
 }
 
-.btn-logout {
+.menue-absolute {
   position: absolute;
   bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  color: var(--white-color);
-  border: 2px solid var(--white-color);
-  font-weight: bold;
-  background-color: var(--accent-gold);
-}
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 
+  .btn-logout {
+    width: 87%;
+    margin: auto;
+    display: block;
+    border: 2px solid var(--white-color);
+    font-weight: bold;
+    background-color: var(--primary-navy);
+    color: var(--white-color);
+    border-radius: 35px;
+    transition: 0.3s ease;
+    &:hover {
+      background-color: var(--accent-gold);
+      color: var(--white-color);
+      opacity: 0.9;
+    }
+  }
+
+  .card {
+    padding: 20px;
+    width: 87%;
+    margin: auto;
+    border-radius: 20px;
+    background: linear-gradient(
+      135deg,
+      var(--Pale-Gold) 0%,
+      var(--white-color) 50%,
+      var(--Pale-Gold) 100%
+    );
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    p {
+      text-wrap: wrap;
+    }
+  }
+
+
+  .work_day_btn{
+     background-color: var(--bg-cream-light);
+  color: var(--accent-gold);
+  border: 1px solid var(--accent-gold);
+  border-radius: 40px;
+    width: 87%;
+margin: auto;
+
+  }
+}
 .fa-xmark {
   font-size: 30px;
   display: none;
 }
 
-.active {
-  background-color: var(--white-color);
-  color: var(--primary-navy);
+li.active {
+  background-color: var(--bg-cream-light);
+  color: var(--accent-gold);
+  border: 1px solid var(--accent-gold);
+  border-radius: 40px;
 }
 
-.fa-user.collpasedMenue {
-  height: 40px !important;
-  width: 40px !important;
-  font-size: 15px;
+img.collpasedMenue {
+  margin-top: 30px;
+  width: 50px;
 }
 ul.collpasedMenue {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding: 5px;
 }
 
 li.collpasedMenue {

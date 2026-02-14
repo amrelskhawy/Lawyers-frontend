@@ -2,21 +2,36 @@
   <div class="content-header container">
     <div>
       <img height="70" width="70" src="/assets/Img/LOGO-GOLD.svg" alt="Logo" class="logo-header" />
-
     </div>
+
     <div class="header-links">
-      <div>
-        <ul>
-          <li (click)="onClickListActive('Home')"><a>الرئيسية</a></li>
-          <li (click)="onClickListActive('About')"><a>من نحن</a></li>
-          <li (click)="onClickListActive('HowWork')"><a>كيف يعمل</a></li>
-          <li (click)="onClickListActive('Services')"><a>الخدمات</a></li>
-        </ul>
-      </div>
+      @if (!getTokenInsession()) {
+        <div>
+          <ul>
+            <li (click)="onClickListActive('Home')">
+              <a>{{ 'NAV_HOME' | translate }}</a>
+            </li>
+            <li (click)="onClickListActive('About')">
+              <a>{{ 'NAV_ABOUT' | translate }}</a>
+            </li>
+            <li (click)="onClickListActive('HowWork')">
+              <a>{{ 'NAV_HOW_IT_WORKS' | translate }}</a>
+            </li>
+            <li (click)="onClickListActive('Services')">
+              <a>{{ 'NAV_SERVICES' | translate }}</a>
+            </li>
+          </ul>
+        </div>
+      } 
+    </div>
 
-
-      <button [routerLink]="['/auth/login']" class="btn-header">دخول</button>
-      <!-- <h3 style="color: var(--primary-navy);"><i class="fa-solid fa-user"></i> username</h3> -->
+    <div class="btn-header-div">
+      @if (!getTokenInsession()) {
+        <button [routerLink]="['/auth/login']" class="btn-header">
+          {{ 'AUTH_LOGIN' | translate }}
+        </button>
+      }
+      <app-translation></app-translation>
     </div>
   </div>
 </section>

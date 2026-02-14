@@ -1,0 +1,79 @@
+// @use '../glopalstyles.scss';
+
+// .btn-add {
+//   background-color: var(--accent-gold);
+//   color: var(--white-color);
+//   margin-bottom: 10px;
+//   border-radius: 30px;
+//   transition: 0.3s linear;
+//   &:hover {
+//     transform: scale(1.1);
+//     box-shadow: 0 20px 40px rgba(var(--accent-gold-rgb), 0.2);
+//   }
+//   i {
+//     display: inline-block;
+//     transition: 0.5s ease-in-out;
+//   }
+
+//   &:hover i {
+//     transform: rotate(360deg);
+//   }
+// }
+
+// .header-grid {
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+//   background-color: var(--white-color);
+//   padding: 10px 20px;
+//   margin-bottom: 10px;
+//   border-radius: 40px;
+//   button {
+//     margin: 0;
+//     width: 13%;
+//   }
+// }
+
+// .account-admin {
+//   display: flex;
+//   align-items: center;
+//   text-align: right;
+//   gap: 5px;
+//   border: 2px solid var(--golden-bronze);
+//   padding: 0 12px;
+//   border-radius: 40px;
+
+// h4{
+//   text-align: center;
+// }
+
+//   img{
+//     border-radius: 50%;
+//   }
+
+//   i{
+//     color: var(--accent-gold);
+//     font-size:20px;
+//   }
+// }
+
+// .filed-search {
+//   position: relative;
+//   border: 1px solid var(--secondary-color);
+//   border-radius: 20px;
+//   background-color: var(--soft-gray);
+
+//   i {
+//     position: absolute;
+//     inset-inline-end: 5px;
+//     top: 35%;
+//     color: var(--secondary-color);
+//   }
+//   input {
+//     width: 100%;
+//     border: none;
+//   }
+//   ::placeholder {
+//     color: var(--secondary-color);
+//   }
+// }

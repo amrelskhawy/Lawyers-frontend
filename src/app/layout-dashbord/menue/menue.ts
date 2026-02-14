@@ -1,4 +1,12 @@
-import { Component, EventEmitter, HostListener, Input, Output, signal } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnInit,
+  Output,
+  signal,
+} from '@angular/core';
 
 @Component({
   selector: 'app-menue',
@@ -6,12 +14,23 @@ import { Component, EventEmitter, HostListener, Input, Output, signal } from '@a
   templateUrl: './menue.html',
   styleUrl: './menue.scss',
 })
-export class Menue {
+export class Menue implements OnInit {
+  ngOnInit(): void {
+    this.GetDataMenue();
+  }
+
   @Output() toggelMenue = new EventEmitter<boolean>();
   isOpen = signal<boolean>(true);
   statusMenue = signal<boolean>(true);
   widthScreen = signal<boolean>(false);
-
+  ListMenue = signal<
+    {
+      name: string;
+      icon: string;
+      route: string;
+    }[]
+  >([]);
+  visibelform = signal<boolean>(false);
 
   @Input()
   set toggel(event: boolean) {
@@ -28,11 +47,34 @@ export class Menue {
     this.isOpen.set(!this.isOpen());
   }
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    const isMobile = window.innerWidth < 768;
+    this.widthScreen.set(isMobile);
+  }
 
-   @HostListener('window:resize', ['$event'])
-onResize(event: any) {
-  // نعتبر الشاشة صغيرة (موبايل) فقط إذا كانت أقل من 768 بكسل
-  const isMobile = window.innerWidth < 768;
-  this.widthScreen.set(isMobile);
-}
+  GetDataMenue() {
+    this.ListMenue.set([
+      {
+        name: 'users',
+        icon: 'fa-solid fa-user',
+        route: '/dashboard/content',
+      },
+      {
+        name: 'services',
+        icon: 'fa-solid fa-gear',
+        route: '/dashboard/content/addservies',
+      },
+      {
+        name: 'work_days',
+        icon: 'fa-solid fa-calendar',
+        route: '',
+      },
+      {
+        name: 'holidays_Day',
+        icon: 'fa-solid fa-holly-berry',
+        route: '/dashboard/content/Holidays',
+      },
+    ]);
+  }
 }

@@ -2,30 +2,46 @@
 <button (click)="onCloselMenue()"><i class="fa-solid fa-xmark"></i></button>
 <section class="content-menue">
   <div class="header-menue">
-    <i [ngClass]="{'collpasedMenue':statusMenue()}" class="fa-solid fa-user"></i>
-    @if (!statusMenue() || widthScreen()) {
-      <h3>أسم المستخدم</h3>
-      <p>admin@gmail.com</p>
-    }
+    <img
+      [ngClass]="{ collpasedMenue: statusMenue() }"
+      height="70"
+      width="70"
+      src="/assets/Img/LOGO-GOLD.svg"
+      alt="Logo"
+      class="logo-header"
+    />
   </div>
-  <ul [ngClass]="{'collpasedMenue':statusMenue() && !widthScreen()}">
 
-    <li class="active" [ngClass]="{'collpasedMenue':statusMenue()&& !widthScreen()}">
-      <span><i class="fa-solid fa-user"></i></span> <span *ngIf="widthScreen() || !statusMenue()">المستخدمين</span>
-    </li>
-
-    <li [ngClass]="{'collpasedMenue':statusMenue()&& !widthScreen()}">
-      <span><i class="fa-solid fa-calendar-days"></i></span> <span *ngIf="widthScreen() || !statusMenue()">أيام العمل</span>
-    </li>
-
-    <li [ngClass]="{'collpasedMenue':statusMenue()&& !widthScreen()}">
-      <span><i class="fa-solid fa-holly-berry"></i></span> <span *ngIf="widthScreen() || !statusMenue()">الأجازات</span>
-    </li>
-
-    <li [ngClass]="{'collpasedMenue':statusMenue()&& !widthScreen()}">
-      <span><i class="fa-solid fa-gear"></i></span> <span *ngIf="widthScreen() || !statusMenue()">الخدمات</span>
-    </li>
-
+  <ul [ngClass]="{ collpasedMenue: statusMenue() && !widthScreen() }">
+    @for (item of ListMenue(); track $index) {
+      <li
+        (click)="onCloselMenue()"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        [routerLink]="item.route"
+        [ngClass]="{ collpasedMenue: statusMenue() && !widthScreen() }"
+      >
+        <span><i [class]="item.icon"></i></span>
+        @if (widthScreen() || !statusMenue()) {
+          <span>{{ item.name | translate }}</span>
+        }
+      </li>
+    }
   </ul>
 </section>
-<button class="btn-logout"> <i class="fa-solid fa-arrow-right-from-bracket"></i>  <span *ngIf="!statusMenue()"> تسجيل الخروج </span></button>
+
+<div class="menue-absolute">
+  <button class="btn-logout">
+    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+    <span *ngIf="widthScreen() || !statusMenue()">{{ 'logout' | translate }}</span>
+  </button>
+
+  <button (click)="visibelform.set(true)" class="work_day_btn">Work Day</button>
+  <app-form-work-days [(visible)]="visibelform"></app-form-work-days>
+  @if (widthScreen() || !statusMenue()) {
+    <div class="card">
+      <img width="100" src="/assets/Img/NAME-GOLD.svg" alt="logo" />
+      <p>{{ 'features_company' | translate }}</p>
+    </div>
+  }
+</div>

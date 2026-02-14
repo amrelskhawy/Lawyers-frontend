@@ -1,26 +1,33 @@
 .content {
   display: flex;
-  color: var(--white-color);
 }
 
 .menue {
   position: fixed;
   width: 20%;
-  height: 100%;
-  background: linear-gradient(180deg, var(--primary-navy)  0%, var(--dark-navy-deep) 100%);
+  height: 100vh;
   transition: 0.3s linear;
   z-index: 8888 !important;
   overflow: hidden;
   white-space: nowrap;
+  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.05), -4px 0 15px rgba(0, 0, 0, 0.05);
+      background-color: var(--white-color);
+  border-inline-end: 2px solid var(--golden-bronze);
+  inset-inline-start: 0;
 }
 
 .content-dashbord {
   position: relative;
   width: 80%;
+  height: 100%;
   padding:0 20px;
-  margin-right: 20%;
   transition: 0.3s linear;
+  color: var(--black-color);
+  background-color: var(--Platinum);
+  margin-inline-start: 20%;
 }
+
+
 
 .menue.collapsed {
   width: 5%;
@@ -28,47 +35,50 @@
 
 .content-dashbord.collapsed {
   width: 95%;
-  margin-right: 5%;
+  margin-inline-start: 5%;
 }
+
+
+
+
 
 
 
 
 @media (max-width: 767px) {
   .menue {
-    width: 0 !important;
+    width: 0;
   }
   .content-dashbord {
     width: 100%;
-    margin-right: 0;
+    margin-inline-start: 0;
   }
 
   .menue.collapsed {
-    width: 80% !important;
+    width: 80%;
   }
 
   .content-dashbord.collapsed {
     width: 100%;
-    margin-right: 0;
+    margin-inline-start: 0;
   }
-
 }
 
 @media (min-width: 767px) and (max-width: 1200px) {
   .menue {
-    width: 30% !important;
+    width: 30%;
   }
   .content-dashbord {
-    width: 70% !important;
-    margin-right: 30% !important;
+    width: 70%;
+    margin-inline-start: 30%;
   }
 
   .menue.collapsed {
-    width: 7% !important;
+    width: 7%;
   }
 
   .content-dashbord.collapsed {
-    width: 93% !important;
-    margin-right: 7% !important;
+    width: 93%;
+    margin-inline-start: 7%;
   }
 }

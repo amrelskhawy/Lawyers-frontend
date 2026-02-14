@@ -1,0 +1,94 @@
+.btn-add {
+  width: 200px !important;
+  background-color: var(--accent-gold);
+  color: var(--white-color);
+  margin-bottom: 10px;
+  border-radius: 30px;
+  transition: 0.3s linear;
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 20px 40px rgba(var(--accent-gold-rgb), 0.2);
+  }
+  i {
+    display: inline-block;
+    transition: 0.5s ease-in-out;
+  }
+
+  &:hover i {
+    transform: rotate(360deg);
+  }
+}
+
+.header-grid {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  background-color: var(--white-color);
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 20px;
+  button {
+    margin: 0;
+    width: 13%;
+  }
+}
+
+.account-admin {
+  display: flex;
+  align-items: center;
+    border: 2px solid var(--secondary-color);
+    padding: 0 20px;
+    padding-top: 5px;
+    border-radius: 35px;
+  gap: 5px;
+  img {
+    border-radius: 50%;
+  }
+  h4 {
+    text-align: center;
+  }
+  i {
+    background-color: var(--soft-gray);
+    height: 30px;
+    width: 30px;
+    line-height: 30px;
+    border-radius: 50%;
+    color: var(--accent-gold);
+  }
+}
+
+.filed-search {
+  position: relative;
+  border: 1px solid var(--secondary-color);
+  border-radius: 20px;
+  background-color: var(--soft-gray);
+
+  i {
+    position: absolute;
+    inset-inline-end: 4px;
+    top: 4px;
+    background-color: var(--accent-gold);
+    color: var(--white-color);
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    line-height: 30px;
+  }
+  input {
+    width: 100%;
+    border: none;
+  }
+  ::placeholder {
+    color: var(--secondary-color);
+  }
+}
+
+
+
+@media(max-width:1200px){
+  .header-grid {
+    justify-content: center;
+    gap: 10px;
+  }
+}

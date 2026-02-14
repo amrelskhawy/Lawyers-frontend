@@ -1,0 +1,63 @@
+<p-dialog
+  maskStyleClass="backdrop-blur-sm"
+  [(visible)]="visible"
+  (onHide)="onClose()"
+  [modal]="true"
+  [baseZIndex]="10000"
+  [style]="{ width: '40rem', overflow: 'auto' }"
+>
+  <ng-template #headless>
+    <div class="wrapper-form-work-day">
+      <div class="header-works">
+        <i class="fa-regular fa-clock"></i>
+        <div>
+          <h4>Business Canlnder Day</h4>
+          <p>Control Business Canlnder Day In The Working</p>
+        </div>
+      </div>
+      <img width="100" src="/assets/Img/NAME-GOLD.svg" alt="logo" />
+
+      <div class="work-day">
+        @for (day of data(); track day.id) {
+          <div class="card">
+            <div class="checked-inp">
+              <p-toggleswitch [(ngModel)]="day.isOpen" (onChange)="onToggleChange($event, day)" />
+              <span>{{ day.day }}</span>
+            </div>
+            <div class="time-work">
+              <div class="from">
+                <input
+                  [disabled]="!day.isOpen"
+                  [(ngModel)]="day.startTime"
+                  type="time"
+                  (input)="onTimeChange(day)"
+                />
+              </div>
+
+              <div class="to">
+                <input
+                  [disabled]="!day.isOpen"
+                  [(ngModel)]="day.endTime"
+                  type="time"
+                  (input)="onTimeChange(day)"
+                />
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+      <br />
+      <div class="footer-workday">
+        <h3>{{ 'OFFICE_POLICY_TITLE' | translate }}</h3>
+
+        <p>
+          {{ 'OFFICE_POLICY_DESC' | translate }}
+        </p>
+      </div>
+
+      <button class="btn-close-dilog" (click)="closeDialog()">
+        <i class="fa-solid fa-xmark"></i> {{ 'close' | translate }}
+      </button>
+    </div>
+  </ng-template>
+</p-dialog>

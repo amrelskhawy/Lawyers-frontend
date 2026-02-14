@@ -1,62 +1,40 @@
-<section class="section-footer-wrapper">
-  <div class="container footer-container">
+<section class="section-footer">
+  <div class="container Content-footer">
 
-    <div class="footer-upper">
-      <!-- Left Side: Brand, Desc, Socials, Back to Top -->
-      <div class="footer-left">
-        <div class="brand-area">
-          <div class="logo-group">
-            <img width="280" src="/assets/Img/NAME-GOLD.svg" alt="logo" />
-
-          </div>
-
-          <p class="brand-desc">
-            تمكين العملاء بحلول قانونية متقدمة ومتكاملة لتحقيق العدالة وحماية الحقوق.
-          </p>
-
-          <div class="social-icons">
-            <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-            <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-            <a href="#"><i class="fa-brands fa-instagram"></i></a>
-            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-          </div>
-
-          <button class="back-to-top-btn" (click)="scrollToTop()">
-            <i class="fa-solid fa-angles-up"></i>
-            BACK TO TOP
-          </button>
-        </div>
+    <div>
+      <img width="200" src="/assets/Img/NAME-GOLD.svg" alt="logo" />
+      <div>
+        <button (click)="scrollToTop()">Scroll To Top</button>
       </div>
-
-      <!-- Right Side: Links Columns -->
-      <div class="footer-right">
-        <div class="links-column">
-          <h3>خريطة الموقع</h3>
-          <ul>
-            <li (click)="onClickListActive('Home')"><a>الرئيسية</a></li>
-            <li (click)="onClickListActive('Services')"><a>الخدمات</a></li>
-            <li (click)="onClickListActive('About')"><a>من نحن</a></li>
-            <li (click)="onClickListActive('HowWork')"><a>كيف نعمل</a></li>
-          </ul>
-        </div>
-
-        <div class="links-column">
-          <h3>معلومات قانونية</h3>
-          <ul>
-            <li><a>سياسة الخصوصية</a></li>
-            <li><a>شروط الخدمة</a></li>
-            <li><a>زاوية المحامين</a></li>
-            <li><a>بوابة العملاء</a></li>
-          </ul>
-        </div>
-      </div>
+      <p>{{ 'FOOTER_COMPANY_NAME' | translate }}</p>
+      <p enterClass="my-enter-top">{{ 'FOOTER_LEGAL_SLOGAN' | translate }}</p>
+      <p leaveClass="my-leave-animation">{{ 'FOOTER_CORE_VALUES' | translate }}</p>
+      <p>{{ 'FOOTER_PROFESSIONAL_STANDARDS' | translate }}</p>
     </div>
 
+    <ul>
+      <h3>{{ 'QUICK_LINKS' | translate }}</h3>
+      <li (click)="onClickListActive('Home')">
+        <a>{{ 'NAV_HOME' | translate }}</a>
+      </li>
+      <li (click)="onClickListActive('About')">
+        <a>{{ 'NAV_ABOUT' | translate }}</a>
+      </li>
+      <li (click)="onClickListActive('HowWork')">
+        <a>{{ 'NAV_HOW_IT_WORKS' | translate }}</a>
+      </li>
+      <li (click)="onClickListActive('Services')">
+        <a>{{ 'NAV_SERVICES' | translate }}</a>
+      </li>
+    </ul>
 
-
+    <ul>
+      <h3>{{ 'CONTACT_INFORMATION' | translate }}</h3>
+      <li><i class="fa-solid fa-phone"></i> 055 228 3030</li>
+      <li><i class="fa-solid fa-phone"></i> 055 228 3030</li>
+      <li><i class="fa-solid fa-envelope"></i> info@saadbaqami.com</li>
+      <li><i class="fa-solid fa-location-dot"></i> {{ 'LOCATION_JEDDAH' | translate }}</li>
+    </ul>
   </div>
-  <!-- Bottom Bar -->
-  <div class="footer-bottom-bar">
-    <p>Copyright © 2026, Saadbqami. All Rights Reserved.</p>
-  </div>
+  <p class="endDesc">{{ 'COPYRIGHT_TEXT' | translate }}</p>
 </section>

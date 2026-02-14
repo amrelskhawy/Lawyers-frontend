@@ -1,4 +1,6 @@
+@use './Directions/Direction.scss' as *;
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Mukta:wght@200;300;400;500;600;700;800&family=Playwrite+IT+Trad:wght@100..400&display=swap');
+
 
 * {
   box-sizing: border-box;
@@ -12,13 +14,14 @@ body {
   user-select: none;
   overflow-x: hidden;
   font-family: 'Cairo', sans-serif;
-  direction: rtl;
 }
 
 :root {
   --black-color: black;
   --white-color: white;
   --blue-color: blue;
+  --green-color:green;
+  --vivid-green: #00bb09;
   --red-color: red;
   --golden-bronze: rgb(150, 122, 62);
   --deep-purple: #1a0033;
@@ -27,10 +30,22 @@ body {
   --tertiary-color: #666;
   --soft-gray: #eee;
   --Platinum: #dadadabf;
+  --muted-gold: #dadada59;
   --primary-navy: #14143a;
   --dark-navy-deep: #0a0a1d;
   --accent-gold: #93853f;
   --medium-gray: #a9a9a9;
+  --bg-cream-light: #f4f2e9;
+  --Pale-Gold: #e3d597;
+  --color-success-main: #2e7d32;
+  --color-success-light: rgba(46, 125, 50, 0.1);
+  --overlay-bg: rgba(19, 18, 18, 0.532);
+    --soft-pink: #f16d6de0;
+  --golden-yellow:#ffb50259;
+  --bright-gold: #ffb502;
+  --color-danger-main: #d32f2f;
+  --color-danger-light: rgba(211, 47, 47, 0.1);
+
 }
 
 .Group {

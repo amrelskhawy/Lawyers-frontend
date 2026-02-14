@@ -1,5 +1,6 @@
 <div class="container">
   <section class="about-section">
+
     <div class="img-about-container">
       <div
         pAnimateOnScroll
@@ -45,13 +46,15 @@
         <i class="fa-solid fa-circle"></i>
         <span class="line"></span>
         <h2 pAnimateOnScroll enterClass="my-enter-zoom" leaveClass="my-leave-animation">
-          عملية العمل
+          {{ 'WORK_PROCESS' | translate }}
         </h2>
         <span class="line"></span>
         <i class="fa-solid fa-circle"></i>
       </div>
 
-      <h2 pAnimateOnScroll enterClass="my-enter-top" leaveClass="my-leave-animation">عن شركتنا</h2>
+      <h2 pAnimateOnScroll enterClass="my-enter-top" leaveClass="my-leave-animation">
+        {{ 'ABOUT_COMPANY' | translate }}
+      </h2>
 
       <p
         pAnimateOnScroll
@@ -59,15 +62,13 @@
         leaveClass="my-leave-animation"
         class="animation-duration-1000"
       >
-        نحن شركة محاماة رائدة نكرس جهودنا لتقديم خدمات قانونية استثنائية لعملائنا. فريقنا من
-        المحامين ذوي الخبرة متخصص في مجالات قانونية متنوعة، مما يضمن حلولاً شاملة مصممة لتلبية
-        احتياجاتك. مع التزامنا بالتميز والنزاهة، نسعى لتحقيق أفضل النتائج لعملائنا.
+        {{ 'COMPANY_DESCRIPTION' | translate }}
       </p>
       <ul>
-        <li><i class="fa-solid fa-check"></i>فريق قانوني ذو خبرة</li>
-        <li><i class="fa-solid fa-check"></i>النهج المتمحور حول العميل</li>
-        <li><i class="fa-solid fa-check"></i>خدمات قانونية شاملة</li>
-        <li><i class="fa-solid fa-check"></i>سجل حافل بالنجاح</li>
+        <li><i class="fa-solid fa-check"></i>{{ 'FEATURE_EXPERIENCED_TEAM' | translate }}</li>
+        <li><i class="fa-solid fa-check"></i>{{ 'FEATURE_CLIENT_CENTRIC' | translate }}</li>
+        <li><i class="fa-solid fa-check"></i>{{ 'FEATURE_COMPREHENSIVE_SERVICES' | translate }}</li>
+        <li><i class="fa-solid fa-check"></i>{{ 'FEATURE_SUCCESS_TRACK_RECORD' | translate }}</li>
       </ul>
       <button
         pAnimateOnScroll
@@ -75,8 +76,9 @@
         leaveClass="my-leave-animation"
         class="btn-about-section"
       >
-       قراءة المزيد
+        {{ 'READ_MORE' | translate }}
       </button>
     </div>
+
   </section>
 </div>
