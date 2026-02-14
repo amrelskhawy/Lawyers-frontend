@@ -8,9 +8,10 @@ import { Component, ContentChild, Input, TemplateRef } from '@angular/core';
   styleUrl: './tabel.scss',
 })
 export class Tabel<T extends object> {
-  constructor(private datePipe: DatePipe) {}
+  constructor(private datePipe: DatePipe) { }
   tableData: T[] = [];
-   @Input() bodytabel:any [] = [];
+  @Input() bodytabel: any[] = [];
+  @Input() rows: number = 10;
 
   @Input()
   set data(value: T[]) {
@@ -18,12 +19,12 @@ export class Tabel<T extends object> {
   }
 
 
-formatCell(key: string, value: any): string {
-  if (key === 'createdAt' || key === 'updatedAt') {
-    return this.datePipe.transform(value, 'shortDate') || '';
+  formatCell(key: string, value: any): string {
+    if (key === 'createdAt' || key === 'updatedAt') {
+      return this.datePipe.transform(value, 'shortDate') || '';
+    }
+    return value;
   }
-  return value;
-}
 
   @ContentChild(TemplateRef) actionsTpl!: TemplateRef<any>;
 }

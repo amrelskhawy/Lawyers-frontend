@@ -1,10 +1,4 @@
-<p-table
-  [value]="tableData"
-  [paginator]="true"
-  [rows]="11"
-  stripedRows
-  [tableStyle]="{ 'min-width': '50rem' }"
->
+<p-table [value]="tableData" [paginator]="true" [rows]="rows" stripedRows [tableStyle]="{ 'min-width': '50rem' }">
   <!-- HEADER -->
   <ng-template pTemplate="header">
     <tr>
@@ -21,7 +15,7 @@
 
   <!-- BODY -->
 
-<ng-template pTemplate="body" let-row>
+  <ng-template pTemplate="body" let-row>
     <tr>
       <ng-container *ngFor="let col of bodytabel">
         <td>
@@ -30,12 +24,10 @@
       </ng-container>
 
       <td *ngIf="actionsTpl">
-        <ng-container
-          *ngTemplateOutlet="actionsTpl; context: { $implicit: row }"
-        ></ng-container>
+        <ng-container *ngTemplateOutlet="actionsTpl; context: { $implicit: row }"></ng-container>
       </td>
     </tr>
-    </ng-template>
+  </ng-template>
 </p-table>
 
 <ng-content></ng-content>
