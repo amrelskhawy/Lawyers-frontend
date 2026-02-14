@@ -19,6 +19,7 @@ export class AddServies implements OnInit {
   ) { }
 
   data = signal<any[]>([]);
+  allData = signal<any[]>([]);
   objdata = signal<any>({});
   visibelform = signal<boolean>(false);
   visibelConfirme = signal<boolean>(false);
@@ -32,7 +33,26 @@ export class AddServies implements OnInit {
         priceFormatted: item.price + ' ﷼',
       }));
       this.data.set(formattedData);
+      this.allData.set(formattedData);
     });
+  }
+
+  onSearch(query: string) {
+    if (!query) {
+      this.data.set(this.allData());
+      return;
+    }
+    const lowerQuery = query.toLowerCase();
+    const filtered = this.allData().filter((item) => {
+      return [
+        item.name_ar,
+        item.name_en,
+        item.description_ar,
+        item.description_en,
+        item.priceFormatted
+      ].some(val => val && val.toString().toLowerCase().includes(lowerQuery));
+    });
+    this.data.set(filtered);
   }
 
   onEditData(item: any) {

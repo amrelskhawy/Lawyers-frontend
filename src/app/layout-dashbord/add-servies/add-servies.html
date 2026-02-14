@@ -1,4 +1,4 @@
-<app-top-grid (visibelformadd)="visibelform.set(true)"></app-top-grid>
+<app-top-grid (search)="onSearch($event)" (visibelformadd)="visibelform.set(true)"></app-top-grid>
 
 
 <app-formservies (ResSuccess)="onHandelRespnseProccing()" [objdata]="objdata()"

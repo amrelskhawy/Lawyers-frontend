@@ -4,16 +4,17 @@
   </button>
 
   <div class="filed-search">
+    <input (input)="onSearch($event)" placeholder="{{ 'searchByName' | translate }}" />
     <i class="fa-solid fa-magnifying-glass"></i>
-    <input placeholder="{{ 'searchByName' | translate }}" />
   </div>
 
-
-
-  <div class="account-admin">
-    <div>
-      <h4>{{ 'username' | translate }} <i class="fa-regular fa-user"></i></h4>
-      <p>admin@gmail.com</p>
+  <div class="account-admin" *ngIf="userData()">
+    <div class="user-info">
+      <h4>
+        {{ userData().displayName }}
+        <i *ngIf="!userData().isDerivedName" class="fa-regular fa-user"></i>
+      </h4>
+      <p>{{ userData().email }}</p>
     </div>
     <img height="40" width="40"
       src="/assets/Img/portrait-young-female-lawyer-smiling-happy-her-workplace-office-lawyer-technologist-professional-face-female-lawyer-legal-consultant-law-firm_785351-3460.avif"
