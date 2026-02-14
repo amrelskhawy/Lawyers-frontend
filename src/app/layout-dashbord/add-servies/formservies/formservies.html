@@ -1,102 +1,100 @@
-<p-dialog
-  maskStyleClass="backdrop-blur-sm"
-  [(visible)]="visible"
-  (onHide)="onClose()"
-  [modal]="true"
-  [baseZIndex]="10000"
-  [style]="{ width: '30rem', overflow: 'hidden' }"
->
-  <ng-template #headless>
-    <div class="header-form">
-      <h3>
-        {{ (objData() ? 'edit_servies' : 'add_service') | translate }}
-      </h3>
-      <img width="100" height="50" src="/assets/Img/NAME-GOLD.svg" alt="logo" />
+<p-dialog maskStyleClass="backdrop-blur-sm" [(visible)]="visible" (onHide)="onClose()" [modal]="true"
+  [baseZIndex]="10000" styleClass="modern-modal" [style]="{ width: '90vw', maxWidth: '500px' }">
+
+  <ng-template pTemplate="headless">
+    <div class="modern-form-container">
+
+      <!-- Header -->
+      <div class="form-header">
+        <div class="header-content">
+          <h3>{{ (objData() ? 'edit_servies' : 'add_service') | translate }}</h3>
+          <p class="subtitle">{{ 'SERVICE_DETAILS_HINT' | translate }}</p>
+        </div>
+        <img src="/assets/Img/LOGO-GOLD.svg" alt="logo" class="header-logo" />
+        <button class="close-icon-btn" (click)="closeDialog()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Form -->
+      <form [formGroup]="Form()" (ngSubmit)="onSubmitData()" class="form-body">
+
+        <!-- Names Section (Grid) -->
+        <div class="form-grid">
+          <div class="input-group">
+            <label>{{ 'name_ar' | translate }}</label>
+            <div class="input-wrapper">
+              <i class="fa-regular fa-keyboard input-icon"></i>
+              <input formControlName="name_ar" placeholder="{{ 'name_ar' | translate }}" type="text" />
+            </div>
+            <small class="error-msg" *ngIf="getControlName('name_ar')?.invalid && getControlName('name_ar')?.touched">
+              {{ 'filed_reqierd' | translate }}
+            </small>
+          </div>
+
+          <div class="input-group">
+            <label>{{ 'name_en' | translate }}</label>
+            <div class="input-wrapper">
+              <i class="fa-regular fa-keyboard input-icon"></i>
+              <input formControlName="name_en" placeholder="{{ 'name_en' | translate }}" type="text" />
+            </div>
+            <small class="error-msg" *ngIf="getControlName('name_en')?.invalid && getControlName('name_en')?.touched">
+              {{ 'filed_reqierd' | translate }}
+            </small>
+          </div>
+        </div>
+
+        <!-- Descriptions -->
+        <div class="input-group">
+          <label>{{ 'description_ar' | translate }}</label>
+          <div class="input-wrapper textarea-wrapper">
+            <i class="fa-solid fa-align-right input-icon"></i>
+            <textarea formControlName="description_ar" rows="3"
+              placeholder="{{ 'description_ar' | translate }}"></textarea>
+          </div>
+          <small class="error-msg"
+            *ngIf="getControlName('description_ar')?.invalid && getControlName('description_ar')?.touched">
+            {{ 'filed_reqierd' | translate }}
+          </small>
+        </div>
+
+        <div class="input-group">
+          <label>{{ 'description_en' | translate }}</label>
+          <div class="input-wrapper textarea-wrapper">
+            <i class="fa-solid fa-align-left input-icon"></i>
+            <textarea formControlName="description_en" rows="3"
+              placeholder="{{ 'description_en' | translate }}"></textarea>
+          </div>
+          <small class="error-msg"
+            *ngIf="getControlName('description_en')?.invalid && getControlName('description_en')?.touched">
+            {{ 'filed_reqierd' | translate }}
+          </small>
+        </div>
+
+        <!-- Price -->
+        <div class="input-group">
+          <label>{{ 'price_sevies' | translate }}</label>
+          <div class="input-wrapper">
+            <i class="fa-solid fa-tag input-icon"></i>
+            <input formControlName="price" placeholder="0.00" type="number" />
+            <span class="currency-suffix">SAR</span>
+          </div>
+          <small class="error-msg" *ngIf="getControlName('price')?.invalid && getControlName('price')?.touched">
+            {{ 'filed_reqierd' | translate }}
+          </small>
+        </div>
+
+        <!-- Actions -->
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" (click)="closeDialog()">
+            {{ 'close' | translate }}
+          </button>
+          <button type="submit" class="btn-primary">
+            {{ 'submit' | translate }} <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+
+      </form>
     </div>
-
-    <form [formGroup]="Form()" (ngSubmit)="onSubmitData()">
-      <div class="Group">
-        <label><i class="fa-regular fa-user"></i> {{ 'name_ar' | translate }}</label>
-        <input formControlName="name_ar" placeholder="{{ 'name_ar' | translate }}" type="text" />
-        <div class="wrapper-error">
-          <small
-            class="error-message"
-            *ngIf="getControlName('namear')?.invalid && getControlName('namear')?.touched"
-            >{{ 'filed_reqierd' | translate }}</small
-          >
-        </div>
-      </div>
-
-      <div class="Group">
-        <label><i class="fa-regular fa-user"></i> {{ 'name_en' | translate }}</label>
-        <input formControlName="name_en" placeholder="{{ 'name_en' | translate }}" type="text" />
-        <div class="wrapper-error">
-          <small
-            class="error-message"
-            *ngIf="getControlName('nameen')?.invalid && getControlName('nameen')?.touched"
-            >{{ 'filed_reqierd' | translate }}</small
-          >
-        </div>
-      </div>
-
-      <div class="Group">
-        <label><i class="fa-solid fa-align-right"></i> {{ 'desc_ar' | translate }}</label>
-        <textarea
-          placeholder="{{ 'desc_ar' | translate }}"
-          formControlName="description_ar"
-        ></textarea>
-        <div class="wrapper-error">
-          <small
-            class="error-message"
-            *ngIf="
-              getControlName('descriptionar')?.invalid && getControlName('descriptionar')?.touched
-            "
-            >{{ 'filed_reqierd' | translate }}</small
-          >
-        </div>
-      </div>
-
-      <div class="Group">
-        <label><i class="fa-solid fa-align-right"></i> {{ 'desc_en' | translate }}</label>
-        <textarea
-          placeholder="{{ 'desc_en' | translate }}"
-          formControlName="description_en"
-        ></textarea>
-        <div class="wrapper-error">
-          <small
-            class="error-message"
-            *ngIf="
-              getControlName('descriptionen')?.invalid && getControlName('descriptionen')?.touched
-            "
-            >{{ 'filed_reqierd' | translate }}</small
-          >
-        </div>
-      </div>
-
-      <div class="Group">
-        <label
-          ><i class="fa-solid fa-money-bill-1-wave"></i> {{ 'price_sevies' | translate }}</label
-        >
-        <input
-          formControlName="price"
-          placeholder="{{ 'price_sevies' | translate }}"
-          type="number"
-        />
-        <div class="wrapper-error">
-          <small
-            class="error-message"
-            *ngIf="getControlName('price')?.invalid && getControlName('price')?.touched"
-            >{{ 'filed_reqierd' | translate }}</small
-          >
-        </div>
-      </div>
-
-      <button class="btn-submit">
-        <i class="fa-solid fa-share"></i>{{ 'submit' | translate }}
-      </button>
-    </form>
-    <button class="btn-close-dilog" (click)="closeDialog()">
-      <i class="fa-solid fa-xmark"></i> {{ 'close' | translate }}
-    </button>
   </ng-template>
 </p-dialog>

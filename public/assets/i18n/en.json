@@ -58,5 +58,6 @@
   "created_At": "created At",
   "updated_At": "updated At",
   "price": "price",
-  "Procedures": "Procedures"
+  "Procedures": "Procedures",
+  "SERVICE_DETAILS_HINT": "Please fill in the service details below"
 }

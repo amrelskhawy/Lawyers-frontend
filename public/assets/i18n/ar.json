@@ -58,5 +58,6 @@
   "created_At": "تاريخ الأنشاء",
   "updated_At": "تاريخ التحديث",
   "price": "السعر",
-  "Procedures": "إجراءات"
+  "Procedures": "إجراءات",
+  "SERVICE_DETAILS_HINT": "يرجى ملء تفاصيل الخدمة أدناه"
 }
