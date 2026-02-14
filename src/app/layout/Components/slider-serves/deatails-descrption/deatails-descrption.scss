@@ -1,0 +1,18 @@
+@use '../../../../layout-dashbord/glopalstyles.scss';
+
+.wrapper-datailsData {
+  h2,p,img{
+  text-align: center;
+  margin: auto;
+  display: block;
+  }
+  background-color: var(--primary-navy);
+  color: var(--white-color);
+  padding: 20px;
+}
+
+button {
+  border: 1px solid var(--accent-gold) !important;
+  color: var(--accent-gold);
+  margin-top: 30px;
+}

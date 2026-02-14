@@ -13,6 +13,8 @@ import { TagModule } from 'primeng/tag';
 import { AnimateOnScrollModule } from 'primeng/animateonscroll';
 import { HowItWork } from './Components/how-it-work/how-it-work';
 import { TranslateModule } from '@ngx-translate/core';
+import { DeatailsDescrption } from './Components/slider-serves/deatails-descrption/deatails-descrption';
+import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { TranslateModule } from '@ngx-translate/core';
     About,
     Servies,
     SliderServes,
-    HowItWork
+    HowItWork,
+    DeatailsDescrption
   ],
   imports: [
     TranslateModule,
@@ -32,6 +35,7 @@ import { TranslateModule } from '@ngx-translate/core';
     ButtonModule,
     TagModule,
     AnimateOnScrollModule,
+    DialogModule
   ]
 })
 export class LayoutModule { }

@@ -59,5 +59,6 @@
   "updated_At": "updated At",
   "price": "price",
   "Procedures": "Procedures",
-  "SERVICE_DETAILS_HINT": "Please fill in the service details below"
+  "Work_Day": "Work Day",
+  "read_more": "→ Read More"
 }

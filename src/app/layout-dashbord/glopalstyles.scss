@@ -61,4 +61,13 @@ form {
       color: var(--white-color);
     }
   }
+
+  .fa-eye{
+    background-color: var(--golden-yellow);
+      border: 1px solid var(--bright-gold);
+      height: 30px;
+      width: 30px;
+      line-height: 30px;
+      border-radius: 50%;
+  }
 }

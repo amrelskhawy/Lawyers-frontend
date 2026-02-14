@@ -1,13 +1,11 @@
 @use './Directions/Direction.scss' as *;
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Mukta:wght@200;300;400;500;600;700;800&family=Playwrite+IT+Trad:wght@100..400&display=swap');
 
-
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
 }
-
 
 body {
   background-color: var(--white-color);
@@ -20,7 +18,7 @@ body {
   --black-color: black;
   --white-color: white;
   --blue-color: blue;
-  --green-color:green;
+  --green-color: green;
   --vivid-green: #00bb09;
   --red-color: red;
   --golden-bronze: rgb(150, 122, 62);
@@ -40,12 +38,11 @@ body {
   --color-success-main: #2e7d32;
   --color-success-light: rgba(46, 125, 50, 0.1);
   --overlay-bg: rgba(19, 18, 18, 0.532);
-    --soft-pink: #f16d6de0;
-  --golden-yellow:#ffb50259;
+  --soft-pink: #f16d6de0;
+  --golden-yellow: #ffb50259;
   --bright-gold: #ffb502;
   --color-danger-main: #d32f2f;
   --color-danger-light: rgba(211, 47, 47, 0.1);
-
 }
 
 .Group {
@@ -63,8 +60,6 @@ select {
   border-radius: 7px;
   background-color: transparent;
 }
-
-
 
 li {
   list-style: none;
@@ -91,7 +86,6 @@ button {
   position: relative;
 }
 
-
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -99,14 +93,10 @@ input:-webkit-autofill:active {
   -webkit-transition: background-color 5000s ease-in-out 0s;
 }
 
-
 .requierd {
   color: var(--red-color);
   font-weight: bold;
 }
-
-
-
 
 ::-webkit-scrollbar {
   width: 10px;
@@ -122,8 +112,6 @@ input:-webkit-autofill:active {
   width: 75%;
   margin: auto;
 }
-
-
 
 @mixin button($width: auto) {
   width: $width;
@@ -160,9 +148,6 @@ input:-webkit-autofill:active {
   }
 }
 
-
-
-
 @media (max-width: 1200px) {
   .container {
     width: 90%;
@@ -189,20 +174,6 @@ html {
   scroll-behavior: smooth;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /***********************************Anmations**********************************/
 @keyframes customFadeInLeft {
   0% {
@@ -224,9 +195,6 @@ html {
   opacity: 0 !important;
 }
 
-
-
-
 @keyframes customFadeInRight {
   0% {
     opacity: 0;
@@ -245,10 +213,6 @@ html {
 .my-enter-right {
   animation: customFadeInRight 1s forwards !important;
 }
-
-
-
-
 
 @keyframes customFadeInDown {
   0% {
@@ -270,9 +234,6 @@ html {
   opacity: 0 !important;
   transition: opacity 0.5s;
 }
-
-
-
 
 @keyframes customZoomIn {
   0% {

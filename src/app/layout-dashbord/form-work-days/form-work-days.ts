@@ -1,3 +1,4 @@
+import { Core } from './../../core/Servies/core';
 import { debounceTime, Subject } from 'rxjs';
 import { Data } from './../../core/Servies/data';
 import { Component, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
@@ -13,7 +14,10 @@ export class FormWorkDays implements OnInit {
     this.getAllWorkDay();
   }
 
-  constructor(private Data: Data) {
+  constructor(
+    private Data: Data,
+    private Core:Core
+  ) {
     this.debounceSubmitTime();
   }
 
@@ -55,7 +59,6 @@ export class FormWorkDays implements OnInit {
     }
   }
 
-
   onToggleChange(event: any, day: any) {
     const isChecked = event.checked;
     this.data.update((prevDays: any[]) => {
@@ -64,8 +67,8 @@ export class FormWorkDays implements OnInit {
           return {
             ...item,
             isOpen: isChecked,
-     startTime: isChecked ? (item.startTime || '09:00') : '',
-          endTime: isChecked ? (item.endTime || '17:00') : '',
+            startTime: isChecked ? item.startTime || '09:00' : '',
+            endTime: isChecked ? item.endTime || '17:00' : '',
           };
         }
         return item;
@@ -79,7 +82,9 @@ export class FormWorkDays implements OnInit {
       data: this.data(),
     };
     this.Data.patch('workdays', payload).subscribe({
-      next: (res) => console.log('Done:', res),
+      next: (res) => {
+        this.Core._Sussess.next(false)
+      },
     });
   }
 }

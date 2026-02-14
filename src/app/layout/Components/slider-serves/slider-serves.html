@@ -1,21 +1,23 @@
-<div dir="rtl">
-  <p-carousel [value]="products" [numVisible]="3" [numScroll]="1" [responsiveOptions]="responsiveOptions">
+<div [dir]="getcuurentLangauage() === 'ar' ? 'rtl' : 'ltr'">
+  <p-carousel [value]="data()" [numVisible]="3" [numScroll]="1" [responsiveOptions]="responsiveOptions">
     <ng-template let-service #item>
-      <div class="card animation-duration-1000" pAnimateOnScroll enterClass="my-enter-zoom"
+      <div (click)="showData(service)" class="card animation-duration-1000" pAnimateOnScroll enterClass="my-enter-zoom"
         leaveClass="my-leave-animation">
         <div class="card-icon">
           <i class="fa-solid fa-gavel"></i>
         </div>
         <div class="card-content">
-          <h3 class="mb-2 font-bold">{{ service.name }}</h3>
+          <h3 class="mb-2 font-bold text-xl">{{getcuurentLangauage()=="ar"?service.name_ar:service.name_en}}</h3>
           <p class="text-gray-600 mb-4 text-sm leading-relaxed">
-            {{ service.description.length > 140 ? service.description.slice(0, 140) + '...' : service.description }}
+            {{getServiceDescription(service)}}
           </p>
 
-          <a href="#" class="font-semibold text-sm underline">→ قراءة المزيد</a>
+          <a class="font-semibold text-sm underline">{{"read_more"|translate}}</a>
         </div>
       </div>
     </ng-template>
   </p-carousel>
-
 </div>
+
+
+<app-deatails-descrption [objData]="objData()"  [(visible)]="visibelData" ></app-deatails-descrption>

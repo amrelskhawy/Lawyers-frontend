@@ -20,9 +20,10 @@ import { TooltipModule } from 'primeng/tooltip';
 import { TopGrid } from './top-grid/top-grid';
 import { FormWorkDays } from './form-work-days/form-work-days';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
+import { ShowDataInDilog } from './add-servies/show-data-in-dilog/show-data-in-dilog';
 
 @NgModule({
-  declarations: [Menue, Content, Users, WorkDays, Holidays, AddServies, Formservies, FormHoldays, TopGrid, FormWorkDays],
+  declarations: [Menue, Content, Users, WorkDays, Holidays, AddServies, Formservies, FormHoldays, TopGrid, FormWorkDays, ShowDataInDilog],
   imports: [
     CommonModule,
     LayoutDashbordRoutingModule,

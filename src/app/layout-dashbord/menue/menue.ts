@@ -7,6 +7,7 @@ import {
   Output,
   signal,
 } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-menue',
@@ -18,6 +19,10 @@ export class Menue implements OnInit {
   ngOnInit(): void {
     this.GetDataMenue();
   }
+
+  constructor(private router:Router){ }
+
+
 
   @Output() toggelMenue = new EventEmitter<boolean>();
   isOpen = signal<boolean>(true);
@@ -76,5 +81,10 @@ export class Menue implements OnInit {
         route: '/dashboard/content/Holidays',
       },
     ]);
+  }
+
+  onLogout(){
+    sessionStorage.removeItem('token')
+    this.router.navigate(['/'])
   }
 }

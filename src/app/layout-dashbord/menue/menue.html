@@ -20,12 +20,13 @@
 </section>
 
 <div class="menue-absolute">
-  <button class="btn-logout">
+  <button class="btn-logout" (click)="onLogout()">
     <i class="fa-solid fa-arrow-right-from-bracket"></i>
     <span *ngIf="widthScreen() || !statusMenue()">{{ 'logout' | translate }}</span>
   </button>
-
-  <button (click)="visibelform.set(true)" class="work_day_btn">Work Day</button>
+@if (widthScreen() || !statusMenue()) {
+  <button (click)="visibelform.set(true)" class="work_day_btn">{{"Work_Day"|translate}}</button>
+}
   <app-form-work-days [(visible)]="visibelform"></app-form-work-days>
   @if (widthScreen() || !statusMenue()) {
   <div class="card">

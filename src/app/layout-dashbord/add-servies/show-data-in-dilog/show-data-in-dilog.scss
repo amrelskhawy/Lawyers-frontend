@@ -1,0 +1,29 @@
+.wrapper-data {
+  background-color: var(--primary-navy);
+  overflow: hidden;
+  img {
+    text-align: center;
+    margin: auto;
+    display: block;
+    padding: 10px;
+  }
+}
+
+.content-obj-data {
+  padding: 20px;
+  color: var(--white-color);
+  h2,p{
+    text-align: center;
+  }
+}
+
+.btn-close-dilog {
+  color: var(--accent-gold);
+  border: 1px solid var(--accent-gold);
+  margin-top: 20px;
+  transition: 0.3s linear;
+  &:hover{
+    background-color: var(--white-color);
+    opacity: 0.9;
+  }
+}
