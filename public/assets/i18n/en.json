@@ -39,28 +39,24 @@
   "logout": "Logout",
   "username": "Username",
   "add_service": "Add Service",
-    "edit_servies":"Edit Servies",
+  "edit_servies": "Edit Servies",
   "add_day_holiday": "Add a day off",
   "Date": "Date",
   "name_ar": "name Ar",
   "name_en": "name En",
-  "desc_ar": "descrption Ar",
-  "desc_en": "descrption En",
+  "description_ar": "descrption Ar",
+  "description_en": "descrption En",
   "price_sevies": "Price Sevies",
   "edit": "Edit",
   "add": "Add",
   "delete": "delete",
   "searchByName": "search By Name",
   "holidays_Day": "holidays Day",
-    "features_company":"A company specialized in solving legal problems",
-    "OFFICE_POLICY_TITLE": "Official Firm Policy & Working Hours",
+  "features_company": "A company specialized in solving legal problems",
+  "OFFICE_POLICY_TITLE": "Official Firm Policy & Working Hours",
   "OFFICE_POLICY_DESC": "These hours represent the approved schedule for receiving clients, taking into account the firm's internal holidays to ensure organized reviews and precise judicial follow-up.",
-
-
-
-  "created_At":"created At",
-  "updated_At":"updated At",
-  "price":"price",
-  "Procedures":"Procedures"
-
+  "created_At": "created At",
+  "updated_At": "updated At",
+  "price": "price",
+  "Procedures": "Procedures"
 }

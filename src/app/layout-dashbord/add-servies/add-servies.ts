@@ -16,7 +16,7 @@ export class AddServies implements OnInit {
   constructor(
     private Data: Data,
     private translate: TranslateService,
-  ) {}
+  ) { }
 
   data = signal<any[]>([]);
   objdata = signal<any>({});
@@ -26,7 +26,12 @@ export class AddServies implements OnInit {
 
   GetAllData() {
     this.Data.get('services').subscribe((res: any) => {
-      this.data.set(res.data);
+      const formattedData = res.data.map((item: any, index: number) => ({
+        ...item,
+        index: index + 1,
+        priceFormatted: item.price + ' ﷼',
+      }));
+      this.data.set(formattedData);
     });
   }
 
@@ -57,13 +62,13 @@ export class AddServies implements OnInit {
 
   getDataTabel() {
     let apiData = [
+      { key: '#', value: 'index' },
       { key: this.translate.instant('name_ar'), value: 'name_ar' },
       { key: this.translate.instant('name_en'), value: 'name_en' },
-      // { key: 'description Ar', value: 'description_ar' },
-      // { key: 'description En', value: 'description_en' },
+      { key: this.translate.instant('description_ar'), value: 'description_ar' },
+      { key: this.translate.instant('description_en'), value: 'description_en' },
       { key: 'created_At', value: 'createdAt' },
-      { key: 'updated_At', value: 'updatedAt' },
-      { key: 'price', value: 'price' },
+      { key: this.translate.instant('price'), value: 'priceFormatted' },
     ];
     this.bodytabel.set(apiData);
   }

@@ -1,19 +1,23 @@
 <app-top-grid (visibelformadd)="visibelform.set(true)"></app-top-grid>
 
 
-<app-formservies (ResSuccess)="onHandelRespnseProccing()" [objdata]="objdata()" [(visible)]="visibelform"></app-formservies>
+<app-formservies (ResSuccess)="onHandelRespnseProccing()" [objdata]="objdata()"
+  [(visible)]="visibelform"></app-formservies>
 
 
-<app-confirmation-delete (handelstatusConfirmation)="onHandelStatusConfirmation($event)" [visibelConfirme]="visibelConfirme()"></app-confirmation-delete>
+<app-confirmation-delete (handelstatusConfirmation)="onHandelStatusConfirmation($event)"
+  [visibelConfirme]="visibelConfirme()"></app-confirmation-delete>
 
-<app-tabel [data]="data()" [bodytabel]="bodytabel()">
-  <ng-template let-item>
-    <div class="action-btn">
-      <button (click)="onEditData(item)" class="edit-btn">
-        <i class="fa-solid fa-pen-to-square"></i> {{"edit"|translate}}
-      </button>
+<div class="services-table-wrapper">
+  <app-tabel [data]="data()" [bodytabel]="bodytabel()">
+    <ng-template let-item>
+      <div class="action-btn">
+        <button (click)="onEditData(item)" class="edit-btn">
+          <i class="fa-solid fa-pen-to-square"></i>
+        </button>
 
-      <button (click)="onDelete(item)" class="delete-btn"><i class="fa-solid fa-trash"></i>{{"delete"|translate}}</button>
-    </div>
-  </ng-template>
-</app-tabel>
+        <button (click)="onDelete(item)" class="delete-btn"><i class="fa-solid fa-trash"></i></button>
+      </div>
+    </ng-template>
+  </app-tabel>
+</div>

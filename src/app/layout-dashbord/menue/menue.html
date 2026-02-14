@@ -2,30 +2,19 @@
 <button (click)="onCloselMenue()"><i class="fa-solid fa-xmark"></i></button>
 <section class="content-menue">
   <div class="header-menue">
-    <img
-      [ngClass]="{ collpasedMenue: statusMenue() }"
-      height="70"
-      width="70"
-      src="/assets/Img/LOGO-GOLD.svg"
-      alt="Logo"
-      class="logo-header"
-    />
+    <img [ngClass]="{ collpasedMenue: statusMenue() }" height="70" width="70" src="/assets/Img/LOGO-GOLD.svg" alt="Logo"
+      class="logo-header" />
   </div>
 
   <ul [ngClass]="{ collpasedMenue: statusMenue() && !widthScreen() }">
     @for (item of ListMenue(); track $index) {
-      <li
-        (click)="onCloselMenue()"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
-        [routerLink]="item.route"
-        [ngClass]="{ collpasedMenue: statusMenue() && !widthScreen() }"
-      >
-        <span><i [class]="item.icon"></i></span>
-        @if (widthScreen() || !statusMenue()) {
-          <span>{{ item.name | translate }}</span>
-        }
-      </li>
+    <li (click)="onCloselMenue()" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+      [routerLink]="item.route" [ngClass]="{ collpasedMenue: statusMenue() && !widthScreen() }">
+      <span><i [class]="item.icon"></i></span>
+      @if (widthScreen() || !statusMenue()) {
+      <span>{{ item.name | translate }}</span>
+      }
+    </li>
     }
   </ul>
 </section>
@@ -39,9 +28,9 @@
   <button (click)="visibelform.set(true)" class="work_day_btn">Work Day</button>
   <app-form-work-days [(visible)]="visibelform"></app-form-work-days>
   @if (widthScreen() || !statusMenue()) {
-    <div class="card">
-      <img width="100" src="/assets/Img/NAME-GOLD.svg" alt="logo" />
-      <p>{{ 'features_company' | translate }}</p>
-    </div>
+  <div class="card">
+    <img width="100" src="/assets/Img/NAME-GOLD.svg" alt="logo" />
+    <p>{{ 'features_company' | translate }}</p>
+  </div>
   }
 </div>
