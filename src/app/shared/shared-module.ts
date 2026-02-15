@@ -17,6 +17,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
 import { ConfirmationDelete } from './confirmation-delete/confirmation-delete';
 import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 
 @NgModule({
@@ -41,7 +42,7 @@ import { ToastModule } from 'primeng/toast';
     TranslateModule,
     ToastModule
   ],
-  exports:[
+  exports: [
     Header,
     Loader,
     TopHeader,
@@ -54,8 +55,9 @@ import { ToastModule } from 'primeng/toast';
     Footer
   ],
 
-  providers:[
-        DatePipe
+  providers: [
+    DatePipe,
+    MessageService
   ]
 
 })

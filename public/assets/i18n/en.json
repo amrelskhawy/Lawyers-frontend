@@ -68,6 +68,12 @@
   "Reservations": "Reservations",
   "done": "The operation was completed successfully.",
   "Moderators": "Moderators",
-    "email":"Email"
-
+  "email": "Email",
+  "API_MESSAGES": {
+    "SERVICE_UPDATED_SUCCESS": "Service Updated Successfully",
+    "SERVICES_RETRIEVED_SUCCESS": "Services Retrieved Successfully",
+    "SERVICE_RETRIEVED_SUCCESS": "Service Retrieved Successfully",
+    "SERVICE_CREATED_SUCCESS": "Service Created Successfully",
+    "SERVICE_DELETED_SUCCESS": "Service Deleted Successfully"
+  }
 }

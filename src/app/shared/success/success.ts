@@ -12,7 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class Success {
   private core = inject(Core);
   private messageService = inject(MessageService);
-constructor(private translate: TranslateService){}
+  constructor(private translate: TranslateService) { }
   ngOnInit() {
     this.core._Sussess.asObservable().subscribe((res: any) => {
       if (res) {
@@ -23,8 +23,8 @@ constructor(private translate: TranslateService){}
 
   showSuccess(message: string) {
     this.messageService.add({
-      severity:message,
-      summary:message,
+      severity: message,
+      summary: message,
       life: 3000,
     });
   }
