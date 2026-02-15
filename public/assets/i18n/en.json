@@ -61,12 +61,13 @@
   "Procedures": "Procedures",
   "Work_Day": "Work Day",
   "read_more": "→ Read More",
-    "details_servies":"Details Servies",
-      "date":"at",
-  "startTime":"tartTim",
-  "endTime":"endTime",
-  "Reservations":"Reservations"
-
-
+  "details_servies": "Details Servies",
+  "date": "at",
+  "startTime": "tartTim",
+  "endTime": "endTime",
+  "Reservations": "Reservations",
+  "done": "The operation was completed successfully.",
+  "Moderators": "Moderators",
+    "email":"Email"
 
 }
