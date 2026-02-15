@@ -70,7 +70,6 @@ export class FormWorkDays implements OnInit {
     };
     this.Data.patch('workdays', payload).subscribe({
       next: (res) => {
-        this.Core._Sussess.next(false)
       },
     });
   }
