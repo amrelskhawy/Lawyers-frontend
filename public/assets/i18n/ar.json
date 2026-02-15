@@ -39,7 +39,7 @@
   "logout": "تسجيل الخروج",
   "username": "اسم المستخدم",
   "add_service": "إضافة خدمة",
-  "edit_servies": "التعديل علي الخدمة",
+  "edit_servies":"التعديل علي الخدمة",
   "add_day_holiday": "أضافة يوم أجازة",
   "Date": "التاريخ",
   "name_ar": "الأسم بالعربي",
@@ -64,6 +64,7 @@
   "details_servies":"تفاصيل الخدمة",
   "date":"التاريخ",
   "startTime":"وقت البداية",
-  "endTime":"وقت النهاية"
+  "endTime":"وقت النهاية",
+  "Reservations":"حجوزات"
 
 }

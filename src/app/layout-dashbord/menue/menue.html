@@ -12,7 +12,7 @@
       [routerLink]="item.route" [ngClass]="{ collpasedMenue: statusMenue() && !widthScreen() }">
       <span><i [class]="item.icon"></i></span>
       @if (widthScreen() || !statusMenue()) {
-      <span>{{ item.name | translate }}</span>
+      <span>{{item.name | translate}}</span>
       }
     </li>
     }
@@ -31,7 +31,7 @@
   @if (widthScreen() || !statusMenue()) {
   <div class="card">
     <img width="100" src="/assets/Img/NAME-GOLD.svg" alt="logo" />
-    <p>{{ 'features_company' | translate }}</p>
+    <p>{{'features_company' | translate }}</p>
   </div>
   }
 </div>

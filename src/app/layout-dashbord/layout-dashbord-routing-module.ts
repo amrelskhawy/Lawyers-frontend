@@ -3,9 +3,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Users } from './users/users';
 import { Content } from './content/content';
-import { WorkDays } from './work-days/work-days';
 import { Holidays } from './holidays/holidays';
 import { AddServies } from './add-servies/add-servies';
+import { Reservations } from './reservations/reservations';
 
 const routes: Routes = [
   {
@@ -15,7 +15,7 @@ const routes: Routes = [
     children: [
       { path: '', component: Users },
       { path: 'addservies', component: AddServies },
-      { path: 'workdays', component: WorkDays },
+       { path: 'Reservations', component: Reservations },
       { path: 'Holidays', component: Holidays },
     ],
   },

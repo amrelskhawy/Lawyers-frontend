@@ -71,9 +71,9 @@ export class Menue implements OnInit {
         route: '/dashboard/content/addservies',
       },
       {
-        name: 'work_days',
-        icon: 'fa-solid fa-calendar',
-        route: '',
+        name: 'Reservations',
+        icon: 'fa-solid fa-business-time',
+        route: '/dashboard/content/Reservations',
       },
       {
         name: 'holidays_Day',

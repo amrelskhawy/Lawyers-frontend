@@ -16,6 +16,7 @@ import { Translation } from './translation/translation';
 import { TranslateModule } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
 import { ConfirmationDelete } from './confirmation-delete/confirmation-delete';
+import { ToastModule } from 'primeng/toast';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { ConfirmationDelete } from './confirmation-delete/confirmation-delete';
     SharedRoutingModule,
     DrawerModule,
     TableModule,
-    TranslateModule
+    TranslateModule,
+    ToastModule
   ],
   exports:[
     Header,

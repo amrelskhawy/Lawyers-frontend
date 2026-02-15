@@ -4,7 +4,6 @@ import { LayoutDashbordRoutingModule } from './layout-dashbord-routing-module';
 import { Menue } from './menue/menue';
 import { Content } from './content/content';
 import { Users } from './users/users';
-import { WorkDays } from './work-days/work-days';
 import { Holidays } from './holidays/holidays';
 import { SharedModule } from '../shared/shared-module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -21,9 +20,10 @@ import { TopGrid } from './top-grid/top-grid';
 import { FormWorkDays } from './form-work-days/form-work-days';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { ShowDataInDilog } from './add-servies/show-data-in-dilog/show-data-in-dilog';
+import { Reservations } from './reservations/reservations';
 
 @NgModule({
-  declarations: [Menue, Content, Users, WorkDays, Holidays, AddServies, Formservies, FormHoldays, TopGrid, FormWorkDays, ShowDataInDilog],
+  declarations: [Menue, Content, Users, Holidays, AddServies, Formservies, FormHoldays, TopGrid, FormWorkDays, ShowDataInDilog, Reservations],
   imports: [
     CommonModule,
     LayoutDashbordRoutingModule,

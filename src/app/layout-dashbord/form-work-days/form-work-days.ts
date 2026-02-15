@@ -17,21 +17,12 @@ export class FormWorkDays implements OnInit {
   constructor(
     private Data: Data,
     private Core:Core
-  ) {
-    this.debounceSubmitTime();
-  }
+  ) {}
 
   @Input() visible: boolean = false;
   @Output() visibleChange = new EventEmitter<boolean>();
   data = signal<any>([]);
   updateData = signal<any>([]);
-  private debounceSubmit = new Subject<void>();
-
-  debounceSubmitTime() {
-    this.debounceSubmit.pipe(debounceTime(1500)).subscribe(() => {
-      this.onSubmitData();
-    });
-  }
 
   onClose() {
     this.visible = false;
@@ -54,9 +45,6 @@ export class FormWorkDays implements OnInit {
         item.id === day.id ? { ...item, startTime: day.startTime, endTime: day.endTime } : item,
       );
     });
-    if (day.startTime && day.endTime) {
-      this.debounceSubmit.next();
-    }
   }
 
   onToggleChange(event: any, day: any) {
@@ -74,7 +62,6 @@ export class FormWorkDays implements OnInit {
         return item;
       });
     });
-    this.onSubmitData();
   }
 
   onSubmitData() {
