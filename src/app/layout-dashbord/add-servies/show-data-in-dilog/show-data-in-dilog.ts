@@ -25,6 +25,7 @@ export class ShowDataInDilog implements OnInit {
 
   closeDialog() {
     this.visible = false;
+        this.visibleChange.emit(false);
   }
 
   getcuurentLangauage() {

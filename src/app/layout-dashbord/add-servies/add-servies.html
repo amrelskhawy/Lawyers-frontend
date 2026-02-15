@@ -4,11 +4,13 @@
 <app-formservies (ResSuccess)="onHandelRespnseProccing()" [objdata]="objdata()"
   [(visible)]="visibelform"></app-formservies>
 
+<app-show-data-in-dilog (visibleChange)="ResetForm()" [(visible)]="visibelAllData" [objdata]="objdata()"></app-show-data-in-dilog>
 
 <app-confirmation-delete (handelstatusConfirmation)="onHandelStatusConfirmation($event)"
+
   [visibelConfirme]="visibelConfirme()"></app-confirmation-delete>
 
-<div class="services-table-wrapper">
+<div class="table-wrapper">
   <app-tabel [data]="data()" [bodytabel]="bodytabel()">
     <ng-template let-item>
       <div class="action-btn">
@@ -17,6 +19,7 @@
         </button>
 
         <button (click)="onDelete(item)" class="delete-btn"><i class="fa-solid fa-trash"></i></button>
+        <button (click)="onpatchData(item)" class="show_data"><i class="fa-solid fa-eye"></i></button>
       </div>
     </ng-template>
   </app-tabel>

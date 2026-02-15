@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Data } from '../../../core/Servies/data';
 
 @Component({
   selector: 'app-form-holdays',
@@ -8,7 +9,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrl: './form-holdays.scss',
 })
 export class FormHoldays implements OnInit {
-  constructor(private FB: FormBuilder) {}
+  constructor(
+    private FB: FormBuilder,
+    private Data: Data,
+  ) {}
 
   ngOnInit(): void {
     this.createForm();
@@ -17,15 +21,14 @@ export class FormHoldays implements OnInit {
   //************************************Varibels***************************************//
   @Input() visible: boolean = false;
   @Output() visibleChange = new EventEmitter<boolean>();
+  @Output() ResponseSuccess = new EventEmitter<boolean>();
   Form = signal<FormGroup>(new FormGroup({}));
   //************************************Varibels***************************************//
 
-
-
-    //************************************Implemantion Methods***************************************//
+  //************************************Implemantion Methods***************************************//
   onClose() {
     this.visible = false;
-        this.Form().reset()
+    this.Form().reset();
     this.visibleChange.emit(false);
   }
 
@@ -49,9 +52,35 @@ export class FormHoldays implements OnInit {
       this.Form().markAllAsTouched();
       return;
     }
+    const rawData = this.Form().value;
+    const formatTime = (date: any) => {
+      if (!date || !(date instanceof Date)) return date;
+
+      return date.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true,
+      });
+    };
+
+    const dataToSend = {
+      ...rawData,
+      startTime: formatTime(rawData.startTime),
+      endTime: formatTime(rawData.endTime),
+    };
+
+    this.Data.post('holidays', dataToSend).subscribe((res) => {
+      this.HandelResponseSuccess()
+    });
   }
 
-    getControlName(controlName: string) {
+  HandelResponseSuccess() {
+    this.Form().reset();
+    this.onClose();
+    this.ResponseSuccess.emit(true);
+  }
+
+  getControlName(controlName: string) {
     return this.Form().get(controlName);
   }
   //************************************Implemantion Methods***************************************//

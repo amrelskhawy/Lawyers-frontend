@@ -10,9 +10,9 @@
     <div class="wrapper-data">
       <img height="70" width="70" src="/assets/Img/LOGO-GOLD.svg" alt="Logo" class="logo-header" />
       <div class="content-obj-data">
-         <h2>{{getcuurentLangauage()=="ar"?objItem().name_ar:objItem().name_en}}</h2>
+         <h2>{{getcuurentLangauage()=="ar"?objItem().name_ar:objItem()?.name_en}}</h2>
         <p>
-         {{getcuurentLangauage()=="ar"?objItem().description_ar:objItem().description_en}}
+         {{getcuurentLangauage()=="ar"?objItem().description_ar:objItem()?.description_en}}
         </p>
 
         <button class="btn-close-dilog" (click)="closeDialog()">

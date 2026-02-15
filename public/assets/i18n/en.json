@@ -60,5 +60,12 @@
   "price": "price",
   "Procedures": "Procedures",
   "Work_Day": "Work Day",
-  "read_more": "→ Read More"
+  "read_more": "→ Read More",
+    "details_servies":"Details Servies",
+      "date":"at",
+  "startTime":"tartTim",
+  "endTime":"endTime"
+
+
+
 }

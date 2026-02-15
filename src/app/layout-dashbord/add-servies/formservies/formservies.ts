@@ -23,10 +23,14 @@ export class Formservies {
   @Output() visibleChange = new EventEmitter<boolean>();
   @Output() ResSuccess = new EventEmitter<boolean>();
   Form = signal<FormGroup>(new FormGroup({}));
-  objData = signal<any>({});
+  objData = signal<any>(null);
 
   @Input()
   set objdata(value: any) {
+if (!value) {
+    this.Form().reset();
+    return;
+  }
     this.objData.set(value);
     this.Form().patchValue({
       name_ar: value.name_ar,

@@ -60,5 +60,10 @@
   "price": "السعر",
   "Procedures": "إجراءات",
   "Work_Day": "أيام العمل",
-  "read_more": "→ قراءة المزيد"
+  "read_more": "→ قراءة المزيد",
+  "details_servies":"تفاصيل الخدمة",
+  "date":"التاريخ",
+  "startTime":"وقت البداية",
+  "endTime":"وقت النهاية"
+
 }
