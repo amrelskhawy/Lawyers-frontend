@@ -8,6 +8,77 @@
   [style]="{ width: '90vw', maxWidth: '500px' }"
 >
   <ng-template pTemplate="headless">
-    <h1>iiiiiiiiiiiiiii</h1>
+    <div class="Header-Popup-Modertaors">
+      <div>
+        <h3>{{'Moderators'|translate}}</h3>
+        <p>{{"newModerators"|translate}}</p>
+      </div>
+
+      <img
+        height="100"
+        width="100"
+        src="/assets/Img/LOGO-GOLD.svg"
+        alt="logo"
+        class="header-logo"
+      />
+    </div>
+
+    <div class="content-form">
+      <form [formGroup]="Form()" (ngSubmit)="onSubmit()">
+        <div class="Group">
+          <label>{{ 'name' | translate }}</label>
+          <i class="fa-solid fa-user icon"></i>
+          <input formControlName="name" placeholder="{{ 'name' | translate }}" />
+          <div class="wrapper-error">
+            <small
+              class="error-message"
+              *ngIf="getControlName('name')?.invalid && getControlName('name')?.touched"
+              >{{ 'filed_reqierd' | translate }}</small
+            >
+          </div>
+        </div>
+        <div class="Group">
+          <label>{{ 'email' | translate }}</label>
+          <i class="fa-solid fa-envelope icon"></i>
+          <input formControlName="email" placeholder="{{ 'email' | translate }}" />
+          <div class="wrapper-error">
+            <small
+              class="error-message"
+              *ngIf="getControlName('email')?.invalid && getControlName('email')?.touched"
+              >{{ 'filed_reqierd' | translate }}</small
+            >
+          </div>
+        </div>
+        <div class="Group">
+          <label>{{ 'password' | translate }}</label>
+          <i
+            (click)="togglePasswordVisibility()"
+            class="fa-solid icon"
+            [class.fa-eye]="showPassword()"
+            [class.fa-eye-slash]="!showPassword()"
+          ></i>
+          <input
+            formControlName="password"
+            placeholder="{{ 'password' | translate }}"
+            [type]="showPassword() ? 'text' : 'password'"
+          />
+
+          <div class="wrapper-error">
+            <small
+              class="error-message"
+              *ngIf="getControlName('password')?.invalid && getControlName('password')?.touched"
+              >{{ 'filed_reqierd' | translate }}</small
+            >
+          </div>
+        </div>
+
+        <div class="Group">
+          <button class="btn-submit" type="submit">{{ 'submit' | translate }}</button>
+        </div>
+      </form>
+      <button type="button" class="btn-close-dilog" (click)="closeDialog()">
+        {{ 'close' | translate }}
+      </button>
+    </div>
   </ng-template>
 </p-dialog>

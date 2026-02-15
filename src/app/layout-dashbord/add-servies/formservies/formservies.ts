@@ -27,10 +27,10 @@ export class Formservies {
 
   @Input()
   set objdata(value: any) {
-if (!value) {
-    this.Form().reset();
-    return;
-  }
+    if (!value) {
+      this.Form().reset();
+      return;
+    }
     this.objData.set(value);
     this.Form().patchValue({
       name_ar: value.name_ar,

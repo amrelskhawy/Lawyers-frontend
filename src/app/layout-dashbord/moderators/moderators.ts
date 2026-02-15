@@ -1,6 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { Data } from '../../core/Servies/data';
 import { TranslateService } from '@ngx-translate/core';
+import { IModerators } from '../../core/Models/Moderators.model';
 
 @Component({
   selector: 'app-moderators',
@@ -18,13 +19,22 @@ export class Moderators implements OnInit {
     private Data: Data,
     private translate: TranslateService,
   ) {}
-  data = signal<any[]>([]);
-  bodytabel = signal<any>({});
+
+  data = signal<IModerators[]>([]);
+  bodytabel = signal<
+    {
+      key: string;
+      value: string;
+    }[]
+  >([]);
   visibelform = signal<boolean>(false);
+  visibelConfirme = signal<boolean>(false);
+  objdata = signal<IModerators | null>(null);
+
+
 
   getData() {
-    this.Data.get('moderators').subscribe((res: any) => {
-      console.log(res);
+    this.Data.get<IModerators[]>('moderators').subscribe((res) => {
       const formattedData = res.map((item: any, index: number) => ({
         ...item,
         index: index + 1,
@@ -44,5 +54,22 @@ export class Moderators implements OnInit {
     this.bodytabel.set(apiData);
   }
 
-  onDelete(item: any) {}
+  HandelResponseSuccess() {
+    this.getData();
+    this.visibelform.set(false);
+  }
+
+    onDelete(item: IModerators) {
+      this.visibelConfirme.set(true);
+      this.objdata.set(item)
+    }
+
+    onHandelStatusConfirmation(event: string) {
+      this.visibelConfirme.set(false);
+      if (event == 'delete') {
+        this.Data.delete(`moderators/${this.objdata()?.id}`).subscribe((res) => {
+          this.getData();
+        });
+      }
+    }
 }

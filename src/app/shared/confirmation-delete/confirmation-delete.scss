@@ -56,18 +56,16 @@
   background-color: var(--golden-yellow);
   border:5px;
   border: 1px solid var(--bright-gold);
-  margin-top: 30px;
   padding: 10px;
   border-radius: 5px;
 }
 
 
 .btn-confirmed{
-margin-top: 30px;
 display: flex;
 gap: 10px;
 position: absolute;
-bottom: 15px;
+bottom: 26px;
 width: 100%;
 button{
   width: 20%;
@@ -111,6 +109,7 @@ background-color: var(--vivid-green);
 }
 
 .btn-confirmed{
+  margin-top: 20px;
   button{
     width: 30%;
   }

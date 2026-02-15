@@ -68,7 +68,10 @@
   "Reservations": "حجوزات",
   "done": "تم تنفيذ العملية بنجاح",
   "Moderators": "المديرون",
+  "newModerators":"أضافة مديرون جدد",
+  "password":"كلمة المرور",
   "email": "البريد الإلكتروني",
+  "role":"دور",
   "API_MESSAGES": {
     "SERVICE_UPDATED_SUCCESS": "تم تحديث الخدمه بنجاح",
     "SERVICES_RETRIEVED_SUCCESS": "تم استرجاع الخدمات بنجاح",

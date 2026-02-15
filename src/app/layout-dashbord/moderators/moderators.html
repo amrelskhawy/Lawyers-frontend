@@ -1,7 +1,11 @@
 
 <app-top-grid (visibelformadd)="visibelform.set(true)"></app-top-grid>
 
+<app-form (success)="HandelResponseSuccess()" [(visible)]="visibelform"></app-form>
+<app-confirmation-delete [visibelConfirme]="visibelConfirme()" (handelstatusConfirmation)="onHandelStatusConfirmation($event)"></app-confirmation-delete>
 
+
+<div class="table-wrapper">
   <app-tabel [data]="data()" [bodytabel]="bodytabel()">
     <ng-template let-item>
       <div class="action-btn">
@@ -9,3 +13,4 @@
       </div>
     </ng-template>
   </app-tabel>
+</div>
