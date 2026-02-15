@@ -68,6 +68,8 @@
   "Reservations": "Reservations",
   "done": "The operation was completed successfully.",
   "Moderators": "Moderators",
-    "email":"Email"
+    "email":"Email",
+    "role":"Role"
+
 
 }

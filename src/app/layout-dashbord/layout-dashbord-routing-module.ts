@@ -6,6 +6,7 @@ import { Content } from './content/content';
 import { Holidays } from './holidays/holidays';
 import { AddServies } from './add-servies/add-servies';
 import { Reservations } from './reservations/reservations';
+import { Moderators } from './moderators/moderators';
 
 const routes: Routes = [
   {
@@ -13,9 +14,10 @@ const routes: Routes = [
     component: Content,
     canActivate:[securityAuthGuard],
     children: [
-      { path: '', component: Users },
+      { path: '', component: Reservations },
+      { path: 'Moderators', component: Moderators },
+      { path: 'users', component: Users },
       { path: 'addservies', component: AddServies },
-       { path: 'Reservations', component: Reservations },
       { path: 'Holidays', component: Holidays },
     ],
   },

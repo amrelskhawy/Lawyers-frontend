@@ -21,9 +21,11 @@ import { FormWorkDays } from './form-work-days/form-work-days';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { ShowDataInDilog } from './add-servies/show-data-in-dilog/show-data-in-dilog';
 import { Reservations } from './reservations/reservations';
+import { Moderators } from './moderators/moderators';
+import { Form } from './moderators/form/form';
 
 @NgModule({
-  declarations: [Menue, Content, Users, Holidays, AddServies, Formservies, FormHoldays, TopGrid, FormWorkDays, ShowDataInDilog, Reservations],
+  declarations: [Menue, Content, Users, Holidays, AddServies, Formservies, FormHoldays, TopGrid, FormWorkDays, ShowDataInDilog, Reservations, Moderators, Form],
   imports: [
     CommonModule,
     LayoutDashbordRoutingModule,
