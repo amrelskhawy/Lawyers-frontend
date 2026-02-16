@@ -71,9 +71,9 @@ export class Menue implements OnInit {
       },
 
       {
-        name: 'users',
+        name: 'Admins',
         icon: 'fa-solid fa-user',
-        route: '/dashboard/content/users',
+        route: '/dashboard/content/admin',
       },
       {
         name: 'services',

@@ -1,0 +1,13 @@
+
+<app-top-grid [page]="'Admin'" (visibelformadd)="visibelform.set(true)"></app-top-grid>
+
+<app-confirmation-delete [visibelConfirme]="visibelConfirme()" (handelstatusConfirmation)="onHandelStatusConfirmation($event)"></app-confirmation-delete>
+<div class="table-wrapper">
+  <app-tabel [data]="data()" [bodytabel]="bodytabel()">
+    <ng-template let-item>
+      <div class="action-btn">
+        <button (click)="onDelete(item)" class="delete-btn"><i class="fa-solid fa-trash"></i></button>
+      </div>
+    </ng-template>
+  </app-tabel>
+</div>

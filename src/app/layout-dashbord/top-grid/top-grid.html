@@ -1,7 +1,9 @@
 <div class="header-grid">
-  <button class="btn-add" (click)="visibelform()">
-    <i class="fa-solid fa-plus"></i> {{ 'add' | translate }}
-  </button>
+  @if(pages()!=='Admin'){
+    <button class="btn-add" (click)="visibelform()">
+      <i class="fa-solid fa-plus"></i> {{ 'add' | translate }}
+    </button>
+  }
 
   <div class="filed-search">
     <input (input)="onSearch($event)" placeholder="{{ 'searchByName' | translate }}" />

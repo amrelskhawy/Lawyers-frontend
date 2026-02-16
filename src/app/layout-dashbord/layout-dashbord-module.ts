@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { LayoutDashbordRoutingModule } from './layout-dashbord-routing-module';
 import { Menue } from './menue/menue';
 import { Content } from './content/content';
-import { Users } from './users/users';
 import { Holidays } from './holidays/holidays';
 import { SharedModule } from '../shared/shared-module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -23,9 +22,10 @@ import { ShowDataInDilog } from './add-servies/show-data-in-dilog/show-data-in-d
 import { Reservations } from './reservations/reservations';
 import { Moderators } from './moderators/moderators';
 import { Form } from './moderators/form/form';
+import { Admins } from './admins/admins';
 
 @NgModule({
-  declarations: [Menue, Content, Users, Holidays, AddServies, Formservies, FormHoldays, TopGrid, FormWorkDays, ShowDataInDilog, Reservations, Moderators, Form],
+  declarations: [Menue, Content, Holidays, AddServies, Formservies, FormHoldays, TopGrid, FormWorkDays, ShowDataInDilog, Reservations, Moderators, Form, Admins],
   imports: [
     CommonModule,
     LayoutDashbordRoutingModule,
