@@ -4,13 +4,24 @@
   (onHide)="onClose()"
   [modal]="true"
   [baseZIndex]="10000"
-  [style]="{ width: '25rem', overflow: 'hidden' }"
+  [style]="{ width: '35rem', overflow: 'hidden' }"
 >
   <ng-template #headless>
     <div class="header-form">
-      <h3>{{ 'add_day_holiday' | translate }}</h3>
-      <img width="100" height="50" src="/assets/Img/NAME-GOLD.svg" alt="logo" />
+      <div>
+        <h3>{{ 'add_day_holiday' | translate }}</h3>
+        <p>{{"ADD_HOLIDAY_DESC"|translate}}</p>
+      </div>
+        <img
+        height="100"
+        width="100"
+        src="/assets/Img/LOGO-GOLD.svg"
+        alt="logo"
+        class="header-logo"
+      />
     </div>
+
+
     <form [formGroup]="Form()" (ngSubmit)="onSubmitData()">
       <div class="Group">
         <label><i class="fa-regular fa-calendar"></i> {{ 'Date' | translate }}</label>
@@ -44,7 +55,7 @@
       </div>
 
       <div class="Group">
-        <label>From</label>
+        <label>{{"from"|translate}}</label>
         <p-datepicker
           formControlName="startTime"
           placeholder="00:00 AM"
@@ -64,7 +75,7 @@
       </div>
 
       <div class="Group">
-        <label>To</label>
+        <label>{{"to"|translate}}</label>
         <p-datepicker
           placeholder="00:00 PM"
           appendTo="body"

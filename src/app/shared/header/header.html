@@ -5,7 +5,6 @@
     </div>
 
     <div class="header-links">
-      @if (!getTokenInsession()) {
         <div>
           <ul>
             <li (click)="onClickListActive('Home')">
@@ -22,15 +21,14 @@
             </li>
           </ul>
         </div>
-      } 
+
     </div>
 
     <div class="btn-header-div">
-      @if (!getTokenInsession()) {
         <button [routerLink]="['/auth/login']" class="btn-header">
           {{ 'AUTH_LOGIN' | translate }}
         </button>
-      }
+      
       <app-translation></app-translation>
     </div>
   </div>

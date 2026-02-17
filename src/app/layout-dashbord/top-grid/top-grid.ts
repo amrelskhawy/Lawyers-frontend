@@ -8,7 +8,7 @@ import { Auth } from './../../core/Servies/auth';
   styleUrl: './top-grid.scss',
 })
 export class TopGrid implements OnInit {
-   constructor(private auth: Auth) {}
+  constructor(private auth: Auth) {}
 
   ngOnInit(): void {
     const user = this.auth.getDecodedToken();
@@ -24,7 +24,7 @@ export class TopGrid implements OnInit {
   pages = signal<string>('');
   @Input()
   set page(value: string) {
-    this.pages.set(value)
+    this.pages.set(value);
   }
 
   processUser(user: any) {

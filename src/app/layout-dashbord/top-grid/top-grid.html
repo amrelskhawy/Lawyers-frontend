@@ -1,5 +1,5 @@
 <div class="header-grid">
-  @if(pages()!=='Admin'){
+  @if (pages() !== 'Admin') {
     <button class="btn-add" (click)="visibelform()">
       <i class="fa-solid fa-plus"></i> {{ 'add' | translate }}
     </button>
@@ -18,10 +18,11 @@
       </h4>
       <p>{{ userData().email }}</p>
     </div>
-    <img height="40" width="40"
+    <img
+      height="40"
+      width="40"
       src="/assets/Img/portrait-young-female-lawyer-smiling-happy-her-workplace-office-lawyer-technologist-professional-face-female-lawyer-legal-consultant-law-firm_785351-3460.avif"
-      alt="hero-section-img" />
+      alt="hero-section-img"
+    />
   </div>
-
-
 </div>

@@ -18,7 +18,7 @@ import { DatePipe } from '@angular/common';
 import { ConfirmationDelete } from './confirmation-delete/confirmation-delete';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
-
+import { SkeletonModule } from 'primeng/skeleton';
 
 @NgModule({
   declarations: [
@@ -40,7 +40,8 @@ import { MessageService } from 'primeng/api';
     DrawerModule,
     TableModule,
     TranslateModule,
-    ToastModule
+    ToastModule,
+    SkeletonModule
   ],
   exports: [
     Header,

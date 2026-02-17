@@ -12,10 +12,10 @@ import { TranslateService } from '@ngx-translate/core';
 export class Admins implements OnInit {
   ngOnInit(): void {
     this.getData();
-    this.getDataTabel()
+    this.getDataTabel();
   }
 
- constructor(
+  constructor(
     private Data: Data,
     private translate: TranslateService,
   ) {}
@@ -32,17 +32,16 @@ export class Admins implements OnInit {
   visibelform = signal<boolean>(false);
 
   getData() {
-    this.Data.get<IAdmin[]>('admin/users').subscribe((res)=>{
-          const formattedData = res.map((item: any, index: number) => ({
+    this.Data.get<IAdmin[]>('admin/users').subscribe((res) => {
+      const formattedData = res.map((item: any, index: number) => ({
         ...item,
         index: index + 1,
       }));
       this.data.set(formattedData);
-    })
+    });
   }
 
-
-    getDataTabel() {
+  getDataTabel() {
     let apiData = [
       { key: '#', value: 'index' },
       { key: this.translate.instant('name'), value: 'name' },
@@ -55,16 +54,16 @@ export class Admins implements OnInit {
   }
 
   onDelete(item: any) {
-    this.objdata.set(item)
-          this.visibelConfirme.set(true);
+    this.objdata.set(item);
+    this.visibelConfirme.set(true);
   }
 
-    onHandelStatusConfirmation(event: string) {
-      this.visibelConfirme.set(false);
-      if (event == 'delete') {
-        this.Data.delete(`admin/users/${this.objdata()?.id}`).subscribe((res) => {
-          this.getData();
-        });
-      }
+  onHandelStatusConfirmation(event: string) {
+    this.visibelConfirme.set(false);
+    if (event == 'delete') {
+      this.Data.delete(`admin/users/${this.objdata()?.id}`).subscribe((res) => {
+        this.getData();
+      });
     }
+  }
 }

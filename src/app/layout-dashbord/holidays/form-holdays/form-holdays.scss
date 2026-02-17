@@ -1,1 +1,11 @@
 @use "../../glopalstyles.scss";
+
+.header-form{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+h3{
+  color: var(--accent-gold);
+}

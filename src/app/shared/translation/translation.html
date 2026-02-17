@@ -1,15 +1,6 @@
 <section class="wrapper-langaue">
-  <button class="lang" (click)="switchLanguage(currentLang === 'ar' ? 'en' : 'ar')">
-    <span>{{ currentLang === 'ar' ? 'En' : 'Ar' }}</span>
-    <img
-      height="20"
-      width="30"
-      [src]="
-        currentLang === 'ar'
-          ? '/assets/Img/united-states-rounded-square.png'
-          : '/assets/Img/egypt-flag-02.png'
-      "
-      [alt]="currentLang === 'ar' ? 'English Flag' : 'Arabic Flag'"
-    />
+  <button (click)="switchLanguage(currentLang === 'ar' ? 'en' : 'ar')" class="lang">
+    <i class="fa-solid fa-language"></i> {{ currentLang === 'ar' ? 'English' : 'عربي' }}
+    <i class="fa-solid fa-caret-down"></i>
   </button>
 </section>

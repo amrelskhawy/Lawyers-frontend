@@ -12,7 +12,7 @@ const routes: Routes = [
   {
     path: 'content',
     component: Content,
-    canActivate:[securityAuthGuard],
+    // canActivate:[securityAuthGuard],
     children: [
       { path: '', component: Reservations },
       { path: 'Moderators', component: Moderators },

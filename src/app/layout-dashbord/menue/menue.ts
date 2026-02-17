@@ -66,7 +66,7 @@ export class Menue implements OnInit {
 
       {
         name: 'Moderators',
-        icon: 'fa-solid fa-user',
+        icon: 'fa-solid fa-user-tie',
         route: '/dashboard/content/Moderators',
       },
 

@@ -12,6 +12,20 @@
       <p>{{ 'FOOTER_PROFESSIONAL_STANDARDS' | translate }}</p>
     </div>
 
+  <ul>
+    <h3> {{"work_days"|translate}} <i class="fa-regular fa-clock"></i></h3>
+    @for (item of data(); track $index) {
+      <li>
+        <p><span class="day">{{item.day}}:-</span> {{item.startTime}} - {{item.endTime}}</p>
+      </li>
+    }
+
+    </ul>
+
+
+
+
+
     <ul>
       <h3>{{ 'QUICK_LINKS' | translate }}</h3>
       <li (click)="onClickListActive('Home')">
@@ -35,6 +49,10 @@
       <li><i class="fa-solid fa-envelope"></i> info@saadbaqami.com</li>
       <li><i class="fa-solid fa-location-dot"></i> {{ 'LOCATION_JEDDAH' | translate }}</li>
     </ul>
+
+
+
+
   </div>
   <p class="endDesc">{{ 'COPYRIGHT_TEXT' | translate }}</p>
 </section>

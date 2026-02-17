@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, ContentChild, Input, TemplateRef } from '@angular/core';
+import { Component, ContentChild, Input, signal, TemplateRef } from '@angular/core';
 
 @Component({
   selector: 'app-tabel',
@@ -17,6 +17,8 @@ export class Tabel<T extends object> {
   set data(value: T[]) {
     this.tableData = value ?? [];
   }
+
+
 
   formatCell(key: string, value: any): string {
     let ArraDate = ['createdAt', 'updatedAt'];
