@@ -35,15 +35,20 @@
             <li class="nav-item">
               <a routerLink="/auth/login" (click)="visible = false" class="drawer-link">
                 <i class="fa-solid fa-right-to-bracket"></i>
-                <span>{{ 'NAV_LOGIN' | translate }}</span>
+                <span>{{ 'LOGIN' | translate }}</span>
               </a>
+            </li>
+
+            <li class="nav-item">
+              <i class="fa-solid fa-business-time"></i>
+              <span>{{ 'Book_with_us' | translate }}</span>
             </li>
           </ul>
         </div>
 
         <!-- Footer -->
         <div class="drawer-footer">
-          <div class="user-profile">
+          <!-- <div class="user-profile">
             <div class="user-avatar">
               <i class="fa-regular fa-user"></i>
             </div>
@@ -51,7 +56,8 @@
               <p class="user-name">{{ 'USER_NAME' | translate }}</p>
               <p class="user-role">{{ 'USER_ROLE' | translate }}</p>
             </div>
-          </div>
+          </div> -->
+          <app-translation></app-translation>
           <div class="social-links">
             <i class="fa-brands fa-facebook-f"></i>
             <i class="fa-brands fa-twitter"></i>

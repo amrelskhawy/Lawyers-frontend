@@ -7,7 +7,7 @@
   "NAV_ABOUT": "About Us",
   "NAV_HOW_IT_WORKS": "How it Works",
   "NAV_SERVICES": "Services",
-  "AUTH_LOGIN": "Login",
+  "LOGIN": "Login",
   "reset_password": "reset password",
   "EXCEPTIONAL_SERVICE": "Exceptional Personal Service.",
   "LEGAL_CONSULTANCY_DESC": "We provide comprehensive legal consultations for individuals and companies in KSA, focusing on quality and speed of service",
@@ -81,6 +81,8 @@
   "ADD_HOLIDAY_DESC": "Please enter the holiday details and set the time accurately.",
     "from":"from",
 "to":"To",
+  "Book_with_us":"Book With Us",
+
   "API_MESSAGES": {
     "SERVICE_UPDATED_SUCCESS": "Service Updated Successfully",
     "SERVICES_RETRIEVED_SUCCESS": "Services Retrieved Successfully",

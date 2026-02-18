@@ -26,8 +26,6 @@ ul {
 
   li {
     position: relative;
-
-
     &::before {
       content: '';
       position: absolute;
@@ -38,7 +36,6 @@ ul {
       left: 0;
       transition: width 0.3s ease;
     }
-
     a {
       color: var(--primary-navy);
       text-decoration: none;
@@ -56,7 +53,7 @@ ul {
 .header-links {
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 20px;
 }
 
 .btn-header {
@@ -69,13 +66,15 @@ ul {
   margin-inline-start: 20px;
 }
 
-
-
 .btn-header-div{
   display: flex;
   align-items: center;
   gap: 10px;
 }
+
+
+
+
 
 @media (max-width: 767px) {
   .section-header {
@@ -85,6 +84,15 @@ ul {
 
 @media (min-width: 767px) and (max-width: 1400px) {
   .btn-header {
-    width: 130px;
+    width: 120px;
+      margin-inline-start: 0px;
+  }
+  img{
+    display: none;
+  }
+
+
+  ul {
+    gap: 19px;
   }
 }

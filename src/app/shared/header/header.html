@@ -5,30 +5,32 @@
     </div>
 
     <div class="header-links">
-        <div>
-          <ul>
-            <li (click)="onClickListActive('Home')">
-              <a>{{ 'NAV_HOME' | translate }}</a>
-            </li>
-            <li (click)="onClickListActive('About')">
-              <a>{{ 'NAV_ABOUT' | translate }}</a>
-            </li>
-            <li (click)="onClickListActive('HowWork')">
-              <a>{{ 'NAV_HOW_IT_WORKS' | translate }}</a>
-            </li>
-            <li (click)="onClickListActive('Services')">
-              <a>{{ 'NAV_SERVICES' | translate }}</a>
-            </li>
-          </ul>
-        </div>
-
+      <div>
+        <ul>
+          <li (click)="onClickListActive('Home')">
+            <a>{{ 'NAV_HOME' | translate }}</a>
+          </li>
+          <li (click)="onClickListActive('About')">
+            <a>{{ 'NAV_ABOUT' | translate }}</a>
+          </li>
+          <li (click)="onClickListActive('HowWork')">
+            <a>{{ 'NAV_HOW_IT_WORKS' | translate }}</a>
+          </li>
+          <li (click)="onClickListActive('Services')">
+            <a>{{ 'NAV_SERVICES' | translate }}</a>
+          </li>
+        </ul>
+      </div>
     </div>
 
+
     <div class="btn-header-div">
-        <button [routerLink]="['/auth/login']" class="btn-header">
-          {{ 'AUTH_LOGIN' | translate }}
-        </button>
-      
+      <button [routerLink]="['/auth/login']" class="btn-header">{{"Book_with_us"|translate}}</button>
+
+      <button [routerLink]="['/auth/login']" class="btn-header">
+        {{ 'LOGIN' | translate }}
+      </button>
+
       <app-translation></app-translation>
     </div>
   </div>

@@ -7,7 +7,7 @@
   "NAV_ABOUT": "من نحن",
   "NAV_HOW_IT_WORKS": "كيف يعمل",
   "NAV_SERVICES": "الخدمات",
-  "AUTH_LOGIN": "دخول",
+  "LOGIN": "دخول",
   "reset_password":"هل نسيت كلمة المرور؟",
   "EXCEPTIONAL_SERVICE": "خدمة شخصية استثنائية.",
   "LEGAL_CONSULTANCY_DESC": "نقدم استشارات قانونية شاملة للأفراد والشركات في المملكة العربية السعودية مع التركيز على الجودة والسرعة في الخدمة",
@@ -81,7 +81,7 @@
   "ADD_HOLIDAY_DESC": "يرجى إدخال تفاصيل الإجازة وتحديد الوقت بدقة.",
   "from":"من",
   "to":"إلي",
-
+  "Book_with_us":"أحجز معنا",
   "API_MESSAGES": {
     "SERVICE_UPDATED_SUCCESS": "تم تحديث الخدمه بنجاح",
     "SERVICES_RETRIEVED_SUCCESS": "تم استرجاع الخدمات بنجاح",

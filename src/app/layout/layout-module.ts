@@ -15,6 +15,7 @@ import { HowItWork } from './Components/how-it-work/how-it-work';
 import { TranslateModule } from '@ngx-translate/core';
 import { DeatailsDescrption } from './Components/slider-serves/deatails-descrption/deatails-descrption';
 import { DialogModule } from 'primeng/dialog';
+import { Reservations } from './Components/reservations/reservations';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { DialogModule } from 'primeng/dialog';
     Servies,
     SliderServes,
     HowItWork,
-    DeatailsDescrption
+    DeatailsDescrption,
+    Reservations
   ],
   imports: [
     TranslateModule,
