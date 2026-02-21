@@ -1,1 +1,48 @@
-<p>reservations works!</p>
+<div class="calendar-wrapper">
+  <div class="calendar-nav">
+    <button (click)="changeMonth(-1)" class="nav-btn">الشهر السابق</button>
+    <h2>{{ displayDate | date: 'MMMM yyyy' }}</h2>
+    <button (click)="changeMonth(1)" class="nav-btn">الشهر التالي</button>
+  </div>
+
+  <div class="calendar-grid">
+    <div class="day-header" *ngFor="let day of ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']">
+      {{ day }}
+    </div>
+
+    <div class="day-cell" *ngFor="let d of daysInMonth">
+      <div class="booking-container">
+        <div
+          (click)="onShowDilogBooking(book)"
+          class="booking-item"
+          *ngFor="let book of getBookingsForDay(d)"
+        >
+          <div class="header-book">
+            <p class="date"><i class="fa-solid fa-clock"></i>{{ book.startTime }}</p>
+            <span class="day-number">{{ d }}</span>
+          </div>
+          <div class="content-book">
+            <p class="booking-name">{{ book.name }}</p>
+            <p>{{ getnameServies(book.service) }}</p>
+            <p class="booking-phone">{{ book.phone_number }}</p>
+          </div>
+          <div class="status-btn" [ngClass]="book.status?.toLowerCase()">
+            <i
+              class="fa-solid"
+              [ngClass]="{
+                'fa-check-circle':
+                  book.status?.toLowerCase() === 'completed' ||
+                  book.status?.toLowerCase() === 'confirmed',
+                'fa-times-circle': book.status?.toLowerCase() === 'cancelled',
+                'fa-clock': book.status?.toLowerCase() === 'pending',
+              }"
+            ></i>
+            {{ book.status }} <span class="gemini-dot"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-dilog-booking [(visible)]="visibelDilogBooking" [obj]="obj()"></app-dilog-booking>

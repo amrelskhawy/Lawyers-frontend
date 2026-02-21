@@ -11,8 +11,6 @@ export class Tabel<T extends object> {
   constructor(private datePipe: DatePipe) {}
   tableData: T[] = [];
   @Input() bodytabel: any[] = [];
-  @Input() rows: number = 10;
-
   @Input()
   set data(value: T[]) {
     this.tableData = value ?? [];

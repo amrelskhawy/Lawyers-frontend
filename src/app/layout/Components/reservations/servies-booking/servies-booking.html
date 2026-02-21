@@ -1,0 +1,20 @@
+<div class="wrapper-servies-booking">
+  <div class="header-booking">
+    <i class="fa-solid fa-scale-balanced"></i>
+    <div>
+      <h3>{{"SELECT_SERVICE"|translate}}</h3>
+      <p>{{"SELECT_SERVICE_DESC"|translate}}</p>
+    </div>
+  </div>
+
+  <div class="content-servies-booking">
+    @for (item of servise(); track item.id) {
+      <button [ngClass]="{'active-servies':item.id == selectServies().id}" class="card" (click)="onSelctServies(item)">
+        <img height="70" width="70" src="/assets/Img/unnamed.jpg" />
+        <p>{{ getcuurentLangauage() == 'ar' ? item.name_ar : item.name_en }}</p>
+      </button>
+    }
+  </div>
+      <button (click)="onNextSteap()" class="next-btn">{{"NEXT_BTN"|translate}}</button>
+
+</div>

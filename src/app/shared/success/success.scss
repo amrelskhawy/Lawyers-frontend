@@ -2,9 +2,14 @@
     background: linear-gradient(135deg, var(--accent-gold) 0%, darken(#c5a059, 10%) 100%);
 color: var(--white-color);
 border-radius: 10px;
-z-index: 88888888888;
+z-index: 88888888888 !important;
 }
 
+
+
+::ng-deep .p-toast-message-content {
+  z-index: 88888888888 !important;
+}
 
 ::ng-deep .p-toast-message-icon{
  height: 30px;

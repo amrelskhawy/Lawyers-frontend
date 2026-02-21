@@ -19,14 +19,16 @@
           <li (click)="onClickListActive('Services')">
             <a>{{ 'NAV_SERVICES' | translate }}</a>
           </li>
+
+           <li [routerLink]="['/booking']">
+            <a>{{"Book_with_us"|translate}}</a>
+          </li>
         </ul>
       </div>
     </div>
 
 
     <div class="btn-header-div">
-      <button [routerLink]="['/auth/login']" class="btn-header">{{"Book_with_us"|translate}}</button>
-
       <button [routerLink]="['/auth/login']" class="btn-header">
         {{ 'LOGIN' | translate }}
       </button>

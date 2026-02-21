@@ -1,0 +1,132 @@
+.wrapper-information-booking {
+  padding: 20px;
+  background-color: var(--bg-cream-light);
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.header-booking{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  span{
+    display: inline-block;
+    width: 20%;
+    height: 1.5px;
+    background-color: var(--accent-gold);
+  }
+}
+
+
+
+.content-booking {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  .card {
+    position: relative;
+    border: 1px solid var(--golden-bronze);
+    background-color: var(--white-color);
+    box-shadow:
+      4px 0 15px rgba(0, 0, 0, 0.05),
+      -4px 0 15px rgba(0, 0, 0, 0.05);
+    padding: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+    &::before {
+      content: '';
+      height: 100%;
+      width: 2px;
+      position: absolute;
+      background-color: var(--golden-bronze);
+      inset-inline-end: 0;
+      top: 0;
+      border-radius: 10px;
+    }
+    p:first-child {
+      color: var(--tertiary-color);
+      font-size: 11px;
+    }
+  }
+}
+
+.Status-booking {
+  position: relative;
+  background-color: var(--white-color);
+  border: 1px solid var(--golden-bronze);
+  overflow: hidden;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  &::before {
+    content: '';
+    height: 100%;
+    width: 2px;
+    position: absolute;
+    background-color: var(--golden-bronze);
+    inset-inline-end: 0;
+    top: 0;
+    border-radius: 10px;
+  }
+  .status-booking-p {
+    border-radius: 20px;
+    width: fit-content;
+    padding: 0 10px;
+  }
+}
+
+.desc-booking {
+  background-color: var(--white-color);
+  border: 1px solid var(--golden-bronze);
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.completed {
+  border-inline-end: #5bae7f;
+  background-color: #d1f5d3;
+  color: #5bae7f;
+}
+
+.pending {
+  border-inline-end: #fbc02d;
+  background-color: #fff9c4;
+  color: #fbc02d;
+}
+
+.cancelled {
+  border-inline-end: #ef5350;
+  background-color: #ffcdd2;
+  color: #ef5350;
+}
+
+.Action-booking {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+  .wrapper-btn {
+    display: flex;
+    gap: 10px;
+    button {
+      font-weight: bold;
+    }
+  }
+
+  .confirme {
+    background-color: var(--primary-navy);
+    color: var(--accent-gold);
+  }
+  .close {
+    background-color: var(--white-color);
+    border: 1px solid var(--accent-gold);
+    transition: 0.3s linear;
+    &:hover {
+      background-color: var(--primary-navy);
+      color: var(--white-color);
+      opacity: 0.9;
+    }
+  }
+}

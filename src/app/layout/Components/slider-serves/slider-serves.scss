@@ -12,7 +12,7 @@
   transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
   border: 1px solid rgba(0, 0, 0, 0.03);
-cursor: pointer;
+  cursor: pointer;
   // Initial state styles
   .card-icon {
     margin-bottom: 20px;
@@ -99,12 +99,18 @@ cursor: pointer;
   }
 }
 
+
+.not-data{
+  text-align: center;
+  margin: 10px 0;
+  color: var(--accent-gold);
+}
+
 ::ng-deep .p-carousel-indicator-active .p-carousel-indicator-button {
   background-color: var(--accent-gold) !important;
 }
 
 ::ng-deep .p-button-text.p-button-secondary {
-  // Navigation buttons
   color: var(--white-color) !important;
 
   &:hover {
@@ -131,7 +137,7 @@ cursor: pointer;
 
     .card-content {
       h3 {
-        font-size: .7rem;
+        font-size: 0.7rem;
         margin-bottom: 10px;
       }
 
@@ -142,4 +148,95 @@ cursor: pointer;
       }
     }
   }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.empty-state{
+  text-align: center;
+  margin: 10px 0;
 }

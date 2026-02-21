@@ -1,0 +1,64 @@
+
+.booking {
+  background-color: var(--silver-frost);
+}
+
+.header-steap-booking {
+  text-align: center;
+  margin: auto;
+  padding-top: 30px;
+}
+
+.container {
+  width: 50%;
+  margin-top: 10px;
+}
+.flex-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.new-meeting {
+  background-color: var(--primary-navy);
+  color: var(--white-color);
+  border-radius: 30px;
+  width: fit-content;
+  text-align: center;
+  margin: auto;
+  padding: 10px;
+}
+.span-text {
+  color: var(--accent-gold);
+}
+
+.confirm-booking {
+  color: var(--Cloudy-Sky);
+}
+
+::ng-deep .p-step:has(~ .p-step-active) .p-stepper-separator {
+  background-color: var(--primary-navy) !important;
+}
+
+::ng-deep .p-step-active .p-step-number {
+  background-color: var(--primary-navy) !important;
+  color: var(--white-color) !important;
+}
+
+::ng-deep .p-step-active .p-step-title {
+  color: var(--primary-navy) !important;
+}
+
+::ng-deep .p-button {
+  background-color: var(--primary-navy) !important;
+  margin-top: 20px;
+}
+
+
+
+
+@media(max-width:767px){
+  .container{
+width: 100%;
+  }
+}

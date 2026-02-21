@@ -1,6 +1,6 @@
 @use '../glopalstyles.scss';
-.btn-submit{
-margin-top: 30px;
+.btn-submit {
+  margin-top: 30px;
   border-radius: 30px;
 }
 
@@ -22,11 +22,11 @@ margin-top: 30px;
   }
 }
 
-  img {
-    text-align: center;
-    margin:20px auto;
-    display: block;
-  }
+img {
+  text-align: center;
+  margin: 20px auto;
+  display: block;
+}
 
 .work-day {
   margin-top: 20px;
@@ -49,6 +49,7 @@ margin-top: 30px;
       gap: 3px;
     }
     .time-work {
+      width: 100%;
       gap: 15px;
     }
 
@@ -62,10 +63,9 @@ margin-top: 30px;
   }
 }
 
-
-.footer-workday{
+.footer-workday {
   margin: 10px 0;
-p {
+  p {
     white-space: normal;
     overflow-wrap: anywhere;
     word-break: normal;
@@ -73,15 +73,9 @@ p {
   }
 }
 
-
 ::ng-deep .p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-slider {
   background: var(--black-color) !important;
 }
-
-
-
-
-
 
 @media (max-width: 767px) {
   .work-day {

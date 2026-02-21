@@ -23,9 +23,25 @@ import { Reservations } from './reservations/reservations';
 import { Moderators } from './moderators/moderators';
 import { Form } from './moderators/form/form';
 import { Admins } from './admins/admins';
+import { DilogBooking } from './reservations/dilog-booking/dilog-booking';
 
 @NgModule({
-  declarations: [Menue, Content, Holidays, AddServies, Formservies, FormHoldays, TopGrid, FormWorkDays, ShowDataInDilog, Reservations, Moderators, Form, Admins],
+  declarations: [
+    Menue,
+    Content,
+    Holidays,
+    AddServies,
+    Formservies,
+    FormHoldays,
+    TopGrid,
+    FormWorkDays,
+    ShowDataInDilog,
+    Reservations,
+    Moderators,
+    Form,
+    Admins,
+    DilogBooking,
+  ],
   imports: [
     CommonModule,
     LayoutDashbordRoutingModule,
@@ -38,8 +54,7 @@ import { Admins } from './admins/admins';
     ReactiveFormsModule,
     TooltipModule,
     ToggleSwitchModule,
-    FormsModule
-
+    FormsModule,
   ],
 })
 export class LayoutDashbordModule {}

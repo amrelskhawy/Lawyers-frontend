@@ -34,7 +34,7 @@ export class SliderServes {
 
   getData() {
     this.Data.get('public').subscribe((res: any) => {
-      this.data.set(res.data.services);
+     this.data.set(res.data.services);
     });
   }
 

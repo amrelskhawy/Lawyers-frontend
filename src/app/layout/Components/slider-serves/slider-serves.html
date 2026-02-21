@@ -1,23 +1,41 @@
-<div [dir]="getcuurentLangauage() === 'ar' ? 'rtl' : 'ltr'">
-  <p-carousel [value]="data()" [numVisible]="3" [numScroll]="1" [responsiveOptions]="responsiveOptions">
-    <ng-template let-service #item>
-      <div (click)="showData(service)" class="card animation-duration-1000" pAnimateOnScroll enterClass="my-enter-zoom"
-        leaveClass="my-leave-animation">
-        <div class="card-icon">
-          <i class="fa-solid fa-gavel"></i>
+@if (data().length > 0) {
+  <div [dir]="getcuurentLangauage() === 'ar' ? 'rtl' : 'ltr'">
+    <p-carousel
+      [value]="data()"
+      [numVisible]="3"
+      [numScroll]="1"
+      [responsiveOptions]="responsiveOptions"
+    >
+      <ng-template let-service #item>
+        <div
+          (click)="showData(service)"
+          class="card animation-duration-1000"
+          pAnimateOnScroll
+          enterClass="my-enter-zoom"
+          leaveClass="my-leave-animation"
+        >
+          <div class="card-icon">
+            <i class="fa-solid fa-gavel"></i>
+          </div>
+          <div class="card-content">
+            <h3 class="mb-2 font-bold text-xl">
+              {{ getcuurentLangauage() == 'ar' ? service.name_ar : service.name_en }}
+            </h3>
+            <p class="text-gray-600 mb-4 text-sm leading-relaxed">
+              {{ getServiceDescription(service) }}
+            </p>
+
+            <a class="font-semibold text-sm underline">{{ 'read_more' | translate }}</a>
+          </div>
         </div>
-        <div class="card-content">
-          <h3 class="mb-2 font-bold text-xl">{{getcuurentLangauage()=="ar"?service.name_ar:service.name_en}}</h3>
-          <p class="text-gray-600 mb-4 text-sm leading-relaxed">
-            {{getServiceDescription(service)}}
-          </p>
+      </ng-template>
+    </p-carousel>
+  </div>
+} @else {
+    <div class="empty-state">
+      <h2>خدماتنا قيد التحديث</h2>
+      <p>نحن نعمل على تجهيز قائمة خدماتنا القانونية...</p>
+    </div>
+}
 
-          <a class="font-semibold text-sm underline">{{"read_more"|translate}}</a>
-        </div>
-      </div>
-    </ng-template>
-  </p-carousel>
-</div>
-
-
-<app-deatails-descrption [objData]="objData()"  [(visible)]="visibelData" ></app-deatails-descrption>
+<app-deatails-descrption [objData]="objData()" [(visible)]="visibelData"></app-deatails-descrption>

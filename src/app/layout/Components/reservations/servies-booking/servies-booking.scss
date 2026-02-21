@@ -1,0 +1,78 @@
+.wrapper-servies-booking {
+  background-color: var(--white-color);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.header-booking {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid var(--medium-gray);
+  i {
+    border: 1px solid #fbc02d;
+    background-color: #fff9c4;
+    color: #fbc02d;
+    height: 40px;
+    width: 40px;
+    line-height: 40px;
+    border-radius: 10px;
+  }
+}
+
+.content-servies-booking {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  height: 340px;
+  overflow-y: auto;
+}
+
+.card {
+  background-color: var(--silver-frost);
+  border: 1px solid var(--Platinum);
+  padding: 10px;
+  border-radius: 10px;
+  font-weight: bold;
+  text-align: center;
+  display: block;
+  cursor: pointer;
+  padding: 20px;
+  transition: 0.3s linear;
+  &:hover {
+    background-color: var(--accent-gold);
+    color: var(--white-color);
+  }
+}
+
+img {
+  border-radius: 50%;
+}
+
+
+.next-btn{
+  background-color: var(--primary-navy);
+  border-radius: 30px;
+  color: var(--white-color);
+  width: 20%;
+  margin: 20px;
+}
+
+
+
+.active-servies{
+  background-color: var(--accent-gold);
+  color: var(--white-color) !important;
+}
+
+
+
+
+@media(max-width:767px){
+  .next-btn{
+width: 30%;
+  }
+}

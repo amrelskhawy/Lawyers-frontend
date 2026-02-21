@@ -1,0 +1,62 @@
+<p-dialog
+  maskStyleClass="backdrop-blur-sm"
+  [(visible)]="visible"
+  (onHide)="onClose()"
+  [modal]="true"
+  [baseZIndex]="10000"
+  styleClass="modern-modal"
+  [style]="{ width: '90vw', maxWidth: '500px' }"
+>
+  <ng-template pTemplate="headless">
+    <div class="wrapper-information-booking">
+      <div class="header-booking">
+        <span></span>
+        <h2>{{getcuurentLangauage()=='ar'?dataobj().service.name_ar:dataobj().service.name_en}}</h2>
+        <span></span>
+      </div>
+
+      <div class="content-booking">
+        <div class="card">
+          <p>أسم العميل</p>
+          <p>{{dataobj().name}}</p>
+        </div>
+
+        <div class="card">
+          <p>أيميل العميل</p>
+          <p>{{dataobj().clientEmail}}</p>
+        </div>
+        <div class="card">
+          <p> سعر الخدمه</p>
+          <p>{{dataobj().service.price}}</p>
+        </div>
+        <div class="card">
+          <p>الوقت</p>
+          <p>{{dataobj().startTime}}</p>
+        </div>
+      </div>
+
+      <div class="Status-booking">
+        <p>الحالة</p>
+        <p class="status-booking-p pending">{{dataobj().status}}</p>
+      </div>
+
+      <div class="desc-booking">
+        <p>
+       {{dataobj().service.description_ar}}
+       {{getcuurentLangauage()=='ar'?dataobj().service.description_ar:dataobj().service.description_en}}
+        </p>
+      </div>
+
+      <div class="Action-booking">
+        <div class="wrapper-btn">
+          <button class="cancelled"><i class="fa-solid fa-xmark"></i> Canseld</button>
+          <button (click)="HandelActionBooking('confirm')"  class="confirme"><i class="fa-regular fa-circle-check"></i> Confirmed</button>
+          <button class="completed"><i class="fa-solid fa-star"></i> Completeted</button>
+        </div>
+        <div>
+          <button class="close" (click)="closeDialog()">Close</button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>

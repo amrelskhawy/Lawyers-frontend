@@ -1,7 +1,8 @@
 <p-table
   [value]="tableData"
   [paginator]="true"
-  [rows]="rows"
+  [rowsPerPageOptions]="[5, 10, 20, 50]"
+  [rows]="20"
   stripedRows
   [tableStyle]="{ 'min-width': '50rem' }"
 >
