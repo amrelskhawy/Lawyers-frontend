@@ -20,7 +20,7 @@ export class Menue implements OnInit {
     this.GetDataMenue();
   }
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   @Output() toggelMenue = new EventEmitter<boolean>();
   isOpen = signal<boolean>(true);
@@ -63,59 +63,41 @@ export class Menue implements OnInit {
     if (get_usre) {
       parseUser = JSON.parse(get_usre);
     }
-    if (parseUser.role == 'MODERATOR') {
-        this.ListMenue.set([
-      {
-        name: 'Reservations',
-        icon: 'fa-solid fa-business-time',
-        route: '/dashboard/content',
-      },
 
-      {
-        name: 'services',
-        icon: 'fa-solid fa-gear',
-        route: '/dashboard/content/addservies',
-      },
+    if (parseUser) {
+      this.ListMenue.set([
+        ...(parseUser.role === 'ADMIN'
+          ? [
+            {
+              name: 'Admins',
+              icon: 'fa-solid fa-user',
+              route: '/dashboard/content/admin',
+            },
 
-      {
-        name: 'holidays_Day',
-        icon: 'fa-solid fa-holly-berry',
-        route: '/dashboard/content/Holidays',
-      },
-    ]);
-    }else{
-   this.ListMenue.set([
-      {
-        name: 'Reservations',
-        icon: 'fa-solid fa-business-time',
-        route: '/dashboard/content',
-      },
-
-      {
-        name: 'Moderators',
-        icon: 'fa-solid fa-user-tie',
-        route: '/dashboard/content/Moderators',
-      },
-
-      {
-        name: 'Admins',
-        icon: 'fa-solid fa-user',
-        route: '/dashboard/content/admin',
-      },
-      {
-        name: 'services',
-        icon: 'fa-solid fa-gear',
-        route: '/dashboard/content/addservies',
-      },
-
-      {
-        name: 'holidays_Day',
-        icon: 'fa-solid fa-holly-berry',
-        route: '/dashboard/content/Holidays',
-      },
-    ]);
+            {
+              name: 'Moderators',
+              icon: 'fa-solid fa-user-tie',
+              route: '/dashboard/content/Moderators',
+            },
+          ]
+          : []),
+        {
+          name: 'Reservations',
+          icon: 'fa-solid fa-business-time',
+          route: '/dashboard/content',
+        },
+        {
+          name: 'services',
+          icon: 'fa-solid fa-gear',
+          route: '/dashboard/content/addservies',
+        },
+        {
+          name: 'holidays_Day',
+          icon: 'fa-solid fa-holly-berry',
+          route: '/dashboard/content/Holidays',
+        },
+      ]);
     }
-
 
   }
 

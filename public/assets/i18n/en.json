@@ -111,13 +111,11 @@
   "Thu": "Thursday",
   "Fri": "Friday",
   "Sat": "Saturday",
-
   "COMPLETED": "Completed",
   "CONFIRMED": "Confirmed",
   "CANCELLED": "Cancelled",
   "PENDING": "Pending",
-    "all":"All",
-
+  "all": "All",
   "status": "Status",
   "Email_client": "Email Client",
   "name_client": "Name Client",
@@ -128,6 +126,7 @@
   "welcome_chat": "✨ Hello and welcome! How can I help you?",
   "type_message": "Type your message...",
   "API_MESSAGES": {
+    "USER_LOGGED_IN_SUCCESS": "User Logged In Successfully",
     "SERVICE_UPDATED_SUCCESS": "Service Updated Successfully",
     "SERVICES_RETRIEVED_SUCCESS": "Services Retrieved Successfully",
     "SERVICE_RETRIEVED_SUCCESS": "Service Retrieved Successfully",

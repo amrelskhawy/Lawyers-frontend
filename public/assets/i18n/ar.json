@@ -115,7 +115,7 @@
   "COMPLETED": "مكتمل",
   "CONFIRMED": "مؤكد",
   "CANCELLED": "ملغي",
-  "all":"الكل",
+  "all": "الكل",
   "PENDING": "قيد الانتظار",
   "status": "الحالة",
   "Email_client": "إيميل العميل",
@@ -126,6 +126,7 @@
   "welcome_chat": "✨ أهلاً وسهلاً! كيف أقدر أساعدك؟",
   "Type_message": "اكتب رسالتك...",
   "API_MESSAGES": {
+    "USER_LOGGED_IN_SUCCESS": "تم تسجيل الدخول بنجاح",
     "SERVICE_UPDATED_SUCCESS": "تم تحديث الخدمه بنجاح",
     "SERVICES_RETRIEVED_SUCCESS": "تم استرجاع الخدمات بنجاح",
     "SERVICE_RETRIEVED_SUCCESS": "تم استرجاع الخدمه بنجاح",
