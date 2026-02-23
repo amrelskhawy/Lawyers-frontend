@@ -1,8 +1,25 @@
 @use '../glopalstyles.scss';
 .btn-submit {
-  margin-top: 30px;
-  border-radius: 30px;
+border-radius: 30px;
+margin: 10px 0;
+transition: 0.3s linear;
+&:hover{
+  background-color: var(--primary-navy);
+  opacity: 0.9;
 }
+}
+
+.close-popup-workday{
+  position: absolute;
+    inset-inline-end: 10px;
+    transition: 0.3s linear;
+    &:hover i{
+      background-color: var(--accent-gold);
+      color: var(--white-color);
+    }
+}
+
+
 
 .wrapper-form-work-day {
   padding: 20px;
@@ -64,7 +81,6 @@ img {
 }
 
 .footer-workday {
-  margin: 10px 0;
   p {
     white-space: normal;
     overflow-wrap: anywhere;
@@ -72,6 +88,9 @@ img {
     max-width: 100%;
   }
 }
+
+
+
 
 ::ng-deep .p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-slider {
   background: var(--black-color) !important;

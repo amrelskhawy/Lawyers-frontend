@@ -73,6 +73,4 @@ export class Reservations implements OnInit {
    this.Form().get('startTime')?.patchValue(event.startTime)
   }
 
-
-
 }

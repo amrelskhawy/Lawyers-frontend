@@ -14,7 +14,12 @@
           <h4>Business Canlnder Day</h4>
           <p>Control Business Canlnder Day In The Working</p>
         </div>
+
+        <button class="close-popup-workday" (click)="closeDialog()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
       </div>
+
       <img width="100" src="/assets/Img/NAME-GOLD.svg" alt="logo" />
 
       <div class="work-day">
@@ -46,21 +51,20 @@
           </div>
         }
       </div>
-      <div>
-        <button (click)="onSubmitData()" class="btn-submit">{{ 'submit' | translate }}</button>
-      </div>
-      <br />
+      <button (click)="onSubmitData()" class="btn-submit">
+        {{ 'submit' | translate }} <i class="fa-solid fa-arrow-right-long"></i>
+      </button>
       <div class="footer-workday">
         <h3>{{ 'OFFICE_POLICY_TITLE' | translate }}</h3>
 
         <p>
           {{ 'OFFICE_POLICY_DESC' | translate }}
         </p>
-      </div>
 
-      <button class="btn-close-dilog" (click)="closeDialog()">
-        <i class="fa-solid fa-xmark"></i> {{ 'close' | translate }}
-      </button>
+        <!-- <button class="btn-close-dilog" (click)="closeDialog()">
+          <i class="fa-solid fa-xmark"></i> {{ 'close' | translate }}
+        </button> -->
+      </div>
     </div>
   </ng-template>
 </p-dialog>

@@ -1,13 +1,13 @@
-.header-confirmed{
+.header-confirmed {
   display: flex;
   gap: 10px;
   align-items: center;
   padding: 10px;
   border-bottom: 1px solid var(--medium-gray);
   i {
-    border: 1px solid #fbc02d;
-    background-color: #fff9c4;
-    color: #fbc02d;
+    border: 1px solid var(--golden-sun);
+    background-color: var(--state-attention-border);
+    color: var(--golden-sun);
     height: 40px;
     width: 40px;
     line-height: 40px;
@@ -21,13 +21,13 @@
   overflow: hidden;
 }
 
-.content-confirmed{
+.content-confirmed {
   background-color: var(--silver-frost);
   padding: 20px;
-  margin:  30px;
+  margin: 30px;
   border-radius: 10px;
-      border: 1px solid var(--Platinum);
-  .card{
+  border: 1px solid var(--Platinum);
+  .card {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -36,18 +36,15 @@
   }
 }
 
-
-.footer-confirmed{
-    border: #fbc02d;
-  background-color: #fff9c4;
+.footer-confirmed {
+  border: var(--golden-sun);
+  background-color: var(--state-attention-border);
   padding: 10px;
   margin: 30px;
-    border-radius: 10px;
+  border-radius: 10px;
 }
 
-
-
-button{
+button {
   background-color: var(--green-color);
   color: var(--white-color);
   border-radius: 30px;
@@ -55,10 +52,17 @@ button{
   width: 30%;
 }
 
-
-
-@media(max-width:767px){
-  .next-btn{
-width: 30%;
+@media (max-width: 767px) {
+  .button{
+    width: 30%;
   }
 }
+
+
+
+@media (min-width: 767px) and (max-width:1200px) {
+  .button{
+    width: 30%;
+  }
+}
+

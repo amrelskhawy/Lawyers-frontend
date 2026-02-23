@@ -1,5 +1,5 @@
 
-<app-top-grid (visibelformadd)="visibelform.set(true)"></app-top-grid>
+<app-top-grid (search)="onSearch($event)" (visibelformadd)="visibelform.set(true)"></app-top-grid>
 
 <app-form (success)="HandelResponseSuccess()" [(visible)]="visibelform"></app-form>
 <app-confirmation-delete [visibelConfirme]="visibelConfirme()" (handelstatusConfirmation)="onHandelStatusConfirmation($event)"></app-confirmation-delete>

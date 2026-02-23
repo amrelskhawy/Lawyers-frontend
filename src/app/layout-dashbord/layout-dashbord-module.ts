@@ -24,7 +24,7 @@ import { Moderators } from './moderators/moderators';
 import { Form } from './moderators/form/form';
 import { Admins } from './admins/admins';
 import { DilogBooking } from './reservations/dilog-booking/dilog-booking';
-
+import { SelectModule } from 'primeng/select';
 @NgModule({
   declarations: [
     Menue,
@@ -55,6 +55,7 @@ import { DilogBooking } from './reservations/dilog-booking/dilog-booking';
     TooltipModule,
     ToggleSwitchModule,
     FormsModule,
+    SelectModule
   ],
 })
 export class LayoutDashbordModule {}

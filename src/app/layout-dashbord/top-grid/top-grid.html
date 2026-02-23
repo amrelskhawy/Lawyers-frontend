@@ -13,7 +13,7 @@
   <div class="account-admin" *ngIf="userData()">
     <div class="user-info">
       <h4>
-        {{ userData().displayName }}
+        {{ userData().name }}
         <i *ngIf="!userData().isDerivedName" class="fa-regular fa-user"></i>
       </h4>
       <p>{{ userData().email }}</p>

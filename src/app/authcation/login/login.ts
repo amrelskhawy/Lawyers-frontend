@@ -46,7 +46,8 @@ export class Login implements OnInit {
     }
     this.Data.post('auth/login', this.Form().value).subscribe((res: any) => {
       this.Form().reset();
-      sessionStorage.setItem('token', res.data);
+      sessionStorage.setItem('token', res.data.token);
+      sessionStorage.setItem('user', JSON.stringify(res.data.user));
       this.router.navigate(['/dashboard/content']);
     });
   }

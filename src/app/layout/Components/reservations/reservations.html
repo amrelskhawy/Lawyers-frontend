@@ -11,9 +11,9 @@
     <p-stepper [(value)]="currentStep" class="basis-[50rem]">
       <p-step-list>
         <p-step [value]="1">{{ 'NAV_SERVICES' | translate }}</p-step>
-        <p-step [value]="2">{{ 'data_information' | translate }}</p-step>
-        <p-step [value]="3">{{ 'SELECT_DATE_TIME' | translate }}</p-step>
-        <p-step [value]="4">{{ 'confirme_booking' | translate }}</p-step>
+        <p-step [value]="2" [disabled]="!Form().get('serviceId')?.value">{{ 'data_information' | translate }}</p-step>
+        <p-step [value]="3" [disabled]="!Form().get('clientEmail')?.value">{{ 'SELECT_DATE_TIME' | translate }}</p-step>
+        <p-step [value]="4" [disabled]="!Form().get('date')?.value">{{ 'confirme_booking' | translate }}</p-step>
       </p-step-list>
       <p-step-panels>
         <p-step-panel [value]="1">

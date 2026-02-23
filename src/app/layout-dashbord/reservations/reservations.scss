@@ -1,6 +1,7 @@
 .calendar-wrapper {
+  position: relative;
   padding: 20px;
-  background: #fff;
+  background: var(--pure-white);
   height: 700px;
   margin-top: 30px;
   border-radius: 20px;
@@ -11,19 +12,46 @@
   .calendar-nav {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     margin-bottom: 20px;
+    align-items: center;
+    position: sticky;
+    width: 100%;
+    top: 0;
+    background-color: var(--white-color);
 
-    .nav-btn {
-      padding: 10px 20px;
-      border: 1px solid #d1f5d3;
-      background: #f0faf5;
-      color: #5bae7f;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      &:hover {
-        background: #d1f5d3;
+    .btn-filterbyStatus {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      button {
+        border: 1px solid var(--storm-slate);
+        color: var(--storm-slate);
+        transition: 0.3s linear;
+        &:hover {
+          background-color: var(--storm-slate);
+          color: var(--white-color);
+          opacity: 0.9;
+        }
+        &.All {
+          background-color: var(--primary-navy);
+          color: var(--white-color);
+        }
+
+        &.COMPLETED {
+          background-color: var(--state-positive-soft);
+          color: var(--seafoam-green);
+        }
+
+        &.CANCELLED {
+          background-color: var(--rose-petal);
+          color: var(--soft-crimson);
+        }
+        &.PENDING {
+          background-color: var(--state-attention-soft);
+          border: 1.5px solid var(--amber-honey);
+          color: var(--state-attention);
+        }
       }
     }
     h2 {
@@ -36,27 +64,27 @@
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  border-left: 1px solid #f0f0f0;
-  border-top: 1px solid #f0f0f0;
+  border-left: 1px solid var(--frost-gray);
+  border-top: 1px solid var(--frost-gray);
 
   .day-header {
-    background: #f8f9fa;
+    background: var(--surface-base);
     padding: 10px;
     text-align: center;
     font-weight: bold;
-    color: #777;
-    border-right: 1px solid #f0f0f0;
+    color: var(--dusty-stone);
+    border-right: 1px solid var(--frost-gray);
   }
 
   .day-cell {
     min-height: 140px;
-    border-right: 1px solid #f0f0f0;
-    border-bottom: 3px solid #f0faf5;
+    border-right: 1px solid var(--frost-gray);
+    border-bottom: 3px solid var(--mint-whisper);
     padding: 8px;
-    background-color: #fff;
+    background-color: var(--pure-white);
     cursor: pointer;
     &:hover {
-      background-color: #fafafa;
+      background-color: var(--cloud-white);
     }
   }
 
@@ -64,7 +92,7 @@
     box-shadow:
       4px 0 15px rgba(0, 0, 0, 0.05),
       -4px 0 15px rgba(0, 0, 0, 0.05);
-    border: 1px solid #fff9c4;
+    border: 1px solid var(--state-attention-border);
     border-radius: 10px;
     overflow: hidden;
     background-color: var(--white-color);
@@ -73,18 +101,18 @@
     .header-book {
       background-color: var(--primary-navy);
       padding: 5px;
-      color: #fbc02d;
-      border-top: 3px solid #fbc02d;
+      color: var(--golden-sun);
+      border-top: 3px solid var(--golden-sun);
       display: flex;
       align-items: center;
       justify-content: space-between;
-       .day-number {
-      font-size: 12px;
-    color: #4A556C;
-    font-family: serif;
-    font-size: 15px;
-      font-weight: bold;
-    }
+      .day-number {
+        font-size: 12px;
+        color: var(--storm-slate);
+        font-family: serif;
+        font-size: 15px;
+        font-weight: bold;
+      }
     }
 
     .content-book {
@@ -100,22 +128,22 @@
     border-radius: 20px;
     margin: 10px;
     font-size: 13px;
-    &.completed {
-      background-color: #d1f5d3;
-      color: #5bae7f;
+    &.COMPLETED {
+      background-color: var(--state-positive-soft);
+      color: var(--seafoam-green);
     }
     &.confirmed {
-      background-color: #e3f2fd;
-      color: #2196f3;
+      background-color: var(--ice-blue);
+      color: var(--royal-azure);
     }
-    &.cancelled {
-      background-color: #ffebee;
-      color: #ef5350;
+    &.CANCELLED {
+      background-color: var(--rose-petal);
+      color: var(--soft-crimson);
     }
-    &.pending {
-      background-color: #fffbeb;
-      border: 1.5px solid #f59e0b;
-      color: #d97706;
+    &.PENDING {
+      background-color: var(--state-attention-soft);
+      border: 1.5px solid var(--amber-honey);
+      color: var(--state-attention);
     }
   }
 }
@@ -125,9 +153,21 @@
   display: inline-block;
   margin: 0 5px;
   height: 5px;
-  background-color: #f59e0b;
+  background-color: var(--amber-honey);
   border-radius: 50%;
   animation: pulse 1.5s infinite ease-in-out;
+  &.COMPLETED {
+    background-color: var(--seafoam-green);
+  }
+  &.CONFIRMED {
+    background-color: var(--royal-azure);
+  }
+  &.CANCELLED {
+    background-color: var(--soft-crimson);
+  }
+  &.PENDING {
+    background-color: var(--amber-honey);
+  }
 }
 
 @keyframes pulse {
@@ -139,13 +179,13 @@
   50% {
     transform: scale(1.3);
     opacity: 1;
-    box-shadow: 0 0 15px #72f1b8;
+    box-shadow: 0 0 15px var(--state-positive);
   }
 }
 
-@media (max-width: 767px){
+@media (max-width: 767px) {
   .calendar-nav {
-    h2{
+    h2 {
       display: none;
     }
   }
@@ -167,21 +207,39 @@
     .day-cell {
       min-height: auto;
       margin-bottom: 15px;
-      border: 1px solid #f0f0f0;
+      border: 1px solid var(--frost-gray);
       border-radius: 12px;
-      border-bottom: 4px solid #f0faf5;
+      border-bottom: 4px solid var(--mint-whisper);
 
       &::before {
         content: 'التاريخ: ' attr(data-day);
         font-weight: bold;
         display: block;
         margin-bottom: 10px;
-        color: #5bae7f;
+        color: var(--seafoam-green);
       }
 
       &:not(:has(.booking-item)) {
         display: none;
       }
     }
+  }
+}
+
+@media  (max-width: 1200px) {
+  .calendar-nav{
+    flex-direction: column;
+    gap: 10px;
+    .btn-filterbyStatus{
+      flex-wrap: wrap;
+      justify-content: center !important;
+    }
+  }
+}
+
+
+@media (min-width: 1200px) and (max-width: 1400px) {
+  .gemini-dot {
+    display: none;
   }
 }

@@ -19,6 +19,8 @@ import { ConfirmationDelete } from './confirmation-delete/confirmation-delete';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { SkeletonModule } from 'primeng/skeleton';
+import { Error } from './error/error';
+
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { SkeletonModule } from 'primeng/skeleton';
     Tabel,
     Footer,
     Translation,
-    ConfirmationDelete
+    ConfirmationDelete,
+    Error
   ],
   imports: [
     CommonModule,
@@ -41,7 +44,7 @@ import { SkeletonModule } from 'primeng/skeleton';
     TableModule,
     TranslateModule,
     ToastModule,
-    SkeletonModule
+    SkeletonModule,
   ],
   exports: [
     Header,
@@ -53,7 +56,8 @@ import { SkeletonModule } from 'primeng/skeleton';
     Tabel,
     Translation,
     ConfirmationDelete,
-    Footer
+    Error,
+    Footer,
   ],
 
   providers: [

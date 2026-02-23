@@ -7,7 +7,7 @@
     <div class="header-links">
       <div>
         <ul>
-          <li (click)="onClickListActive('Home')">
+          <li [routerLink]="['/']" (click)="onClickListActive('Home')">
             <a>{{ 'NAV_HOME' | translate }}</a>
           </li>
           <li (click)="onClickListActive('About')">

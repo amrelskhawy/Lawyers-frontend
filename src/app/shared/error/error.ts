@@ -2,29 +2,34 @@ import { Component, inject } from '@angular/core';
 import { Core } from '../../core/Servies/core';
 import { MessageService } from 'primeng/api';
 
+
 @Component({
-  selector: 'app-success',
+  selector: 'app-error',
   standalone: false,
-  templateUrl: './success.html',
-  styleUrl: './success.scss',
+  templateUrl: './error.html',
+  styleUrl: './error.scss',
 })
-export class Success {
+export class Error {
   private core = inject(Core);
   private messageService = inject(MessageService);
   ngOnInit() {
-    this.core._Sussess.asObservable().subscribe((res: any) => {
+    this.core._Error.asObservable().subscribe((res: any) => {
       if (res) {
-        this.showSuccess(res);
+         this.showError(res);
       }
     });
   }
 
-  showSuccess(message: string) {
+  showError(message: string) {
     this.messageService.add({
-       severity: "success",
+       severity: 'error',
       summary: message,
        life: 3000,
     });
   }
+
+
+
+
 
 }

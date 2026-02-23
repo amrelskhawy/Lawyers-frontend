@@ -7,5 +7,5 @@ import { BehaviorSubject } from 'rxjs';
 export class Core {
   _loading = new BehaviorSubject<boolean>(false);
   _Sussess = new BehaviorSubject<string>("");
-  _Error = new BehaviorSubject<boolean>(false);
+  _Error = new BehaviorSubject<string>("");
 }

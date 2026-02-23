@@ -57,7 +57,34 @@ export class Menue implements OnInit {
   }
 
   GetDataMenue() {
-    this.ListMenue.set([
+    let get_usre = sessionStorage.getItem('user');
+    let parseUser: any = null;
+
+    if (get_usre) {
+      parseUser = JSON.parse(get_usre);
+    }
+    if (parseUser.role == 'MODERATOR') {
+        this.ListMenue.set([
+      {
+        name: 'Reservations',
+        icon: 'fa-solid fa-business-time',
+        route: '/dashboard/content',
+      },
+
+      {
+        name: 'services',
+        icon: 'fa-solid fa-gear',
+        route: '/dashboard/content/addservies',
+      },
+
+      {
+        name: 'holidays_Day',
+        icon: 'fa-solid fa-holly-berry',
+        route: '/dashboard/content/Holidays',
+      },
+    ]);
+    }else{
+   this.ListMenue.set([
       {
         name: 'Reservations',
         icon: 'fa-solid fa-business-time',
@@ -87,6 +114,9 @@ export class Menue implements OnInit {
         route: '/dashboard/content/Holidays',
       },
     ]);
+    }
+
+
   }
 
   onLogout() {

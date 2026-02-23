@@ -1,13 +1,48 @@
 <div class="calendar-wrapper">
   <div class="calendar-nav">
-    <button (click)="changeMonth(-1)" class="nav-btn">الشهر السابق</button>
+    <p-select
+      [options]="months"
+      [(ngModel)]="selectedMonth"
+      (onChange)="onMonthChange($event)"
+      optionLabel="name"
+      [style]="{ width: '40%' }"
+    />
     <h2>{{ displayDate | date: 'MMMM yyyy' }}</h2>
-    <button (click)="changeMonth(1)" class="nav-btn">الشهر التالي</button>
+
+    <div class="btn-filterbyStatus">
+      <button
+        [ngClass]="{ All: selectedStatus() === 'All' }"
+        (click)="GetAllBookingByStatus('All')"
+      >
+        ⊞ {{"all"|translate}}
+      </button>
+
+      <button
+        [ngClass]="{ PENDING: selectedStatus() === 'PENDING' }"
+        (click)="GetAllBookingByStatus('PENDING')"
+      >
+        ⏳ {{"PENDING"|translate}}
+      </button>
+
+      <button
+        [ngClass]="{ CANCELLED: selectedStatus() === 'CANCELLED' }"
+        (click)="GetAllBookingByStatus('CANCELLED')"
+      >
+        ✕ {{"CANCELLED"|translate}}
+      </button>
+
+      <button
+        [ngClass]="{ COMPLETED: selectedStatus() === 'COMPLETED' }"
+        (click)="GetAllBookingByStatus('COMPLETED')"
+      >
+        ✓ {{"COMPLETED"|translate}}
+      </button>
+    </div>
   </div>
 
   <div class="calendar-grid">
-    <div class="day-header" *ngFor="let day of ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']">
-      {{ day }}
+    <div class="day-header" *ngFor="let day of ['SUn', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']">
+      {{ day | translate }}
     </div>
 
     <div class="day-cell" *ngFor="let d of daysInMonth">
@@ -26,18 +61,11 @@
             <p>{{ getnameServies(book.service) }}</p>
             <p class="booking-phone">{{ book.phone_number }}</p>
           </div>
-          <div class="status-btn" [ngClass]="book.status?.toLowerCase()">
-            <i
-              class="fa-solid"
-              [ngClass]="{
-                'fa-check-circle':
-                  book.status?.toLowerCase() === 'completed' ||
-                  book.status?.toLowerCase() === 'confirmed',
-                'fa-times-circle': book.status?.toLowerCase() === 'cancelled',
-                'fa-clock': book.status?.toLowerCase() === 'pending',
-              }"
-            ></i>
-            {{ book.status }} <span class="gemini-dot"></span>
+
+          <div class="status-btn" [ngClass]="book.status">
+            <i class="fa-solid fa-diagram-project"></i>
+            {{ book.status }}
+            <span [ngClass]="book.status" class="gemini-dot"></span>
           </div>
         </div>
       </div>
@@ -45,4 +73,8 @@
   </div>
 </div>
 
-<app-dilog-booking [(visible)]="visibelDilogBooking" [obj]="obj()"></app-dilog-booking>
+<app-dilog-booking
+  (changeStatusBooking)="onchangeStatusBooking()"
+  [(visible)]="visibelDilogBooking"
+  [obj]="obj()"
+></app-dilog-booking>

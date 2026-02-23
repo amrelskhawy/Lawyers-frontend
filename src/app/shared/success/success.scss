@@ -1,18 +1,9 @@
-::ng-deep .p-toast-message-content{
-    background: linear-gradient(135deg, var(--accent-gold) 0%, darken(#c5a059, 10%) 100%);
-color: var(--white-color);
-border-radius: 10px;
+
+::ng-deep .p-toast-message-success  {
+color: var(--white-color) !important;
 z-index: 88888888888 !important;
+background-color: var(--accent-gold) !important;
 }
 
 
 
-::ng-deep .p-toast-message-content {
-  z-index: 88888888888 !important;
-}
-
-::ng-deep .p-toast-message-icon{
- height: 30px;
-    width: 30px;
-  color: var(--white-color);
-}

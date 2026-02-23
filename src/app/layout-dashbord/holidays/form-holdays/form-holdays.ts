@@ -50,7 +50,7 @@ export class FormHoldays implements OnInit {
   onSubmitData() {
     if (this.Form().invalid) {
       this.Form().markAllAsTouched();
-      return;
+    return;
     }
     const rawData = this.Form().value;
     const formatTime = (date: any) => {

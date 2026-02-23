@@ -13,6 +13,7 @@ export class DilogBooking {
   dataobj = signal<any>([]);
   @Input() visible: boolean = false;
   @Output() visibleChange = new EventEmitter<boolean>();
+  @Output() changeStatusBooking = new EventEmitter<boolean>();
   @Input()
   set obj(value: any) {
     this.dataobj.set(value);
@@ -29,7 +30,9 @@ export class DilogBooking {
   }
 
   HandelActionBooking(action: string) {
-    this.Data.patch(`bookings/${this.dataobj().id}/${action}`,{}).subscribe((rse) => {});
+    this.Data.patch(`bookings/${this.dataobj().id}/${action}`,{}).subscribe((rse) => {
+      this.changeStatusBooking.emit(true)
+    });
   }
 
   getcuurentLangauage() {

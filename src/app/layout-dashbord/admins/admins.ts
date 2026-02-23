@@ -53,6 +53,35 @@ export class Admins implements OnInit {
     this.bodytabel.set(apiData);
   }
 
+
+
+    onSearch(query: string) {
+    if (!query) {
+      this.data.set(this.data());
+      return;
+    }
+    const lowerQuery = query.toLowerCase();
+    const filtered = this.data().filter((item: any) => {
+      return [
+        item.name,
+        item.email,
+        item.role,
+         item.created_At,
+         item.updated_At
+        ].some(
+        (val) => val && val.toString().toLowerCase().includes(lowerQuery),
+      );
+    });
+    this.data.set(filtered);
+  }
+
+
+
+
+
+
+
+
   onDelete(item: any) {
     this.objdata.set(item);
     this.visibelConfirme.set(true);

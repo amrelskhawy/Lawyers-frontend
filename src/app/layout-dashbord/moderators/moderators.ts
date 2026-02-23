@@ -31,8 +31,6 @@ export class Moderators implements OnInit {
   visibelConfirme = signal<boolean>(false);
   objdata = signal<IModerators | null>(null);
 
-
-
   getData() {
     this.Data.get<IModerators[]>('moderators').subscribe((res) => {
       const formattedData = res.map((item: any, index: number) => ({
@@ -54,22 +52,36 @@ export class Moderators implements OnInit {
     this.bodytabel.set(apiData);
   }
 
+  onSearch(query: string) {
+    if (!query) {
+      this.data.set(this.data());
+      return;
+    }
+    const lowerQuery = query.toLowerCase();
+    const filtered = this.data().filter((item: any) => {
+      return [item.name, item.email, item.role, item.created_At].some(
+        (val) => val && val.toString().toLowerCase().includes(lowerQuery),
+      );
+    });
+    this.data.set(filtered);
+  }
+
   HandelResponseSuccess() {
     this.getData();
     this.visibelform.set(false);
   }
 
-    onDelete(item: IModerators) {
-      this.visibelConfirme.set(true);
-      this.objdata.set(item)
-    }
+  onDelete(item: IModerators) {
+    this.visibelConfirme.set(true);
+    this.objdata.set(item);
+  }
 
-    onHandelStatusConfirmation(event: string) {
-      this.visibelConfirme.set(false);
-      if (event == 'delete') {
-        this.Data.delete(`moderators/${this.objdata()?.id}`).subscribe((res) => {
-          this.getData();
-        });
-      }
+  onHandelStatusConfirmation(event: string) {
+    this.visibelConfirme.set(false);
+    if (event == 'delete') {
+      this.Data.delete(`moderators/${this.objdata()?.id}`).subscribe((res) => {
+        this.getData();
+      });
     }
+  }
 }
