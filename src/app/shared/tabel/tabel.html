@@ -1,41 +1,70 @@
-<p-table
-  [value]="tableData"
-  [paginator]="true"
-  [rowsPerPageOptions]="[5, 10, 20, 50]"
-  [rows]="20"
-  stripedRows
-  [tableStyle]="{ 'min-width': '50rem' }"
->
-  <!-- HEADER -->
-  <ng-template pTemplate="header">
-    <tr>
-      <ng-container *ngFor="let col of bodytabel">
-        <th>
-          {{ col.key | translate }}
-        </th>
-      </ng-container>
+@if (tableData.length > 0) {
+  <p-table
+    [value]="tableData"
+    [paginator]="true"
+    [rowsPerPageOptions]="[5, 10, 20, 50]"
+    [rows]="20"
+    stripedRows
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <!-- HEADER -->
+    <ng-template pTemplate="header">
+      <tr>
+        <ng-container *ngFor="let col of bodytabel">
+          <th>
+            {{ col.key | translate }}
+          </th>
+        </ng-container>
 
-      <th *ngIf="actionsTpl" style="text-align: center">{{ 'Procedures' | translate }}</th>
-    </tr>
-  </ng-template>
+        <th *ngIf="actionsTpl" style="text-align: center">{{ 'Procedures' | translate }}</th>
+      </tr>
+    </ng-template>
 
-  <!-- BODY -->
+    <!-- BODY -->
 
-  <ng-template pTemplate="body" let-row>
-    <tr>
-      <ng-container *ngFor="let col of bodytabel">
-        <td>
-          {{ formatCell(col.value, row[col.value]) }}
+    <ng-template pTemplate="body" let-row>
+      <tr>
+        <ng-container *ngFor="let col of bodytabel">
+          <td>
+            {{ formatCell(col.value, row[col.value]) }}
+          </td>
+        </ng-container>
+
+        <td *ngIf="actionsTpl">
+          <ng-container *ngTemplateOutlet="actionsTpl; context: { $implicit: row }"></ng-container>
         </td>
-      </ng-container>
+      </tr>
+    </ng-template>
+  </p-table>
 
-      <td *ngIf="actionsTpl">
-        <ng-container *ngTemplateOutlet="actionsTpl; context: { $implicit: row }"></ng-container>
-      </td>
-    </tr>
-  </ng-template>
+  <ng-content></ng-content>
+}
 
 
-</p-table>
+@else {
+  <p-table [value]="loadingData" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+      <tr>
+        <ng-container *ngFor="let col of bodytabel">
+          <th>
+            {{ col.key | translate }}
+          </th>
+        </ng-container>
+        <th *ngIf="actionsTpl" style="text-align: center">
+          {{ 'Procedures' | translate }}
+        </th>
+      </tr>
+    </ng-template>
 
-<ng-content></ng-content>
+    <ng-template pTemplate="body">
+      <tr>
+        <td *ngFor="let col of bodytabel">
+          <p-skeleton width="100%" height="1.5rem" />
+        </td>
+        <td *ngIf="actionsTpl">
+          <p-skeleton width="100%" height="1.5rem" />
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+}
