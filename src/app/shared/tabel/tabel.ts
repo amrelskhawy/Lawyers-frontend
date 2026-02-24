@@ -9,15 +9,20 @@ import { Component, ContentChild, Input, signal, TemplateRef } from '@angular/co
 })
 export class Tabel<T extends object> {
   constructor(private datePipe: DatePipe) {}
-  loadingData = [1, 2, 3, 4, 5,6,7,8,9,10];
   tableData: T[] = [];
+  exsistData = signal<string>('');
+  loadingData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+
   @Input() bodytabel: any[] = [];
   @Input()
   set data(value: T[]) {
     this.tableData = value ?? [];
   }
 
-
+  @Input()
+  set no_data(value: string) {
+    this.exsistData.set(value);
+  }
 
   formatCell(key: string, value: any): string {
     let ArraDate = ['createdAt', 'updatedAt'];
