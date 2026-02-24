@@ -42,8 +42,8 @@ export class Holidays implements OnInit {
     });
   }
 
-  onHandelResponseSuccess(){
-    this.getData()
+  onHandelResponseSuccess() {
+    this.getData();
   }
   onDelete(item: IHoliday) {
     this.visibelConfirme.set(true);
@@ -62,7 +62,7 @@ export class Holidays implements OnInit {
   getDataTabel() {
     let apiData = [
       { key: '#', value: 'index' },
-            { key: this.translate.instant('name'), value: 'name' },
+      { key: this.translate.instant('name'), value: 'name' },
       { key: this.translate.instant('date'), value: 'date' },
       { key: this.translate.instant('startTime'), value: 'startTime' },
       { key: this.translate.instant('endTime'), value: 'endTime' },
@@ -70,21 +70,16 @@ export class Holidays implements OnInit {
     this.bodytabel.set(apiData);
   }
 
-
-
-   onSearch(query: string) {
+  onSearch(query: string) {
     if (!query) {
-       this.getData()
+      this.getData();
       return;
     }
     const lowerQuery = query.toLowerCase();
     const filtered = this.data().filter((item) => {
-      return [
-        item.date,
-        item.endTime,
-        item.startTime,
-        item.name,
-      ].some(val => val && val.toString().toLowerCase().includes(lowerQuery));
+      return [item.date, item.endTime, item.startTime, item.name].some(
+        (val) => val && val.toString().toLowerCase().includes(lowerQuery),
+      );
     });
     this.data.set(filtered);
   }
