@@ -46,8 +46,8 @@ export class Moderators implements OnInit {
       { key: '#', value: 'index' },
       { key: this.translate.instant('name'), value: 'name' },
       { key: this.translate.instant('email'), value: 'email' },
-      { key: this.translate.instant('role'), value: 'role' },
       { key: this.translate.instant('created_At'), value: 'createdAt' },
+      { key: this.translate.instant('role'), value: 'role' },
     ];
     this.bodytabel.set(apiData);
   }
