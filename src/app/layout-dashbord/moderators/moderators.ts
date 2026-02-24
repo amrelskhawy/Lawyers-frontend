@@ -32,8 +32,8 @@ export class Moderators implements OnInit {
   objdata = signal<IModerators | null>(null);
 
   getData() {
-    this.Data.get<IModerators[]>('moderators').subscribe((res) => {
-      const formattedData = res.map((item: any, index: number) => ({
+    this.Data.get<IModerators[]>('moderators').subscribe((res:any) => {
+      const formattedData = res.data.map((item: any, index: number) => ({
         ...item,
         index: index + 1,
       }));
