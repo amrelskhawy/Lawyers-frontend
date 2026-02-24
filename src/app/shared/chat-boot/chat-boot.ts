@@ -21,6 +21,29 @@ export class ChatBoot {
     this.messages=''
   }
 
+
+
+formatClosuresToHtml(text: string) {
+  // return text
+  //   .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+  //   .replace(/`(.+?)`/g, "<code>$1</code>")
+  //   .replace(/^\s*\*\s+(.+)$/gm, "<li>$1</li>")
+  //   .replace(/(<li>[\s\S]+?<\/li>)/g, "<ul>$1</ul>")
+  //   .replace(/\n/g, "<br />");
+
+    return text
+    // Convert headings *text*
+    .replace(/\\(.?)\\*/g, "<strong>$1</strong>")
+    // Convert list items *
+    .replace(/^\\s+(.)$/gm, "<li>$1</li>")
+    // Wrap consecutive <li> in <ul>
+    .replace(/(<li>.*<\/li>)/gs, "<ul>$1</ul>")
+    // Convert line breaks
+    .replace(/\n/g, "<br />");
+}
+
+
+
   sendMessage(input: HTMLInputElement) {
     this.isLoading.set(true);
     const text = input.value.trim();
@@ -28,13 +51,13 @@ export class ChatBoot {
     const body = { question: text };
      this.Data.post('chat', body).subscribe({
     next: (res: any) => {
-      this.messages = res.data.answer;
+       this.messages = res.data.answer;
       input.value = '';
       this.isLoading.set(false);
     },
     error: (err) => {
       console.error(err);
-      this.isLoading.set(false);  
+      this.isLoading.set(false);
     }
   });
   }

@@ -15,9 +15,8 @@
       @if (messages=="") {
         <p class="message">{{"welcome_chat"|translate}}</p>
       }
-      <div>
-        {{ messages }}
-      </div>
+     <div [innerHTML]="formatClosuresToHtml(messages)"></div>
+
 
        @if (isLoading()) {
     <div class="typing-indicator">
