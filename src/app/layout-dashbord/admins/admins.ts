@@ -32,8 +32,8 @@ export class Admins implements OnInit {
   visibelform = signal<boolean>(false);
 
   getData() {
-    this.Data.get<IAdmin[]>('admin/users').subscribe((res) => {
-      const formattedData = res.map((item: any, index: number) => ({
+    this.Data.get<IAdmin[]>('admin/users').subscribe((res:any) => {
+      const formattedData = res.data.map((item: any, index: number) => ({
         ...item,
         index: index + 1,
       }));
