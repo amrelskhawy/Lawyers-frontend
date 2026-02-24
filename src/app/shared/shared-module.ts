@@ -20,6 +20,7 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { SkeletonModule } from 'primeng/skeleton';
 import { Error } from './error/error';
+import { NoData } from './no-data/no-data';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { Error } from './error/error';
     Footer,
     Translation,
     ConfirmationDelete,
-    Error
+    Error,
+    NoData
   ],
   imports: [
     CommonModule,
@@ -58,6 +60,7 @@ import { Error } from './error/error';
     ConfirmationDelete,
     Error,
     Footer,
+    NoData
   ],
 
   providers: [
