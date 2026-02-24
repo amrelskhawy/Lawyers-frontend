@@ -39,6 +39,7 @@ originalData: any[] = [];
         index: index + 1,
       }));
       this.data.set(formattedData);
+      this.originalData = formattedData;
 
      if (formattedData.length === 0) {
       this.dataStatus.set('no-data');
@@ -61,19 +62,23 @@ originalData: any[] = [];
 
   onSearch(query: string) {
     if (!query) {
-      this.dataStatus.set('loading');
-       this.getData();
-      // this.data.set(this.data());
+      this.data.set(this.originalData);
       return;
     }
     const lowerQuery = query.toLowerCase();
-    const filtered = this.data().filter((item: any) => {
-      return [item.name, item.email, item.role, item.created_At].some(
-        (val) => val && val.toString().toLowerCase().includes(lowerQuery),
-      );
+    const filtered = this.data().filter((item:any) => {
+      return [
+        item.name,
+        item.email,
+         item.created_At,
+        item.role,
+      ].some(val => val && val.toString().toLowerCase().includes(lowerQuery));
     });
     this.data.set(filtered);
   }
+
+
+
 
   HandelResponseSuccess() {
     this.getData();
