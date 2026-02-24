@@ -1,6 +1,7 @@
 .content-menue {
   position: relative;
   color: var(--tertiary-color);
+  overflow-y: auto;
   img {
     display: block;
     text-align: center;

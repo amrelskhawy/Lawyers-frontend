@@ -23,11 +23,16 @@ export const securityAuthGuard: CanActivateFn = (route, state) => {
 
 
 export const isAdminGuard: CanActivateFn = (route, state) => {
+  const router = inject(Router);
   const token = sessionStorage.getItem('token');
-  if (token) {
-    const user = JSON.parse(sessionStorage.getItem('user') || '{}');
-    return user.role === 'ADMIN';
-  } else {
-    return false;
+  const userData = sessionStorage.getItem('user');
+
+  if (token && userData) {
+    const user = JSON.parse(userData);
+    if (user.role === 'ADMIN') {
+      return true;
+    }
   }
-};
+  router.navigate(['/dashboard/content']);
+  return false;
+}

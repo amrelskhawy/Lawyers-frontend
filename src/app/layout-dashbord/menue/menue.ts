@@ -20,7 +20,7 @@ export class Menue implements OnInit {
     this.GetDataMenue();
   }
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {}
 
   @Output() toggelMenue = new EventEmitter<boolean>();
   isOpen = signal<boolean>(true);
@@ -66,26 +66,25 @@ export class Menue implements OnInit {
 
     if (parseUser) {
       this.ListMenue.set([
-        ...(parseUser.role === 'ADMIN'
-          ? [
-            {
-              name: 'Admins',
-              icon: 'fa-solid fa-user',
-              route: '/dashboard/content/admin',
-            },
-
-            {
-              name: 'Moderators',
-              icon: 'fa-solid fa-user-tie',
-              route: '/dashboard/content/Moderators',
-            },
-          ]
-          : []),
         {
           name: 'Reservations',
           icon: 'fa-solid fa-business-time',
           route: '/dashboard/content',
         },
+        ...(parseUser.role === 'ADMIN'
+          ? [
+              {
+                name: 'Admins',
+                icon: 'fa-solid fa-user',
+                route: '/dashboard/content/admin',
+              },
+              {
+                name: 'Moderators',
+                icon: 'fa-solid fa-user-tie',
+                route: '/dashboard/content/Moderators',
+              },
+            ]
+          : []),
         {
           name: 'services',
           icon: 'fa-solid fa-gear',
@@ -98,7 +97,6 @@ export class Menue implements OnInit {
         },
       ]);
     }
-
   }
 
   onLogout() {
