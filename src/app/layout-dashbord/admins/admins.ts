@@ -31,6 +31,7 @@ export class Admins implements OnInit {
   >([]);
   visibelform = signal<boolean>(false);
  dataStatus = signal<string>('loading');
+originalData: any[] = [];
 
   getData() {
     this.Data.get<IAdmin[]>('admin/users').subscribe((res:any) => {
@@ -39,6 +40,7 @@ export class Admins implements OnInit {
         index: index + 1,
       }));
       this.data.set(formattedData);
+            this.originalData = formattedData;
        if (formattedData.length === 0) {
       this.dataStatus.set('no-data');
     } else {
@@ -63,7 +65,7 @@ export class Admins implements OnInit {
 
     onSearch(query: string) {
     if (!query) {
-      this.data.set(this.data());
+      this.data.set(this.originalData);
       return;
     }
     const lowerQuery = query.toLowerCase();
