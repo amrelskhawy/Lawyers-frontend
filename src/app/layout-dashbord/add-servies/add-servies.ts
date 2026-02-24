@@ -26,6 +26,7 @@ export class AddServies implements OnInit {
   visibelConfirme = signal<boolean>(false);
   visibelAllData = signal<boolean>(false);
   bodytabel = signal<any>({});
+ dataStatus = signal<string>('loading');
 
   GetAllData() {
     this.Data.get('services').subscribe((res: any) => {
@@ -35,6 +36,11 @@ export class AddServies implements OnInit {
         priceFormatted: item.price + ' ﷼',
       }));
       this.data.set(formattedData);
+       if (formattedData.length === 0) {
+      this.dataStatus.set('no-data');
+    } else {
+      this.dataStatus.set('has-data');
+    }
       this.allData.set(formattedData);
     });
   }

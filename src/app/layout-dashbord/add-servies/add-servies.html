@@ -11,7 +11,7 @@
   [visibelConfirme]="visibelConfirme()"></app-confirmation-delete>
 
 <div class="table-wrapper">
-  <app-tabel [data]="data()" [bodytabel]="bodytabel()">
+  <app-tabel [data]="data()" [bodytabel]="bodytabel()" [no_data]="dataStatus()">
     <ng-template let-item>
       <div class="action-btn">
         <button (click)="onEditData(item)" class="edit-btn">
