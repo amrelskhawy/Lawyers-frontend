@@ -125,7 +125,10 @@
   "Support": "دعم",
   "welcome_chat": "✨ أهلاً وسهلاً! كيف أقدر أساعدك؟",
   "Type_message": "اكتب رسالتك...",
+  "NO_DATA_TITLE": "لا توجد بيانات",
+  "NO_DATA_SUBTITLE": "لم يتم العثور على أي سجلات في الوقت الحالي",
   "API_MESSAGES": {
+      "QUOTA_EXCEEDED":"تجاوز الحصة",
     "USER_LOGGED_IN_SUCCESS": "تم تسجيل الدخول بنجاح",
     "SERVICE_UPDATED_SUCCESS": "تم تحديث الخدمه بنجاح",
     "SERVICES_RETRIEVED_SUCCESS": "تم استرجاع الخدمات بنجاح",
@@ -192,7 +195,6 @@
     "WORKING_DAY_UPDATED_SUCCESS": "تم تحديث يوم العمل بنجاح",
     "PUBLIC_DATA_RETRIEVED_SUCCESS": "تم استرداد البيانات العامة بنجاح",
     "RESPONSE_GENERATED_SUCCESS": "تم إنشاء الاستجابة بنجاح",
-        "CHAT_SUCCESS":"نجاح الدردشة"
-
+    "CHAT_SUCCESS": "نجاح الدردشة"
   }
 }
