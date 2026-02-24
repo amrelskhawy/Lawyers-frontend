@@ -24,6 +24,7 @@ export class Holidays implements OnInit {
   visibelConfirme = signal<boolean>(false);
   data = signal<IHoliday[]>([]);
   objdata = signal<IHoliday | null>(null);
+ dataStatus = signal<string>('loading');
 
   bodytabel = signal<
     {
@@ -39,6 +40,11 @@ export class Holidays implements OnInit {
         index: index + 1,
       }));
       this.data.set(formattedData);
+        if (formattedData.length === 0) {
+      this.dataStatus.set('no-data');
+    } else {
+      this.dataStatus.set('has-data');
+    }
     });
   }
 
