@@ -30,8 +30,8 @@ export class Moderators implements OnInit {
   visibelform = signal<boolean>(false);
   visibelConfirme = signal<boolean>(false);
   objdata = signal<IModerators | null>(null);
- dataStatus = signal<string>('loading');
-originalData: any[] = [];
+  dataStatus = signal<string>('loading');
+  originalData: any[] = [];
   getData() {
     this.Data.get<IModerators[]>('moderators').subscribe((res: any) => {
       const formattedData = res.data.map((item: any, index: number) => ({
@@ -40,12 +40,11 @@ originalData: any[] = [];
       }));
       this.data.set(formattedData);
       this.originalData = formattedData;
-
-     if (formattedData.length === 0) {
-      this.dataStatus.set('no-data');
-    } else {
-      this.dataStatus.set('has-data');
-    }
+      if (formattedData.length === 0) {
+        this.dataStatus.set('no-data');
+      } else {
+        this.dataStatus.set('has-data');
+      }
     });
   }
 
@@ -66,19 +65,13 @@ originalData: any[] = [];
       return;
     }
     const lowerQuery = query.toLowerCase();
-    const filtered = this.data().filter((item:any) => {
-      return [
-        item.name,
-        item.email,
-         item.created_At,
-        item.role,
-      ].some(val => val && val.toString().toLowerCase().includes(lowerQuery));
+    const filtered = this.data().filter((item: any) => {
+      return [item.name, item.email, item.created_At, item.role].some(
+        (val) => val && val.toString().toLowerCase().includes(lowerQuery),
+      );
     });
     this.data.set(filtered);
   }
-
-
-
 
   HandelResponseSuccess() {
     this.getData();
