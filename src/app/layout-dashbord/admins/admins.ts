@@ -30,6 +30,7 @@ export class Admins implements OnInit {
     }[]
   >([]);
   visibelform = signal<boolean>(false);
+ dataStatus = signal<string>('loading');
 
   getData() {
     this.Data.get<IAdmin[]>('admin/users').subscribe((res:any) => {
@@ -38,6 +39,11 @@ export class Admins implements OnInit {
         index: index + 1,
       }));
       this.data.set(formattedData);
+       if (formattedData.length === 0) {
+      this.dataStatus.set('no-data');
+    } else {
+      this.dataStatus.set('has-data');
+    }
     });
   }
 
