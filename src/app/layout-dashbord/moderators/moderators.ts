@@ -30,14 +30,21 @@ export class Moderators implements OnInit {
   visibelform = signal<boolean>(false);
   visibelConfirme = signal<boolean>(false);
   objdata = signal<IModerators | null>(null);
-
+ dataStatus = signal<string>('loading');
+originalData: any[] = [];
   getData() {
-    this.Data.get<IModerators[]>('moderators').subscribe((res:any) => {
+    this.Data.get<IModerators[]>('moderators').subscribe((res: any) => {
       const formattedData = res.data.map((item: any, index: number) => ({
         ...item,
         index: index + 1,
       }));
       this.data.set(formattedData);
+
+     if (formattedData.length === 0) {
+      this.dataStatus.set('no-data');
+    } else {
+      this.dataStatus.set('has-data');
+    }
     });
   }
 
@@ -54,7 +61,9 @@ export class Moderators implements OnInit {
 
   onSearch(query: string) {
     if (!query) {
-      this.data.set(this.data());
+      this.dataStatus.set('loading');
+       this.getData();
+      // this.data.set(this.data());
       return;
     }
     const lowerQuery = query.toLowerCase();
