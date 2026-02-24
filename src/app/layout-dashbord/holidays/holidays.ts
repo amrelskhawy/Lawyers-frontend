@@ -62,10 +62,10 @@ export class Holidays implements OnInit {
   getDataTabel() {
     let apiData = [
       { key: '#', value: 'index' },
+            { key: this.translate.instant('name'), value: 'name' },
       { key: this.translate.instant('date'), value: 'date' },
       { key: this.translate.instant('startTime'), value: 'startTime' },
       { key: this.translate.instant('endTime'), value: 'endTime' },
-      { key: this.translate.instant('name'), value: 'name' },
     ];
     this.bodytabel.set(apiData);
   }
