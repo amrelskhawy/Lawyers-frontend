@@ -59,12 +59,12 @@
   "created_At": "created At",
   "updated_At": "updated At",
   "price": "price",
-  "Procedures": "Procedures",
+  "Procedures": "Actions",
   "Work_Day": "Work Day",
   "read_more": "→ Read More",
   "details_servies": "Details Servies",
-  "date": "at",
-  "startTime": "startTim",
+  "date": "Date",
+  "startTime": "startTime",
   "endTime": "endTime",
   "Reservations": "Reservations",
   "done": "The operation was completed successfully.",
@@ -135,9 +135,9 @@
     "BOOKING_CANCELLED": "BOOKING CANCELLED",
     "DATE_IN_PAST": "DATE IN PAST",
     "VALIDATION_ERROR": "VALIDATION ERROR",
-    "AUTH_ADMIN_ONLY": "AUTH_ADMIN_ONLY",
+    "AUTH_ADMIN_ONLY": "AUTH ADMIN ONLY",
     "TIME_SLOT_UNAVAILABLE": "TIME SLOT UNAVAILABLE",
-    "CHATBOT_ERROR": "CHATBOT_ERROR",
+    "CHATBOT_ERROR": "CHATBOT ERROR",
     "BOOKING_CREATED_SUCCESS": "Booking created successfully",
     "AVAILABLE_SLOTS_RETRIEVED": "Available slots retrieved",
     "MONTHLY_AVAILABILITY_RETRIEVED": "Monthly availability retrieved",
@@ -191,6 +191,7 @@
     "WORKING_DAYS_FETCHED_SUCCESS": "Working days fetched successfully",
     "WORKING_DAY_UPDATED_SUCCESS": "Working day updated successfully",
     "PUBLIC_DATA_RETRIEVED_SUCCESS": "Public data retrieved successfully",
-    "RESPONSE_GENERATED_SUCCESS": "Response generated successfully"
+    "RESPONSE_GENERATED_SUCCESS": "Response generated successfully",
+    "CHAT_SUCCESS":"CHAT SUCCESS"
   }
 }
