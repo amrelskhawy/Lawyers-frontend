@@ -1,5 +1,7 @@
-<div class="card flex justify-center">
-  <p-drawer #drawerRef [(visible)]="visible">
+
+<div class="wrapper-drawer">
+
+<p-drawer #drawerRef [(visible)]="visible">
     <ng-template #headless>
       <div class="drawer-container">
         <button class="close-btn" (click)="visible = false">
@@ -16,7 +18,7 @@
         <!-- Body -->
         <div class="drawer-body">
           <ul class="nav-list">
-            <li (click)="onClickListActive('Home')" class="nav-item">
+            <li [routerLink]="['/']" (click)="onClickListActive('Home')" class="nav-item">
               <i class="fa-solid fa-house"></i>
               <span>{{ 'NAV_HOME' | translate }}</span>
             </li>
@@ -68,7 +70,6 @@
       </div>
     </ng-template>
   </p-drawer>
-</div>
 
 <div class="header-drawer">
   <div>
@@ -86,4 +87,6 @@
       </button>
     }
   </div>
+</div>
+
 </div>

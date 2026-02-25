@@ -1,4 +1,10 @@
-// Headless Drawer Overrides
+.wrapper-drawer {
+  position: sticky;
+  top: 0;
+  background-color: var(--white-color);
+  z-index: 100;
+}
+
 ::ng-deep .p-drawer {
   border: 0;
   width: 320px !important;
@@ -37,12 +43,10 @@
 
   // Box shadow for depth
   box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
-text-align: center;
+  text-align: center;
   // direction: ltr; // Force LTR
   // text-align: left;
 }
-
-
 
 // *** Header ***
 .drawer-header {
@@ -62,18 +66,13 @@ text-align: center;
     .brand-logo {
       height: 120px;
       width: 120px;
-
     }
-
   }
-
-
 }
 
 // *** Navigation ***
 .drawer-body {
   // flex: 1;
-
 
   .nav-list {
     display: flex;
@@ -128,7 +127,6 @@ text-align: center;
         font-size: 16px;
         font-weight: 500;
       }
-
 
       &:hover {
         background-color: rgba(147, 133, 63, 0.15); // Gold tint
