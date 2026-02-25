@@ -2,8 +2,8 @@
   <div class="header-date">
     <i class="fa-solid fa-address-book"></i>
     <div>
-      <h3>بياناتك الشخصية</h3>
-      <p>أدخل معلومات التواصل الخاصة بك</p>
+      <h3>{{"PERSONAL_DATA"|translate}}</h3>
+      <p>{{"PERSONAL_DATA_DESC"|translate}}</p>
     </div>
   </div>
   <form [formGroup]="Form()">
@@ -46,5 +46,5 @@
       </div>
     }
   </form>
-        <button (click)="onNextSteap()" class="next-btn"> التالي ←</button>
+        <button (click)="onNextSteap()" class="next-btn">{{ 'NEXT_BTN' | translate }}</button>
 </div>
