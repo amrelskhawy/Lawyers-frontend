@@ -20,7 +20,7 @@ export class DataBooking implements OnInit {
   createForm() {
     this.Form.set(
       this.FB.group({
-        clientEmail: ['', Validators.required],
+        clientEmail: ['', [Validators.required,Validators.email]],
         name: ['', Validators.required],
         phone_number: ['', Validators.required],
       }),
