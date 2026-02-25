@@ -1,67 +1,169 @@
+
+.wrapper-date {
+  background-color: transparent;
+}
+
 .header-date {
   display: flex;
-  gap: 10px;
+  gap: 15px;
   align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid var(--medium-gray);
+  padding: 0 0 25px 0;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+  margin-bottom: 25px;
+
   i {
-    border: 1px solid var(--golden-sun);
-    background-color: var(--state-attention-border);
-    color: var(--golden-sun);
-    height: 40px;
-    width: 40px;
-    line-height: 40px;
-    border-radius: 10px;
+    background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
+    border: 1px solid var(--storm-slate);
+    color: var(--storm-slate);
+    height: 50px;
+    width: 50px;
+    line-height: 50px;
+    text-align: center;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 10px rgba(74, 85, 108, 0.15);
+  }
+
+  h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--primary-navy);
+    margin: 0;
+  }
+
+  p {
+    font-size: 0.9rem;
+    color: var(--secondary-color);
+    margin: 5px 0 0 0;
   }
 }
 
 .datepicker {
   text-align: center;
-  margin: 20px auto;
-}
+  margin: 20px 0;
+  
+  ::ng-deep {
+    .p-datepicker {
+      border: 1.5px solid var(--Platinum) !important;
+      border-radius: 16px !important;
+      padding: 15px !important;
+      background: var(--white-color) !important;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03) !important;
+    }
 
-.wrapper-date {
-  background-color: var(--white-color);
-  border-radius: 20px;
-  overflow: hidden;
-  border: 1px solid var(--accent-gold);
+    .p-datepicker-header {
+      background: transparent !important;
+      border: none !important;
+      padding-bottom: 15px !important;
+    }
+
+    .p-datepicker-title {
+      font-weight: 700 !important;
+      color: var(--primary-navy) !important;
+    }
+
+    .p-datepicker table th {
+      color: var(--Cloudy-Sky) !important;
+      font-weight: 600 !important;
+      font-size: 0.85rem !important;
+    }
+
+    .p-datepicker td > span {
+      width: 38px !important;
+      height: 38px !important;
+      border-radius: 10px !important;
+      transition: all 0.2s ease !important;
+      font-weight: 500 !important;
+    }
+
+    .p-datepicker-day:not(.p-disabled):not(.p-datepicker-day-selected):hover {
+      background: var(--silver-frost) !important;
+      color: var(--primary-navy) !important;
+    }
+
+    .p-datepicker-day-selected {
+      background: var(--accent-gold) !important;
+      color: var(--white-color) !important;
+      box-shadow: 0 4px 12px rgba(147, 133, 63, 0.3) !important;
+    }
+  }
 }
 
 .Times-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 5px;
-  margin-top: 5px;
-  height: 168px;
+  justify-content: flex-start;
+  gap: 12px;
+  margin-top: 25px;
+  padding: 5px;
+  max-height: 200px;
   overflow-y: auto;
-}
 
-.Time-slot {
-  background-color: var(--silver-frost);
-  border: 1px solid var(--Cloudy-Sky);
-  padding: 10px;
-  border-radius: 10px;
-  font-weight: bold;
-  cursor: pointer;
-  .Timing {
-    color: var(--primary-navy);
+  /* Modern Scrollbar */
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--Platinum);
+    border-radius: 10px;
   }
 }
 
-.selected-time {
-  background-color: var(--accent-gold);
-  color: var(--white-color) !important;
+.Time-slot {
+  background: var(--white-color);
+  border: 1.5px solid var(--Platinum);
+  padding: 12px 20px;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  font-size: 0.95rem;
+  color: var(--primary-navy);
+
+  .Timing {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    margin-inline-start: 4px;
+    opacity: 0.7;
+  }
+
+  &:hover {
+    border-color: var(--accent-gold);
+    background: var(--silver-frost);
+    transform: translateY(-2px);
+  }
+
+  &.selected-time {
+    background: var(--accent-gold);
+    border-color: var(--accent-gold);
+    color: var(--white-color);
+    box-shadow: 0 4px 15px rgba(147, 133, 63, 0.3);
+
+    .Timing {
+      color: var(--white-color);
+      opacity: 0.9;
+    }
+  }
 }
 
 .next-btn {
-  background-color: var(--primary-navy);
-  border-radius: 30px;
+  background: var(--primary-navy);
   color: var(--white-color);
-  width: 200px;
-  margin: 20px;
-}
+  border-radius: 50px;
+  padding: 12px 40px;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-top: 30px;
+  float: left;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(20, 20, 58, 0.2);
 
-::ng-deep .p-datepicker-day-selected {
-  background: var(--accent-gold) !important;
+  &:hover {
+    box-shadow: 0 12px 30px rgba(20, 20, 58, 0.3);
+    transform: translateY(-2px);
+    opacity: 0.95;
+  }
 }
