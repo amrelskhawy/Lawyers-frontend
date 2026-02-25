@@ -52,27 +52,15 @@ img {
   border-radius: 50%;
 }
 
-
-.next-btn{
+.next-btn {
   background-color: var(--primary-navy);
   border-radius: 30px;
   color: var(--white-color);
-  width: 20%;
+  width: 200px;
   margin: 20px;
 }
 
-
-
-.active-servies{
+.active-servies {
   background-color: var(--accent-gold);
   color: var(--white-color) !important;
-}
-
-
-
-
-@media(max-width:767px){
-  .next-btn{
-width: 30%;
-  }
 }
