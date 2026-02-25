@@ -1,6 +1,6 @@
 @if (exsistData() == 'has-data') {
   <p-table
-    [value]="tableData.length > 0 ? tableData : $any([1, 2, 3, 4, 5])"
+    [value]="tableData"
     [paginator]="true"
     [rowsPerPageOptions]="[5, 10, 20, 50]"
     [rows]="20"
@@ -25,7 +25,7 @@
     <ng-template pTemplate="body" let-row>
       <tr>
         <ng-container *ngFor="let col of bodytabel">
-          <td>
+          <td [ngClass]="getCellClass(col, row)">
             {{ formatCell(col.value, row[col.value]) }}
           </td>
         </ng-container>

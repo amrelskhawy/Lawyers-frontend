@@ -36,4 +36,24 @@ export class Tabel<T extends object> {
   }
 
   @ContentChild(TemplateRef) actionsTpl!: TemplateRef<any>;
+
+
+
+
+
+
+
+
+
+  getCellClass(col: any, row: any): string {
+  const value = row[col.value];
+  if (col.value === 'role') {
+    switch (value) {
+      case 'ADMIN': return 'admin-badge';
+      case 'MODERATOR': return 'moderator-badge ';
+      default: return '';
+    }
+  }
+  return '';
+}
 }
