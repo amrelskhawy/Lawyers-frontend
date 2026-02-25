@@ -11,32 +11,37 @@ import { Data } from '../../../../core/Servies/data';
 export class MeetingBooking implements OnInit {
   constructor(
     private FB: FormBuilder,
-    private Data:Data
-  ) {}
-    ngOnInit(): void {
+    private Data: Data
+  ) { }
+  ngOnInit(): void {
     this.createForm();
     this.watchDateChange()
   }
 
 
   Form = signal<FormGroup>(new FormGroup({}));
-   timeSlots = signal<any[]>([]);
-    selectedTime = signal<string | null>(null);
-    disibledDays = signal<any | null>(null);
+  timeSlots = signal<any[]>([]);
+  selectedTime = signal<string | null>(null);
+  disibledDays = signal<any | null>(null);
+  minDate = new Date();
   @Output() DateClient = new EventEmitter<any>();
-@Input()
-set disabledDates(value:any){
-this.disibledDays.set(value)
-}
+  @Input()
+  set disabledDates(value: any) {
+    this.disibledDays.set(value)
+  }
+  @Input() initialData: any;
 
 
   createForm() {
     this.Form.set(
       this.FB.group({
-        date: ['', Validators.required],
-        startTime: ['', Validators.required],
+        date: [this.initialData?.date || '', Validators.required],
+        startTime: [this.initialData?.startTime || '', Validators.required],
       }),
     );
+    if (this.initialData?.startTime) {
+      this.selectedTime.set(this.initialData.startTime);
+    }
   }
 
   PathTime(slot: any) {
@@ -45,17 +50,17 @@ this.disibledDays.set(value)
   }
 
   watchDateChange() {
-  this.Form().get('date')?.valueChanges.subscribe((selectedDate: Date) => {
-    if (!selectedDate) return;
-    const finalDate = selectedDate.toLocaleDateString('en-CA');
-    this.Data.get(`bookings/availability`, { date: finalDate })
-      .subscribe((res: any) => {
-        if (res.data) {
-          this.timeSlots.set(res.data);
-        }
-      });
-  });
-}
+    this.Form().get('date')?.valueChanges.subscribe((selectedDate: Date) => {
+      if (!selectedDate) return;
+      const finalDate = selectedDate.toLocaleDateString('en-CA');
+      this.Data.get(`bookings/availability`, { date: finalDate })
+        .subscribe((res: any) => {
+          if (res.data) {
+            this.timeSlots.set(res.data);
+          }
+        });
+    });
+  }
 
   onNextSteap() {
     if (this.Form().invalid) {

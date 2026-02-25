@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, signal } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, signal, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -12,23 +12,23 @@ export class DataBooking implements OnInit {
     this.createForm();
   }
 
-  constructor(private FB: FormBuilder) {}
+  constructor(private FB: FormBuilder) { }
   Form = signal<FormGroup>(new FormGroup({}));
   @Output() dataClient = new EventEmitter<any>();
-
+  @Input() initialData: any;
 
   createForm() {
     this.Form.set(
       this.FB.group({
-        clientEmail: ['', [Validators.required,Validators.email]],
-        name: ['', Validators.required],
-        phone_number: ['', Validators.required],
+        clientEmail: [this.initialData?.clientEmail || '', [Validators.required, Validators.email]],
+        name: [this.initialData?.name || '', Validators.required],
+        phone_number: [this.initialData?.phone_number || '', Validators.required],
       }),
     );
   }
 
   onNextSteap() {
-    if(this.Form().invalid){
+    if (this.Form().invalid) {
       this.Form().markAllAsTouched()
       return
     }

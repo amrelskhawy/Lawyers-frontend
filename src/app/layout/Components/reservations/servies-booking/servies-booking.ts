@@ -9,12 +9,19 @@ import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
 export class ServiesBooking {
   servise = signal<any[]>([]);
   selectServies = signal<any>({});
-  @Output() serviesid = new EventEmitter<boolean>();
-
   @Input()
   set dataservies(value: any) {
     this.servise.set(value);
   }
+
+  @Input()
+  set selectedService(value: any) {
+    if (value) {
+      this.selectServies.set(value);
+    }
+  }
+
+  @Output() serviesid = new EventEmitter<any>();
 
   getcuurentLangauage() {
     let lang = localStorage.getItem('Language');

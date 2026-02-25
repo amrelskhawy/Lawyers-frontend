@@ -1,5 +1,6 @@
 import { Component, Input, signal } from '@angular/core';
 import { Data } from '../../../../core/Servies/data';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-confirme-booking',
@@ -8,7 +9,7 @@ import { Data } from '../../../../core/Servies/data';
   styleUrl: './confirme-booking.scss',
 })
 export class ConfirmeBooking {
-  constructor(private Data: Data) {}
+  constructor(private Data: Data, private router: Router) { }
   Form = signal<any>({});
   name = signal<any>({});
   @Input()
@@ -36,6 +37,7 @@ export class ConfirmeBooking {
     this.Data.post('bookings', payload).subscribe(() => {
       this.Form().reset();
       this.name.set('')
+      this.router.navigate(['/']);
     });
   }
 }

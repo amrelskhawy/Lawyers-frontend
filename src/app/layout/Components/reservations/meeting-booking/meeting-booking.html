@@ -8,43 +8,32 @@
   </div>
   <form [formGroup]="Form()">
     <div class="Group datepicker">
-      <p-datepicker
-      formControlName="date"
-      [inline]="true"
-      [showWeek]="true"
-      [disabledDates]="disibledDays()"
-       >
+      <p-datepicker formControlName="date" [inline]="true" [showWeek]="true" [disabledDates]="disibledDays()"
+        [minDate]="minDate">
       </p-datepicker>
 
       <div class="wrapper-error">
-        <small
-          class="error-message"
-          *ngIf="getControlName('date')?.invalid && getControlName('date')?.touched"
-          >{{ 'filed_reqierd' | translate }}</small
-        >
+        <small class="error-message" *ngIf="getControlName('date')?.invalid && getControlName('date')?.touched">{{
+          'filed_reqierd' | translate }}</small>
       </div>
     </div>
     @if (timeSlots().length > 0) {
-      <div class="Times-container">
-        @for (slot of timeSlots(); track $index) {
-          <div class="Time-slot"  [ngClass]="{
+    <div class="Times-container">
+      @for (slot of timeSlots(); track $index) {
+      <div (click)="PathTime(slot.startTime)" class="Time-slot" [ngClass]="{
                 'selected-time': slot.startTime == selectedTime(),}">
-            <span
-              (click)="PathTime(slot.startTime)"
-            >
-              {{ slot.startTime }}<span class="Timing">Am</span> : {{ slot.endTime}}<span class="Timing">Pm</span>
-            </span>
-          </div>
-        }
-        <div class="wrapper-error">
-          <small
-            class="error-message"
-            *ngIf="getControlName('startTime')?.invalid && getControlName('startTime')?.touched"
-            >{{ 'SELECT_DATE_TIME' | translate }}</small
-          >
-        </div>
+        <span>
+          {{ slot.startTime }}<span class="Timing">Am</span> : {{ slot.endTime}}<span class="Timing">Pm</span>
+        </span>
       </div>
+      }
+      <div class="wrapper-error">
+        <small class="error-message"
+          *ngIf="getControlName('startTime')?.invalid && getControlName('startTime')?.touched">{{ 'SELECT_DATE_TIME' |
+          translate }}</small>
+      </div>
+    </div>
     }
   </form>
-        <button (click)="onNextSteap()" class="next-btn">{{ 'NEXT_BTN' | translate }}</button>
+  <button (click)="onNextSteap()" class="next-btn">{{ 'NEXT_BTN' | translate }}</button>
 </div>

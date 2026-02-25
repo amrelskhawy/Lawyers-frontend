@@ -12,13 +12,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class Reservations implements OnInit {
   ngOnInit(): void {
     this.getData();
-     this.createForm();
+    this.createForm();
   }
 
   constructor(
     private Data: Data,
-     private Fb: FormBuilder,
-  ) {}
+    private Fb: FormBuilder,
+  ) { }
   currentStep = 1;
 
   dataservies = signal<IDataServies[]>([]);
@@ -28,21 +28,21 @@ export class Reservations implements OnInit {
   Form = signal<FormGroup>(new FormGroup({}));
 
 
-      createForm() {
-      this.Form.set(
-        this.Fb.group({
-          serviceId: ['', Validators.required],
-          date: ['', Validators.required],
-          startTime: ['', Validators.required],
-          clientEmail: ['', Validators.required],
-          name:['', Validators.required],
-          phone_number:['', Validators.required]
-        }),
-      );
-    }
+  createForm() {
+    this.Form.set(
+      this.Fb.group({
+        serviceId: ['', Validators.required],
+        date: ['', Validators.required],
+        startTime: ['', Validators.required],
+        clientEmail: ['', Validators.required],
+        name: ['', Validators.required],
+        phone_number: ['', Validators.required]
+      }),
+    );
+  }
 
   getData() {
-    this.Data.get('public').subscribe((res: any) => {
+    this.Data.getPublicData().subscribe((res: any) => {
       this.dataservies.set(res.data.services);
       this.workdays.set(res.data.workingDays);
       const holidaysApi = res.data.holidays;
@@ -62,15 +62,15 @@ export class Reservations implements OnInit {
 
   EventDataClient(event: any) {
     this.currentStep = 3;
-   this.Form().get('phone_number')?.patchValue(event.phone_number)
-   this.Form().get('name')?.patchValue(event.name)
-   this.Form().get('clientEmail')?.patchValue(event.clientEmail)
+    this.Form().get('phone_number')?.patchValue(event.phone_number)
+    this.Form().get('name')?.patchValue(event.name)
+    this.Form().get('clientEmail')?.patchValue(event.clientEmail)
   }
 
   EventDateClient(event: any) {
     this.currentStep = 4;
-     this.Form().get('date')?.patchValue(event.date)
-   this.Form().get('startTime')?.patchValue(event.startTime)
+    this.Form().get('date')?.patchValue(event.date)
+    this.Form().get('startTime')?.patchValue(event.startTime)
   }
 
 }
