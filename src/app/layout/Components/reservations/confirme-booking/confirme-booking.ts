@@ -35,6 +35,7 @@ export class ConfirmeBooking {
     };
     this.Data.post('bookings', payload).subscribe(() => {
       this.Form().reset();
+      this.name.set('')
     });
   }
 }
