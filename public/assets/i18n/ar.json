@@ -127,6 +127,15 @@
   "Type_message": "اكتب رسالتك...",
   "NO_DATA_TITLE": "لا توجد بيانات",
   "NO_DATA_SUBTITLE": "لم يتم العثور على أي سجلات في الوقت الحالي",
+  "appointment_badge": "💼 حجز موعد جديد",
+  "page_heading": "احجز موعدك",
+  "legal_highlight": "القانوني",
+  "steps_guide": "أكمل الخطوات الأربع لتأكيد حجزك",
+
+
+
+
+
   "API_MESSAGES": {
       "QUOTA_EXCEEDED":"تجاوز الحصة",
     "USER_LOGGED_IN_SUCCESS": "تم تسجيل الدخول بنجاح",
