@@ -1,6 +1,5 @@
-import { Component, EventEmitter, OnInit, Output, signal } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, signal, effect } from '@angular/core';
 import { Data } from '../../core/Servies/data';
-import { elementAt } from 'rxjs';
 
 @Component({
   selector: 'app-footer',
@@ -9,10 +8,18 @@ import { elementAt } from 'rxjs';
   styleUrls: ['./footer.scss'],
 })
 export class Footer implements OnInit {
-  ngOnInit(): void {
-    this.getData();
+  constructor(private Data: Data) {
+    effect(() => {
+      const publicData = this.Data.publicData();
+      if (publicData && publicData.workingDays) {
+        this.formatWorkingDays(publicData.workingDays);
+      }
+    });
   }
-  constructor(private Data: Data) { }
+
+  ngOnInit(): void {
+  }
+
   @Output() EventRoute = new EventEmitter<string>();
   data = signal<any[]>([]);
   onClickListActive(route: string) {
@@ -23,7 +30,7 @@ export class Footer implements OnInit {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  getData() {
+  private formatWorkingDays(workingDays: any[]) {
     const dayTranslationKeys: { [key: string]: string } = {
       'Saturday': 'Sat',
       'Sunday': 'SUn',
@@ -41,24 +48,22 @@ export class Footer implements OnInit {
       'الجمعة': 'Fri'
     };
 
-    this.Data.get('public').subscribe((res: any) => {
-      const formattedData = res.data.workingDays.map((item: any) => {
-        const isClosed = !item.startTime || item.startTime === '' || item.endTime === '';
-        return {
-          ...item,
-          translationKey: dayTranslationKeys[item.day] || item.day,
-          startTime: isClosed ? '00' : item.startTime,
-          endTime: isClosed ? '00' : item.endTime,
-          status: isClosed ? 'Closed' : 'Open',
-        };
-      });
-
-      const keyOrder = ['Sat', 'SUn', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
-      formattedData.sort((a: any, b: any) => {
-        return keyOrder.indexOf(a.translationKey) - keyOrder.indexOf(b.translationKey);
-      });
-
-      this.data.set(formattedData);
+    const formattedData = workingDays.map((item: any) => {
+      const isClosed = !item.startTime || item.startTime === '' || item.endTime === '';
+      return {
+        ...item,
+        translationKey: dayTranslationKeys[item.day] || item.day,
+        startTime: isClosed ? '00' : item.startTime,
+        endTime: isClosed ? '00' : item.endTime,
+        status: isClosed ? 'Closed' : 'Open',
+      };
     });
+
+    const keyOrder = ['Sat', 'SUn', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+    formattedData.sort((a: any, b: any) => {
+      return keyOrder.indexOf(a.translationKey) - keyOrder.indexOf(b.translationKey);
+    });
+
+    this.data.set(formattedData);
   }
 }

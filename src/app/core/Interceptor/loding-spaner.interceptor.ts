@@ -4,16 +4,16 @@ import { finalize, Observable } from 'rxjs';
 import { Core } from '../Servies/core';
 @Injectable()
 export class LoaderInterceptor implements HttpInterceptor {
-  constructor(private Core: Core) {}
+  constructor(private Core: Core) { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (req.url.includes('chat')) {
       return next.handle(req);
     }
 
-    this.Core._loading.next(true);
+    this.Core.showLoader();
     return next.handle(req).pipe(
       finalize(() => {
-        this.Core._loading.next(false);
+        this.Core.hideLoader();
       }),
     );
   }

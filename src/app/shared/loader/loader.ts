@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef, effect } from '@angular/core';
 import { Core } from '../../core/Servies/core';
-import { Subscription } from 'rxjs';
+import { Data } from '../../core/Servies/data';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-loader',
@@ -11,17 +12,36 @@ import { Subscription } from 'rxjs';
 export class Loader {
   loading = false;
   currentLang = 'en';
-  private sub!: Subscription;
 
-  constructor(private core: Core) {
-    this.sub = this.core._loading.subscribe((load) => (this.loading = load));
+  constructor(
+    private core: Core,
+    private data: Data,
+    private router: Router,
+    private cdr: ChangeDetectorRef
+  ) {
+    // Effect to react to publicData signal changes
+    effect(() => {
+      this.updateLoadingStatus();
+    });
+
+    // Subscribe to core loading changes
+    this.core._loading.subscribe(() => {
+      this.updateLoadingStatus();
+    });
   }
 
   ngOnInit() {
     this.currentLang = localStorage.getItem('Language') || 'en';
   }
 
-  ngOnDestroy() {
-    this.sub.unsubscribe();
+  private updateLoadingStatus() {
+    const isInterceptorLoading = this.core._loading.value;
+    const isPublicRoute = !this.router.url.includes('dashboard');
+    const isPublicDataMissing = isPublicRoute && !this.data.publicData();
+
+    this.loading = isInterceptorLoading || isPublicDataMissing;
+    this.cdr.detectChanges();
   }
+
+  ngOnDestroy() { }
 }
