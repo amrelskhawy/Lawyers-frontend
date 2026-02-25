@@ -6,7 +6,7 @@
       <p>{{"PERSONAL_DATA_DESC"|translate}}</p>
     </div>
   </div>
-  <form [formGroup]="Form()">
+  <form [formGroup]="bookingService.bookingForm()">
     <div class="Group datepicker">
       <p-datepicker formControlName="date" [inline]="true" [showWeek]="true" [disabledDates]="disibledDays()"
         [minDate]="minDate">
@@ -35,5 +35,5 @@
     </div>
     }
   </form>
-  <button (click)="onNextSteap()" class="next-btn">{{ 'NEXT_BTN' | translate }}</button>
+  <button (click)="onNextStep()" class="next-btn">{{ 'NEXT_BTN' | translate }}</button>
 </div>

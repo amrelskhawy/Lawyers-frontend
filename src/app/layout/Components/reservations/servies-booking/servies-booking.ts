@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
+import { BookingService } from '../booking.service';
 
 @Component({
   selector: 'app-servies-booking',
@@ -7,6 +8,7 @@ import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
   styleUrl: './servies-booking.scss',
 })
 export class ServiesBooking {
+  constructor(private bookingService: BookingService) { }
   servise = signal<any[]>([]);
   selectServies = signal<any>({});
   @Input()
@@ -23,15 +25,18 @@ export class ServiesBooking {
 
   @Output() serviesid = new EventEmitter<any>();
 
-  getcuurentLangauage() {
-    let lang = localStorage.getItem('Language');
-    return lang;
+  getCurrentLanguage() {
+    return this.bookingService.getCurrentLanguage();
   }
   onSelctServies(item: any) {
     this.selectServies.set(item);
   }
 
-  onNextSteap() {
+  onNextStep() {
+    if (!this.selectServies().id) {
+      this.bookingService.getControl('serviceId')?.markAsTouched();
+      return;
+    }
     this.serviesid.emit(this.selectServies());
   }
 }

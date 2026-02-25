@@ -1,5 +1,6 @@
+
 import { Component, EventEmitter, OnInit, Output, signal, Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BookingService } from '../booking.service';
 
 @Component({
   selector: 'app-data-booking',
@@ -8,37 +9,35 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrl: './data-booking.scss',
 })
 export class DataBooking implements OnInit {
+  constructor(public bookingService: BookingService) { }
+
   ngOnInit(): void {
-    this.createForm();
+    if (this.initialData) {
+      this.bookingService.bookingForm().patchValue(this.initialData);
+    }
   }
 
-  constructor(private FB: FormBuilder) { }
-  Form = signal<FormGroup>(new FormGroup({}));
   @Output() dataClient = new EventEmitter<any>();
   @Input() initialData: any;
 
-  createForm() {
-    this.Form.set(
-      this.FB.group({
-        clientEmail: [this.initialData?.clientEmail || '', [Validators.required, Validators.email]],
-        name: [this.initialData?.name || '', Validators.required],
-        phone_number: [this.initialData?.phone_number || '', Validators.required],
-      }),
-    );
-  }
+  onNextStep() {
+    const controls = ['clientEmail', 'name', 'phone_number'];
+    let isValid = true;
 
-  onNextSteap() {
-    if (this.Form().invalid) {
-      this.Form().markAllAsTouched()
-      return
+    controls.forEach(control => {
+      const c = this.bookingService.getControl(control);
+      if (c?.invalid) {
+        c.markAsTouched();
+        isValid = false;
+      }
+    });
+
+    if (isValid) {
+      this.dataClient.emit(this.bookingService.bookingForm().value);
     }
-    this.dataClient.emit(this.Form().value)
   }
-
 
   getControlName(controlName: string) {
-    return this.Form().get(controlName);
+    return this.bookingService.getControl(controlName);
   }
-
-
 }

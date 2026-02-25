@@ -12,43 +12,48 @@
     <p class="confirm-booking">{{ 'steps_guide' | translate }}</p>
   </div>
   <div class="container">
-    <p-stepper [(value)]="currentStep" class="basis-[50rem]">
+    <p-stepper [value]="bookingService.currentStep()" class="basis-[50rem]">
       <p-step-list>
         <p-step [value]="1">{{ 'NAV_SERVICES' | translate }}</p-step>
-        <p-step [value]="2" [disabled]="!Form().get('serviceId')?.value">{{
+        <p-step [value]="2" [disabled]="bookingService.getControl('serviceId')?.invalid ?? true">{{
           'data_information' | translate
           }}</p-step>
-        <p-step [value]="3" [disabled]="!Form().get('clientEmail')?.value">{{
+        <p-step [value]="3"
+          [disabled]="(bookingService.getControl('clientEmail')?.invalid || bookingService.getControl('name')?.invalid || bookingService.getControl('phone_number')?.invalid) ?? true">{{
           'SELECT_DATE_TIME' | translate
           }}</p-step>
-        <p-step [value]="4" [disabled]="!Form().get('date')?.value">{{
+        <p-step [value]="4"
+          [disabled]="(bookingService.getControl('date')?.invalid || bookingService.getControl('startTime')?.invalid) ?? true">{{
           'confirme_booking' | translate
           }}</p-step>
       </p-step-list>
       <p-step-panels>
         <p-step-panel [value]="1">
           <ng-template #content let-activateCallback="activateCallback">
-            <app-servies-booking [dataservies]="dataservies()" [selectedService]="detailsservies()"
+            <app-servies-booking [dataservies]="bookingService.dataservies()"
+              [selectedService]="bookingService.detailsservies()"
               (serviesid)="onselectServies($event)"></app-servies-booking>
           </ng-template>
         </p-step-panel>
 
         <p-step-panel [value]="2">
           <ng-template #content let-activateCallback="activateCallback">
-            <app-data-booking [initialData]="Form().value" (dataClient)="EventDataClient($event)"></app-data-booking>
+            <app-data-booking [initialData]="bookingService.bookingForm().value"
+              (dataClient)="EventDataClient($event)"></app-data-booking>
           </ng-template>
         </p-step-panel>
 
         <p-step-panel [value]="3">
           <ng-template #content let-activateCallback="activateCallback">
-            <app-meeting-booking [initialData]="Form().value" (DateClient)="EventDateClient($event)"
-              [disabledDates]="disabledDates()"></app-meeting-booking>
+            <app-meeting-booking [initialData]="bookingService.bookingForm().value"
+              (DateClient)="EventDateClient($event)"
+              [disabledDates]="bookingService.disabledDates()"></app-meeting-booking>
           </ng-template>
         </p-step-panel>
 
         <p-step-panel [value]="4">
           <ng-template #content let-activateCallback="activateCallback">
-            <app-confirme-booking [form]="Form()" [nameServies]="detailsservies()"></app-confirme-booking>
+            <app-confirme-booking [nameServies]="bookingService.detailsservies()"></app-confirme-booking>
           </ng-template>
         </p-step-panel>
       </p-step-panels>
