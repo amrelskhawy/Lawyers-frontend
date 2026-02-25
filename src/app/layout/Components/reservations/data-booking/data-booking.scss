@@ -1,11 +1,11 @@
-.wrapper-information-booging{
-    background-color: var(--white-color);
+.wrapper-information-booging {
+  background-color: var(--white-color);
   border-radius: 20px;
   overflow: hidden;
 }
 
-.header-information{
-   display: flex;
+.header-information {
+  display: flex;
   gap: 10px;
   align-items: center;
   padding: 10px;
@@ -21,40 +21,20 @@
   }
 }
 
-
-
-.icon{
-  position: absolute;
-  inset-inline-end: 10px;
-  top: 40px;
-  color: var(--accent-gold);
-}
-form{
+form {
   padding: 20px;
   background-color: var(--silver-frost);
   margin: 20px;
   border-radius: 20px;
-  input{
+  input {
     background-color: var(--white-color);
   }
 }
 
-
-
-
-.next-btn{
+.next-btn {
   background-color: var(--primary-navy);
   border-radius: 30px;
   color: var(--white-color);
-  width: 20%;
+  width: 200px;
   margin: 20px;
-}
-
-
-
-
-@media(max-width:767px){
-  .next-btn{
-width: 30%;
-  }
 }
