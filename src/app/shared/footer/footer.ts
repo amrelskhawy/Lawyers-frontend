@@ -12,7 +12,7 @@ export class Footer implements OnInit {
   ngOnInit(): void {
     this.getData();
   }
-  constructor(private Data: Data) {}
+  constructor(private Data: Data) { }
   @Output() EventRoute = new EventEmitter<string>();
   data = signal<any[]>([]);
   onClickListActive(route: string) {
@@ -24,16 +24,40 @@ export class Footer implements OnInit {
   }
 
   getData() {
+    const dayTranslationKeys: { [key: string]: string } = {
+      'Saturday': 'Sat',
+      'Sunday': 'SUn',
+      'Monday': 'Mon',
+      'Tuesday': 'Tue',
+      'Wednesday': 'Wed',
+      'Thursday': 'Thu',
+      'Friday': 'Fri',
+      'السبت': 'Sat',
+      'الأحد': 'SUn',
+      'الإثنين': 'Mon',
+      'الثلاثاء': 'Tue',
+      'الأربعاء': 'Wed',
+      'الخميس': 'Thu',
+      'الجمعة': 'Fri'
+    };
+
     this.Data.get('public').subscribe((res: any) => {
       const formattedData = res.data.workingDays.map((item: any) => {
         const isClosed = !item.startTime || item.startTime === '' || item.endTime === '';
         return {
           ...item,
+          translationKey: dayTranslationKeys[item.day] || item.day,
           startTime: isClosed ? '00' : item.startTime,
           endTime: isClosed ? '00' : item.endTime,
           status: isClosed ? 'Closed' : 'Open',
         };
       });
+
+      const keyOrder = ['Sat', 'SUn', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+      formattedData.sort((a: any, b: any) => {
+        return keyOrder.indexOf(a.translationKey) - keyOrder.indexOf(b.translationKey);
+      });
+
       this.data.set(formattedData);
     });
   }

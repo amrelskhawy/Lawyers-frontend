@@ -1,4 +1,6 @@
 {
+  "en": "الإنجليزية",
+  "ar": "العربية",
   "filed_reqierd": "هذا الحقل مطلوب",
   "name": "الأسم",
   "submit": "إرسال",
@@ -131,13 +133,8 @@
   "page_heading": "احجز موعدك",
   "legal_highlight": "القانوني",
   "steps_guide": "أكمل الخطوات الأربع لتأكيد حجزك",
-
-
-
-
-
   "API_MESSAGES": {
-      "QUOTA_EXCEEDED":"تجاوز الحصة",
+    "QUOTA_EXCEEDED": "تجاوز الحصة",
     "USER_LOGGED_IN_SUCCESS": "تم تسجيل الدخول بنجاح",
     "SERVICE_UPDATED_SUCCESS": "تم تحديث الخدمه بنجاح",
     "SERVICES_RETRIEVED_SUCCESS": "تم استرجاع الخدمات بنجاح",

@@ -31,7 +31,7 @@
       <ul class="work-days-list">
         @for (item of data(); track $index) {
         <li class="day-item">
-          <span class="day-name">{{ item.day }}</span>
+          <span class="day-name">{{ item.translationKey | translate }}</span>
           @if(item.status === 'Open') {
           <span class="day-time">{{ item.startTime }} - {{ item.endTime }}</span>
           } @else {

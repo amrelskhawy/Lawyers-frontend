@@ -1,4 +1,6 @@
 {
+  "en": "English",
+  "ar": "Arabic",
   "filed_reqierd": "This Field Is Requierd *",
   "name": "Name",
   "submit": "submit",
@@ -127,19 +129,12 @@
   "type_message": "Type your message...",
   "NO_DATA_TITLE": "No Data Found",
   "NO_DATA_SUBTITLE": "No records were found at the moment",
-
- "appointment_badge": "💼 New Appointment",
+  "appointment_badge": "💼 New Appointment",
   "page_heading": "Book Your",
   "legal_highlight": "Legal Consultation",
   "steps_guide": "Complete the four steps to confirm your booking",
-
-
-
-
-
-
   "API_MESSAGES": {
-      "QUOTA_EXCEEDED": "QUOTA EXCEEDED",
+    "QUOTA_EXCEEDED": "QUOTA EXCEEDED",
     "USER_LOGGED_IN_SUCCESS": "User Logged In Successfully",
     "SERVICE_UPDATED_SUCCESS": "Service Updated Successfully",
     "SERVICES_RETRIEVED_SUCCESS": "Services Retrieved Successfully",
