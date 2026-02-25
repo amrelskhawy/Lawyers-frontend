@@ -15,6 +15,8 @@ export class MeetingBooking implements OnInit {
     public bookingService: BookingService
   ) { }
 
+  private dateSub: any;
+
   ngOnInit(): void {
     if (this.initialData) {
       this.bookingService.bookingForm().patchValue(this.initialData);
@@ -23,6 +25,12 @@ export class MeetingBooking implements OnInit {
       }
     }
     this.watchDateChange();
+  }
+
+  ngOnDestroy(): void {
+    if (this.dateSub) {
+      this.dateSub.unsubscribe();
+    }
   }
 
   timeSlots = signal<any[]>([]);
@@ -38,14 +46,20 @@ export class MeetingBooking implements OnInit {
   @Input() initialData: any;
 
   PathTime(slot: any) {
-    this.bookingService.getControl('startTime')?.patchValue(slot);
-    this.selectedTime.set(slot);
+    if (!slot.available) return;
+    this.bookingService.getControl('startTime')?.patchValue(slot.startTime);
+    this.selectedTime.set(slot.startTime);
   }
 
   watchDateChange() {
-    this.bookingService.getControl('date')?.valueChanges.subscribe((selectedDate: Date) => {
+    if (this.dateSub) this.dateSub.unsubscribe();
+    
+    this.dateSub = this.bookingService.getControl('date')?.valueChanges.subscribe((selectedDate: Date) => {
       if (!selectedDate) return;
-      const finalDate = selectedDate.toLocaleDateString('en-CA');
+      
+      // Ensure we only trigger when the date string actually changes
+      const finalDate = new Date(selectedDate).toLocaleDateString('en-CA');
+      
       this.dataService.get(`bookings/availability`, { date: finalDate })
         .subscribe((res: any) => {
           if (res.data) {

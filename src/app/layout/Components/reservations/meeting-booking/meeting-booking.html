@@ -2,8 +2,8 @@
   <div class="header-date">
     <i class="fa-solid fa-address-book"></i>
     <div>
-      <h3>{{"PERSONAL_DATA"|translate}}</h3>
-      <p>{{"PERSONAL_DATA_DESC"|translate}}</p>
+      <h3>{{"DATE_TIME"|translate}}</h3>
+      <p>{{"DATE_TIME_DESC"|translate}}</p>
     </div>
   </div>
   <form [formGroup]="bookingService.bookingForm()">
@@ -20,10 +20,15 @@
     @if (timeSlots().length > 0) {
     <div class="Times-container">
       @for (slot of timeSlots(); track $index) {
-      <div (click)="PathTime(slot.startTime)" class="Time-slot" [ngClass]="{
-                'selected-time': slot.startTime == selectedTime(),}">
-        <span>
-          {{ slot.startTime }}<span class="Timing">Am</span> : {{ slot.endTime}}<span class="Timing">Pm</span>
+      <div (click)="PathTime(slot)" class="Time-slot" [ngClass]="{
+                'selected-time': slot.startTime == selectedTime(),
+                'slot-unavailable': !slot.available
+              }">
+        <span class="slot-time">
+          {{ slot.startTime }} - {{ slot.endTime}}
+        </span>
+        <span class="slot-status">
+          {{ slot.available ? ('AVAILABLE' | translate) : ('BOOKED' | translate) }}
         </span>
       </div>
       }

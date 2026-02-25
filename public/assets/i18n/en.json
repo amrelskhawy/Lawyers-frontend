@@ -104,6 +104,8 @@
   "SELECT_SERVICE_DESC": "Select the type of service you need",
   "PERSONAL_DATA": "Your Personal Information",
   "PERSONAL_DATA_DESC": "Enter your contact information",
+  "DATE_TIME": "Date & Time",
+  "DATE_TIME_DESC": "Select the date and time you want to book",
   "PREVIOUS_MONTH": "Previous Month",
   "NEXT_MONTH": "Next Month",
   "SUn": "Sunday",
