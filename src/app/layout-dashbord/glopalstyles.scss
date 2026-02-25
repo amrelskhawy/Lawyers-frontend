@@ -77,10 +77,9 @@ form {
 
 .table-wrapper {
   margin-top: 1rem;
-  height: calc(100vh - 215px);
+  height: calc(100vh - 140px) !important;
   display: flex;
   flex-direction: column;
-
   app-tabel {
     width: 100%;
     height: 100%;
@@ -94,18 +93,10 @@ form {
 
     .p-datatable-wrapper {
       flex: 1;
-      overflow-y: auto; // Allow scroll within the table body if needed
+      overflow-y: auto;
     }
 
-    .p-datatable-thead>tr>th {
-      padding: 0.75rem 1rem;
-      background-color: var(--primary-navy, #1a2b4b); // Use theme color instead of white/gray
-      color: var(--white-color, #fff);
-      font-weight: 600;
-      font-size: 0.9rem;
-      border-bottom: 2px solid var(--accent-gold, #c5a059);
-    }
-
+   
     .p-datatable-tbody>tr>td {
       padding: 0.5rem 1rem; // Compact padding
       border-bottom: 1px solid #eee;
@@ -128,13 +119,11 @@ form {
       }
     }
 
-    // Pagination styling to be at the bottom
     .p-paginator {
       margin-top: auto;
-      background-color: transparent;
       border-top: 1px solid #ddd;
     }
-  }
+ }
 
   .action-btn {
     display: flex;
@@ -159,7 +148,7 @@ form {
       }
 
       &.edit-btn {
-        color: #f59e0b; // Amber/Gold usually for edit
+        color: #f59e0b;
 
         &:hover {
           background-color: rgba(245, 158, 11, 0.1);
