@@ -1,39 +1,53 @@
 <section class="wrapper-information-booging">
   <div class="header-information">
-        <i class="fa-solid fa-address-book"></i>
+    <i class="fa-solid fa-address-book"></i>
     <div>
-      <h3>{{"PERSONAL_DATA"|translate}}</h3>
-      <p>{{"PERSONAL_DATA_DESC"|translate}}</p>
+      <h3>{{ 'PERSONAL_DATA' | translate }}</h3>
+      <p>{{ 'PERSONAL_DATA_DESC' | translate }}</p>
     </div>
   </div>
   <form [formGroup]="Form()">
     <div class="Group">
-      <label><i class="fa-regular fa-envelope icon"></i> {{ 'email' | translate }}</label>
-      <input formControlName="clientEmail" placeholder="{{ 'email' | translate }}" />
+      <label>{{ 'email' | translate }}</label>
+      <input formControlName="clientEmail" placeholder="📧  {{ 'email' | translate }}" />
       <div class="wrapper-error">
         <small
           class="error-message"
-          *ngIf="getControlName('clientEmail')?.invalid && getControlName('clientEmail')?.touched"
-          >{{ 'filed_reqierd' | translate }}</small>
+          *ngIf="
+            getControlName('clientEmail')?.errors?.['required'] &&
+            getControlName('clientEmail')?.touched
+          "
+        >
+          {{ 'filed_reqierd' | translate }}
+        </small>
+
+        <small
+          class="error-message"
+          *ngIf="
+            getControlName('clientEmail')?.errors?.['email'] &&
+            !getControlName('clientEmail')?.errors?.['required']
+          "
+        >
+          {{ 'vaild_email' | translate }}
+        </small>
       </div>
     </div>
 
-
-     <div class="Group">
-      <label><i class="fa-solid fa-id-badge icon"></i> {{ 'name' | translate }}</label>
-      <input formControlName="name" placeholder="{{ 'name' | translate }}" />
+    <div class="Group">
+      <label> {{ 'name' | translate }}</label>
+      <input formControlName="name" placeholder="👤 {{ 'name' | translate }}" />
       <div class="wrapper-error">
         <small
           class="error-message"
           *ngIf="getControlName('name')?.invalid && getControlName('name')?.touched"
-          >{{ 'filed_reqierd' | translate }}</small>
+          >{{ 'filed_reqierd' | translate }}</small
+        >
       </div>
     </div>
 
-
     <div class="Group">
-      <label><i class="fa-solid fa-phone icon"></i> {{ 'phone' | translate }}</label>
-      <input formControlName="phone_number" placeholder="{{ 'phone' | translate }}" type="number"/>
+      <label>{{ 'phone' | translate }}</label>
+      <input formControlName="phone_number" placeholder="📞 {{ 'phone' | translate }}" type="string" />
       <div class="wrapper-error">
         <small
           class="error-message"
@@ -42,6 +56,6 @@
         >
       </div>
     </div>
-      <button (click)="onNextSteap()" class="next-btn">{{"NEXT_BTN"|translate}}</button>
+    <button (click)="onNextSteap()" class="next-btn">{{ 'NEXT_BTN' | translate }}</button>
   </form>
 </section>
