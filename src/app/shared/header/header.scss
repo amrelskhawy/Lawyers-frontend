@@ -4,7 +4,7 @@
   padding: 10px 0;
   padding-bottom: 5px;
   position: sticky;
-    background-color: var(--white-color);
+  background-color: var(--white-color);
   top: 0;
   z-index: 100;
 }
@@ -14,9 +14,6 @@
   justify-content: space-between;
   align-items: center;
 }
-
-
-
 
 ul {
   display: flex;
@@ -66,15 +63,11 @@ ul {
   margin-inline-start: 20px;
 }
 
-.btn-header-div{
+.btn-header-div {
   display: flex;
   align-items: center;
   gap: 10px;
 }
-
-
-
-
 
 @media (max-width: 767px) {
   .section-header {
@@ -85,12 +78,11 @@ ul {
 @media (min-width: 767px) and (max-width: 1400px) {
   .btn-header {
     width: 120px;
-      margin-inline-start: 0px;
+    margin-inline-start: 0px;
   }
-  img{
-    display: none;
+  img {
+    display: none !important;
   }
-
 
   ul {
     gap: 19px;
