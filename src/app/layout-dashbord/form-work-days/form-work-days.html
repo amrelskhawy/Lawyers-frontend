@@ -1,63 +1,64 @@
-<p-dialog
-  maskStyleClass="backdrop-blur-sm"
-  [(visible)]="visible"
-  (onHide)="onClose()"
-  [modal]="true"
-  [baseZIndex]="10000"
-  [style]="{ width: '40rem', overflow: 'auto' }"
->
-  <ng-template #headless>
-    <div class="wrapper-form-work-day">
-      <div class="header-works">
-        <i class="fa-regular fa-clock"></i>
-        <div>
-          <h4>Business Canlnder Day</h4>
-          <p>Control Business Canlnder Day In The Working</p>
+<p-dialog maskStyleClass="backdrop-blur-sm" [(visible)]="visible" (onHide)="onClose()" [modal]="true"
+  [baseZIndex]="10000" styleClass="modern-modal" [style]="{ width: '90vw', maxWidth: '650px' }">
+
+  <ng-template pTemplate="headless">
+    <div class="modern-form-container">
+
+      <!-- Header -->
+      <div class="form-header">
+        <button class="close-icon-btn" (click)="closeDialog()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div class="header-content">
+          <img src="/assets/Img/NAME-GOLD.svg" alt="logo" class="header-logo mx-auto"
+            style="display:block; margin: 0 auto 10px;" />
+          <h3>Business Calendar Day</h3>
+          <p class="subtitle">Control Business Calendar Day In The Working</p>
         </div>
       </div>
-      <img width="100" src="/assets/Img/NAME-GOLD.svg" alt="logo" />
 
-      <div class="work-day">
-        @for (day of data(); track day.id) {
-          <div class="card">
-            <div class="checked-inp">
-              <p-toggleswitch [(ngModel)]="day.isOpen" (onChange)="onToggleChange($event, day)" />
-              <span>{{ day.day }}</span>
+      <!-- Form Body -->
+      <div class="form-body">
+        <div class="work-days-list">
+          @for (day of data(); track day.id) {
+          <div class="work-day-card" [class.is-disabled]="!day.isOpen">
+            <div class="day-toggle-col">
+              <span class="day-name">{{ day.day }}</span>
+              <p-toggleswitch [(ngModel)]="day.isOpen" (onChange)="onToggleChange($event, day)"></p-toggleswitch>
             </div>
-            <div class="time-work">
-              <div class="from">
-                <input
-                  [disabled]="!day.isOpen"
-                  [(ngModel)]="day.startTime"
-                  type="time"
-                  (input)="onTimeChange(day)"
-                />
+
+            <div class="time-inputs-col">
+              <div class="input-wrapper custom-time-input">
+                <i class="fa-regular fa-clock input-icon"></i>
+                <input [disabled]="!day.isOpen" [(ngModel)]="day.startTime" type="time" (input)="onTimeChange(day)" />
               </div>
 
-              <div class="to">
-                <input
-                  [disabled]="!day.isOpen"
-                  [(ngModel)]="day.endTime"
-                  type="time"
-                  (input)="onTimeChange(day)"
-                />
+              <div class="input-wrapper custom-time-input">
+                <i class="fa-regular fa-clock input-icon"></i>
+                <input [disabled]="!day.isOpen" [(ngModel)]="day.endTime" type="time" (input)="onTimeChange(day)" />
               </div>
             </div>
           </div>
-        }
-      </div>
-      <br />
-      <div class="footer-workday">
-        <h3>{{ 'OFFICE_POLICY_TITLE' | translate }}</h3>
+          }
+        </div>
 
-        <p>
-          {{ 'OFFICE_POLICY_DESC' | translate }}
-        </p>
+        <!-- Footer Info -->
+        <div class="footer-policy mt-4">
+          <div class="policy-card">
+            <h4>{{ 'OFFICE_POLICY_TITLE' | translate }}</h4>
+            <p>{{ 'OFFICE_POLICY_DESC' | translate }}</p>
+          </div>
+        </div>
       </div>
 
-      <button class="btn-close-dilog" (click)="closeDialog()">
-        <i class="fa-solid fa-xmark"></i> {{ 'close' | translate }}
-      </button>
+      <!-- Actions -->
+      <div class="form-actions">
+        <button type="button" class="btn-primary" (click)="onSubmitData()">
+          {{ 'submit' | translate }} <i class="fa-solid fa-arrow-right-long"
+            [ngClass]="{'fa-arrow-left-long': false}"></i>
+        </button>
+      </div>
+
     </div>
   </ng-template>
 </p-dialog>

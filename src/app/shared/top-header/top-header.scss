@@ -18,7 +18,6 @@
   li {
     padding: 0 10px;
   }
-
 }
 
 .icon-contact {
@@ -35,7 +34,6 @@
     &:hover {
       color: var(--primary-navy);
       transform: scale(1.1);
-
     }
   }
 }
@@ -43,5 +41,19 @@
 @media (max-width: 767px) {
   .section-top-header {
     display: none;
+  }
+}
+
+@media (min-width: 767px) and (max-width: 1200px) {
+  .content-top-header{
+flex-direction: column;
+justify-content: center;
+  }
+  .icon-contact {
+    padding: 0;
+    gap: 0;
+    li {
+      padding: 5px;
+    }
   }
 }

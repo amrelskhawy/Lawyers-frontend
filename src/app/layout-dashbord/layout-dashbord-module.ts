@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { LayoutDashbordRoutingModule } from './layout-dashbord-routing-module';
 import { Menue } from './menue/menue';
 import { Content } from './content/content';
-import { Users } from './users/users';
-import { WorkDays } from './work-days/work-days';
 import { Holidays } from './holidays/holidays';
 import { SharedModule } from '../shared/shared-module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -21,9 +19,29 @@ import { TopGrid } from './top-grid/top-grid';
 import { FormWorkDays } from './form-work-days/form-work-days';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { ShowDataInDilog } from './add-servies/show-data-in-dilog/show-data-in-dilog';
-
+import { Reservations } from './reservations/reservations';
+import { Moderators } from './moderators/moderators';
+import { Form } from './moderators/form/form';
+import { Admins } from './admins/admins';
+import { DilogBooking } from './reservations/dilog-booking/dilog-booking';
+import { SelectModule } from 'primeng/select';
 @NgModule({
-  declarations: [Menue, Content, Users, WorkDays, Holidays, AddServies, Formservies, FormHoldays, TopGrid, FormWorkDays, ShowDataInDilog],
+  declarations: [
+    Menue,
+    Content,
+    Holidays,
+    AddServies,
+    Formservies,
+    FormHoldays,
+    TopGrid,
+    FormWorkDays,
+    ShowDataInDilog,
+    Reservations,
+    Moderators,
+    Form,
+    Admins,
+    DilogBooking,
+  ],
   imports: [
     CommonModule,
     LayoutDashbordRoutingModule,
@@ -36,8 +54,8 @@ import { ShowDataInDilog } from './add-servies/show-data-in-dilog/show-data-in-d
     ReactiveFormsModule,
     TooltipModule,
     ToggleSwitchModule,
-    FormsModule
-
+    FormsModule,
+    SelectModule
   ],
 })
 export class LayoutDashbordModule {}

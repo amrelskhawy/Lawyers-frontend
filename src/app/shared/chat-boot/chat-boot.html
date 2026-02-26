@@ -1,6 +1,75 @@
+<div class="modern-chatbot-wrapper">
 
-<div class="section-chatboot">
-  <button class="icon-chatboot">
-    <i class="fa-solid fa-headset"></i>
+  <!-- Toggle Button -->
+  <button class="chatbot-fab" [class.is-hidden]="isOpen" (click)="toggleChat()">
+    <div class="fab-icon">
+      <i class="fa-solid fa-headset"></i>
+    </div>
   </button>
+
+  <!-- Chat Window -->
+  <div class="chatbot-window" [class.is-open]="isOpen">
+
+    <!-- Chat Header -->
+    <div class="chat-header">
+      <div class="header-info">
+        <div class="support-avatar">
+          <i class="fa-solid fa-headset"></i>
+        </div>
+        <div class="header-text">
+          <h4>{{ "Support" | translate }}</h4>
+          <span>{{ "Online" | translate }}</span>
+        </div>
+      </div>
+      <button class="btn-close" (click)="toggleChat()">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <!-- Chat Messages -->
+    <div class="chat-messages-container">
+      @if (messages.length === 0) {
+      <div class="message-bubble system-welcome">
+        <p>✨ {{ "welcome_chat" | translate }}</p>
+      </div>
+      }
+
+      @for (msg of messages; track msg) {
+      <div class="message-bubble" [ngClass]="msg.role === 'user' ? 'user-message' : 'bot-response'">
+        @if (msg.role === 'user') {
+        <p>{{ msg.text }}</p>
+        } @else {
+        <div class="messages-renderer" [innerHTML]="formatClosuresToHtml(msg.text)"></div>
+        }
+      </div>
+      }
+
+      @if (isLoading()) {
+      <div class="message-bubble typing-bubble">
+        <div class="typing-indicator">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      }
+    </div>
+
+    <!-- Chat Input Area -->
+    <div class="chat-input-area">
+      <div class="input-wrapper" [class.is-disabled]="isLoading()">
+        <input type="text" #msgInput placeholder="{{ 'Type_message' | translate }}"
+          (keyup.enter)="!isLoading() && sendMessage(msgInput)" [disabled]="isLoading()" />
+        <button class="btn-send" [disabled]="isLoading()" (click)="sendMessage(msgInput)">
+          @if(isLoading()){
+          <i class="fa-solid fa-spinner fa-spin"></i>
+          } @else {
+          <i class="fa-solid fa-paper-plane"></i>
+          }
+        </button>
+      </div>
+    </div>
+
+  </div>
+
 </div>

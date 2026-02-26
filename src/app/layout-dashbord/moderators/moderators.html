@@ -1,0 +1,17 @@
+<app-top-grid (search)="onSearch($event)" (visibelformadd)="visibelform.set(true)"></app-top-grid>
+
+<app-form (success)="HandelResponseSuccess()" [visible]="visibelform()"
+  (visibleChange)="visibelform.set($event)"></app-form>
+<app-confirmation-delete [visibelConfirme]="visibelConfirme()"
+  (handelstatusConfirmation)="onHandelStatusConfirmation($event)"></app-confirmation-delete>
+
+
+<div class="table-wrapper">
+  <app-tabel [data]="data()" [bodytabel]="bodytabel()" [no_data]="dataStatus()">
+    <ng-template let-item>
+      <div class="action-btn">
+        <button (click)="onDelete(item)" class="delete-btn"><i class="fa-solid fa-trash"></i></button>
+      </div>
+    </ng-template>
+  </app-tabel>
+</div>

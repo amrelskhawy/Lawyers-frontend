@@ -7,60 +7,58 @@
 
     </div>
   </div>
-
   <div class="login-form-wrapper">
     <div class="login-card">
       <div class="brand-header">
         <div class="home-nav">
-          <a routerLink="/" class="btn-home" title="العودة للرئيسية">
+          <a routerLink="/" class="btn-home" title="{{'return_main'|translate}}">
             <i class="fa-solid fa-arrow-right"></i>
           </a>
+          <app-translation></app-translation>
         </div>
         <img src="/assets/Img/logo.svg" alt="Law Firm Logo" class="app-logo" width="200" height="auto" />
-        <h1>مرحباً بعودتك</h1>
-        <p class="subtitle">الرجاء تسجيل الدخول إلى حسابك</p>
+        <h1>{{"Welcome_back"|translate}}</h1>
+        <p class="subtitle">{{"please_login"|translate}}</p>
       </div>
 
       <form [formGroup]="Form()" (ngSubmit)="onSubmit()" class="modern-form">
         <div class="form-group">
-          <label for="email">البريد الإلكتروني</label>
+          <label for="email">{{"email"|translate}}</label>
           <div class="input-container"
             [class.error]="getControlName('email')?.invalid && getControlName('email')?.touched">
             <span class="icon"><i class="fa-solid fa-envelope"></i></span>
-            <input id="email" type="email" formControlName="email" placeholder="البريد الإلكتروني" />
+            <input id="email" type="email" formControlName="email" placeholder="{{'email'|translate}}" />
           </div>
           <div class="error-msg" *ngIf="getControlName('email')?.invalid && getControlName('email')?.touched">
-            <small *ngIf="getControlName('email')?.errors?.['required']">البريد الإلكتروني مطلوب</small>
-            <small *ngIf="getControlName('email')?.errors?.['email']">الرجاء إدخال بريد إلكتروني صحيح</small>
+            <small *ngIf="getControlName('email')?.errors?.['required']">  </small>
+            <small *ngIf="getControlName('email')?.errors?.['email']">{{"vaild_email"|translate}}</small>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="password">كلمة المرور</label>
+          <label for="password">{{"password"|translate}}</label>
           <div class="input-container"
             [class.error]="getControlName('password')?.invalid && getControlName('password')?.touched">
             <span class="icon"><i class="fa-solid fa-lock"></i></span>
             <input id="password" [type]="showPassword() ? 'text' : 'password'" formControlName="password"
-              placeholder="كلمة المرور" />
+              placeholder="{{'password'|translate}}" />
             <span class="toggle-password" (click)="togglePasswordVisibility()" role="button" tabindex="0">
               <i class="fa-solid" [class.fa-eye]="!showPassword()" [class.fa-eye-slash]="showPassword()"></i>
             </span>
           </div>
           <div class="error-msg" *ngIf="getControlName('password')?.invalid && getControlName('password')?.touched">
-            <small>كلمة المرور مطلوبة</small>
+            <small>{{"filed_reqierd"|translate}}</small>
           </div>
         </div>
 
         <div class="form-actions">
-          <a routerLink="/auth/forgot-password" class="forgot-password">هل نسيت الباسورد؟</a>
+          <a routerLink="/auth/forgot-password" class="forgot-password">{{"reset_password"|translate}}</a>
         </div>
 
         <button type="submit" class="btn-primary" [disabled]="Form().invalid">
-          <span>تسجيل الدخول</span>
+          <span>{{"LOGIN"|translate}}</span>
           <i class="fa-solid fa-arrow-right"></i>
         </button>
-
-
       </form>
     </div>
   </div>

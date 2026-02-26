@@ -1,33 +1,58 @@
-<p-table [value]="tableData" [paginator]="true" [rows]="rows" stripedRows [tableStyle]="{ 'min-width': '50rem' }">
-  <!-- HEADER -->
-  <ng-template pTemplate="header">
-    <tr>
-      <ng-container *ngFor="let col of bodytabel">
-        <th>
-          {{ col.key | translate }}
-        </th>
-      </ng-container>
+@if (exsistData() == 'has-data') {
+  <p-table
+    [value]="tableData"
+    [paginator]="true"
+    [rowsPerPageOptions]="[5, 10, 20, 50]"
+    [rows]="20"
+    stripedRows
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <!-- HEADER -->
+    <ng-template pTemplate="header">
+      <tr>
+        <ng-container *ngFor="let col of bodytabel">
+          <th>
+            {{ col.key | translate }}
+          </th>
+        </ng-container>
 
-      <!-- Procedures column -->
-      <th *ngIf="actionsTpl" style="text-align: center">{{"Procedures"|translate}}</th>
-    </tr>
-  </ng-template>
+        <th *ngIf="actionsTpl" style="text-align: center">{{ 'Procedures' | translate }}</th>
+      </tr>
+    </ng-template>
 
-  <!-- BODY -->
+    <!-- BODY -->
 
-  <ng-template pTemplate="body" let-row>
-    <tr>
-      <ng-container *ngFor="let col of bodytabel">
-        <td>
-          {{ formatCell(col.value, row[col.value]) }}
+    <ng-template pTemplate="body" let-row>
+      <tr>
+        <ng-container *ngFor="let col of bodytabel">
+          <td [ngClass]="getCellClass(col, row)">
+            {{ formatCell(col.value, row[col.value]) }}
+          </td>
+        </ng-container>
+
+        <td *ngIf="actionsTpl">
+          <ng-container *ngTemplateOutlet="actionsTpl; context: { $implicit: row }"></ng-container>
         </td>
-      </ng-container>
+      </tr>
+    </ng-template>
+  </p-table>
 
-      <td *ngIf="actionsTpl">
-        <ng-container *ngTemplateOutlet="actionsTpl; context: { $implicit: row }"></ng-container>
-      </td>
-    </tr>
-  </ng-template>
-</p-table>
-
-<ng-content></ng-content>
+  <ng-content></ng-content>
+} @else if (exsistData() == 'no-data') {
+  <app-no-data></app-no-data>
+} @else {
+  <p-table [value]="$any(loadingData)" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+      <tr>
+        <ng-container *ngFor="let col of bodytabel">
+          <th>{{ col.key | translate }}</th>
+        </ng-container>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body">
+      <tr>
+        <td *ngFor="let col of bodytabel"><p-skeleton /></td>
+      </tr>
+    </ng-template>
+  </p-table>
+}

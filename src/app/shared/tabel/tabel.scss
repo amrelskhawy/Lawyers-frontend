@@ -1,10 +1,23 @@
-th{
-  background: linear-gradient(180deg, #b5a863  0%, #8b7a3a 100%) !important;
+th {
+  background: linear-gradient(180deg, #b5a863 0%, #8b7a3a 100%) !important;
   color: var(--white-color) !important;
+  position: sticky !important;
+  top: 0;
 }
 
-
-::ng-deep .p-paginator-page.p-paginator-page-selected{
+::ng-deep .p-paginator-page.p-paginator-page-selected {
   color: var(--white-color) !important;
-   background-color: var(--accent-gold) !important;
+  background-color: var(--accent-gold) !important;
+}
+
+.admin-badge {
+  background-color: var(--mint-whisper);
+  color: var(--seafoam-green);
+  text-align: center;
+}
+
+.moderator-badge {
+  background-color: var(--state-attention-soft);
+  color: var(--state-attention);
+  text-align: center;
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { Data } from '../../core/Servies/data';
 import { TranslateService } from '@ngx-translate/core';
+import { IDataServies } from '../../core/Models/servies.model';
 @Component({
   selector: 'app-add-servies',
   standalone: false,
@@ -20,10 +21,12 @@ export class AddServies implements OnInit {
 
   data = signal<any[]>([]);
   allData = signal<any[]>([]);
-  objdata = signal<any>({});
+  objdata = signal<IDataServies|null>(null);
   visibelform = signal<boolean>(false);
   visibelConfirme = signal<boolean>(false);
+  visibelAllData = signal<boolean>(false);
   bodytabel = signal<any>({});
+ dataStatus = signal<string>('loading');
 
   GetAllData() {
     this.Data.get('services').subscribe((res: any) => {
@@ -33,6 +36,11 @@ export class AddServies implements OnInit {
         priceFormatted: item.price + ' ﷼',
       }));
       this.data.set(formattedData);
+       if (formattedData.length === 0) {
+      this.dataStatus.set('no-data');
+    } else {
+      this.dataStatus.set('has-data');
+    }
       this.allData.set(formattedData);
     });
   }
@@ -55,18 +63,23 @@ export class AddServies implements OnInit {
     this.data.set(filtered);
   }
 
-  onEditData(item: any) {
+  onEditData(item: IDataServies) {
     this.visibelform.set(true);
     this.objdata.set(item);
   }
 
+  onpatchData(item:IDataServies){
+     this.objdata.set(item);
+     this.visibelAllData.set(true)
+  }
+
   onHandelRespnseProccing() {
     this.visibelform.set(false);
-    this.objdata.set({});
+    this.objdata.set(null);
     this.GetAllData();
   }
 
-  onDelete(item: any) {
+  onDelete(item: IDataServies) {
     this.objdata.set(item);
     this.visibelConfirme.set(true);
   }
@@ -74,10 +87,14 @@ export class AddServies implements OnInit {
   onHandelStatusConfirmation(event: string) {
     this.visibelConfirme.set(false);
     if (event == 'delete') {
-      this.Data.delete(`services/${this.objdata().id}`).subscribe((res) => {
+      this.Data.delete(`services/${this.objdata()?.id}`).subscribe((res) => {
         this.GetAllData();
       });
     }
+  }
+
+  ResetForm(){
+    this.objdata.set(null);
   }
 
   getDataTabel() {

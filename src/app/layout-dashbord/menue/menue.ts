@@ -20,9 +20,7 @@ export class Menue implements OnInit {
     this.GetDataMenue();
   }
 
-  constructor(private router:Router){ }
-
-
+  constructor(private router: Router) {}
 
   @Output() toggelMenue = new EventEmitter<boolean>();
   isOpen = signal<boolean>(true);
@@ -59,32 +57,50 @@ export class Menue implements OnInit {
   }
 
   GetDataMenue() {
-    this.ListMenue.set([
-      {
-        name: 'users',
-        icon: 'fa-solid fa-user',
-        route: '/dashboard/content',
-      },
-      {
-        name: 'services',
-        icon: 'fa-solid fa-gear',
-        route: '/dashboard/content/addservies',
-      },
-      {
-        name: 'work_days',
-        icon: 'fa-solid fa-calendar',
-        route: '',
-      },
-      {
-        name: 'holidays_Day',
-        icon: 'fa-solid fa-holly-berry',
-        route: '/dashboard/content/Holidays',
-      },
-    ]);
+    let get_usre = sessionStorage.getItem('user');
+    let parseUser: any = null;
+
+    if (get_usre) {
+      parseUser = JSON.parse(get_usre);
+    }
+
+    if (parseUser) {
+      this.ListMenue.set([
+        {
+          name: 'Reservations',
+          icon: 'fa-solid fa-business-time',
+          route: '/dashboard/content',
+        },
+        ...(parseUser.role === 'ADMIN'
+          ? [
+              {
+                name: 'Admins',
+                icon: 'fa-solid fa-user',
+                route: '/dashboard/content/admin',
+              },
+              {
+                name: 'Moderators',
+                icon: 'fa-solid fa-user-tie',
+                route: '/dashboard/content/Moderators',
+              },
+            ]
+          : []),
+        {
+          name: 'services',
+          icon: 'fa-solid fa-gear',
+          route: '/dashboard/content/addservies',
+        },
+        {
+          name: 'holidays_Day',
+          icon: 'fa-solid fa-holly-berry',
+          route: '/dashboard/content/Holidays',
+        },
+      ]);
+    }
   }
 
-  onLogout(){
-    sessionStorage.removeItem('token')
-    this.router.navigate(['/'])
+  onLogout() {
+    sessionStorage.removeItem('token');
+    this.router.navigate(['/']);
   }
 }

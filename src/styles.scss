@@ -14,6 +14,10 @@ body {
   font-family: 'Cairo', sans-serif;
 }
 
+::placeholder {
+  font-family: 'Cairo', sans-serif;
+}
+
 :root {
   --black-color: black;
   --white-color: white;
@@ -43,6 +47,31 @@ body {
   --bright-gold: #ffb502;
   --color-danger-main: #d32f2f;
   --color-danger-light: rgba(211, 47, 47, 0.1);
+  --Cloudy-Sky: #8c9bb0;
+  --silver-frost: #f1f4f9;
+--pearl-gray: #e9e9eb;
+  --mint-whisper: #f0faf5;
+  --seafoam-green: #5bae7f;
+  --golden-sun: #fbc02d;
+  --amber-honey: #f59e0b;
+  --ice-blue: #e3f2fd;
+  --royal-azure: #2196f3;
+  --storm-slate: #4a556c;
+  --dusty-stone: #777;
+  --rose-petal: #ffebee;
+  --soft-crimson: #ef5350;
+  --pure-white: #fff;
+  --cloud-white: #fafafa;
+  --frost-gray: #f0f0f0;
+
+  --state-positive-soft: #d1f5d3;
+  --state-positive: #72f1b8;
+
+  --state-attention-soft: #fffbeb;
+  --state-attention: #d97706;
+  --state-attention-border: #fff9c4;
+
+  --surface-base: #f8f9fa;
 }
 
 .Group {

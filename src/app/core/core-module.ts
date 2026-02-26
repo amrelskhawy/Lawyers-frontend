@@ -6,6 +6,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './Interceptor/authcathion.interceptor';
 import { LoaderInterceptor } from './Interceptor/loding-spaner.interceptor';
 import { SuccessInterceptor } from './Interceptor/Sussess.interceptor';
+import { ErrorInterceptor } from './Interceptor/Error.interceptor';
 
 @NgModule({
   declarations: [],
@@ -28,6 +29,12 @@ import { SuccessInterceptor } from './Interceptor/Sussess.interceptor';
       useClass: SuccessInterceptor,
       multi: true,
     },
+
+      {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true,
+    }
   ],
 })
 export class CoreModule {}

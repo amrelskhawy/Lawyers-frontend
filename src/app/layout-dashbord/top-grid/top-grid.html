@@ -1,7 +1,9 @@
 <div class="header-grid">
-  <button class="btn-add" (click)="visibelform()">
-    <i class="fa-solid fa-plus"></i> {{ 'add_service' | translate }}
-  </button>
+  @if (pages() !== 'Admin') {
+    <button class="btn-add" (click)="visibelform()">
+      <i class="fa-solid fa-plus"></i> {{ 'add' | translate }}
+    </button>
+  }
 
   <div class="filed-search">
     <input (input)="onSearch($event)" placeholder="{{ 'searchByName' | translate }}" />
@@ -11,15 +13,16 @@
   <div class="account-admin" *ngIf="userData()">
     <div class="user-info">
       <h4>
-        {{ userData().displayName }}
+        {{ userData().name }}
         <i *ngIf="!userData().isDerivedName" class="fa-regular fa-user"></i>
       </h4>
       <p>{{ userData().email }}</p>
     </div>
-    <img height="40" width="40"
+    <img
+      height="40"
+      width="40"
       src="/assets/Img/portrait-young-female-lawyer-smiling-happy-her-workplace-office-lawyer-technologist-professional-face-female-lawyer-legal-consultant-law-firm_785351-3460.avif"
-      alt="hero-section-img" />
+      alt="hero-section-img"
+    />
   </div>
-
-
 </div>

@@ -115,10 +115,7 @@
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-radius: 50% !important;
-
-
   border-radius: 50% !important;
-
 }
 
 @media (max-width: 1200px) {
@@ -175,8 +172,19 @@
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 767px) {
+  .logo {
+      backdrop-filter: blur(4px);
+  }
   .hero-section {
     font-size: 20px !important;
   }
 }
+
+
+@media (min-width: 767px) and (max-width: 1200px){
+   .logo {
+      backdrop-filter: blur(4px);
+  }
+}
+

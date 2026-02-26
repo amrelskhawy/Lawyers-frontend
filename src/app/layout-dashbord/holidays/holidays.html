@@ -1,18 +1,17 @@
 
-<app-top-grid (visibelformadd)="visibelform.set(true)"></app-top-grid>
+<app-top-grid (search)="onSearch($event)" (visibelformadd)="visibelform.set(true)"></app-top-grid>
 
-<app-form-holdays [(visible)]="visibelform"></app-form-holdays>
+<app-form-holdays (ResponseSuccess)="onHandelResponseSuccess()" [(visible)]="visibelform"></app-form-holdays>
+<app-confirmation-delete [visibelConfirme]="visibelConfirme()" (handelstatusConfirmation)="onHandelStatusConfirmation($event)"></app-confirmation-delete>
 
-<!-- <app-tabel [data]="HoldaysData()">
-  <ng-template let-doctors>
-    <div class="action-btn">
-      <button class="edit-btn" [routerLink]="['addClink', doctors.id]">
-        <i class="fa-solid fa-pen-to-square"></i> {{ 'edit' | translate }}
-      </button>
+<div class="table-wrapper">
+<app-tabel [data]="data()" [bodytabel]="bodytabel()" [no_data]="dataStatus()">
+  <ng-template let-data>
 
-      <button class="delete-btn">
-        <i class="fa-solid fa-trash"></i> {{ 'delete' | translate }}
-      </button>
-    </div>
+     <div class="action-btn">
+        <button (click)="onDelete(data)" class="delete-btn"><i class="fa-solid fa-trash"></i></button>
+      </div>
   </ng-template>
-</app-tabel> -->
+</app-tabel>
+
+</div>

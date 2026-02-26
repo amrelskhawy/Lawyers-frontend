@@ -17,21 +17,12 @@ export class FormWorkDays implements OnInit {
   constructor(
     private Data: Data,
     private Core:Core
-  ) {
-    this.debounceSubmitTime();
-  }
+  ) {}
 
   @Input() visible: boolean = false;
   @Output() visibleChange = new EventEmitter<boolean>();
   data = signal<any>([]);
   updateData = signal<any>([]);
-  private debounceSubmit = new Subject<void>();
-
-  debounceSubmitTime() {
-    this.debounceSubmit.pipe(debounceTime(1500)).subscribe(() => {
-      this.onSubmitData();
-    });
-  }
 
   onClose() {
     this.visible = false;
@@ -54,9 +45,6 @@ export class FormWorkDays implements OnInit {
         item.id === day.id ? { ...item, startTime: day.startTime, endTime: day.endTime } : item,
       );
     });
-    if (day.startTime && day.endTime) {
-      this.debounceSubmit.next();
-    }
   }
 
   onToggleChange(event: any, day: any) {
@@ -74,17 +62,43 @@ export class FormWorkDays implements OnInit {
         return item;
       });
     });
-    this.onSubmitData();
   }
 
-  onSubmitData() {
-    const payload = {
-      data: this.data(),
-    };
-    this.Data.patch('workdays', payload).subscribe({
-      next: (res) => {
-        this.Core._Sussess.next(false)
-      },
-    });
-  }
+
+
+convertTo12Hour(time: string) {
+  if (!time) return "";
+  let [hours, minutes] = time.split(':').map(Number);
+  hours = hours % 12 || 12;
+  const paddedHours = hours.toString().padStart(2, '0');
+  return `${paddedHours}:${minutes.toString().padStart(2, '0')}`;
+}
+
+onSubmitData() {
+  const formattedData = this.data().map((day: any) => ({
+    ...day,
+    startTime: this.convertTo12Hour(day.startTime),
+    endTime: this.convertTo12Hour(day.endTime)
+  }));
+
+  const payload = {
+    data: formattedData,
+  };
+
+  this.Data.patch('workdays', payload).subscribe({
+    next: (res) => {
+      console.log('Payload Sent:', payload);
+    },
+  });
+}
+
+  // onSubmitData() {
+  //   const payload = {
+  //     data: this.data(),
+  //   };
+  //   this.Data.patch('workdays', payload).subscribe({
+  //     next: (res) => {
+  //     },
+  //   });
+  // }
 }

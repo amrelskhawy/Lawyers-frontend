@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Core } from '../../core/Servies/core';
-import { Subscription } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-loader',
@@ -8,15 +8,13 @@ import { Subscription } from 'rxjs';
   templateUrl: './loader.html',
   styleUrl: './loader.scss',
 })
-export class Loader {
-  loading = false;
-  private sub!: Subscription;
+export class Loader implements OnInit {
+  private core = inject(Core);
 
-  constructor(private core: Core) {
-    this.sub = this.core._loading.subscribe((load) => (this.loading = load));
-  }
+  loading = toSignal(this.core._loading, { initialValue: false });
+  currentLang = 'en';
 
-  ngOnDestroy() {
-    this.sub.unsubscribe();
+  ngOnInit() {
+    this.currentLang = localStorage.getItem('Language') || 'en';
   }
 }

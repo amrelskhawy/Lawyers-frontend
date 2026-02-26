@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, ContentChild, Input, TemplateRef } from '@angular/core';
+import { Component, ContentChild, Input, signal, TemplateRef } from '@angular/core';
 
 @Component({
   selector: 'app-tabel',
@@ -8,23 +8,52 @@ import { Component, ContentChild, Input, TemplateRef } from '@angular/core';
   styleUrl: './tabel.scss',
 })
 export class Tabel<T extends object> {
-  constructor(private datePipe: DatePipe) { }
+  constructor(private datePipe: DatePipe) {}
   tableData: T[] = [];
-  @Input() bodytabel: any[] = [];
-  @Input() rows: number = 10;
+  exsistData = signal<string>('');
+  loadingData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 
+  @Input() bodytabel: any[] = [];
   @Input()
   set data(value: T[]) {
     this.tableData = value ?? [];
   }
 
+  @Input()
+  set no_data(value: string) {
+    this.exsistData.set(value);
+  }
 
   formatCell(key: string, value: any): string {
-    if (key === 'createdAt' || key === 'updatedAt') {
+    let ArraDate = ['createdAt', 'updatedAt'];
+    let timeFields = ['startTime', 'endTime'];
+    if (ArraDate.includes(key)) {
       return this.datePipe.transform(value, 'shortDate') || '';
+    }
+    if (timeFields.includes(key)) {
     }
     return value;
   }
 
   @ContentChild(TemplateRef) actionsTpl!: TemplateRef<any>;
+
+
+
+
+
+
+
+
+
+  getCellClass(col: any, row: any): string {
+  const value = row[col.value];
+  if (col.value === 'role') {
+    switch (value) {
+      case 'ADMIN': return 'admin-badge';
+      case 'MODERATOR': return 'moderator-badge ';
+      default: return '';
+    }
+  }
+  return '';
+}
 }

@@ -7,7 +7,7 @@
   width: 20%;
   height: 100vh;
   transition: 0.3s linear;
-  z-index: 8888 !important;
+ z-index: 555 !important;
   overflow: hidden;
   white-space: nowrap;
   box-shadow: 4px 0 15px rgba(0, 0, 0, 0.05), -4px 0 15px rgba(0, 0, 0, 0.05);
@@ -23,7 +23,7 @@
   padding:0 20px;
   transition: 0.3s linear;
   color: var(--black-color);
-  background-color: var(--Platinum);
+  height: 100vh;
   margin-inline-start: 20%;
 }
 

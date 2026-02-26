@@ -1,0 +1,29 @@
+@use "../../glopalstyles.scss";
+
+.Header-Popup-Modertaors{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--primary-navy);
+  color: var(--white-color);
+  padding:10px 20px;
+  h3{
+    color: var(--accent-gold);
+  }
+}
+
+
+.content-form{
+  padding: 1.5rem;
+}
+
+.icon{
+  position: absolute;
+  inset-inline-end: 10px;
+  top: 40px;
+}
+
+
+.fa-eye,.fa-eye-slash{
+  cursor: pointer;
+}

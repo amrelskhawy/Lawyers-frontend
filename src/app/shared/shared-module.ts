@@ -16,6 +16,11 @@ import { Translation } from './translation/translation';
 import { TranslateModule } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
 import { ConfirmationDelete } from './confirmation-delete/confirmation-delete';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { SkeletonModule } from 'primeng/skeleton';
+import { Error } from './error/error';
+import { NoData } from './no-data/no-data';
 
 
 @NgModule({
@@ -30,16 +35,20 @@ import { ConfirmationDelete } from './confirmation-delete/confirmation-delete';
     Tabel,
     Footer,
     Translation,
-    ConfirmationDelete
+    ConfirmationDelete,
+    Error,
+    NoData
   ],
   imports: [
     CommonModule,
     SharedRoutingModule,
     DrawerModule,
     TableModule,
-    TranslateModule
+    TranslateModule,
+    ToastModule,
+    SkeletonModule,
   ],
-  exports:[
+  exports: [
     Header,
     Loader,
     TopHeader,
@@ -49,11 +58,14 @@ import { ConfirmationDelete } from './confirmation-delete/confirmation-delete';
     Tabel,
     Translation,
     ConfirmationDelete,
-    Footer
+    Error,
+    Footer,
+    NoData
   ],
 
-  providers:[
-        DatePipe
+  providers: [
+    DatePipe,
+    MessageService
   ]
 
 })
