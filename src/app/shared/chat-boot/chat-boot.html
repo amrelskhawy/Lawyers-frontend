@@ -1,42 +1,63 @@
-<div class="chatbot-container">
-  @if (!isOpen) {
-    <button class="chatbot-toggle" (click)="toggleChat()">
+<div class="modern-chatbot-wrapper">
+
+  <!-- Toggle Button -->
+  <button class="chatbot-fab" [class.is-hidden]="isOpen" (click)="toggleChat()">
+    <div class="fab-icon">
       <i class="fa-solid fa-headset"></i>
-    </button>
-  }
-
-  <div class="chatbot-box" [class.isOpen]="isOpen">
-    <div class="chatbot-header">
-      <h4><i class="fa-solid fa-headset Support"></i> {{"Support"|translate}}</h4>
-      <button class="close-chat" (click)="toggleChat()">&times;</button>
     </div>
+  </button>
 
-    <div class="chatbot-messages">
-      @if (messages=="") {
-        <p class="message">{{"welcome_chat"|translate}}</p>
-      }
-     <div [innerHTML]="formatClosuresToHtml(messages)"></div>
+  <!-- Chat Window -->
+  <div class="chatbot-window" [class.is-open]="isOpen">
 
-
-       @if (isLoading()) {
-    <div class="typing-indicator">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-  }
-    </div>
-
-    <div class="chatbot-input">
-      <input
-        type="text"
-        #msgInput
-        placeholder="{{'Type_message'|translate}}"
-        (keyup.enter)="sendMessage(msgInput)"
-      />
-      <button (click)="sendMessage(msgInput)">
-        <i class="fa-solid fa-paper-plane"></i>
+    <!-- Chat Header -->
+    <div class="chat-header">
+      <div class="header-info">
+        <div class="support-avatar">
+          <i class="fa-solid fa-headset"></i>
+        </div>
+        <div class="header-text">
+          <h4>{{ "Support" | translate }}</h4>
+          <span>{{ "Online" | translate }}</span>
+        </div>
+      </div>
+      <button class="btn-close" (click)="toggleChat()">
+        <i class="fa-solid fa-xmark"></i>
       </button>
     </div>
+
+    <!-- Chat Messages -->
+    <div class="chat-messages-container">
+      @if (messages == "") {
+      <div class="message-bubble system-welcome">
+        <p>✨ {{ "welcome_chat" | translate }}</p>
+      </div>
+      }
+
+      <div class="messages-renderer" [innerHTML]="formatClosuresToHtml(messages)"></div>
+
+      @if (isLoading()) {
+      <div class="message-bubble typing-bubble">
+        <div class="typing-indicator">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      }
+    </div>
+
+    <!-- Chat Input Area -->
+    <div class="chat-input-area">
+      <div class="input-wrapper">
+        <input type="text" #msgInput placeholder="{{ 'Type_message' | translate }}"
+          (keyup.enter)="sendMessage(msgInput)" />
+        <button class="btn-send" (click)="sendMessage(msgInput)">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+
   </div>
+
 </div>
