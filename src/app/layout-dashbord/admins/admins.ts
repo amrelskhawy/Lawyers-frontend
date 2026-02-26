@@ -18,7 +18,7 @@ export class Admins implements OnInit {
   constructor(
     private Data: Data,
     private translate: TranslateService,
-  ) {}
+  ) { }
 
   visibelConfirme = signal<boolean>(false);
   objdata = signal<IAdmin | null>(null);
@@ -30,22 +30,22 @@ export class Admins implements OnInit {
     }[]
   >([]);
   visibelform = signal<boolean>(false);
- dataStatus = signal<string>('loading');
-originalData: any[] = [];
+  dataStatus = signal<string>('loading');
+  originalData: any[] = [];
 
   getData() {
-    this.Data.get<IAdmin[]>('admin/users').subscribe((res:any) => {
+    this.Data.get<IAdmin[]>('admin/users?role=admin').subscribe((res: any) => {
       const formattedData = res.data.map((item: any, index: number) => ({
         ...item,
         index: index + 1,
       }));
       this.data.set(formattedData);
-            this.originalData = formattedData;
-       if (formattedData.length === 0) {
-      this.dataStatus.set('no-data');
-    } else {
-      this.dataStatus.set('has-data');
-    }
+      this.originalData = formattedData;
+      if (formattedData.length === 0) {
+        this.dataStatus.set('no-data');
+      } else {
+        this.dataStatus.set('has-data');
+      }
     });
   }
 
@@ -54,7 +54,7 @@ originalData: any[] = [];
       { key: '#', value: 'index' },
       { key: this.translate.instant('name'), value: 'name' },
       { key: this.translate.instant('email'), value: 'email' },
-       { key: this.translate.instant('created_At'), value: 'createdAt' },
+      { key: this.translate.instant('created_At'), value: 'createdAt' },
       { key: this.translate.instant('updated_At'), value: 'updatedAt' },
       { key: this.translate.instant('role'), value: 'role' },
     ];
@@ -63,7 +63,7 @@ originalData: any[] = [];
 
 
 
-    onSearch(query: string) {
+  onSearch(query: string) {
     if (!query) {
       this.data.set(this.originalData);
       return;
@@ -74,9 +74,9 @@ originalData: any[] = [];
         item.name,
         item.email,
         item.role,
-         item.created_At,
-         item.updated_At
-        ].some(
+        item.created_At,
+        item.updated_At
+      ].some(
         (val) => val && val.toString().toLowerCase().includes(lowerQuery),
       );
     });

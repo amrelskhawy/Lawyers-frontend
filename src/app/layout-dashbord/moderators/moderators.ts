@@ -18,7 +18,7 @@ export class Moderators implements OnInit {
   constructor(
     private Data: Data,
     private translate: TranslateService,
-  ) {}
+  ) { }
 
   data = signal<IModerators[]>([]);
   bodytabel = signal<
@@ -33,7 +33,7 @@ export class Moderators implements OnInit {
   dataStatus = signal<string>('loading');
   originalData: any[] = [];
   getData() {
-    this.Data.get<IModerators[]>('moderators').subscribe((res: any) => {
+    this.Data.get<IModerators[]>('admin/users?role=moderator').subscribe((res: any) => {
       const formattedData = res.data.map((item: any, index: number) => ({
         ...item,
         index: index + 1,
