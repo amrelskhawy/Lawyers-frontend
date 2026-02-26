@@ -1,5 +1,6 @@
-import { Component, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Core } from '../../core/Servies/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-loader',
@@ -7,24 +8,13 @@ import { Core } from '../../core/Servies/core';
   templateUrl: './loader.html',
   styleUrl: './loader.scss',
 })
-export class Loader implements OnInit, OnDestroy {
-  loading = false;
-  currentLang = 'en';
+export class Loader implements OnInit {
+  private core = inject(Core);
 
-  constructor(
-    private core: Core,
-    private cdr: ChangeDetectorRef
-  ) {
-    // Subscribe to core loading changes from API interceptor
-    this.core._loading.subscribe((isLoading) => {
-      this.loading = isLoading;
-      this.cdr.detectChanges();
-    });
-  }
+  loading = toSignal(this.core._loading, { initialValue: false });
+  currentLang = 'en';
 
   ngOnInit() {
     this.currentLang = localStorage.getItem('Language') || 'en';
   }
-
-  ngOnDestroy() { }
 }
