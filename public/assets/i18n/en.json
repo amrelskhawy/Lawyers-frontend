@@ -209,6 +209,7 @@
     "WORKING_DAY_UPDATED_SUCCESS": "Working day updated successfully",
     "PUBLIC_DATA_RETRIEVED_SUCCESS": "Public data retrieved successfully",
     "RESPONSE_GENERATED_SUCCESS": "Response generated successfully",
-    "CHAT_SUCCESS": "CHAT SUCCESS"
+    "CHAT_SUCCESS": "CHAT SUCCESS",
+    "SERVER_ERROR": "Server Error"
   }
 }
