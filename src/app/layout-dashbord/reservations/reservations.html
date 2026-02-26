@@ -48,17 +48,42 @@
   </div>
 </div>
 
-<p-dialog [(visible)]="visibleBooksPopup" [modal]="true"
-  [header]="('Bookings details' | translate) + ' - ' + selectedDay()" [style]="{ width: '400px', maxWidth: '90vw' }"
-  [draggable]="false" [resizable]="false">
-  <div class="day-popup-container">
-    <div *ngFor="let book of selectedDayBooks()" (click)="onShowDilogBooking(book); visibleBooksPopup = false"
-      class="booking-item-compact popup-item" [ngClass]="book.status">
-      <div class="book-info">
-        <span class="book-time">{{ book.startTime }}</span>
-        <span class="book-title">{{ book.name }}</span>
+<p-dialog [(visible)]="visibleBooksPopup" [modal]="true" styleClass="modern-day-popup" [showHeader]="false"
+  [style]="{ width: '550px', maxWidth: '95vw' }" [draggable]="false" [resizable]="false">
+  <div class="day-popup-wrapper">
+    <div class="popup-top-bar">
+      <button class="close-popup-btn" (click)="visibleBooksPopup = false">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <h3 class="popup-title">{{ 'Bookings details' | translate }} - {{ selectedDay() }}</h3>
+      <div style="width: 38px"></div>
+    </div>
+
+    <!-- Scrollable container -->
+    <div class="day-schedule-scrollview">
+
+      <!-- Timeline column with hours -->
+      <div class="hours-column">
+        <div *ngFor="let hour of dayHours" class="hour-row">
+          <span class="hour-text">{{ hour }}</span>
+          <div class="hour-divider"></div>
+        </div>
       </div>
-      <span class="status-badge" [ngClass]="book.status">{{ book.status | translate }}</span>
+
+      <!-- Events container (absolute positioning relative to this) -->
+      <div class="events-board">
+        <div *ngFor="let book of selectedDayBooks()" (click)="onShowDilogBooking(book); visibleBooksPopup = false"
+          class="event-block-absolute" [ngClass]="book.status" [ngStyle]="getEventStyle(book)">
+
+          <div class="event-content">
+            <span class="event-time" dir="ltr">{{ book.startTime }} - {{ book.endTime || '...' }}</span>
+            <span class="event-title">{{ book.name }}</span>
+            <span class="event-status-badge">{{ book.status | translate }}</span>
+          </div>
+
+        </div>
+      </div>
+
     </div>
   </div>
 </p-dialog>

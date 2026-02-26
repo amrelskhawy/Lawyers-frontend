@@ -133,4 +133,27 @@ export class Reservations implements OnInit {
     this.selectedDayBooks.set(books);
     this.visibleBooksPopup = true;
   }
+
+  dayHours: string[] = Array.from({ length: 24 }, (_, i) => `${i < 10 ? '0' + i : i}:00`);
+
+  getEventStyle(book: any) {
+    const parseTime = (time: string) => {
+      if (!time) return 0;
+      const [hourStr, minuteStr] = time.split(':');
+      return parseInt(hourStr, 10) + (parseInt(minuteStr, 10) / 60);
+    };
+
+    const start = parseTime(book.startTime) || 9;
+    const end = parseTime(book.endTime) || (start + 1);
+
+    // Each hour block is 60px high
+    // Add a 2px offset to the top and subtract 4px from the total height to create a gap between abutting events
+    const top = (start * 60) + 2;
+    const height = Math.max((end - start) * 60 - 4, 30);
+
+    return {
+      top: `${top}px`,
+      height: `${height}px`
+    };
+  }
 }
