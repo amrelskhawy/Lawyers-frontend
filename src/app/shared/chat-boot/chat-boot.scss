@@ -1,180 +1,493 @@
-.chatbot-container {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 9999 !important;
+// Variables
+$primary-navy: #1a2b4b;
+$accent-gold: var(--accent-gold, #c5a059);
+$accent-gold-dark: color-mix(in srgb, var(--accent-gold, #c5a059), black 15%);
+$bg-light: #f8fafc;
+$white: #ffffff;
+$gray-border: #e2e8f0;
+$gray-text: #64748b;
 
-  .chatbot-toggle {
-    width: 60px;
-    height: 60px;
+.modern-chatbot-wrapper {
+  position: fixed;
+  bottom: 12px;
+  right: 12px;
+  z-index: 99999;
+  font-family: inherit;
+
+  :host-context([dir='rtl']) & {
+    right: auto;
+    left: 12px;
+  }
+
+  // Floating Action Button
+  .chatbot-fab {
+    width: 65px;
+    height: 65px;
     border-radius: 50%;
-    background: var(--accent-gold);
-    color: var(--white-colr);
-    font-size: 24px;
+    background: linear-gradient(135deg, $accent-gold 0%, $accent-gold-dark 100%);
+    color: $white;
+    font-size: 1.5rem;
     border: none;
     cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    transition: transform 0.2s;
+    box-shadow: 0 8px 24px rgba($accent-gold, 0.4);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    
+    :host-context([dir='rtl']) & {
+      right: auto;
+      left: 0;
+    }
+
     &:hover {
-      transform: scale(1.1);
+      transform: scale(1.1) translateY(-4px);
+      box-shadow: 0 12px 28px rgba($accent-gold, 0.5);
+    }
+
+    &.is-hidden {
+      transform: scale(0) rotate(90deg);
+      opacity: 0;
+      pointer-events: none;
     }
   }
 
-  .chatbot-box {
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    background-color: var(--white-color);
-    color: var(--black-color);
-    border-radius: 10px;
+  // Chat Window Panel
+  .chatbot-window {
+    position: absolute;
+    bottom: 85px;  // above FAB
+    right: 0;
+    width: 360px;
+    height: 600px;
+    max-height: calc(100vh - 120px);
+    background-color: $white;
+    border-radius: 20px;
+    box-shadow: 0 12px 40px -10px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0,0,0,0.05);
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    margin-bottom: 10px;
+    transform-origin: bottom right;
+    transform: scale(0.6) translateY(20px);
     opacity: 0;
-    transform: scale(0);
     pointer-events: none;
-    height: 0;
-    width: 0;
-    transition:
-      opacity 0.3s linear,
-      transform 0.3s linear;
-    &.isOpen {
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    :host-context([dir='rtl']) & {
+      right: auto;
+      left: 0;
+      transform-origin: bottom left;
+    }
+
+    &.is-open {
+      transform: scale(1) translateY(0);
       opacity: 1;
-      transform: scale(1);
-      height: 500px !important;
-          width: 300px;
       pointer-events: all;
     }
-    .chatbot-header {
-      background: var(--accent-gold);
-      color: var(--white-color);
-      padding: 10px;
+
+    @media (max-width: 480px) {
+      width: calc(100vw - 48px);
+      position: fixed;
+      left: 24px;
+      right: 24px;
+      bottom: 100px;
+      height: calc(100vh - 140px);
+    }
+
+    // Header Area
+    .chat-header {
+      background: linear-gradient(135deg, $primary-navy 0%, color-mix(in srgb, $primary-navy, black 20%) 100%);
+      padding: 1.25rem 1.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-weight: bold;
+      color: $white;
+      border-bottom: 2px solid $accent-gold;
 
-      button {
-        background: transparent;
+      .header-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        .support-avatar {
+          width: 44px;
+          height: 44px;
+          background: rgba($white, 0.15);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.25rem;
+          color: $accent-gold;
+          box-shadow: inset 0 0 0 1px rgba($white, 0.1);
+          backdrop-filter: blur(4px);
+        }
+
+        .header-text {
+          h4 {
+            margin: 0 0 0.15rem 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+          }
+          span {
+            font-size: 0.8rem;
+            color: rgba($white, 0.7);
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            
+            &::before {
+              content: '';
+              display: inline-block;
+              width: 8px;
+              height: 8px;
+              background-color: #10b981; // Online green dot
+              border-radius: 50%;
+            }
+          }
+        }
+      }
+
+      .btn-close {
+        background: rgba($white, 0.1);
         border: none;
-        color: var(--white-color);
-        font-size: 20px;
+        color: $white;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         cursor: pointer;
+        transition: all 0.2s;
+        
+        &:hover {
+          background: rgba($white, 0.2);
+          transform: rotate(90deg);
+        }
       }
     }
 
-    .chatbot-messages {
+    // Messages Area
+    .chat-messages-container {
       flex: 1;
-      padding: 10px;
+      padding: 1.5rem;
       overflow-y: auto;
-    }
-
-    .chatbot-input {
+      background-color: #fafbfc;
       display: flex;
-      gap: 5px;
-      padding: 5px;
-      border-top: 1px solid #ddd;
+      flex-direction: column;
+      gap: 1.25rem;
+      scroll-behavior: smooth;
 
-      input {
-        flex: 1;
-        padding: 8px;
-        border-radius: 5px;
-        border: 1px solid var(--accent-gold);
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
+      &::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: rgba($gray-text, 0.2);
+        border-radius: 10px;
       }
 
-      button {
-        background: var(--accent-gold);
-        border: none;
-        color: var(--white-color);
-        padding: 0 12px;
-        border-radius: 5px;
-        cursor: pointer;
+      .message-bubble {
+        max-width: 85%;
+        animation: fadeIn 0.4s ease-out;
+        
+        &.system-welcome {
+          align-self: flex-start;
+          background-color: $white;
+          border-left: 3px solid $accent-gold;
+          padding: 1rem 1.25rem;
+          border-radius: 12px;
+          border-top-left-radius: 4px;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+          color: $primary-navy;
+          font-weight: 500;
+          font-size: 0.95rem;
+
+          :host-context([dir='rtl']) & {
+            border-left: none;
+            border-right: 3px solid $accent-gold;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 4px;
+          }
+
+          p {
+            margin: 0;
+            line-height: 1.5;
+          }
+        }
+
+        &.bot-response {
+          align-self: flex-start;
+          background-color: $white;
+          border: 1px solid rgba($accent-gold, 0.2);
+          border-left: 3px solid $accent-gold;
+          padding: 1rem 1.25rem;
+          border-radius: 12px;
+          border-top-left-radius: 4px;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+          color: $primary-navy;
+          font-weight: 500;
+          font-size: 0.95rem;
+
+          :host-context([dir='rtl']) & {
+            border-left: 1px solid rgba($accent-gold, 0.2);
+            border-right: 3px solid $accent-gold;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 4px;
+          }
+
+          p {
+            margin: 0 0 0.5rem 0;
+            line-height: 1.6;
+            
+            &:last-child {
+              margin-bottom: 0;
+            }
+          }
+
+          ul, ol {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            
+            :host-context([dir='rtl']) & {
+              padding-left: 0;
+              padding-right: 1.5rem;
+            }
+
+            li {
+              margin-bottom: 0.25rem;
+            }
+          }
+
+          strong {
+            color: $accent-gold;
+          }
+
+          .chat-code {
+            display: inline-block;
+            background-color: rgba($primary-navy, 0.05);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-family: monospace, monospace;
+            font-size: 0.85rem;
+            color: $accent-gold-dark;
+            border: 1px solid rgba($primary-navy, 0.1);
+          }
+        }
+
+        &.user-message {
+          align-self: flex-end;
+          background: linear-gradient(135deg, $accent-gold 0%, $accent-gold-dark 100%);
+          color: $white;
+          padding: 1rem 1.25rem;
+          border-radius: 12px;
+          border-bottom-right-radius: 4px;
+          box-shadow: 0 4px 12px rgba($accent-gold, 0.2);
+          font-weight: 500;
+          font-size: 0.95rem;
+
+          :host-context([dir='rtl']) & {
+            border-bottom-right-radius: 12px;
+            border-bottom-left-radius: 4px;
+          }
+
+          p {
+            margin: 0;
+            line-height: 1.5;
+          }
+        }
+      }
+
+      // Applied to dynamically generated HTML (assuming formatting happens there too)
+      ::ng-deep .messages-renderer {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+
+        // Note: You may need to adapt these based on your `formatClosuresToHtml` output
+        .message {
+          max-width: 85%;
+          padding: 0.85rem 1.25rem;
+          border-radius: 16px;
+          font-size: 0.95rem;
+          line-height: 1.5;
+          box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+          word-break: break-word;
+          
+          &:not(.user) { // Bot format 
+            align-self: flex-start;
+            background-color: $white;
+            color: $primary-navy;
+            border-bottom-left-radius: 4px;
+            border: 1px solid rgba($accent-gold, 0.2);
+
+            :host-context([dir='rtl']) & {
+              border-bottom-left-radius: 16px;
+              border-bottom-right-radius: 4px;
+            }
+          }
+
+          &.user { // Assuming you add class 'user' to user texts
+            align-self: flex-end;
+            background: linear-gradient(135deg, $accent-gold 0%, $accent-gold-dark 100%);
+            color: $white;
+            border-bottom-right-radius: 4px;
+
+            :host-context([dir='rtl']) & {
+              border-bottom-right-radius: 16px;
+              border-bottom-left-radius: 4px;
+            }
+          }
+        }
+
+        .bot-message .chat-title {
+          font-weight: 700;
+          font-size: 0.9rem;
+          color: $accent-gold !important;
+          margin-bottom: 0.5rem;
+          display: block;
+        }
+
+        .time {
+          display: inline-block;
+          background: rgba($primary-navy, 0.05);
+          color: $gray-text;
+          padding: 0.2em 0.6em;
+          border-radius: 4px;
+          font-size: 0.75rem;
+          margin-top: 0.5rem;
+          font-weight: 500;
+        }
+      }
+
+      .typing-bubble {
+        align-self: flex-start;
+        background-color: $white;
+        border: 1px solid $gray-border;
+        padding: 0.85rem 1.25rem;
+        border-radius: 16px;
+        border-bottom-left-radius: 4px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+
+        :host-context([dir='rtl']) & {
+          border-bottom-left-radius: 16px;
+          border-bottom-right-radius: 4px;
+        }
+
+        .typing-indicator {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+
+          span {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: $accent-gold;
+            animation: modernTyping 1.4s infinite ease-in-out both;
+
+            &:nth-child(1) { animation-delay: -0.32s; }
+            &:nth-child(2) { animation-delay: -0.16s; }
+            &:nth-child(3) { animation-delay: 0s; }
+          }
+        }
+      }
+    }
+
+    // Input Area
+    .chat-input-area {
+      padding: 1rem 1.25rem;
+      background: $white;
+      border-top: 1px solid $gray-border;
+
+      .input-wrapper {
+        display: flex;
+        align-items: center;
+        background-color: $bg-light;
+        border: 1px solid $gray-border;
+        border-radius: 100px;
+        padding: 0.35rem 0.35rem 0.35rem 1.25rem;
+        transition: all 0.3s ease;
+
+        :host-context([dir='rtl']) & {
+          padding: 0.35rem 1.25rem 0.35rem 0.35rem;
+        }
+
+        &:focus-within {
+          border-color: rgba($accent-gold, 0.5);
+          background-color: $white;
+          box-shadow: 0 0 0 4px rgba($accent-gold, 0.08);
+        }
+
+        input {
+          flex: 1;
+          border: none;
+          background: transparent;
+          font-size: 0.95rem;
+          color: $primary-navy;
+          outline: none;
+          font-family: inherit;
+          padding: 0.5rem 0.25rem;
+
+          &::placeholder {
+            color: #94a3b8;
+          }
+        }
+
+        .btn-send {
+          background: $accent-gold;
+          color: $white;
+          border: none;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.2s;
+          margin-left: 0.5rem;
+          
+          :host-context([dir='rtl']) & {
+            margin-left: 0;
+            margin-right: 0.5rem;
+            transform: scaleX(-1); // flip icon
+          }
+
+          &:hover {
+            background: $accent-gold-dark;
+            transform: scale(1.05);
+            
+            :host-context([dir='rtl']) & {
+              transform: scale(-1.05, 1.05); // preserve flip on hover
+            }
+          }
+
+          &:active {
+            transform: scale(0.95);
+            
+            :host-context([dir='rtl']) & {
+              transform: scale(-0.95, 0.95); // preserve flip on active
+            }
+          }
+        }
       }
     }
   }
 }
 
-.Support {
-  background-color: var(--primary-navy);
-  height: 30px;
-  width: 30px;
-  border-radius: 50%;
-  line-height: 30px;
-  text-align: center;
+// Animations
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.close-chat {
-  border: 2px solid var(--white-color) !important;
-  height: 30px;
-  width: 30px;
-  line-height: 5px;
-  border-radius: 50%;
-  padding: 0;
-  margin: 0;
-  transition: 0.3s linear;
-  &:hover {
-    background-color: var(--white-color) !important;
-    color: var(--accent-gold) !important;
-    transform: rotate(360deg);
-  }
-}
-
-.message {
-  background: var(--pearl-gray);
-  color: var(--black-color);
-  padding: 10px 14px;
-  border-radius: 15px;
-  border-bottom-left-radius: 4px;
-  border: 1px solid var(--accent-gold);
-  font-size: 15px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-
-
-
-.typing-indicator {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 10px 14px;
-  background: #e9e9eb;
-  border-radius: 15px;
-  border-bottom-left-radius: 4px;
-  width: fit-content;
-  margin: 8px 0;
-
-  span {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--accent-gold);
-    animation: typing 1.2s infinite;
-
-    &:nth-child(2) { animation-delay: 0.2s; }
-    &:nth-child(3) { animation-delay: 0.4s; }
-  }
-}
-
-@keyframes typing {
-  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
-  30%           { transform: translateY(-6px); opacity: 1; }
-}
-
-
-
-
-
-.bot-message .chat-title {
-  font-weight: bolder;
-  font-size: 15px;
-  color: var(--accent-gold) !important;
-  margin-bottom: 8px;
-}
-
-.time {
-  background: var(--primary-navy);
-  color: white;
-  padding: 2px 6px;
-  border-radius: 6px;
-  font-size: 12px;
+@keyframes modernTyping {
+  0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
+  40% { transform: scale(1); opacity: 1; }
 }

@@ -18,7 +18,7 @@ export class Moderators implements OnInit {
   constructor(
     private Data: Data,
     private translate: TranslateService,
-  ) {}
+  ) { }
 
   data = signal<IModerators[]>([]);
   bodytabel = signal<
@@ -33,7 +33,7 @@ export class Moderators implements OnInit {
   dataStatus = signal<string>('loading');
   originalData: any[] = [];
   getData() {
-    this.Data.get<IModerators[]>('moderators').subscribe((res: any) => {
+    this.Data.get<{ data: IModerators[] }>('admin/users?role=moderator').subscribe((res) => {
       const formattedData = res.data.map((item: any, index: number) => ({
         ...item,
         index: index + 1,
@@ -66,7 +66,7 @@ export class Moderators implements OnInit {
     }
     const lowerQuery = query.toLowerCase();
     const filtered = this.data().filter((item: any) => {
-      return [item.name, item.email, item.created_At, item.role].some(
+      return [item.name, item.email, item.createdAt, item.role].some(
         (val) => val && val.toString().toLowerCase().includes(lowerQuery),
       );
     });
@@ -86,7 +86,7 @@ export class Moderators implements OnInit {
   onHandelStatusConfirmation(event: string) {
     this.visibelConfirme.set(false);
     if (event == 'delete') {
-      this.Data.delete(`moderators/${this.objdata()?.id}`).subscribe((res) => {
+      this.Data.delete<any>(`moderators/${this.objdata()?.id}`).subscribe((res) => {
         this.getData();
       });
     }

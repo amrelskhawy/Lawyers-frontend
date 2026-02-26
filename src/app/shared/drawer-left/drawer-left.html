@@ -1,7 +1,6 @@
-
 <div class="wrapper-drawer">
 
-<p-drawer #drawerRef [(visible)]="visible">
+  <p-drawer #drawerRef [(visible)]="visible">
     <ng-template #headless>
       <div class="drawer-container">
         <button class="close-btn" (click)="visible = false">
@@ -11,7 +10,7 @@
         <!-- Header -->
         <div class="drawer-header">
           <div class="brand">
-            <img src="/assets/Img/LOGO-GOLD.svg" alt="Logo" class="brand-logo" />
+            <img src="assets/Img/LOGO-GOLD.svg" alt="Logo" class="brand-logo" />
           </div>
         </div>
 
@@ -71,22 +70,22 @@
     </ng-template>
   </p-drawer>
 
-<div class="header-drawer">
-  <div>
-    <img height="50" width="50" src="/assets/Img/LOGO-GOLD.svg" alt="Logo" class="logo-header" />
-  </div>
+  <div class="header-drawer">
+    <div>
+      <img height="50" width="50" src="assets/Img/LOGO-GOLD.svg" alt="Logo" class="logo-header" />
+    </div>
 
-  <div>
-    @if (!getTokenInsession()) {
+    <div>
+      @if (!getTokenInsession()) {
       <button class="menue-toggel" (click)="visible = true" icon="pi pi-arrow-right">
         <i class="fa-solid fa-bars"></i>
       </button>
-    } @else {
+      } @else {
       <button class="menue-toggel" (click)="onToggelMenue()" icon="pi pi-arrow-right">
         <i class="fa-solid fa-bars"></i>
       </button>
-    }
+      }
+    </div>
   </div>
-</div>
 
 </div>

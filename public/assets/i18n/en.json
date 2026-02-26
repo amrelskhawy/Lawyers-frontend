@@ -1,4 +1,6 @@
 {
+  "en": "English",
+  "ar": "Arabic",
   "filed_reqierd": "This Field Is Requierd *",
   "name": "Name",
   "submit": "submit",
@@ -7,6 +9,10 @@
   "NAV_ABOUT": "About Us",
   "NAV_HOW_IT_WORKS": "How it Works",
   "NAV_SERVICES": "Services",
+  "LEGAL_SERVICES_TITLE": "Legal Services",
+  "LEGAL_SERVICES_SUBTITLE": "Professional and specialized legal services covering all aspects of Saudi law",
+  "SERVICES_UPDATING_TITLE": "Our Services are being updated",
+  "SERVICES_UPDATING_DESC": "We are working on preparing our list of legal services...",
   "LOGIN": "Login",
   "reset_password": "reset password",
   "EXCEPTIONAL_SERVICE": "Exceptional Personal Service.",
@@ -42,6 +48,8 @@
   "add_service": "Add Service",
   "edit_servies": "Edit Servies",
   "add_day_holiday": "Add a day off",
+  "full_day": "Full Day",
+  "full_day_desc": "Check this if the holiday spans the entire day.",
   "Date": "Date",
   "name_ar": "name Ar",
   "name_en": "name En",
@@ -102,6 +110,8 @@
   "SELECT_SERVICE_DESC": "Select the type of service you need",
   "PERSONAL_DATA": "Your Personal Information",
   "PERSONAL_DATA_DESC": "Enter your contact information",
+  "DATE_TIME": "Date & Time",
+  "DATE_TIME_DESC": "Select the date and time you want to book",
   "PREVIOUS_MONTH": "Previous Month",
   "NEXT_MONTH": "Next Month",
   "SUn": "Sunday",
@@ -127,19 +137,12 @@
   "type_message": "Type your message...",
   "NO_DATA_TITLE": "No Data Found",
   "NO_DATA_SUBTITLE": "No records were found at the moment",
-
- "appointment_badge": "💼 New Appointment",
+  "appointment_badge": "💼 New Appointment",
   "page_heading": "Book Your",
   "legal_highlight": "Legal Consultation",
   "steps_guide": "Complete the four steps to confirm your booking",
-
-
-
-
-
-
   "API_MESSAGES": {
-      "QUOTA_EXCEEDED": "QUOTA EXCEEDED",
+    "QUOTA_EXCEEDED": "QUOTA EXCEEDED",
     "USER_LOGGED_IN_SUCCESS": "User Logged In Successfully",
     "SERVICE_UPDATED_SUCCESS": "Service Updated Successfully",
     "SERVICES_RETRIEVED_SUCCESS": "Services Retrieved Successfully",
@@ -206,6 +209,7 @@
     "WORKING_DAY_UPDATED_SUCCESS": "Working day updated successfully",
     "PUBLIC_DATA_RETRIEVED_SUCCESS": "Public data retrieved successfully",
     "RESPONSE_GENERATED_SUCCESS": "Response generated successfully",
-    "CHAT_SUCCESS": "CHAT SUCCESS"
+    "CHAT_SUCCESS": "CHAT SUCCESS",
+    "SERVER_ERROR": "Server Error"
   }
 }

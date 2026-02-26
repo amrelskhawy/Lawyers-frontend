@@ -6,28 +6,22 @@
       <p>{{ 'PERSONAL_DATA_DESC' | translate }}</p>
     </div>
   </div>
-  <form [formGroup]="Form()">
+  <form [formGroup]="bookingService.bookingForm()">
     <div class="Group">
       <label>{{ 'email' | translate }}</label>
       <input formControlName="clientEmail" placeholder="📧  {{ 'email' | translate }}" />
       <div class="wrapper-error">
-        <small
-          class="error-message"
-          *ngIf="
+        <small class="error-message" *ngIf="
             getControlName('clientEmail')?.errors?.['required'] &&
             getControlName('clientEmail')?.touched
-          "
-        >
+          ">
           {{ 'filed_reqierd' | translate }}
         </small>
 
-        <small
-          class="error-message"
-          *ngIf="
+        <small class="error-message" *ngIf="
             getControlName('clientEmail')?.errors?.['email'] &&
             !getControlName('clientEmail')?.errors?.['required']
-          "
-        >
+          ">
           {{ 'vaild_email' | translate }}
         </small>
       </div>
@@ -37,11 +31,8 @@
       <label> {{ 'name' | translate }}</label>
       <input formControlName="name" placeholder="👤 {{ 'name' | translate }}" />
       <div class="wrapper-error">
-        <small
-          class="error-message"
-          *ngIf="getControlName('name')?.invalid && getControlName('name')?.touched"
-          >{{ 'filed_reqierd' | translate }}</small
-        >
+        <small class="error-message" *ngIf="getControlName('name')?.invalid && getControlName('name')?.touched">{{
+          'filed_reqierd' | translate }}</small>
       </div>
     </div>
 
@@ -49,13 +40,11 @@
       <label>{{ 'phone' | translate }}</label>
       <input formControlName="phone_number" placeholder="📞 {{ 'phone' | translate }}" type="string" />
       <div class="wrapper-error">
-        <small
-          class="error-message"
-          *ngIf="getControlName('phone_number')?.invalid && getControlName('phone_number')?.touched"
-          >{{ 'filed_reqierd' | translate }}</small
-        >
+        <small class="error-message"
+          *ngIf="getControlName('phone_number')?.invalid && getControlName('phone_number')?.touched">{{ 'filed_reqierd'
+          | translate }}</small>
       </div>
     </div>
-    <button (click)="onNextSteap()" class="next-btn">{{ 'NEXT_BTN' | translate }}</button>
+    <button (click)="onNextStep()" class="next-btn">{{ 'NEXT_BTN' | translate }}</button>
   </form>
 </section>

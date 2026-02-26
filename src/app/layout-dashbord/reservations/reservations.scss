@@ -3,20 +3,19 @@
   padding: 20px;
   background: var(--pure-white);
   height: 96vh;
-  margin-top: 30px;
   border-radius: 20px;
   margin-top: 15px;
   border: 1px solid var(--medium-gray);
-  overflow: auto;
+  display: flex;
+  flex-direction: column;
 
   .calendar-nav {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
     align-items: center;
-    position: sticky;
     width: 100%;
-    top: 0;
+    flex-shrink: 0;
     background-color: var(--white-color);
 
     .btn-filterbyStatus {
@@ -66,84 +65,336 @@
   grid-template-columns: repeat(7, 1fr);
   border-left: 1px solid var(--frost-gray);
   border-top: 1px solid var(--frost-gray);
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
 
   .day-header {
-    background: var(--surface-base);
-    padding: 10px;
+    background: linear-gradient(180deg, var(--pure-white) 0%, var(--surface-base) 100%);
+    padding: 12px 10px;
     text-align: center;
-    font-weight: bold;
-    color: var(--dusty-stone);
+    font-weight: 700;
+    color: var(--primary-navy);
     border-right: 1px solid var(--frost-gray);
+    border-bottom: 1px solid var(--frost-gray);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 4px 6px -4px rgba(0,0,0,0.1);
   }
 
   .day-cell {
-    min-height: 140px;
+    min-height: 120px;
     border-right: 1px solid var(--frost-gray);
-    border-bottom: 3px solid var(--mint-whisper);
+    border-bottom: 1px solid var(--frost-gray);
     padding: 8px;
     background-color: var(--pure-white);
-    cursor: pointer;
+    transition: background-color 0.2s ease;
+    
     &:hover {
       background-color: var(--cloud-white);
     }
+
+    .day-number {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--tertiary-color, #64748b);
+      margin-bottom: 8px;
+      padding-left: 4px;
+    }
   }
 
-  .booking-item {
-    box-shadow:
-      4px 0 15px rgba(0, 0, 0, 0.05),
-      -4px 0 15px rgba(0, 0, 0, 0.05);
-    border: 1px solid var(--state-attention-border);
-    border-radius: 10px;
+  .booking-item-compact {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 6px;
+    border-radius: 6px;
+    margin-bottom: 5px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: transform 0.2s, filter 0.2s;
     overflow: hidden;
-    background-color: var(--white-color);
-    margin-top: 10px;
+    position: relative;
 
-    .header-book {
-      background-color: var(--primary-navy);
-      padding: 5px;
-      color: var(--golden-sun);
-      border-top: 3px solid var(--golden-sun);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      .day-number {
-        font-size: 12px;
-        color: var(--storm-slate);
-        font-family: serif;
-        font-size: 15px;
-        font-weight: bold;
+    &:hover {
+      transform: translateY(-1px);
+      filter: brightness(0.95);
+    }
+
+    .book-time {
+      font-weight: 700;
+      opacity: 0.85;
+      font-size: 0.7rem;
+    }
+
+    .book-title {
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 1;
+    }
+
+    &.COMPLETED {
+      background-color: #d1f5d3;
+      color: #166534;
+      border-left: 3px solid #166534;
+    }
+    &.CONFIRMED {
+      background-color: #e0f2fe;
+      color: #0369a1;
+      border-left: 3px solid #0369a1;
+    }
+    &.PENDING {
+      background-color: #fef08a;
+      color: #854d0e;
+      border-left: 3px solid #854d0e;
+    }
+    &.CANCELLED {
+      background-color: #ffe4e6;
+      color: #be123c;
+      border-left: 3px solid #be123c;
+    }
+  }
+
+  .view-more-btn {
+    font-size: 0.75rem;
+    color: var(--primary-navy, #1e293b);
+    font-weight: 700;
+    cursor: pointer;
+    padding: 4px;
+    margin-top: 4px;
+    text-align: center;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: var(--cloud-white, #f1f5f9);
+    }
+  }
+}
+
+:host {
+  ::ng-deep {
+    .p-dialog.modern-day-popup {
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      
+      .p-dialog-content {
+        padding: 0;
+      }
+    }
+  }
+}
+
+.day-popup-wrapper {
+  background-color: transparent;
+  width: 100%;
+  font-family: inherit;
+  color: var(--primary-navy, #1e293b);
+  display: flex;
+  flex-direction: column;
+}
+
+.popup-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 32px;
+  background: #ffffff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+
+  .popup-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 0;
+    color: var(--primary-navy, #1e293b);
+  }
+
+  .close-popup-btn {
+    background: transparent;
+    border: 1px solid var(--gray-300, #cbd5e1);
+    color: var(--tertiary-color, #475569);
+    cursor: pointer;
+    font-size: 0.9rem;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:hover {
+      background: var(--cloud-white, #f1f5f9);
+      color: var(--primary-navy, #1e293b);
+      border-color: var(--gray-400, #94a3b8);
+      transform: scale(1.05);
+    }
+  }
+}
+
+.day-schedule-scrollview {
+  position: relative;
+  height: 500px; /* Fixed height for scrollable day view */
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--pure-white, #ffffff);
+  
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+  }
+}
+
+.hours-column {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none; /* Let clicks pass through to events */
+
+  .hour-row {
+    height: 60px; /* Important: must match the 60px multiplier in typescript */
+    position: relative;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    box-sizing: border-box;
+
+    .hour-text {
+      position: absolute;
+      left: 12px;
+      top: -10px; /* Center with the border line conceptually */
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--tertiary-color, #94a3b8);
+      background: #ffffff;
+      padding: 2px 6px;
+      border-radius: 4px;
+
+      html[dir='rtl'] & {
+        left: auto;
+        right: 12px;
       }
     }
 
-    .content-book {
-      border-bottom: 1px solid var(--bg-cream-light);
-      padding: 10px;
+    .hour-divider {
+      position: absolute;
+      top: 0;
+      left: 60px; /* start after the text */
+      right: 0;
+      height: 1px;
+      background: rgba(0,0,0,0.05);
+
+      html[dir='rtl'] & {
+        left: 0;
+        right: 60px;
+      }
     }
   }
+}
 
-  .status-btn {
-    border: none;
-    width: fit-content;
-    padding: 0 5px;
-    border-radius: 20px;
-    margin: 10px;
-    font-size: 13px;
+.events-board {
+  position: absolute;
+  top: 0;
+  left: 65px; /* Leave space for hours */
+  right: 16px;
+  height: 1440px; /* 24 hours * 60px */
+
+  html[dir='rtl'] & {
+    left: 16px;
+    right: 65px;
+  }
+
+  .event-block-absolute {
+    position: absolute;
+    left: 0;
+    right: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    border-left: 3px solid transparent;
+    transition: transform 0.1s, filter 0.2s, box-shadow 0.2s;
+    overflow: hidden;
+
+    html[dir='rtl'] & {
+      border-left: none;
+      border-right: 3px solid transparent;
+    }
+
+    &:hover {
+      filter: brightness(0.95);
+      z-index: 10;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+    }
+
+    .event-content {
+      padding: 6px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      height: 100%;
+      box-sizing: border-box;
+
+      .event-time {
+        font-size: 0.7rem;
+        font-weight: 700;
+        opacity: 0.8;
+      }
+      
+      .event-title {
+        font-size: 0.8rem;
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .event-status-badge {
+        font-size: 0.65rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-top: auto; /* Push badge to bottom if high enough */
+        background: rgba(255, 255, 255, 0.7);
+        padding: 4px 8px;
+        border-radius: 4px;
+        align-self: flex-end; /* Aligns to left side in RTL */
+      }
+    }
+
     &.COMPLETED {
-      background-color: var(--state-positive-soft);
-      color: var(--seafoam-green);
+      background: #d1f5d3;
+      border-left-color: #166534;
+      html[dir='rtl'] & { border-right-color: #166534; }
+      color: #166534;
     }
-    &.confirmed {
-      background-color: var(--ice-blue);
-      color: var(--royal-azure);
-    }
-    &.CANCELLED {
-      background-color: var(--rose-petal);
-      color: var(--soft-crimson);
+    &.CONFIRMED {
+      background: #e0f2fe;
+      border-left-color: #0369a1;
+      html[dir='rtl'] & { border-right-color: #0369a1; }
+      color: #0369a1;
     }
     &.PENDING {
-      background-color: var(--state-attention-soft);
-      border: 1.5px solid var(--amber-honey);
-      color: var(--state-attention);
+      background: #fef08a;
+      border-left-color: #854d0e;
+      html[dir='rtl'] & { border-right-color: #854d0e; }
+      color: #854d0e;
+    }
+    &.CANCELLED {
+      background: #ffe4e6;
+      border-left-color: #be123c;
+      html[dir='rtl'] & { border-right-color: #be123c; }
+      color: #be123c;
     }
   }
 }
@@ -219,7 +470,7 @@
         color: var(--seafoam-green);
       }
 
-      &:not(:has(.booking-item)) {
+      &:not(:has(.booking-item-compact)) {
         display: none;
       }
     }

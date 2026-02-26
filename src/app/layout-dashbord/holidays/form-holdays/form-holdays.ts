@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, signal, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Data } from '../../../core/Servies/data';
 
@@ -8,11 +9,12 @@ import { Data } from '../../../core/Servies/data';
   templateUrl: './form-holdays.html',
   styleUrl: './form-holdays.scss',
 })
-export class FormHoldays implements OnInit {
+export class FormHoldays implements OnInit, OnDestroy {
+  isFullDaySubscription?: Subscription;
   constructor(
     private FB: FormBuilder,
     private Data: Data,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -41,16 +43,40 @@ export class FormHoldays implements OnInit {
       this.FB.group({
         date: ['', Validators.required],
         name: ['', Validators.required],
+        isFullDay: [false],
         startTime: ['', Validators.required],
         endTime: ['', Validators.required],
       }),
     );
+
+    this.isFullDaySubscription = this.Form().get('isFullDay')?.valueChanges.subscribe(isFullDay => {
+      const startTimeControl = this.Form().get('startTime');
+      const endTimeControl = this.Form().get('endTime');
+
+      if (isFullDay) {
+        startTimeControl?.clearValidators();
+        endTimeControl?.clearValidators();
+        startTimeControl?.setValue('');
+        endTimeControl?.setValue('');
+      } else {
+        startTimeControl?.setValidators([Validators.required]);
+        endTimeControl?.setValidators([Validators.required]);
+      }
+      startTimeControl?.updateValueAndValidity();
+      endTimeControl?.updateValueAndValidity();
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.isFullDaySubscription) {
+      this.isFullDaySubscription.unsubscribe();
+    }
   }
 
   onSubmitData() {
     if (this.Form().invalid) {
       this.Form().markAllAsTouched();
-    return;
+      return;
     }
     const rawData = this.Form().value;
     const formatTime = (date: any) => {
@@ -65,8 +91,8 @@ export class FormHoldays implements OnInit {
 
     const dataToSend = {
       ...rawData,
-      startTime: formatTime(rawData.startTime),
-      endTime: formatTime(rawData.endTime),
+      startTime: rawData.isFullDay ? null : formatTime(rawData.startTime),
+      endTime: rawData.isFullDay ? null : formatTime(rawData.endTime),
     };
 
     this.Data.post('holidays', dataToSend).subscribe((res) => {

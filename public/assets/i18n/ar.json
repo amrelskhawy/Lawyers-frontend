@@ -1,4 +1,6 @@
 {
+  "en": "الإنجليزية",
+  "ar": "العربية",
   "filed_reqierd": "هذا الحقل مطلوب",
   "name": "الأسم",
   "submit": "إرسال",
@@ -7,6 +9,10 @@
   "NAV_ABOUT": "من نحن",
   "NAV_HOW_IT_WORKS": "كيف يعمل",
   "NAV_SERVICES": "الخدمات",
+  "LEGAL_SERVICES_TITLE": "الخدمات القانونية",
+  "LEGAL_SERVICES_SUBTITLE": "خدمات قانونية احترافية ومتخصصة تغطي جميع جوانب القانون السعودي",
+  "SERVICES_UPDATING_TITLE": "خدماتنا قيد التحديث",
+  "SERVICES_UPDATING_DESC": "نحن نعمل على تجهيز قائمة خدماتنا القانونية...",
   "LOGIN": "دخول",
   "reset_password": "هل نسيت كلمة المرور؟",
   "EXCEPTIONAL_SERVICE": "خدمة شخصية استثنائية.",
@@ -42,6 +48,8 @@
   "add_service": "إضافة خدمة",
   "edit_servies": "التعديل علي الخدمة",
   "add_day_holiday": "أضافة يوم أجازة",
+  "full_day": "يوم كامل",
+  "full_day_desc": "حدد هذا الخيار إذا كانت الإجازة تشمل اليوم بأكمله.",
   "Date": "التاريخ",
   "name_ar": "الأسم بالعربي",
   "name_en": "الأسم باالأنجليزي",
@@ -103,6 +111,8 @@
   "NEXT_BTN": "التالي ←",
   "PERSONAL_DATA": "بياناتك الشخصية",
   "PERSONAL_DATA_DESC": "أدخل معلومات التواصل الخاصة بك",
+  "DATE_TIME": "التاريخ والوقت",
+  "DATE_TIME_DESC": "اختر التاريخ والوقت المناسب لك",
   "PREVIOUS_MONTH": "الشهر السابق",
   "NEXT_MONTH": "الشهر التالي",
   "SUn": "الأحد",
@@ -131,13 +141,8 @@
   "page_heading": "احجز موعدك",
   "legal_highlight": "القانوني",
   "steps_guide": "أكمل الخطوات الأربع لتأكيد حجزك",
-
-
-
-
-
   "API_MESSAGES": {
-      "QUOTA_EXCEEDED":"تجاوز الحصة",
+    "QUOTA_EXCEEDED": "تجاوز الحصة",
     "USER_LOGGED_IN_SUCCESS": "تم تسجيل الدخول بنجاح",
     "SERVICE_UPDATED_SUCCESS": "تم تحديث الخدمه بنجاح",
     "SERVICES_RETRIEVED_SUCCESS": "تم استرجاع الخدمات بنجاح",
@@ -204,6 +209,7 @@
     "WORKING_DAY_UPDATED_SUCCESS": "تم تحديث يوم العمل بنجاح",
     "PUBLIC_DATA_RETRIEVED_SUCCESS": "تم استرداد البيانات العامة بنجاح",
     "RESPONSE_GENERATED_SUCCESS": "تم إنشاء الاستجابة بنجاح",
-    "CHAT_SUCCESS": "نجاح الدردشة"
+    "CHAT_SUCCESS": "نجاح الدردشة",
+    "SERVER_ERROR": "خطأ في الخادم"
   }
 }
