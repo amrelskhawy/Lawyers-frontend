@@ -13,12 +13,15 @@ export class Reservations implements OnInit {
     this.getAllBooking();
   }
 
-  constructor(private Data: Data) {}
+  constructor(private Data: Data) { }
 
   displayDate: Date = new Date();
   daysInMonth: number[] = [];
   emptyCells: any[] = [];
   visibelDilogBooking: boolean = false;
+  visibleBooksPopup: boolean = false;
+  selectedDayBooks = signal<any[]>([]);
+  selectedDay = signal<number>(0);
   bookings = signal<any[]>([]);
   obj = signal<any[]>([]);
   selectedStatus = signal<string>('All');
@@ -123,5 +126,11 @@ export class Reservations implements OnInit {
   onchangeStatusBooking() {
     this.visibelDilogBooking = false;
     this.getAllBooking();
+  }
+
+  onViewMore(day: number, books: any[]) {
+    this.selectedDay.set(day);
+    this.selectedDayBooks.set(books);
+    this.visibleBooksPopup = true;
   }
 }
