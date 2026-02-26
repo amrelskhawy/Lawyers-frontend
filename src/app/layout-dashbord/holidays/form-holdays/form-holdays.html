@@ -1,105 +1,111 @@
-<p-dialog
-  maskStyleClass="backdrop-blur-sm"
-  [(visible)]="visible"
-  (onHide)="onClose()"
-  [modal]="true"
-  [baseZIndex]="10000"
-  [style]="{ width: '35rem', overflow: 'hidden' }"
->
-  <ng-template #headless>
-    <div class="header-form">
-      <div>
-        <h3>{{ 'add_day_holiday' | translate }}</h3>
-        <p>{{"ADD_HOLIDAY_DESC"|translate}}</p>
+<p-dialog maskStyleClass="backdrop-blur-sm" [(visible)]="visible" (onHide)="onClose()" [modal]="true"
+  [baseZIndex]="10000" styleClass="modern-modal" [style]="{ width: '90vw', maxWidth: '550px' }">
+
+  <ng-template pTemplate="headless">
+    <div class="modern-form-container">
+
+      <!-- Header -->
+      <div class="form-header">
+        <div class="header-content">
+          <h3>{{ 'add_day_holiday' | translate }}</h3>
+          <p class="subtitle">{{"ADD_HOLIDAY_DESC"|translate}}</p>
+        </div>
+        <img src="/assets/Img/LOGO-GOLD.svg" alt="logo" class="header-logo" />
+        <button class="close-icon-btn" (click)="closeDialog()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
       </div>
-        <img
-        height="100"
-        width="100"
-        src="/assets/Img/LOGO-GOLD.svg"
-        alt="logo"
-        class="header-logo"
-      />
+
+      <!-- Form -->
+      <form [formGroup]="Form()" (ngSubmit)="onSubmitData()" class="form-body">
+        <div class="inputs-wrapper">
+
+          <div class="form-grid">
+            <!-- Date -->
+            <div class="input-group">
+              <label>{{ 'Date' | translate }}</label>
+              <div class="input-wrapper date-picker-modern">
+                <p-datepicker appendTo="body" formControlName="date" [style]="{ width: '100%' }"
+                  placeholder="{{ 'Date' | translate }}" showIcon iconDisplay="input" />
+              </div>
+              <small class="error-msg" *ngIf="getControlName('date')?.invalid && getControlName('date')?.touched">
+                {{ 'filed_reqierd' | translate }}
+              </small>
+            </div>
+
+            <!-- Name -->
+            <div class="input-group">
+              <label>{{ 'name' | translate }}</label>
+              <div class="input-wrapper">
+                <i class="fa-regular fa-signature input-icon"></i>
+                <input formControlName="name" placeholder="{{ 'name' | translate }}" type="text" />
+              </div>
+              <small class="error-msg" *ngIf="getControlName('name')?.invalid && getControlName('name')?.touched">
+                {{ 'filed_reqierd' | translate }}
+              </small>
+            </div>
+          </div>
+
+          <!-- Full Day Toggle -->
+          <div class="input-group full-day-toggle-card">
+            <div class="toggle-content">
+              <div class="toggle-icon-bg">
+                <i class="fa-regular fa-clock"></i>
+              </div>
+              <div class="toggle-text">
+                <label>{{ 'full_day' | translate }}</label>
+                <span>{{ 'full_day_desc' | translate }}</span>
+              </div>
+            </div>
+            <p-toggleswitch formControlName="isFullDay"></p-toggleswitch>
+          </div>
+
+          <!-- Time pickers -->
+          <ng-container *ngIf="!Form().get('isFullDay')?.value">
+            <div class="form-grid slide-down">
+              <!-- From Time -->
+              <div class="input-group">
+                <label>{{"from"|translate}}</label>
+                <div class="input-wrapper date-picker-modern">
+                  <p-datepicker formControlName="startTime" placeholder="00:00" appendTo="body"
+                    [style]="{ width: '100%' }" [timeOnly]="true" hourFormat="12">
+                  </p-datepicker>
+                </div>
+                <small class="error-msg"
+                  *ngIf="getControlName('startTime')?.invalid && getControlName('startTime')?.touched">
+                  {{ 'filed_reqierd' | translate }}
+                </small>
+              </div>
+
+              <!-- To Time -->
+              <div class="input-group">
+                <label>{{"to"|translate}}</label>
+                <div class="input-wrapper date-picker-modern">
+                  <p-datepicker placeholder="00:00" appendTo="body" [style]="{ width: '100%' }"
+                    formControlName="endTime" [timeOnly]="true" hourFormat="12">
+                  </p-datepicker>
+                </div>
+                <small class="error-msg"
+                  *ngIf="getControlName('endTime')?.invalid && getControlName('endTime')?.touched">
+                  {{ 'filed_reqierd' | translate }}
+                </small>
+              </div>
+            </div>
+          </ng-container>
+
+        </div>
+
+        <!-- Actions -->
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" (click)="closeDialog()">
+            {{ 'close' | translate }}
+          </button>
+          <button type="submit" class="btn-primary">
+            {{ 'submit' | translate }} <i class="fa-solid fa-share"></i>
+          </button>
+        </div>
+
+      </form>
     </div>
-
-
-    <form [formGroup]="Form()" (ngSubmit)="onSubmitData()">
-      <div class="Group">
-        <label><i class="fa-regular fa-calendar"></i> {{ 'Date' | translate }}</label>
-        <p-datepicker
-          appendTo="body"
-          formControlName="date"
-          [style]="{ width: '100%' }"
-          placeholder="{{ 'Date' | translate }}"
-          showIcon
-          iconDisplay="input"
-        />
-        <div class="wrapper-error">
-          <small
-            class="error-message"
-            *ngIf="getControlName('date')?.invalid && getControlName('date')?.touched"
-            >{{ 'filed_reqierd' | translate }}</small
-          >
-        </div>
-      </div>
-
-      <div class="Group">
-        <label><i class="fa-regular fa-user"></i> {{ 'name' | translate }}</label>
-        <input formControlName="name" placeholder="{{ 'name' | translate }}" type="text" />
-        <div class="wrapper-error">
-          <small
-            class="error-message"
-            *ngIf="getControlName('name')?.invalid && getControlName('name')?.touched"
-            >{{ 'filed_reqierd' | translate }}</small
-          >
-        </div>
-      </div>
-
-      <div class="Group">
-        <label>{{"from"|translate}}</label>
-        <p-datepicker
-          formControlName="startTime"
-          placeholder="00:00 AM"
-          appendTo="body"
-          [style]="{ width: '100%' }"
-          [timeOnly]="true"
-          hourFormat="12"
-        >
-        </p-datepicker>
-        <div class="wrapper-error">
-          <small
-            class="error-message"
-            *ngIf="getControlName('startTime')?.invalid && getControlName('startTime')?.touched"
-            >{{ 'filed_reqierd' | translate }}</small
-          >
-        </div>
-      </div>
-
-      <div class="Group">
-        <label>{{"to"|translate}}</label>
-        <p-datepicker
-          placeholder="00:00 PM"
-          appendTo="body"
-          [style]="{ width: '100%' }"
-          formControlName="endTime"
-          [timeOnly]="true"
-          hourFormat="12"
-        >
-        </p-datepicker>
-        <div class="wrapper-error">
-          <small
-            class="error-message"
-            *ngIf="getControlName('endTime')?.invalid && getControlName('endTime')?.touched"
-            >{{ 'filed_reqierd' | translate }}</small
-          >
-        </div>
-      </div>
-
-      <button type="submit" class="btn-submit">
-        <i class="fa-solid fa-share"></i> {{ 'submit' | translate }}
-      </button>
-    </form>
-    <button class="btn-close-dilog" (click)="closeDialog()">
-      <i class="fa-solid fa-xmark"></i> {{ 'close' | translate }}
-    </button>
   </ng-template>
 </p-dialog>

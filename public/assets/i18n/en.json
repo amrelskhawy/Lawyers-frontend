@@ -44,6 +44,8 @@
   "add_service": "Add Service",
   "edit_servies": "Edit Servies",
   "add_day_holiday": "Add a day off",
+  "full_day": "Full Day",
+  "full_day_desc": "Check this if the holiday spans the entire day.",
   "Date": "Date",
   "name_ar": "name Ar",
   "name_en": "name En",
