@@ -196,7 +196,7 @@ $bg-light: #f8fafc;
 
   .footer-policy {
     margin-top: 1.5rem;
-    
+      white-space: normal;
     .policy-card {
       padding: 1.25rem;
       background-color: rgba(#c5a059, 0.05);
@@ -254,7 +254,7 @@ $bg-light: #f8fafc;
 
       i {
         transition: transform 0.2s;
-        
+
         :host-context([dir="rtl"]) & {
           transform: rotate(180deg);
         }
