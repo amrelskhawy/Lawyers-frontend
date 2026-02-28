@@ -31,7 +31,7 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: 0.2s ease;
+    transition: 0.3s ease;
 
     i {
       font-size: 1.25rem;
@@ -39,6 +39,7 @@
 
     &:hover {
       background-color: var(--bg-cream-light);
+      border: 1px solid var(--accent-gold);
     }
   }
 
