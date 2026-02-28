@@ -13,7 +13,7 @@
       <tr>
         <ng-container *ngFor="let col of bodytabel">
           <th [pSortableColumn]="col.value">
-            <div style="display: flex;gap: 2px;white-space: nowrap;">
+            <div class="table-header-content">
               {{ col.key | translate }}
                <p-sortIcon [field]="col.value" />
             </div>

@@ -10,9 +10,14 @@ th {
   background-color: var(--accent-gold) !important;
 }
 
-
-::ng-deep .p-datatable-sort-icon{
+::ng-deep .p-datatable-sort-icon {
   color: var(--white-color);
+}
+
+.table-header-content {
+  display: flex;
+  gap: 2px;
+  white-space: nowrap;
 }
 
 .admin-badge {
