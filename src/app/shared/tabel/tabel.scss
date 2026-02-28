@@ -10,6 +10,11 @@ th {
   background-color: var(--accent-gold) !important;
 }
 
+
+::ng-deep .p-datatable-sort-icon{
+  color: var(--white-color);
+}
+
 .admin-badge {
   background-color: var(--mint-whisper);
   color: var(--seafoam-green);

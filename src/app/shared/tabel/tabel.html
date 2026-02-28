@@ -6,13 +6,17 @@
     [rows]="20"
     stripedRows
     [tableStyle]="{ 'min-width': '50rem' }"
+    [sortOrder]="-1"
   >
     <!-- HEADER -->
     <ng-template pTemplate="header">
       <tr>
         <ng-container *ngFor="let col of bodytabel">
-          <th>
-            {{ col.key | translate }}
+          <th [pSortableColumn]="col.value">
+            <div style="display: flex;gap: 2px;white-space: nowrap;">
+              {{ col.key | translate }}
+               <p-sortIcon [field]="col.value" />
+            </div>
           </th>
         </ng-container>
 
