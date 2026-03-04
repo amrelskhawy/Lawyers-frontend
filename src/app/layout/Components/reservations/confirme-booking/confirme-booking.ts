@@ -1,4 +1,3 @@
-
 import { Component, Input, signal } from '@angular/core';
 import { Data } from '../../../../core/Servies/data';
 import { Router } from '@angular/router';
@@ -14,8 +13,8 @@ export class ConfirmeBooking {
   constructor(
     private dataService: Data,
     private router: Router,
-    public bookingService: BookingService
-  ) { }
+    public bookingService: BookingService,
+  ) {}
 
   name = signal<any>({});
   @Input()
@@ -37,9 +36,10 @@ export class ConfirmeBooking {
       date: formattedDate,
     };
 
-    this.dataService.post('bookings', payload).subscribe(() => {
+    this.dataService.post('bookings', payload).subscribe((res: any) => {
       this.bookingService.resetBooking();
-      this.router.navigate(['/']);
+      const paymentUrl = res.data.payment_link;
+      window.open(paymentUrl, '_blank');
     });
   }
 }
