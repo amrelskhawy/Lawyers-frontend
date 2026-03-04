@@ -8,7 +8,11 @@
   </div>
   <form [formGroup]="bookingService.bookingForm()">
     <div class="Group datepicker">
-      <p-datepicker formControlName="date" [inline]="true" [showWeek]="true" [disabledDates]="disibledDays()"
+      <p-datepicker
+      formControlName="date"
+       [inline]="true"
+       [showWeek]="true"
+        [disabledDates]="disibledDays()"
         [minDate]="minDate">
       </p-datepicker>
 

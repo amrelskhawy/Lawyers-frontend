@@ -19,7 +19,6 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-
   .toggle-btn,
   .close-btn {
     background: transparent;
@@ -32,7 +31,7 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: 0.2s ease;
+    transition: 0.3s ease;
 
     i {
       font-size: 1.25rem;
@@ -40,12 +39,17 @@
 
     &:hover {
       background-color: var(--bg-cream-light);
+      border: 1px solid var(--accent-gold);
     }
   }
 
   /* hide close btn on desktop */
   .fa-xmark {
     font-size: 30px;
+    display: none;
+  }
+
+  .close-btn {
     display: none;
   }
 }
@@ -207,32 +211,26 @@
     align-items: center;
     gap: 0.75rem;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-
     p {
       margin: 0;
       font-size: 0.85rem;
       color: var(--tertiary-color, #555);
       line-height: 1.5;
       font-weight: 500;
+      white-space: normal;
     }
   }
 }
 
 /* Collapsed State Styles */
 .collpasedMenue {
-  &.sidebar-wrapper {
-    width: 80px;
-    /* if parent manages width, this ensures inner styling adapts */
-  }
-
   &.top-menue {
     justify-content: center;
     padding: 1rem 0;
   }
 
-  .logo-header {
-    width: 45px;
-    height: auto;
+  img {
+    width: 50px;
   }
 
   &.nav-list {
@@ -240,7 +238,7 @@
   }
 
   &.nav-item {
-    padding: 0.75rem;
+    padding: 1px;
     justify-content: center;
 
     .nav-icon {
@@ -272,10 +270,11 @@
     display: block !important;
   }
   .close-btn {
-    position: absolute;
-    inset-inline-start: 10px;
-    top: 10px;
-    z-index: 10;
+    display: inline-block !important;
+    //   position: absolute;
+    //   inset-inline-start: 10px;
+    //   top: 10px;
+    //   z-index: 10;
   }
 }
 

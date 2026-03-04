@@ -8,7 +8,7 @@ import { BookingService } from '../booking.service';
   styleUrl: './servies-booking.scss',
 })
 export class ServiesBooking {
-  constructor(private bookingService: BookingService) { }
+  constructor(private bookingService: BookingService) {}
   servise = signal<any[]>([]);
   selectServies = signal<any>({});
   @Input()
