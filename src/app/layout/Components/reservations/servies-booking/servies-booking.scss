@@ -43,9 +43,9 @@
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 20px;
   padding: 10px 0;
-  max-height: 400px;
+  max-height: 440px;
   overflow-y: auto;
-  
+
   /* Modern Scrollbar */
   &::-webkit-scrollbar {
     width: 6px;
