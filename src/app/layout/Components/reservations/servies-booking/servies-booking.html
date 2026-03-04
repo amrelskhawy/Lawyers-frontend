@@ -1,3 +1,5 @@
+@if(servise().length>0){
+
 <div class="wrapper-servies-booking">
   <div class="header-booking">
     <i class="fa-solid fa-scale-balanced"></i>
@@ -20,3 +22,6 @@
   </div>
   <button (click)="onNextStep()" class="next-btn">{{ 'NEXT_BTN' | translate }}</button>
 </div>
+}@else {
+  <app-no-data></app-no-data>
+}
