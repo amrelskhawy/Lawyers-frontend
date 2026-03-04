@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Data } from '../../../core/Servies/data';
 import { BookingService } from './booking.service';
 
@@ -34,10 +34,12 @@ export class Reservations implements OnInit {
     this.bookingService.detailsservies.set(event);
     this.bookingService.getControl('serviceId')?.patchValue(event.id);
     this.bookingService.currentStep.set(2);
+    setTimeout(() => this.scrollToSection(), 0);
   }
 
   EventDataClient(event: any) {
     this.bookingService.currentStep.set(3);
+    setTimeout(() => this.scrollToSection(), 0);
     this.bookingService.getControl('phone_number')?.patchValue(event.phone_number);
     this.bookingService.getControl('name')?.patchValue(event.name);
     this.bookingService.getControl('clientEmail')?.patchValue(event.clientEmail);
@@ -45,7 +47,19 @@ export class Reservations implements OnInit {
 
   EventDateClient(event: any) {
     this.bookingService.currentStep.set(4);
+    setTimeout(() => this.scrollToSection(), 0);
     this.bookingService.getControl('date')?.patchValue(event.date);
     this.bookingService.getControl('startTime')?.patchValue(event.startTime);
+  }
+@ViewChild('bookingSection') bookingSection!: ElementRef;
+
+
+ scrollToSection() {
+    if (this.bookingSection) {
+      this.bookingSection.nativeElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+    }
   }
 }
