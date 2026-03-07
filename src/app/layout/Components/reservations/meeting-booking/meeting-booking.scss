@@ -41,7 +41,7 @@
 .datepicker {
   text-align: center;
   margin: 20px 0;
-  
+
   ::ng-deep {
     .p-datepicker {
       border: 1.5px solid var(--Platinum) !important;
@@ -94,11 +94,11 @@
 .Times-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content:center;
   gap: 12px;
   margin-top: 25px;
   padding: 5px;
-  max-height: 200px;
+  max-height: 177px;
   overflow-y: auto;
 
   /* Modern Scrollbar */
