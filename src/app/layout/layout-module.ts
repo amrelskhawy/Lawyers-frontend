@@ -25,6 +25,8 @@ import { ServiesBooking } from './Components/reservations/servies-booking/servie
 import { DataBooking } from './Components/reservations/data-booking/data-booking';
 import { MeetingBooking } from './Components/reservations/meeting-booking/meeting-booking';
 import { ConfirmeBooking } from './Components/reservations/confirme-booking/confirme-booking';
+import { TeamWork } from './Components/team-work/team-work';
+import { Payment } from './Components/reservations/payment/payment';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,8 @@ import { ConfirmeBooking } from './Components/reservations/confirme-booking/conf
     DataBooking,
     MeetingBooking,
     ConfirmeBooking,
+    TeamWork,
+    Payment,
   ],
   imports: [
     TranslateModule,
