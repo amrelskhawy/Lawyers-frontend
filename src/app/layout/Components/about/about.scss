@@ -81,9 +81,8 @@
     margin-top: 20px;
 
     li {
-      display: flex;
       color: var(--tertiary-color);
-      gap: 7px;
+      margin-bottom: 10px;
 
       i {
         background-color: var(--accent-gold);
@@ -93,6 +92,8 @@
         line-height: 20px;
         border-radius: 50%;
         font-size: 14px;
+         margin-inline-end:5px;
+
       }
     }
   }
