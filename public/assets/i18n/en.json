@@ -1,4 +1,33 @@
 {
+
+"SUBTITLE": "Choose your preferred payment method to complete booking",
+    "TABBY_NAME": "Tabby",
+    "TABBY_DESC": "Pay with card via Tabby gateway",
+    "TAMARA_NAME": "Tamara",
+    "TAMARA_DESC": "Split into 3 interest-free payments",
+    "STRIPE_NAME": "Stripe",
+    "STRIPE_DESC": "Secure international card payment",
+    "CARD_PAYMENT": "Card Payment",
+    "CARD_DETAILS": "Enter your card details below",
+    "SSL_SECURED": "SSL Secured",
+    "CARD_HOLDER": "Card Holder",
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  "payment":"payment",
   "en": "English",
   "ar": "Arabic",
   "filed_reqierd": "This Field Is Requierd *",
