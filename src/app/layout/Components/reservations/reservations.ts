@@ -1,4 +1,3 @@
-
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Data } from '../../../core/Servies/data';
 import { BookingService } from './booking.service';
@@ -12,8 +11,8 @@ import { BookingService } from './booking.service';
 export class Reservations implements OnInit {
   constructor(
     private data: Data,
-    public bookingService: BookingService
-  ) { }
+    public bookingService: BookingService,
+  ) {}
 
   ngOnInit(): void {
     this.getData();
@@ -37,6 +36,12 @@ export class Reservations implements OnInit {
     setTimeout(() => this.scrollToSection(), 0);
   }
 
+  onPayment(valuepayment: string) {
+    this.bookingService.getControl('Provider')?.patchValue(valuepayment);
+    this.bookingService.currentStep.set(5);
+    setTimeout(() => this.scrollToSection(), 0);
+  }
+
   EventDataClient(event: any) {
     this.bookingService.currentStep.set(3);
     setTimeout(() => this.scrollToSection(), 0);
@@ -51,14 +56,13 @@ export class Reservations implements OnInit {
     this.bookingService.getControl('date')?.patchValue(event.date);
     this.bookingService.getControl('startTime')?.patchValue(event.startTime);
   }
-@ViewChild('bookingSection') bookingSection!: ElementRef;
+  @ViewChild('bookingSection') bookingSection!: ElementRef;
 
-
- scrollToSection() {
+  scrollToSection() {
     if (this.bookingSection) {
       this.bookingSection.nativeElement.scrollIntoView({
         behavior: 'smooth',
-        block: 'center'
+        block: 'center',
       });
     }
   }
