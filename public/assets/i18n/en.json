@@ -11,21 +11,9 @@
     "CARD_DETAILS": "Enter your card details below",
     "SSL_SECURED": "SSL Secured",
     "CARD_HOLDER": "Card Holder",
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+"EXPERIENCE_YEARS": "Saad Al-Buqami Law Firm & Legal Consultations boasts over 15 years of legal expertise, providing specialized legal services to individuals and corporations across the Kingdom of Saudi Arabia.",
+    "METHODOLOGY_TEAM": "We adopt a clear legal methodology that begins with a precise analysis of facts and concludes with practical solutions that protect our clients' interests and strengthen their legal positions. Our team comprises elite lawyers and consultants experienced in various legal fields, with a full commitment to accuracy and professionalism.",
+    "STRATEGIC_SUCCESS": "We believe that success in legal cases relies not only on legal knowledge but also on strategic planning, risk management, and assertive legal representation to achieve the best possible outcomes for our clients.",
 
   "payment":"payment",
   "en": "English",
@@ -45,7 +33,8 @@
   "LOGIN": "Login",
   "reset_password": "reset password",
   "EXCEPTIONAL_SERVICE": "Exceptional Personal Service.",
-  "LEGAL_CONSULTANCY_DESC": "We provide comprehensive legal consultations for individuals and companies in KSA, focusing on quality and speed of service",
+  "LEGAL_CONSULTANCY_DESC": "Precise legal solutions crafted with solid expertise ... and implemented professionally",
+  "PROFESSIONAL_REPRESENTATION": "We provide professional legal representation and strategic consultations that protect your interests and support your decisions.",
   "CONTACT_US_NOW": "Contact Us",
   "WORK_PROCESS": "Work Process",
   "ABOUT_COMPANY": "About Our Company",
