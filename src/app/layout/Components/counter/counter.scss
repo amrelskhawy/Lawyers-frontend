@@ -1,0 +1,92 @@
+.wrapper-counter{
+  text-align: center;
+  margin-bottom: 100px;
+  padding: 20px;
+  position: relative;
+  height: fit-content;
+}
+
+
+.svg1{
+  position: absolute;
+  left: 10px;
+     top: 0px;
+}
+
+
+
+
+.svg2{
+    position: absolute;
+  right: 10px;
+   bottom: 0px;
+
+}
+
+
+
+
+.header-counter{
+  p{
+    color: var(--amber-honey);
+  }
+
+  .active-color{
+    color: var(--secondary-color);
+  }
+}
+
+
+
+.blog-counter{
+      background: linear-gradient(145deg, rgba(201, 168, 76, 0.06), rgba(201, 168, 76, 0.02));
+    border: 1px solid rgba(201, 168, 76, 0.15);
+    padding: 30px ;
+    width: 30%;
+    height: 50%;
+    margin: auto;
+
+    .lawers{
+      color: var(--accent-gold);
+    }
+}
+
+
+
+
+
+
+  .tick-bar {
+      display: flex;
+      gap: 3px;
+      justify-content: center;
+      flex-wrap: wrap;
+      max-width: 400px;
+      margin: 30px auto;
+    }
+
+    .tick {
+      width: 4px;
+      height: 14px;
+      border-radius: 2px;
+      background: rgba(201, 168, 76, 0.15);
+      transition: background 0.05s;
+    }
+
+    .tick.active {
+      background: rgba(201, 168, 76, 0.7);
+    }
+
+
+
+
+
+    @media (max-width:1200px) {
+.svg2 , .svg1{
+  display: none;
+}
+
+.blog-counter{
+  width: 70%;
+}
+    }
