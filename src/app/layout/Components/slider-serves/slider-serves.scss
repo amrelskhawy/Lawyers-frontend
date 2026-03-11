@@ -80,7 +80,7 @@
       align-items: center;
       gap: 10px;
       margin-top: auto;
-      
+
       a {
         color: var(--accent-gold);
         font-size: 0.95rem;
@@ -88,7 +88,7 @@
         transition: all 0.4s ease;
         text-decoration: none;
       }
-      
+
       i {
         font-size: 12px;
         color: var(--accent-gold);
@@ -126,7 +126,7 @@
           color: #ffffff;
           padding-left: 5px;
         }
-        
+
         i {
           color: #ffffff;
           transform: translateX(-5px);
@@ -172,7 +172,7 @@
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08) !important;
     transition: all 0.3s ease !important;
     z-index: 10;
-    
+
     &:hover {
       background: var(--accent-gold) !important;
       color: var(--white-color) !important;
