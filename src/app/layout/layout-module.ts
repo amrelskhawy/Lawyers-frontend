@@ -27,6 +27,7 @@ import { MeetingBooking } from './Components/reservations/meeting-booking/meetin
 import { ConfirmeBooking } from './Components/reservations/confirme-booking/confirme-booking';
 import { TeamWork } from './Components/team-work/team-work';
 import { Payment } from './Components/reservations/payment/payment';
+import { Counter } from './Components/counter/counter';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { Payment } from './Components/reservations/payment/payment';
     ConfirmeBooking,
     TeamWork,
     Payment,
+    Counter,
   ],
   imports: [
     TranslateModule,
