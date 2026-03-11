@@ -19,12 +19,15 @@
           <a>{{ 'NAV_SERVICES' | translate }}</a>
         </li>
 
+        <li (click)="onClickListActive('teamWork')">
+          <a>{{ 'teamWork' | translate }}</a>
+        </li>
+
         <li [routerLink]="['/booking']">
-          <a>{{"Book_with_us"|translate}}</a>
+          <a>{{ 'Book_with_us' | translate }}</a>
         </li>
       </ul>
     </div>
-
 
     <div class="btn-header-div">
       <button [routerLink]="['/auth/login']" class="btn-header">
