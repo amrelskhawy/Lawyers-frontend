@@ -71,81 +71,68 @@
   }
 }
 
-/* --- Carousel Overrides --- */
-.team-carousel-container {
-  :host ::ng-deep {
-    .p-carousel-content {
-        padding: 20px 0;
-    }
-
-    .p-carousel-prev, .p-carousel-next {
-      width: 50px;
-      height: 50px;
-      background: var(--white-color);
-      color: var(--primary-navy);
-      border: 1px solid rgba(0,0,0,0.06);
-      border-radius: 50%;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-      transition: all 0.3s ease;
-      z-index: 20;
-      
-      &:hover {
-        background: var(--primary-navy);
-        color: var(--white-color);
-        transform: scale(1.1);
-      }
-    }
-
-    .p-carousel-next { right: -10px; }
-    .p-carousel-prev { left: -10px; }
-
-    .p-carousel-indicators {
-      padding: 30px 0 0;
-      .p-carousel-indicator {
-        button {
-          width: 7px;
-          height: 7px;
-          border-radius: 50%;
-          background: var(--soft-gray);
-          transition: all 0.3s ease;
-          border: none;
+/* --- Seamless Infinite Slider --- */
+.team-flex-container {
+    padding: 60px 0 100px;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+    
+    .members-flex {
+        display: flex;
+        // width: fit-content;
+        direction: ltr; // Force LTR for predictable infinite scroll logic
+        gap: 30px;
+        padding: 20px 30px 20px 0; // Padding-right (30px) balances the gaps for perfect -50% loop
+        animation: teamScroll 10s linear infinite;
+        will-change: transform;
+        backface-visibility: hidden;
+        
+        &:hover {
+            animation-play-state: paused;
         }
-        &.p-highlight button {
-          background: var(--accent-gold);
-          transform: scale(1.4);
-        }
-      }
     }
-  }
 }
 
-/* --- Professional Member Card --- */
 .member-card-wrapper {
-    padding: 10px;
+    flex: 0 0 350px;
+    height: 580px;
+    transition: all 0.9s cubic-bezier(0.2, 1, 0.2, 1);
+    cursor: pointer;
+    user-select: none;
+filter: grayscale(.8);
+    &:hover {
+        flex: 0 0 680px;
+        z-index: 50;
+        filter: grayscale(0);
+        
+        .member-details {
+            opacity: 1;
+            transform: translate(-50%, -40px);
+        }
+
+        .image-overlay { opacity: 1; }
+        .member-card { 
+            border-radius: 40px;
+            box-shadow: 0 50px 120px rgba(0,0,0,0.3);
+            border-color: rgba(147, 133, 63, 0.4);
+        }
+    }
 }
 
 .member-card {
-    background: var(--white-color);
-    border-radius: 20px;
-    overflow: hidden;
-    transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-    border: 1px solid rgba(0, 0, 0, 0.02);
     position: relative;
-    height: 380px;
-
-    &:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 30px 60px rgba(147, 133, 63, 0.15);
-        border-color: rgba(147, 133, 63, 0.2);
-
-        .member-photo { transform: scale(1.1); }
-        .member-details { 
-            background: rgba(255, 255, 255, 1);
-            padding-bottom: 25px;
-        }
-        .card-line { width: 100%; opacity: 1; }
-    }
+    width: 100%;
+    height: 100%;
+    border-radius: 175px; // Ultra-pill
+    overflow: hidden;
+    transition: all 0.8s cubic-bezier(0.2, 1, 0.2, 1);
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.04);
+    box-shadow: 0 15px 45px rgba(0,0,0,0.06);
+    direction: rtl; // Restore RTL for Arabic text content
 }
 
 .member-image-box {
@@ -153,95 +140,69 @@
     inset: 0;
     width: 100%;
     height: 100%;
-    overflow: hidden;
-
+    
     .member-photo {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        object-position: top center;
-        transition: transform 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+        object-position: center 10%;
+        transition: transform 1.5s ease;
+        
     }
 
     .image-overlay {
         position: absolute;
         inset: 0;
-        background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.1));
-    }
-
-    .member-socials-mini {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-        z-index: 5;
-        
-        .dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--accent-gold);
-            opacity: 0.7;
-        }
+        background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 65%);
+        opacity: 0;
+        transition: opacity 0.6s ease;
     }
 }
 
 .member-details {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 16px 15px 18px;
+    bottom: 40px;
+    left: 50%;
+    transform: translate(-50%, 20px);
     text-align: center;
-    background: rgba(255, 255, 255, 0.96);
-    backdrop-filter: blur(8px);
-    transition: all 0.4s ease;
-    z-index: 10;
-    border-top: 1px solid rgba(0,0,0,0.04);
+    color: white;
+    z-index: 20;
+    opacity: 0;
+    width: 90%;
+    transition: all 0.6s cubic-bezier(0.25, 1, 0.3, 1) 0.1s;
 
     .member-name {
-        font-size: 18px;
-        color: var(--primary-navy);
+        font-size: 32px;
         font-weight: 800;
-        margin-bottom: 3px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        line-height: 1.2;
+        margin-bottom: 8px;
+        color: white;
+        text-shadow: 0 2px 15px rgba(0,0,0,0.4);
     }
 
     .member-position {
         display: block;
-        font-size: 11px;
+        font-size: 14px;
         font-weight: 600;
         color: var(--accent-gold);
         text-transform: uppercase;
-        letter-spacing: 1.2px;
-        opacity: 0.9;
+        letter-spacing: 3px;
     }
+}
 
-    .card-line {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        height: 4px;
-        width: 0%;
-        background: var(--accent-gold);
-        transition: all 0.5s ease;
-        opacity: 0;
-    }
+/* --- Scrolling Animation --- */
+@keyframes teamScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } 
 }
 
 /* --- Responsive Adaptations --- */
 @media (max-width: 992px) {
-    .member-card { height: 340px; }
-    .member-name { font-size: 16px; }
+    .member-card-wrapper { flex: 0 0 280px; height: 450px; }
+    .member-card-wrapper:hover { flex: 0 0 420px; }
+    .member-name { font-size: 24px; }
 }
 
-@media (max-width: 768px) {
-    .team-section { padding: 60px 0; }
-    .section-header { margin-bottom: 40px; .section-title { font-size: 30px; } }
-    .member-card { height: 320px; border-radius: 16px; }
+@media (max-width: 600px) {
+    .member-card-wrapper { flex: 0 0 240px; height: 400px; }
+    .member-card-wrapper:hover { flex: 0 0 300px; }
 }
