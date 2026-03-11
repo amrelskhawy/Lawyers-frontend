@@ -1,60 +1,247 @@
-.infinite-scroll {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  overflow: hidden;
+.team-section {
+  padding: 100px 0;
+  background-color: #fcfcfc;
   position: relative;
-  align-items: center;
-  white-space: nowrap;
-   height: 500px;
-}
+  overflow: hidden;
 
-.scroll-text {
- position: absolute;
-  left: 100%;
-  animation: infinite-scroll 30s linear infinite;
-  padding-right: 40px;
-    overflow: hidden;
-}
+  /* --- Premium Background Layer --- */
+  .bg-decoration {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
 
+    .pattern-mesh {
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(var(--accent-gold) 0.8px, transparent 0.8px);
+        background-size: 32px 32px;
+        opacity: 0.08;
+    }
 
+    .glow {
+        position: absolute;
+        width: 50vw;
+        height: 50vw;
+        border-radius: 50%;
+        filter: blur(120px);
+        opacity: 0.1;
+    }
 
-@for $i from 1 through 11 {
-  .scroll-text:nth-child(#{$i}) {
-    animation-delay: calc(30s / 11 * (11 - ($i - 1)) * -1);
+    .glow-gold { top: -10%; right: -5%; background: var(--accent-gold); }
+    .glow-navy { bottom: -10%; left: -5%; background: var(--primary-navy); }
   }
-}
 
-@keyframes infinite-scroll {
-  to {
-    left: -120%;
-  }
-}
+  .container { position: relative; z-index: 5; }
 
+  .section-header {
+    text-align: center;
+    margin-bottom: 70px;
 
- img{
-  height:350px;
-  width:200px;
-  border-radius: 20px;
-   display: block;
-   object-fit: cover;
-}
+    .header-badge {
+      display: inline-block;
+      padding: 6px 20px;
+      background: rgba(147, 133, 63, 0.08);
+      color: var(--accent-gold);
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+      border: 1px solid rgba(147, 133, 63, 0.15);
+    }
 
+    .section-title {
+      font-size: 46px;
+      color: var(--primary-navy);
+      font-weight: 800;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
 
-
-
-.scroll-text:nth-child(even) img {
-  height: 300px;
-    border-radius: 10px;
-}
-
-
-
-
-/* --------- Mobile ----------- */
-@media (max-width: 767px) {
- @for $i from 1 through 11 {
-    .scroll-text:nth-child(#{$i}) {
-      animation-delay: calc(40s / 11 * (11 - ($i - 1)) * -1);
+    .section-subtitle {
+      color: var(--secondary-color);
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 18px;
+      line-height: 1.6;
+      opacity: 0.85;
     }
   }
+}
+
+/* --- Carousel Overrides --- */
+.team-carousel-container {
+  :host ::ng-deep {
+    .p-carousel-content {
+        padding: 20px 0;
+    }
+
+    .p-carousel-prev, .p-carousel-next {
+      width: 50px;
+      height: 50px;
+      background: var(--white-color);
+      color: var(--primary-navy);
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: 50%;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+      z-index: 20;
+      
+      &:hover {
+        background: var(--primary-navy);
+        color: var(--white-color);
+        transform: scale(1.1);
+      }
+    }
+
+    .p-carousel-next { right: -10px; }
+    .p-carousel-prev { left: -10px; }
+
+    .p-carousel-indicators {
+      padding: 30px 0 0;
+      .p-carousel-indicator {
+        button {
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          background: var(--soft-gray);
+          transition: all 0.3s ease;
+          border: none;
+        }
+        &.p-highlight button {
+          background: var(--accent-gold);
+          transform: scale(1.4);
+        }
+      }
+    }
+  }
+}
+
+/* --- Professional Member Card --- */
+.member-card-wrapper {
+    padding: 10px;
+}
+
+.member-card {
+    background: var(--white-color);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.02);
+    position: relative;
+    height: 380px;
+
+    &:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 30px 60px rgba(147, 133, 63, 0.15);
+        border-color: rgba(147, 133, 63, 0.2);
+
+        .member-photo { transform: scale(1.1); }
+        .member-details { 
+            background: rgba(255, 255, 255, 1);
+            padding-bottom: 25px;
+        }
+        .card-line { width: 100%; opacity: 1; }
+    }
+}
+
+.member-image-box {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    .member-photo {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top center;
+        transition: transform 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .image-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.1));
+    }
+
+    .member-socials-mini {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        z-index: 5;
+        
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent-gold);
+            opacity: 0.7;
+        }
+    }
+}
+
+.member-details {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 16px 15px 18px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(8px);
+    transition: all 0.4s ease;
+    z-index: 10;
+    border-top: 1px solid rgba(0,0,0,0.04);
+
+    .member-name {
+        font-size: 18px;
+        color: var(--primary-navy);
+        font-weight: 800;
+        margin-bottom: 3px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 1.2;
+    }
+
+    .member-position {
+        display: block;
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--accent-gold);
+        text-transform: uppercase;
+        letter-spacing: 1.2px;
+        opacity: 0.9;
+    }
+
+    .card-line {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 4px;
+        width: 0%;
+        background: var(--accent-gold);
+        transition: all 0.5s ease;
+        opacity: 0;
+    }
+}
+
+/* --- Responsive Adaptations --- */
+@media (max-width: 992px) {
+    .member-card { height: 340px; }
+    .member-name { font-size: 16px; }
+}
+
+@media (max-width: 768px) {
+    .team-section { padding: 60px 0; }
+    .section-header { margin-bottom: 40px; .section-title { font-size: 30px; } }
+    .member-card { height: 320px; border-radius: 16px; }
 }
