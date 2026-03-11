@@ -1,6 +1,5 @@
 <div class="container">
   <section class="about-section">
-
     <div class="img-about-container">
       <div pAnimateOnScroll enterClass="my-enter-right" leaveClass="my-leave-animation" class="img-left">
         <img height="300" width="200" src="/assets/Img/2a.png" alt="About Image" class="img-1" />
@@ -13,39 +12,44 @@
       </div>
     </div>
 
-
-
-
-
     <div class="about-text-container">
       <div class="section-title">
         <i class="fa-solid fa-circle"></i>
         <span class="line"></span>
-        <h2 pAnimateOnScroll enterClass="my-enter-zoom" leaveClass="my-leave-animation">
-          {{ 'ABOUT_COMPANY' | translate }}
-        </h2>
+        <h2 pAnimateOnScroll enterClass="my-enter-zoom" leaveClass="my-leave-animation">{{"NAV_ABOUT"|translate}}</h2>
         <span class="line"></span>
         <i class="fa-solid fa-circle"></i>
       </div>
 
+      <h2 pAnimateOnScroll enterClass="my-enter-top" leaveClass="my-leave-animation">
+        {{ 'ABOUT_COMPANY' | translate }}
+      </h2>
+
       <p pAnimateOnScroll enterClass="my-enter-animation" leaveClass="my-leave-animation"
         class="animation-duration-1000">
-        {{ 'COMPANY_DESCRIPTION' | translate }}
+        <!-- {{ 'COMPANY_DESCRIPTION' | translate }} -->
       </p>
       <p style="margin-top: 20px;" pAnimateOnScroll enterClass="my-enter-animation" leaveClass="my-leave-animation"
         class="animation-duration-1000">
         {{ 'COMPANY_DESCRIPTION_2' | translate }}
       </p>
       <ul>
-        <li><i class="fa-solid fa-check"></i>{{ 'FEATURE_EXPERIENCED_TEAM' | translate }}</li>
-        <li><i class="fa-solid fa-check"></i>{{ 'FEATURE_CLIENT_CENTRIC' | translate }}</li>
-        <li><i class="fa-solid fa-check"></i>{{ 'FEATURE_COMPREHENSIVE_SERVICES' | translate }}</li>
-        <li><i class="fa-solid fa-check"></i>{{ 'FEATURE_SUCCESS_TRACK_RECORD' | translate }}</li>
+        <li>
+          <i class="fa-solid fa-check"></i>
+          {{ 'EXPERIENCE_YEARS' | translate }}
+        </li>
+        <li>
+          <i class="fa-solid fa-check"></i>
+          {{ 'METHODOLOGY_TEAM' | translate }}
+        </li>
+        <li>
+          <i class="fa-solid fa-check"></i>
+          {{ 'STRATEGIC_SUCCESS' | translate }}
+        </li>
       </ul>
       <button pAnimateOnScroll enterClass="my-enter-zoom" leaveClass="my-leave-animation" class="btn-about-section">
         {{ 'READ_MORE' | translate }}
       </button>
     </div>
-
   </section>
 </div>

@@ -11,7 +11,6 @@ import { CarouselModule } from 'primeng/carousel';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 import { AnimateOnScrollModule } from 'primeng/animateonscroll';
-import { HowItWork } from './Components/how-it-work/how-it-work';
 import { TranslateModule } from '@ngx-translate/core';
 import { DeatailsDescrption } from './Components/slider-serves/deatails-descrption/deatails-descrption';
 import { DialogModule } from 'primeng/dialog';
@@ -25,6 +24,9 @@ import { ServiesBooking } from './Components/reservations/servies-booking/servie
 import { DataBooking } from './Components/reservations/data-booking/data-booking';
 import { MeetingBooking } from './Components/reservations/meeting-booking/meeting-booking';
 import { ConfirmeBooking } from './Components/reservations/confirme-booking/confirme-booking';
+import { TeamWork } from './Components/team-work/team-work';
+import { Payment } from './Components/reservations/payment/payment';
+import { Counter } from './Components/counter/counter';
 
 @NgModule({
   declarations: [
@@ -33,13 +35,15 @@ import { ConfirmeBooking } from './Components/reservations/confirme-booking/conf
     About,
     Servies,
     SliderServes,
-    HowItWork,
     DeatailsDescrption,
     Reservations,
     ServiesBooking,
     DataBooking,
     MeetingBooking,
     ConfirmeBooking,
+    TeamWork,
+    Payment,
+    Counter,
   ],
   imports: [
     TranslateModule,
@@ -58,6 +62,6 @@ import { ConfirmeBooking } from './Components/reservations/confirme-booking/conf
     SelectModule,
     ReactiveFormsModule,
     ReactiveFormsModule,
-]
+  ]
 })
 export class LayoutModule { }

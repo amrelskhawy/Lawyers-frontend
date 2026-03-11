@@ -1,0 +1,74 @@
+<div class="header-payment">
+  <span>💳</span>
+  <div>
+    <h3>{{"payment"|translate}}</h3>
+    <p>{{"SUBTITLE"|translate}}</p>
+  </div>
+</div>
+
+<div class="type-of-payment">
+  <button
+    class="card"
+    [ngClass]="{ active: typepayment() == 'TABBY' }"
+    (click)="OnSelectPayment('TABBY')"
+  >
+    <div class="check-badge">
+      <i *ngIf="typepayment() == 'TABBY'" class="fa-solid fa-circle-check"></i>
+    </div>
+    <h3>{{"TABBY_NAME"|translate}}</h3>
+    <p>{{"TABBY_DESC"|translate}}</p>
+  </button>
+
+  <button
+   [ngClass]="{ active: typepayment() == 'TAMARA' }"
+  class="card" (click)="OnSelectPayment('TAMARA')">
+   <div class="check-badge">
+      <i *ngIf="typepayment() == 'TAMARA'"
+      class="fa-solid fa-circle-check"></i>
+    </div>
+    <h3>{{"TAMARA_NAME"|translate}}</h3>
+    <p>{{"TABBY_DESC"|translate}}</p>
+  </button>
+
+  <button class="card"
+  [ngClass]="{ active: typepayment() == 'Stripe' }"
+   (click)="OnSelectPayment('Stripe')">
+   <div class="check-badge">
+      <i *ngIf="typepayment() == 'Stripe'"
+      class="fa-solid fa-circle-check"></i>
+    </div>
+    <h3>{{"STRIPE_NAME"|translate}}</h3>
+    <p>{{"STRIPE_DESC"|translate}}</p>
+  </button>
+</div>
+
+<div class="footer-payment">
+  <div class="header-content">
+    <div class="one-content">
+      <h3 class="">{{typepayment()}}</h3>
+      <div>
+        <h4>{{"CARD_PAYMENT"|translate}}</h4>
+        <p>{{"CARD_DETAILS"|translate}}</p>
+      </div>
+    </div>
+
+    <div class="two-content">
+      <p>🔒{{"SSL_SECURED"|translate}}</p>
+    </div>
+  </div>
+</div>
+
+<div class="card-visual">
+  <div class="square"></div>
+  <span>•••• •••• •••• ••••</span>
+  <div class="card-holder">
+    <p>{{"CARD_HOLDER"|translate}}</p>
+    <div class="circle-color">
+      <div class="circle red-circle"></div>
+      <div class="circle yellow-circle"></div>
+    </div>
+  </div>
+</div>
+
+  <button (click)="onNextStep()" class="next-btn">{{ 'NEXT_BTN' | translate }}</button>
+

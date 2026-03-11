@@ -1,0 +1,59 @@
+<section class="counter-section">
+  <div class="container">
+    <div class="counter-header">
+      <span class="badge">{{"OUR_LEGAL_JOURNEY"|translate}}</span>
+      
+      <div class="header-text-wrap">
+        <h3>
+          {{"JOURNEY_START_TEXT"|translate}}
+          <span class="active-color">{{"WIDE_RANGE_CASES"|translate}}</span>
+          {{"STILL_WORD"|translate}}
+        </h3>
+        <h3>
+          {{"CONTINUING_WORD"|translate}}
+          <span class="active-color">{{"PROFESSIONAL_SERVICES_BLESSING"|translate}}</span>
+          {{"BEST_RESULTS_CLIENTS"|translate}}
+        </h3>
+      </div>
+    </div>
+
+    <div class="divider-wrap">
+      <div class="line"></div>
+      <div class="diamond"></div>
+      <div class="line"></div>
+    </div>
+
+    <div class="stats-card-wrapper">
+      <div class="stats-card my-enter-zoom">
+        <div class="stats-inner">
+          <h1 class="count-number">{{ displayValue.toLocaleString('ar-EG') }} +</h1>
+          <p class="count-label">{{"SUCCESSFUL_CASES_COUNT"|translate}}</p>
+          <p class="count-suffix">{{"WE_ARE_STILL_CONTINUING"|translate}}</p>
+
+          <div class="progress-ticks">
+            <div class="tick-bar">
+              <span *ngFor="let active of ticks" class="tick" [class.active]="active"> </span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Decoration SVGs -->
+        <div class="svg-decor decor-left">
+            <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <pattern id="dotPatternSmall" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
+                        <circle cx="1.5" cy="1.5" r="1.5" fill="var(--accent-gold)" opacity="0.2" />
+                    </pattern>
+                </defs>
+                <rect width="100" height="100" fill="url(#dotPatternSmall)" />
+            </svg>
+        </div>
+        <div class="svg-decor decor-right">
+            <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <rect width="100" height="100" fill="url(#dotPatternSmall)" />
+            </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
