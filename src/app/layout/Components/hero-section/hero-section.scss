@@ -109,18 +109,7 @@ h6{
   position: relative;
 }
 
-// .logo {
-//   position: absolute !important;
-//   top: 35%;
-//   left: -12%;
-//   height: 120px !important;
-//   width: 120px !important;
-//   background: rgba(255, 255, 255, 0.2);
-//   backdrop-filter: blur(12px);
-//   -webkit-backdrop-filter: blur(12px);
-//   border-radius: 50% !important;
-//   border-radius: 50% !important;
-// }
+
 
 @media (max-width: 1200px) {
   .hero-section {
@@ -177,18 +166,19 @@ h6{
 }
 
 @media (max-width: 767px) {
-  // .logo {
-  //     backdrop-filter: blur(4px);
-  // }
+
   .hero-section {
-    font-size: 20px !important;
+    font-size: 10px !important;
+  }
+
+
+  h2{
+      font-size: 20px !important;
+  }
+
+  h6{
+      font-size: 15px !important;
   }
 }
 
-
-@media (min-width: 767px) and (max-width: 1200px){
-  //  .logo {
-  //     backdrop-filter: blur(4px);
-  // }
-}
 
