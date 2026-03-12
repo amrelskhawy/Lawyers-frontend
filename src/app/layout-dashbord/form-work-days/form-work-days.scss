@@ -280,3 +280,13 @@ $bg-light: #f8fafc;
 ::ng-deep .p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-slider {
   background: var(--primary-navy, #1a2b4b) !important;
 }
+
+
+
+
+
+@media (max-width:767px) {
+.header-logo{
+  height: 30px !important;
+}
+}
