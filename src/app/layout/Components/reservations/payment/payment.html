@@ -6,7 +6,7 @@
   </div>
 </div>
 
-<div class="type-of-payment">
+<div class="type-of-payment" dir="rtl">
   <button
     class="card"
     [ngClass]="{ active: typepayment() == 'TABBY' }"
@@ -15,17 +15,21 @@
     <div class="check-badge">
       <i *ngIf="typepayment() == 'TABBY'" class="fa-solid fa-circle-check"></i>
     </div>
+    <img src="assets/Img/Tabby_Small_Use_this.png" class="provider-img" alt="provider-img"/>
     <h3>{{"TABBY_NAME"|translate}}</h3>
     <p>{{"TABBY_DESC"|translate}}</p>
   </button>
 
   <button
+   style="pointer-events: none;opacity: 0.3;"
    [ngClass]="{ active: typepayment() == 'TAMARA' }"
   class="card" (click)="OnSelectPayment('TAMARA')">
    <div class="check-badge">
       <i *ngIf="typepayment() == 'TAMARA'"
       class="fa-solid fa-circle-check"></i>
     </div>
+        <img src="assets/Img/Tamara_Logo-EN-3000x973.webp" class="provider-img" alt="provider-img"/>
+
     <h3>{{"TAMARA_NAME"|translate}}</h3>
     <p>{{"TABBY_DESC"|translate}}</p>
   </button>
@@ -37,12 +41,13 @@
       <i *ngIf="typepayment() == 'Stripe'"
       class="fa-solid fa-circle-check"></i>
     </div>
+            <img src="assets/Img/OIP.webp" class="provider-img" alt="provider-img"/>
     <h3>{{"STRIPE_NAME"|translate}}</h3>
     <p>{{"STRIPE_DESC"|translate}}</p>
   </button>
 </div>
 
-<div class="footer-payment">
+<!-- <div class="footer-payment">
   <div class="header-content">
     <div class="one-content">
       <h3 class="">{{typepayment()}}</h3>
@@ -56,9 +61,9 @@
       <p>🔒{{"SSL_SECURED"|translate}}</p>
     </div>
   </div>
-</div>
+</div> -->
 
-<div class="card-visual">
+<!-- <div class="card-visual">
   <div class="square"></div>
   <span>•••• •••• •••• ••••</span>
   <div class="card-holder">
@@ -68,7 +73,7 @@
       <div class="circle yellow-circle"></div>
     </div>
   </div>
-</div>
+</div> -->
 
   <button (click)="onNextStep()" class="next-btn">{{ 'NEXT_BTN' | translate }}</button>
 
