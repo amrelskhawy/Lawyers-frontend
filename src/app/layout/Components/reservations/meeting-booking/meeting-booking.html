@@ -11,9 +11,11 @@
       <p-datepicker
       formControlName="date"
        [inline]="true"
-       [showWeek]="true"
+       [showWeek]="false"
         [disabledDates]="disibledDays()"
-        [minDate]="minDate">
+        [minDate]="minDate"
+        [firstDayOfWeek]="6"
+        >
       </p-datepicker>
 
       <div class="wrapper-error">
