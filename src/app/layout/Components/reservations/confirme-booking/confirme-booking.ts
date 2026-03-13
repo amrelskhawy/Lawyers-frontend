@@ -39,7 +39,7 @@ export class ConfirmeBooking {
     this.dataService.post('bookings', payload).subscribe((res: any) => {
       this.bookingService.resetBooking();
       const paymentUrl = res.data.payment_link;
-       window.open(paymentUrl, '_self');
+        window.open(paymentUrl, '_self');
     });
   }
 }
