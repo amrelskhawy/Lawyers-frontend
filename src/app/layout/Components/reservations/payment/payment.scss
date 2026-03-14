@@ -57,14 +57,14 @@
   }
 }
 
-.header-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 30px;
-  border-bottom: 1px solid var(--Platinum);
-  padding-bottom: 10px;
-}
+// .header-content {
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+//   margin-top: 30px;
+//   border-bottom: 1px solid var(--Platinum);
+//   padding-bottom: 10px;
+// }
 
 .one-content {
   display: flex;
@@ -79,45 +79,45 @@
   }
 }
 
-.card-visual {
-  background: linear-gradient(135deg, #1a1d23 0%, #2d3142 100%);
-  border-radius: 14px;
-  padding: 22px 24px;
-  margin-bottom: 24px;
-  position: relative;
-  overflow: hidden;
-  height: 130px;
-  color: var(--white-color);
+// .card-visual {
+//   background: linear-gradient(135deg, #1a1d23 0%, #2d3142 100%);
+//   border-radius: 14px;
+//   padding: 22px 24px;
+//   margin-bottom: 24px;
+//   position: relative;
+//   overflow: hidden;
+//   height: 130px;
+//   color: var(--white-color);
 
-  .square {
-    background-color: var(--golden-sun);
-    height: 30px;
-    width: 50px;
-    border-radius: 10px;
-  }
+//   .square {
+//     background-color: var(--golden-sun);
+//     height: 30px;
+//     width: 50px;
+//     border-radius: 10px;
+//   }
 
-  &::before {
-    content: '';
-    position: absolute;
-    top: -40px;
-    right: -40px;
-    width: 180px;
-    height: 180px;
-    border-radius: 50%;
-    background: rgb(194 157 59 / 15%);
-  }
+//   &::before {
+//     content: '';
+//     position: absolute;
+//     top: -40px;
+//     right: -40px;
+//     width: 180px;
+//     height: 180px;
+//     border-radius: 50%;
+//     background: rgb(194 157 59 / 15%);
+//   }
 
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: -60px;
-    left: -20px;
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    background: rgba(184, 150, 62, 0.08);
-  }
-}
+//   &::after {
+//     content: '';
+//     position: absolute;
+//     bottom: -60px;
+//     left: -20px;
+//     width: 200px;
+//     height: 200px;
+//     border-radius: 50%;
+//     background: rgba(184, 150, 62, 0.08);
+//   }
+// }
 
 .card-holder {
   display: flex;
@@ -165,17 +165,17 @@
 }
 
 
+.provider-img{
+  height: 50px;
+  // width: 50px;
+}
+
 @media (max-width: 767px) {
   .header-payment,
-  .header-content,
   .one-content {
     flex-direction: column;
     justify-content: center;
     text-align: center;
     margin: auto;
-  }
-
-  .header-content {
-    margin-top: 10px;
   }
 }

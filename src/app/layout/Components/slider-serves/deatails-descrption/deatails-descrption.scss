@@ -4,7 +4,8 @@
   background-color: var(--white-color);
   padding: 0;
   border-radius: 20px;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 
   .header-popup {
     background: linear-gradient(135deg, var(--primary-navy) 0%, #1a1a4a 100%);
@@ -48,7 +49,7 @@
       text-align: justify;
       direction: rtl; // For Arabic content default
     }
-    
+
     // Adjust direction for English
     &.ltr p {
       direction: ltr;
@@ -92,10 +93,20 @@
   .p-dialog-header {
     display: none; // We handle header in our wrapper
   }
-  
+
   .p-dialog-content {
     padding: 0;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
+  }
+}
+
+
+
+
+@media(max-width:767px){
+  .btn-close-dilog{
+    width: 50%;
+    text-align: center;
   }
 }

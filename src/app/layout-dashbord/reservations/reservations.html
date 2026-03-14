@@ -35,7 +35,7 @@
       <div class="booking-container">
         <div (click)="onShowDilogBooking(book)" class="booking-item-compact" [ngClass]="book.status"
           *ngFor="let book of getBookingsForDay(d) | slice:0:3">
-          <span class="book-time">{{ book.startTime }}</span>
+          <span class="book-time">{{ book.startTime}} Am</span>
           <span class="book-title">{{ book.name }}</span>
         </div>
 
