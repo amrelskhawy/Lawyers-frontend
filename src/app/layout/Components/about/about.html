@@ -1,36 +1,14 @@
 <div class="container">
   <section class="about-section">
     <div class="img-about-container">
-      <div
-        pAnimateOnScroll
-        enterClass="my-enter-right"
-        leaveClass="my-leave-animation"
-        class="img-left"
-      >
+      <div pAnimateOnScroll enterClass="my-enter-right" leaveClass="my-leave-animation" class="img-left">
         <img height="300" width="200" src="/assets/Img/2a.png" alt="About Image" class="img-1" />
       </div>
 
-      <div
-        pAnimateOnScroll
-        enterClass="my-enter-animation"
-        leaveClass="my-leave-animation"
-        class="img-right"
-      >
-        <img
-          height="220"
-          width="180"
-          src="/assets/Img/2.png"
-          alt="hero-section-img"
-          class="img-2"
-        />
+      <div pAnimateOnScroll enterClass="my-enter-animation" leaveClass="my-leave-animation" class="img-right">
+        <img height="220" width="180" src="/assets/Img/2.png" alt="hero-section-img" class="img-2" />
 
-        <img
-          height="100"
-          width="100"
-          src="/assets/Img/logo.svg"
-          alt="Logo"
-          class="logo-header img-3"
-        />
+        <img height="100" width="100" src="/assets/Img/logo.svg" alt="Logo" class="logo-header img-3" />
       </div>
 
       
@@ -49,13 +27,13 @@
         {{ 'ABOUT_COMPANY' | translate }}
       </h2>
 
-      <p
-        pAnimateOnScroll
-        enterClass="my-enter-animation"
-        leaveClass="my-leave-animation"
-        class="animation-duration-1000"
-      >
+      <p pAnimateOnScroll enterClass="my-enter-animation" leaveClass="my-leave-animation"
+        class="animation-duration-1000">
         <!-- {{ 'COMPANY_DESCRIPTION' | translate }} -->
+      </p>
+      <p style="margin-top: 20px;" pAnimateOnScroll enterClass="my-enter-animation" leaveClass="my-leave-animation"
+        class="animation-duration-1000">
+        {{ 'COMPANY_DESCRIPTION_2' | translate }}
       </p>
       <ul>
         <li>
@@ -68,15 +46,10 @@
         </li>
         <li>
           <i class="fa-solid fa-check"></i>
-         {{ 'STRATEGIC_SUCCESS' | translate }}
+          {{ 'STRATEGIC_SUCCESS' | translate }}
         </li>
       </ul>
-      <button
-        pAnimateOnScroll
-        enterClass="my-enter-zoom"
-        leaveClass="my-leave-animation"
-        class="btn-about-section"
-      >
+      <button pAnimateOnScroll enterClass="my-enter-zoom" leaveClass="my-leave-animation" class="btn-about-section">
         {{ 'READ_MORE' | translate }}
       </button>
     </div>

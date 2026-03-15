@@ -11,7 +11,6 @@ import { CarouselModule } from 'primeng/carousel';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 import { AnimateOnScrollModule } from 'primeng/animateonscroll';
-import { HowItWork } from './Components/how-it-work/how-it-work';
 import { TranslateModule } from '@ngx-translate/core';
 import { DeatailsDescrption } from './Components/slider-serves/deatails-descrption/deatails-descrption';
 import { DialogModule } from 'primeng/dialog';
@@ -36,7 +35,6 @@ import { Counter } from './Components/counter/counter';
     About,
     Servies,
     SliderServes,
-    HowItWork,
     DeatailsDescrption,
     Reservations,
     ServiesBooking,
@@ -64,6 +62,6 @@ import { Counter } from './Components/counter/counter';
     SelectModule,
     ReactiveFormsModule,
     ReactiveFormsModule,
-]
+  ]
 })
 export class LayoutModule { }

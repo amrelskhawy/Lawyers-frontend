@@ -1,23 +1,18 @@
 {
-
-"SUBTITLE": "Choose your preferred payment method to complete booking",
-    "TABBY_NAME": "Tabby",
-    "TABBY_DESC": "Pay with card via Tabby gateway",
-    "TAMARA_NAME": "Tamara",
-    "TAMARA_DESC": "Split into 3 interest-free payments",
-    "STRIPE_NAME": "Stripe",
-    "STRIPE_DESC": "Secure international card payment",
-    "CARD_PAYMENT": "Card Payment",
-    "CARD_DETAILS": "Enter your card details below",
-    "SSL_SECURED": "SSL Secured",
-    "CARD_HOLDER": "Card Holder",
-"EXPERIENCE_YEARS": "Saad Al-Buqami Law Firm & Legal Consultations boasts over 15 years of legal expertise, providing specialized legal services to individuals and corporations across the Kingdom of Saudi Arabia.",
-    "METHODOLOGY_TEAM": "We adopt a clear legal methodology that begins with a precise analysis of facts and concludes with practical solutions that protect our clients' interests and strengthen their legal positions. Our team comprises elite lawyers and consultants experienced in various legal fields, with a full commitment to accuracy and professionalism.",
-    "STRATEGIC_SUCCESS": "We believe that success in legal cases relies not only on legal knowledge but also on strategic planning, risk management, and assertive legal representation to achieve the best possible outcomes for our clients.",
-
-
-
-
+  "SUBTITLE": "Choose your preferred payment method to complete booking",
+  "TABBY_NAME": "Tabby",
+  "TABBY_DESC": "Pay with card via Tabby gateway",
+  "TAMARA_NAME": "Tamara",
+  "TAMARA_DESC": "Split into 3 interest-free payments",
+  "STRIPE_NAME": "Stripe",
+  "STRIPE_DESC": "Secure international card payment",
+  "CARD_PAYMENT": "Card Payment",
+  "CARD_DETAILS": "Enter your card details below",
+  "SSL_SECURED": "SSL Secured",
+  "CARD_HOLDER": "Card Holder",
+  "EXPERIENCE_YEARS": "Saad Al-Buqami Law Firm & Legal Consultations boasts over 15 years of legal expertise, providing specialized legal services to individuals and corporations across the Kingdom of Saudi Arabia.",
+  "METHODOLOGY_TEAM": "We adopt a clear legal methodology that begins with a precise analysis of facts and concludes with practical solutions that protect our clients' interests and strengthen their legal positions. Our team comprises elite lawyers and consultants experienced in various legal fields, with a full commitment to accuracy and professionalism.",
+  "STRATEGIC_SUCCESS": "We believe that success in legal cases relies not only on legal knowledge but also on strategic planning, risk management, and assertive legal representation to achieve the best possible outcomes for our clients.",
   "OUR_LEGAL_JOURNEY": "Our Legal Journey",
   "JOURNEY_START_TEXT": "Throughout our professional career",
   "WIDE_RANGE_CASES": ", we have handled a wide range of legal cases and disputes,",
@@ -27,18 +22,10 @@
   "BEST_RESULTS_CLIENTS": "professionalism that achieves the best results for our clients.",
   "SUCCESSFUL_CASES_COUNT": "Successful Cases",
   "WE_ARE_STILL_CONTINUING": "And we are still going",
-
-"teamWork":"Team Work",
-
-
-
-
-
-
-
-
-
-  "payment":"payment",
+  "teamWork": "Team Work",
+  "TEAM_WORK_TITLE": "Elite Lawyers & Consultants",
+  "TEAM_WORK_SUBTITLE": "Our specialized team works passionately to provide the best legal solutions to protect your interests",
+  "payment": "payment",
   "en": "English",
   "ar": "Arabic",
   "filed_reqierd": "This Field Is Requierd *",
@@ -61,11 +48,12 @@
   "CONTACT_US_NOW": "Contact Us",
   "WORK_PROCESS": "Work Process",
   "ABOUT_COMPANY": "About Our Company",
-  "COMPANY_DESCRIPTION": "We are a leading law firm dedicated to providing exceptional legal services to our clients. Our team of experienced lawyers specializes in various legal fields, ensuring comprehensive solutions tailored to meet your needs. With our commitment to excellence and integrity, we strive to achieve the best results for our clients.",
+  "COMPANY_DESCRIPTION": "We adopt a clear legal methodology that begins with a precise analysis of the facts and concludes with practical solutions that protect our clients' interests and strengthen their legal positions.",
+  "COMPANY_DESCRIPTION_2": "We believe that success in legal cases depends not on knowledge alone, but on strategic planning, risk management, and assertive representation.",
   "FEATURE_EXPERIENCED_TEAM": "Experienced Legal Team",
-  "FEATURE_CLIENT_CENTRIC": "Client-Centric Approach",
-  "FEATURE_COMPREHENSIVE_SERVICES": "Comprehensive Legal Services",
-  "FEATURE_SUCCESS_TRACK_RECORD": "Proven Track Record of Success",
+  "FEATURE_CLIENT_CENTRIC": "In-depth legal analysis for each case",
+  "FEATURE_COMPREHENSIVE_SERVICES": "Custom strategy for each client",
+  "FEATURE_SUCCESS_TRACK_RECORD": "Precise follow-up until case closure",
   "READ_MORE": "Read More",
   "LEGAL_NAVIGATION_TITLE": "Navigating Legal Work: Your Project",
   "PEACE_OF_MIND_GUARANTEE": "Peace of Mind Guarantee",

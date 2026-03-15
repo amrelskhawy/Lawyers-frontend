@@ -1,75 +1,59 @@
-<section class="wrapper-counter">
-  <div class="svg1">
-    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <pattern id="dotPattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-          <circle cx="2" cy="2" r="2" fill="rgb(150, 122, 62)" />
-        </pattern>
-      </defs>
-
-      <rect width="100%" height="100%" fill="url(#dotPattern)" />
-    </svg>
-  </div>
-
-  <div class="header-counter">
-    <p>{{"OUR_LEGAL_JOURNEY"|translate}}</p>
-
-    <h4>
-     {{"JOURNEY_START_TEXT"|translate}}<span class="active-color"
-        >{{"WIDE_RANGE_CASES"|translate}}</span
-      >
-     {{"STILL_WORD"|translate}}
-    </h4>
-    <h4>
-      {{"CONTINUING_WORD"|translate}}<span class="active-color">{{"PROFESSIONAL_SERVICES_BLESSING"|translate}}</span> {{"BEST_RESULTS_CLIENTS"|translate}}
-    </h4>
-  </div>
-
-  <div style="display: flex; align-items: center; gap: 16px; max-width: 400px; margin: 40px auto">
-    <div
-      style="
-        flex: 1;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(201, 168, 76, 0.4));
-      "
-    ></div>
-    <div
-      style="width: 8px; height: 8px; background: #c9a84c; transform: rotate(45deg); opacity: 0.7"
-    ></div>
-    <div
-      style="
-        flex: 1;
-        height: 1px;
-        background: linear-gradient(90deg, rgba(201, 168, 76, 0.4), transparent);
-      "
-    ></div>
-  </div>
-
-  <div class="blog-counter">
-    <h1>{{ displayValue.toLocaleString('ar-EG') }} +</h1>
-    <p>{{"SUCCESSFUL_CASES_COUNT"|translate}}</p>
-    <p class="lawers">{{"WE_ARE_STILL_CONTINUING"|translate}}</p>
-
-    <div class="counter-wrap">
-      <div class="tick-bar">
-        <span *ngFor="let active of ticks" class="tick" [class.active]="active"> </span>
+<section class="counter-section">
+  <div class="container">
+    <div class="counter-header">
+      <span class="badge">{{"OUR_LEGAL_JOURNEY"|translate}}</span>
+      
+      <div class="header-text-wrap">
+        <h3>
+          {{"JOURNEY_START_TEXT"|translate}}
+          <span class="active-color">{{"WIDE_RANGE_CASES"|translate}}</span>
+          {{"STILL_WORD"|translate}}
+        </h3>
+        <h3>
+          {{"CONTINUING_WORD"|translate}}
+          <span class="active-color">{{"PROFESSIONAL_SERVICES_BLESSING"|translate}}</span>
+          {{"BEST_RESULTS_CLIENTS"|translate}}
+        </h3>
       </div>
     </div>
-  </div>
 
+    <div class="divider-wrap">
+      <div class="line"></div>
+      <div class="diamond"></div>
+      <div class="line"></div>
+    </div>
 
+    <div class="stats-card-wrapper">
+      <div class="stats-card my-enter-zoom">
+        <div class="stats-inner">
+          <h1 class="count-number">{{ displayValue.toLocaleString('ar-EG') }} +</h1>
+          <p class="count-label">{{"SUCCESSFUL_CASES_COUNT"|translate}}</p>
+          <p class="count-suffix">{{"WE_ARE_STILL_CONTINUING"|translate}}</p>
 
-
-
-   <div class="svg2">
-    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <pattern id="dotPattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-          <circle cx="2" cy="2" r="2" fill="rgb(150, 122, 62)" />
-        </pattern>
-      </defs>
-
-      <rect width="100%" height="100%" fill="url(#dotPattern)" />
-    </svg>
+          <div class="progress-ticks">
+            <div class="tick-bar">
+              <span *ngFor="let active of ticks" class="tick" [class.active]="active"> </span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Decoration SVGs -->
+        <div class="svg-decor decor-left">
+            <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <pattern id="dotPatternSmall" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
+                        <circle cx="1.5" cy="1.5" r="1.5" fill="var(--accent-gold)" opacity="0.2" />
+                    </pattern>
+                </defs>
+                <rect width="100" height="100" fill="url(#dotPatternSmall)" />
+            </svg>
+        </div>
+        <div class="svg-decor decor-right">
+            <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <rect width="100" height="100" fill="url(#dotPatternSmall)" />
+            </svg>
+        </div>
+      </div>
+    </div>
   </div>
 </section>

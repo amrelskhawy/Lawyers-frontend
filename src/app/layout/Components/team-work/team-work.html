@@ -1,59 +1,49 @@
-<div class="container">
-  <div class="infinite-scroll">
-    
-    <div class="scroll-text">
-      <img src="/assets/Img/mohamed-khalil.png" />
-      <p>mohamed-khalil</p>
+<section class="team-section" id="teamWork">
+  <!-- Background Decorations -->
+  <div class="bg-decoration">
+    <div class="glow glow-gold"></div>
+    <div class="glow glow-navy"></div>
+    <div class="pattern-mesh"></div>
+  </div>
+  
+  <div class="container">
+    <div class="section-header">
+      <div class="header-badge">{{ "teamWork" | translate }}</div>
+      <h2 class="section-title">{{ "TEAM_WORK_TITLE" | translate }}</h2>
+      <p class="section-subtitle">{{ "TEAM_WORK_SUBTITLE" | translate }}</p>
     </div>
 
-    <div class="scroll-text">
-      <img src="/assets/Img/المؤسس والرئيس التنفيذي دسعد البقمي.jpeg" />
-      <p>د سعد البقمي</p>
-    </div>
-
-    <div class="scroll-text">
-      <img src="/assets/Img/انار.jpeg" />
-    <p>انار</p>
-    </div>
-
-    <div class="scroll-text">
-      <img src="/assets/Img/جشيم.jpeg" />
-      <p>جشيم</p>
-    </div>
-
-    <div class="scroll-text">
-      <img src="/assets/Img/حلا البلبيسي.jpeg" />
-      <p>حلا البلبيسي.</p>
-    </div>
-
-    <div class="scroll-text">
-      <img src="/assets/Img/دكتور عبد الرحمن.jpeg" />
-      <p>دكتور عبد الرحمن.</p>
-    </div>
-
-    <div class="scroll-text">
-      <img src="/assets/Img/سعد الحارثي.jpeg" />
-      <p>سعد الحارثي</p>
-    </div>
-
-    <div class="scroll-text">
-      <img src="/assets/Img/عفاف الخشرمي.jpeg" />
-      <p>عفاف الخشرمي.</p>
-    </div>
-
-    <div class="scroll-text">
-      <img src="/assets/Img/عمران الباشا.jpeg" />
-      <p>عمران الباشا</p>
-    </div>
-
-    <div class="scroll-text">
-      <img src="/assets/Img/محمد الخربوش.jpeg" />
-      <p>محمد الخربوش</p>
-    </div>
-
-    <div class="scroll-text">
-      <img src="/assets/Img/نور عز الدين.jpeg" />
-      <p>نور عز الدين.</p>
+    <div class="team-flex-container">
+      <div class="members-flex">
+        <!-- Loop twice for seamless infinite scroll -->
+        <div *ngFor="let member of teamMembers" class="member-card-wrapper">
+          <div class="member-card">
+            <div class="member-image-box">
+              <img [src]="member.image" [alt]="member.name" class="member-photo" />
+              <div class="image-overlay"></div>
+            </div>
+            
+            <div class="member-details">
+                <h3 class="member-name">{{ member.name }}</h3>
+                <span class="member-position">{{ member.role }}</span>
+            </div>
+          </div>
+        </div>
+        
+        <div *ngFor="let member of teamMembers" class="member-card-wrapper">
+          <div class="member-card">
+            <div class="member-image-box">
+              <img [src]="member.image" [alt]="member.name" class="member-photo" />
+              <div class="image-overlay"></div>
+            </div>
+            
+            <div class="member-details">
+                <h3 class="member-name">{{ member.name }}</h3>
+                <span class="member-position">{{ member.role }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+</section>
