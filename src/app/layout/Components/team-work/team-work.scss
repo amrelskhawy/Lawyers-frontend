@@ -1,3 +1,6 @@
+@use '../../../../styles' as *;
+
+
 .team-section {
    padding: 50px 0;
   background-color: #fcfcfc;
@@ -49,26 +52,24 @@
     text-align: center;
     margin-bottom: 70px;
 
-    .header-badge {
-      display: inline-block;
-      padding: 6px 20px;
-      background: rgba(147, 133, 63, 0.08);
-      color: var(--accent-gold);
-      border-radius: 30px;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      margin-bottom: 15px;
-      border: 1px solid rgba(147, 133, 63, 0.15);
-    }
+    @include section-header();
 
     .section-title {
+      margin-bottom: 20px;
+
+      h2 {
+        color: var(--accent-gold);
+        font-weight: bold;
+        font-size: 1rem;
+        text-transform: uppercase;
+      }
+    }
+
+    .main-title {
       font-size: 46px;
       color: var(--primary-navy);
       font-weight: 800;
       margin-bottom: 20px;
-      letter-spacing: -1px;
     }
 
     .section-subtitle {
@@ -93,10 +94,10 @@
 
   .members-flex {
     display: flex;
-    direction: ltr; // Force LTR for predictable infinite scroll logic
+    width: max-content;
     gap: 30px;
-    // padding: 20px 30px 20px 0; // Padding-right (30px) balances the gaps for perfect -50% loop
-    animation: teamScroll 10s linear infinite;
+    padding-left: 30px; // Padding on the left balances the gaps for an RTL +50% loop
+    animation: teamScroll 25s linear infinite; // Increased duration for smoother scroll
     will-change: transform;
     backface-visibility: hidden;
 
@@ -113,7 +114,7 @@
   height: 400px;
   transition: all 0.9s cubic-bezier(0.2, 1, 0.2, 1);
   cursor: pointer;
-  user-select: none;
+  
   filter: grayscale(0.8);
   &:hover {
     // flex: 0 0 680px;
@@ -131,8 +132,8 @@
     }
     .member-card {
       border-radius: 40px;
-      box-shadow: 0 50px 120px rgba(0, 0, 0, 0.3);
-      border-color: rgba(147, 133, 63, 0.4);
+      
+      
     }
   }
 }
@@ -147,7 +148,6 @@
   background: #fff;
   border: 1px solid rgba(0, 0, 0, 0.04);
   box-shadow: 0 15px 45px rgba(0, 0, 0, 0.06);
-  direction: rtl; // Restore RTL for Arabic text content
 }
 
 .member-image-box {
@@ -199,7 +199,6 @@
     font-weight: 600;
     color: var(--accent-gold);
     text-transform: uppercase;
-    letter-spacing: 3px;
   }
 }
 
@@ -209,7 +208,7 @@
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translateX(50%); /* Positive moves to the right, creating seamless RTL scroll */
   }
 }
 
@@ -243,28 +242,55 @@
 
 
 @media (max-width:767px){
- .section-header {
-   .section-title{
-    font-size: 25px !important;
-   }
- }
-
-
-
-.member-card-wrapper {
-     flex: 0 0 120px !important;
-    height: 300px !important;
+  .section-header {
+    .main-title {
+      font-size: 25px !important;
+    }
   }
-  .member-card-wrapper:hover {
-    flex: 0 0 150px;
+
+  .team-flex-container {
+    mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
+    
+    .members-flex {
+      gap: 15px;
+      padding-left: 15px;
+    }
   }
+
+  .member-card-wrapper {
+    flex: 0 0 180px !important;
+    height: 250px !important;
+
+    &:hover {
+      flex: 0 0 180px !important;
+
+      .member-details {
+        transform: translate(-50%, -20px);
+      }
+      
+      .member-card {
+        border-radius: 90px;
+      }
+    }
+  }
+  
+  .member-card {
+    border-radius: 90px;
+  }
+  
   .member-name {
-    font-size: 24px !important;
+    font-size: 18px !important;
+    
   }
 
+  .member-position {
+    font-size: 10px !important;
+    margin-top: -5px !important;
+  }
 
-  .member-details{
-bottom: 0px;
-font-size: 10px;
+  .member-details {
+    bottom: 5px;
+    width: 95%;
   }
 }

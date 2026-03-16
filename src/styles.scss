@@ -182,10 +182,19 @@ input:-webkit-autofill:active {
   }
 }
 
-@media (max-width: 750px) {
-  .section-title h2 {
-    font-size: 20px !important;
-    text-align: center;
+@media (max-width: 768px) {
+  .section-title {
+    gap: 10px !important;
+    
+    h2, h3, h1 {
+      font-size: 18px !important;
+      text-align: center;
+      white-space: nowrap;
+    }
+    
+    .line {
+      width: 40px !important;
+    }
   }
 }
 
