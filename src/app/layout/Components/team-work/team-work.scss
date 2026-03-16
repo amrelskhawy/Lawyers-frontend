@@ -1,3 +1,6 @@
+@use '../../../../styles' as *;
+
+
 .team-section {
    padding: 50px 0;
   background-color: #fcfcfc;
@@ -49,20 +52,20 @@
     text-align: center;
     margin-bottom: 70px;
 
-    .header-badge {
-      display: inline-block;
-      padding: 6px 20px;
-      background: rgba(147, 133, 63, 0.08);
-      color: var(--accent-gold);
-      border-radius: 30px;
-      font-size: 13px;
-      font-weight: 700;
-      text-transform: uppercase;
-      margin-bottom: 15px;
-      border: 1px solid rgba(147, 133, 63, 0.15);
-    }
+    @include section-header();
 
     .section-title {
+      margin-bottom: 20px;
+
+      h2 {
+        color: var(--accent-gold);
+        font-weight: bold;
+        font-size: 1rem;
+        text-transform: uppercase;
+      }
+    }
+
+    .main-title {
       font-size: 46px;
       color: var(--primary-navy);
       font-weight: 800;
@@ -111,7 +114,7 @@
   height: 400px;
   transition: all 0.9s cubic-bezier(0.2, 1, 0.2, 1);
   cursor: pointer;
-  user-select: none;
+  
   filter: grayscale(0.8);
   &:hover {
     // flex: 0 0 680px;
@@ -129,8 +132,8 @@
     }
     .member-card {
       border-radius: 40px;
-      box-shadow: 0 50px 120px rgba(0, 0, 0, 0.3);
-      border-color: rgba(147, 133, 63, 0.4);
+      
+      
     }
   }
 }
@@ -240,28 +243,53 @@
 
 
 @media (max-width:767px){
- .section-header {
-   .section-title{
-    font-size: 25px !important;
-   }
- }
-
-
-
-.member-card-wrapper {
-     flex: 0 0 120px !important;
-    height: 300px !important;
+  .section-header {
+    .main-title {
+      font-size: 25px !important;
+    }
   }
-  .member-card-wrapper:hover {
-    flex: 0 0 150px;
+
+  .team-flex-container {
+    mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
+    
+    .members-flex {
+      gap: 15px;
+    }
   }
+
+  .member-card-wrapper {
+    flex: 0 0 180px !important;
+    height: 250px !important;
+
+    &:hover {
+      flex: 0 0 180px !important;
+
+      .member-details {
+        transform: translate(-50%, -20px);
+      }
+      
+      .member-card {
+        border-radius: 90px;
+      }
+    }
+  }
+  
+  .member-card {
+    border-radius: 90px;
+  }
+  
   .member-name {
-    font-size: 24px !important;
+    font-size: 18px !important;
+    margin-bottom: 4px;
   }
 
+  .member-position {
+    font-size: 13px !important;
+  }
 
-  .member-details{
-bottom: 0px;
-font-size: 10px;
+  .member-details {
+    bottom: 5px;
+    width: 95%;
   }
 }

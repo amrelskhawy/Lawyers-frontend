@@ -1,3 +1,5 @@
+@use '../../../../styles' as *;
+
 .counter-section {
   padding: 60px 0 100px;
   background-color: var(--white-color);
@@ -8,17 +10,17 @@
 .counter-header {
   margin-bottom: 40px;
   
-  .badge {
-    display: inline-block;
-    padding: 8px 20px;
-    background: rgba(147, 133, 63, 0.1);
-    color: var(--accent-gold);
-    border-radius: 50px;
-    font-size: 13px;
-    font-weight: 700;
+  @include section-header();
+  
+  .section-title {
     margin-bottom: 24px;
-    text-transform: uppercase;
-    border: 1px solid rgba(147, 133, 63, 0.2);
+
+    h2 {
+      color: var(--accent-gold);
+      font-weight: bold;
+      font-size: 1rem;
+      text-transform: uppercase;
+    }
   }
 
   .header-text-wrap {
@@ -168,7 +170,7 @@
 
   .counter-header {
       margin-bottom: 30px;
-      .badge { margin-bottom: 16px; }
+      .section-title { margin-bottom: 16px; }
       .header-text-wrap h3 {
           font-size: 17px;
           line-height: 1.5;
