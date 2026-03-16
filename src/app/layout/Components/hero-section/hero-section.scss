@@ -18,7 +18,6 @@
   }
 }
 
-
 .overlay {
   position: relative;
   background-image: url('/assets/Img/court-justice-scales-gavel-generative-ai_74760-4832.avif');
@@ -68,15 +67,16 @@
   }
 
   h2 {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
   }
 }
 
-
+h6 {
+  font-size: 18px;
+}
 
 .img-hero-section {
   position: relative;
-
 
   img {
     height: 350px;
@@ -84,8 +84,6 @@
     border-top-right-radius: 150px;
     border-bottom-left-radius: 150px;
   }
-
-
 
   &::before {
     content: '';
@@ -105,23 +103,9 @@
   position: relative;
 }
 
-.logo {
-  position: absolute !important;
-  top: 35%;
-  left: -12%;
-  height: 120px !important;
-  width: 120px !important;
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: 50% !important;
 
 
-  border-radius: 50% !important;
-
-}
-
-@media (max-width: 1200px) {
+@media (min-width: 767px) and (max-width: 1200px) {
   .hero-section {
     flex-direction: column-reverse; // Stack: Image bottom, Text top (or vice versa depending on design)
     justify-content: center;
@@ -147,12 +131,12 @@
       right: -5px;
     }
 
-    .logo {
-      top: -20px !important; // Adjust logo position
-      left: 10px !important;
-      height: 80px !important;
-      width: 80px !important;
-    }
+    // .logo {
+    //   top: -20px !important; // Adjust logo position
+    //   left: 10px !important;
+    //   height: 80px !important;
+    //   width: 80px !important;
+    // }
   }
 
   .title-hero-section {
@@ -175,8 +159,48 @@
   }
 }
 
-@media (max-width: 576px) {
+
+
+
+
+@media (max-width: 767px) {
+.hero-section {
+    flex-direction: column-reverse; // Stack: Image bottom, Text top (or vice versa depending on design)
+    justify-content: center;
+    height: auto;
+    padding: 40px 0;
+    text-align: center;
+  }
+
+
+
   .hero-section {
+    font-size: 10px !important;
+  }
+  img {
+    width: 200px !important;
+    height: 200px !important;
+   border-top-right-radius: 100px !important;
+    border-bottom-left-radius: 100px !important;
+  }
+.img-hero-section{
+
+  &::before {
+     border-top-right-radius: 100px;
+     border-bottom-left-radius: 100px;
+   }
+}
+
+
+
+
+
+
+  h2 {
     font-size: 20px !important;
+  }
+
+  h6 {
+    font-size: 15px !important;
   }
 }

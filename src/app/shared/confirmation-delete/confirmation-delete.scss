@@ -1,0 +1,145 @@
+$error-red: #ef4444;
+$error-red-dark: #dc2626;
+$error-red-light: #fee2e2;
+$text-dark: #1a2b4b;
+$text-muted: #64748b;
+$gray-border: #e2e8f0;
+$white: #ffffff;
+$bg-light: #f8fafc;
+
+.modern-confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(4px);
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &.is-visible {
+    opacity: 1;
+    visibility: visible;
+
+    .modern-confirm-card {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
+  }
+}
+
+.modern-confirm-card {
+  background-color: $white;
+  width: 90%;
+  max-width: 420px;
+  border-radius: 20px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  padding: 2.5rem 2rem 2rem;
+  transform: scale(0.95) translateY(10px);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  font-family: inherit;
+
+  .icon-header {
+    margin-bottom: 1.5rem;
+    
+    .icon-circle {
+      width: 80px;
+      height: 80px;
+      background-color: $error-red-light;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 0 10px rgba($error-red, 0.08);
+      position: relative;
+
+      i {
+        font-size: 2.5rem;
+        color: $error-red;
+      }
+    }
+  }
+
+  .text-content {
+    margin-bottom: 2.5rem;
+
+    .title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: $text-dark;
+      margin: 0 0 0.5rem 0;
+    }
+
+    .message {
+      font-size: 0.95rem;
+      color: $text-muted;
+      margin: 0;
+      line-height: 1.6;
+    }
+  }
+
+  .confirm-actions {
+    display: flex;
+    width: 100%;
+    gap: 1rem;
+
+    button {
+      flex: 1;
+      padding: 0.85rem;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+      font-family: inherit;
+      border: none;
+
+      &.btn-cancel {
+        background-color: $bg-light;
+        color: $text-muted;
+        border: 1px solid $gray-border;
+
+        &:hover {
+          background-color: #e2e8f0;
+          color: $text-dark;
+        }
+      }
+
+      &.btn-delete {
+        background-color: $error-red;
+        color: $white;
+        box-shadow: 0 4px 12px rgba($error-red, 0.3);
+
+        &:hover {
+          background-color: $error-red-dark;
+          box-shadow: 0 6px 16px rgba($error-red, 0.4);
+          transform: translateY(-2px);
+        }
+      }
+    }
+  }
+
+  @media(max-width: 480px) {
+    padding: 2rem 1.5rem 1.5rem;
+    
+    .confirm-actions {
+      flex-direction: column;
+      
+      button {
+        width: 100%;
+      }
+    }
+  }
+}

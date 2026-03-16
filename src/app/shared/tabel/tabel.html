@@ -1,46 +1,62 @@
-<p-table
-  [value]="tableData"
-  [paginator]="true"
-  [rows]="11"
-  showGridlines
-  [tableStyle]="{ 'min-width': '50rem' }"
->
+@if (exsistData() == 'has-data') {
+  <p-table
+    [value]="tableData"
+    [paginator]="true"
+    [rowsPerPageOptions]="[5, 10, 20, 50]"
+    [rows]="20"
+    stripedRows
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [sortOrder]="-1"
+  >
+    <!-- HEADER -->
+    <ng-template pTemplate="header">
+      <tr>
+        <ng-container *ngFor="let col of bodytabel">
+          <th [pSortableColumn]="col.value">
+            <div class="table-header-content">
+              {{ col.key | translate }}
+               <p-sortIcon [field]="col.value" />
+            </div>
+          </th>
+        </ng-container>
 
-  <!-- HEADER -->
-  <ng-template pTemplate="header">
-    <tr>
-      <ng-container
-        *ngFor="let item of (tableData.length ? tableData[0] : {}) | keyvalue">
-        <th *ngIf="!isHidden(item.key)">
-          {{ item.key }}
-        </th>
-      </ng-container>
+        <th *ngIf="actionsTpl" style="text-align: center">{{ 'Procedures' | translate }}</th>
+      </tr>
+    </ng-template>
 
-      <!-- Procedures column -->
-      <th *ngIf="actionsTpl" style="text-align: center">
-        Procedures
-      </th>
-    </tr>
-  </ng-template>
+    <!-- BODY -->
 
-  <!-- BODY -->
-  <ng-template pTemplate="body" let-row>
-    <tr>
-      <ng-container *ngFor="let item of row | keyvalue">
-        <td *ngIf="!isHidden(item.key)">
-          {{ item.value }}
+    <ng-template pTemplate="body" let-row>
+      <tr>
+        <ng-container *ngFor="let col of bodytabel">
+          <td [ngClass]="getCellClass(col, row)">
+            {{ formatCell(col.value, row[col.value]) }}
+          </td>
+        </ng-container>
+
+        <td *ngIf="actionsTpl">
+          <ng-container *ngTemplateOutlet="actionsTpl; context: { $implicit: row }"></ng-container>
         </td>
-      </ng-container>
+      </tr>
+    </ng-template>
+  </p-table>
 
-      <!-- actions -->
-      <td *ngIf="actionsTpl">
-        <ng-container
-          *ngTemplateOutlet="actionsTpl; context: { $implicit: row }"
-        ></ng-container>
-      </td>
-    </tr>
-  </ng-template>
-
-</p-table>
-
-<ng-content></ng-content>
+  <ng-content></ng-content>
+} @else if (exsistData() == 'no-data') {
+  <app-no-data></app-no-data>
+} @else {
+  <p-table [value]="$any(loadingData)" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+      <tr>
+        <ng-container *ngFor="let col of bodytabel">
+          <th>{{ col.key | translate }}</th>
+        </ng-container>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body">
+      <tr>
+        <td *ngFor="let col of bodytabel"><p-skeleton /></td>
+      </tr>
+    </ng-template>
+  </p-table>
+}

@@ -6,19 +6,23 @@
   margin: 0;
 }
 
-
 body {
   background-color: var(--white-color);
   user-select: none;
   overflow-x: hidden;
   font-family: 'Cairo', sans-serif;
-  direction: rtl;
+}
+
+::placeholder {
+  font-family: 'Cairo', sans-serif;
 }
 
 :root {
   --black-color: black;
   --white-color: white;
   --blue-color: blue;
+  --green-color: green;
+  --vivid-green: #00bb09;
   --red-color: red;
   --golden-bronze: rgb(150, 122, 62);
   --deep-purple: #1a0033;
@@ -27,10 +31,46 @@ body {
   --tertiary-color: #666;
   --soft-gray: #eee;
   --Platinum: #dadadabf;
+  --muted-gold: #dadada59;
   --primary-navy: #14143a;
   --dark-navy-deep: #0a0a1d;
   --accent-gold: #93853f;
   --medium-gray: #a9a9a9;
+  --bg-cream-light: #f4f2e9;
+  --Pale-Gold: #e3d597;
+  --color-success-main: #2e7d32;
+  --color-success-light: rgba(46, 125, 50, 0.1);
+  --overlay-bg: rgba(19, 18, 18, 0.532);
+  --soft-pink: #f16d6de0;
+  --golden-yellow: #ffb50259;
+  --bright-gold: #ffb502;
+  --color-danger-main: #d32f2f;
+  --color-danger-light: rgba(211, 47, 47, 0.1);
+  --Cloudy-Sky: #8c9bb0;
+  --silver-frost: #f1f4f9;
+--pearl-gray: #e9e9eb;
+  --mint-whisper: #f0faf5;
+  --seafoam-green: #5bae7f;
+  --golden-sun: #fbc02d;
+  --amber-honey: #f59e0b;
+  --ice-blue: #e3f2fd;
+  --royal-azure: #2196f3;
+  --storm-slate: #4a556c;
+  --dusty-stone: #777;
+  --rose-petal: #ffebee;
+  --soft-crimson: #ef5350;
+  --pure-white: #fff;
+  --cloud-white: #fafafa;
+  --frost-gray: #f0f0f0;
+
+  --state-positive-soft: #d1f5d3;
+  --state-positive: #72f1b8;
+
+  --state-attention-soft: #fffbeb;
+  --state-attention: #d97706;
+  --state-attention-border: #fff9c4;
+
+  --surface-base: #f8f9fa;
 }
 
 .Group {
@@ -48,8 +88,6 @@ select {
   border-radius: 7px;
   background-color: transparent;
 }
-
-
 
 li {
   list-style: none;
@@ -76,7 +114,6 @@ button {
   position: relative;
 }
 
-
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -84,14 +121,10 @@ input:-webkit-autofill:active {
   -webkit-transition: background-color 5000s ease-in-out 0s;
 }
 
-
 .requierd {
   color: var(--red-color);
   font-weight: bold;
 }
-
-
-
 
 ::-webkit-scrollbar {
   width: 10px;
@@ -107,8 +140,6 @@ input:-webkit-autofill:active {
   width: 75%;
   margin: auto;
 }
-
-
 
 @mixin button($width: auto) {
   width: $width;
@@ -145,9 +176,6 @@ input:-webkit-autofill:active {
   }
 }
 
-
-
-
 @media (max-width: 1200px) {
   .container {
     width: 90%;
@@ -174,20 +202,6 @@ html {
   scroll-behavior: smooth;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /***********************************Anmations**********************************/
 @keyframes customFadeInLeft {
   0% {
@@ -209,9 +223,6 @@ html {
   opacity: 0 !important;
 }
 
-
-
-
 @keyframes customFadeInRight {
   0% {
     opacity: 0;
@@ -230,10 +241,6 @@ html {
 .my-enter-right {
   animation: customFadeInRight 1s forwards !important;
 }
-
-
-
-
 
 @keyframes customFadeInDown {
   0% {
@@ -255,9 +262,6 @@ html {
   opacity: 0 !important;
   transition: opacity 0.5s;
 }
-
-
-
 
 @keyframes customZoomIn {
   0% {

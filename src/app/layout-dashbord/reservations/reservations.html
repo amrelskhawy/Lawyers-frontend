@@ -1,0 +1,92 @@
+<div class="calendar-wrapper">
+  <div class="calendar-nav">
+    <p-select [options]="months" [(ngModel)]="selectedMonth" (onChange)="onMonthChange($event)" optionLabel="name"
+      [style]="{ width: '40%' }" />
+    <h2>{{ displayDate | date: 'MMMM yyyy' }}</h2>
+
+    <div class="btn-filterbyStatus">
+      <button [ngClass]="{ All: selectedStatus() === 'All' }" (click)="GetAllBookingByStatus('All')">
+        ⊞ {{"all"|translate}}
+      </button>
+
+      <button [ngClass]="{ PENDING: selectedStatus() === 'PENDING' }" (click)="GetAllBookingByStatus('PENDING')">
+        ⏳ {{"PENDING"|translate}}
+      </button>
+
+      <button [ngClass]="{ CANCELLED: selectedStatus() === 'CANCELLED' }" (click)="GetAllBookingByStatus('CANCELLED')">
+        ✕ {{"CANCELLED"|translate}}
+      </button>
+
+      <button [ngClass]="{ COMPLETED: selectedStatus() === 'COMPLETED' }" (click)="GetAllBookingByStatus('COMPLETED')">
+        ✓ {{"COMPLETED"|translate}}
+      </button>
+    </div>
+  </div>
+
+  <div class="calendar-grid">
+    <div class="day-header" *ngFor="let day of ['SUn', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']">
+      {{ day | translate }}
+    </div>
+
+    <div class="empty-cell day-cell" *ngFor="let empty of emptyCells"></div>
+
+    <div class="day-cell" *ngFor="let d of daysInMonth">
+      <div class="day-number">{{ d }}</div>
+      <div class="booking-container">
+        <div (click)="onShowDilogBooking(book)" class="booking-item-compact" [ngClass]="book.status"
+          *ngFor="let book of getBookingsForDay(d) | slice:0:3">
+          <span class="book-time">{{ book.startTime}} Am</span>
+          <span class="book-title">{{ book.name }}</span>
+        </div>
+
+        <div class="view-more-btn" *ngIf="getBookingsForDay(d).length > 3"
+          (click)="onViewMore(d, getBookingsForDay(d))">
+          + {{ getBookingsForDay(d).length - 3 }} {{ 'more' | translate }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-dialog [(visible)]="visibleBooksPopup" [modal]="true" styleClass="modern-day-popup" [showHeader]="false"
+  [style]="{ width: '550px', maxWidth: '95vw' }" [draggable]="false" [resizable]="false">
+  <div class="day-popup-wrapper">
+    <div class="popup-top-bar">
+      <button class="close-popup-btn" (click)="visibleBooksPopup = false">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <h3 class="popup-title">{{ 'Bookings details' | translate }} - {{ selectedDay() }}</h3>
+      <div style="width: 38px"></div>
+    </div>
+
+    <!-- Scrollable container -->
+    <div class="day-schedule-scrollview">
+
+      <!-- Timeline column with hours -->
+      <div class="hours-column">
+        <div *ngFor="let hour of dayHours" class="hour-row">
+          <span class="hour-text">{{ hour }}</span>
+          <div class="hour-divider"></div>
+        </div>
+      </div>
+
+      <!-- Events container (absolute positioning relative to this) -->
+      <div class="events-board">
+        <div *ngFor="let book of selectedDayBooks()" (click)="onShowDilogBooking(book); visibleBooksPopup = false"
+          class="event-block-absolute" [ngClass]="book.status" [ngStyle]="getEventStyle(book)">
+
+          <div class="event-content">
+            <span class="event-time" dir="ltr">{{ book.startTime }} - {{ book.endTime || '...' }}</span>
+            <span class="event-title">{{ book.name }}</span>
+            <span class="event-status-badge">{{ book.status | translate }}</span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</p-dialog>
+
+<app-dilog-booking (changeStatusBooking)="onchangeStatusBooking()" [(visible)]="visibelDilogBooking"
+  [obj]="obj()"></app-dilog-booking>

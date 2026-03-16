@@ -1,16 +1,17 @@
-@if(loading){
-  <div class="spinner">
-         <div></div>
-         <div></div>
-         <div></div>
-         <div></div>
-         <div></div>
-         <div></div>
-         <div></div>
-         <div></div>
-         <div></div>
-         <div></div>
-         <div></div>
-         <div></div>
-     </div>
+@if(loading()){
+<div class="spinner-overlay">
+  <div class="loader-content">
+    <div class="logo-container">
+      <img src="/assets/Img/NAME-GOLD.svg" alt="Saad Al-Baqami" class="loader-logo">
+    </div>
+
+    <div class="loading-text">
+      {{ (currentLang === 'ar' ? 'جاري التحميل' : 'Loading') }}
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-fill"></div>
+    </div>
+  </div>
+</div>
 }

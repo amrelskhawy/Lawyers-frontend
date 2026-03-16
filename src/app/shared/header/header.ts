@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, signal } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -7,10 +7,9 @@ import { Component, EventEmitter, Output, signal } from '@angular/core';
   styleUrl: './header.scss',
 })
 export class Header {
-  @Output()EventRoute=new EventEmitter<string>();
+  @Output() EventRoute = new EventEmitter<string>();
 
-  onClickListActive(route:string){
-    this.EventRoute.emit(route)
+  onClickListActive(route: string) {
+    this.EventRoute.emit(route);
   }
-
 }

@@ -1,0 +1,112 @@
+@use '../../../../layout-dashbord/glopalstyles.scss';
+
+.wrapper-datailsData {
+  background-color: var(--white-color);
+  padding: 0;
+  border-radius: 20px;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  .header-popup {
+    background: linear-gradient(135deg, var(--primary-navy) 0%, #1a1a4a 100%);
+    padding: 40px 20px;
+    text-align: center;
+    position: relative;
+
+    .logo-header {
+      margin-bottom: 20px;
+      filter: drop-shadow(0 0 10px rgba(var(--accent-gold-rgb), 0.3));
+    }
+
+    h2 {
+      color: var(--white-color);
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin: 0;
+      line-height: 1.4;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--accent-gold);
+    }
+  }
+
+  .content-body {
+    padding: 40px 30px;
+    text-align: center;
+
+    p {
+      color: #4a4a4a;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 40px;
+      text-align: justify;
+      direction: rtl; // For Arabic content default
+    }
+
+    // Adjust direction for English
+    &.ltr p {
+      direction: ltr;
+      text-align: left;
+    }
+  }
+
+  .footer-actions {
+    padding: 0 30px 40px;
+    display: flex;
+    justify-content: center;
+
+    .btn-close-dilog {
+      background: var(--primary-navy);
+      color: var(--white-color);
+      padding: 12px 35px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      border: 2px solid var(--primary-navy);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      i {
+        font-size: 1.1rem;
+      }
+
+      &:hover {
+        background: transparent;
+        color: var(--primary-navy);
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+}
+
+:host ::ng-deep .p-dialog {
+  .p-dialog-header {
+    display: none; // We handle header in our wrapper
+  }
+
+  .p-dialog-content {
+    padding: 0;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+}
+
+
+
+
+@media(max-width:767px){
+  .btn-close-dilog{
+    width: 50%;
+    text-align: center;
+  }
+}

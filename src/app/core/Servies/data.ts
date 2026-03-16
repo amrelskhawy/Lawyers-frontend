@@ -1,14 +1,25 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Injectable, signal } from '@angular/core';
+import { Observable, tap, of } from 'rxjs';
 import { environment } from '../../environments/environment.pord';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Data {
-    private baseUrl: string = environment.baseApi;
-  constructor(private http: HttpClient) {}
+  private baseUrl: string = environment.baseApi;
+  publicData = signal<any>(null);
+
+  constructor(private http: HttpClient) { }
+
+  getPublicData(): Observable<any> {
+    if (this.publicData()) {
+      return of({ data: this.publicData() });
+    }
+    return this.http.get<any>(`${this.baseUrl}public`).pipe(
+      tap(res => this.publicData.set(res.data))
+    );
+  }
 
   // ============================================== GET Request ============================================== //
   /**
@@ -85,7 +96,7 @@ export class Data {
    * @param body
    */
   patch<T>(endpoint: string, body: any): Observable<T> {
-    return this.http.patch<T>(`${this.baseUrl}/${endpoint}`, body);
+    return this.http.patch<T>(`${this.baseUrl}${endpoint}`, body);
   }
   // ============================================== Patch Request ============================================== //
 }

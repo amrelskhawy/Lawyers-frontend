@@ -1,0 +1,49 @@
+<div class="wrapper-confirmed">
+  <div class="header-confirmed">
+    <i class="fa-solid fa-address-book"></i>
+    <div>
+      <h3>{{"CONFIRM_BOOKING"|translate}}</h3>
+      <p>{{"CHECK_DATA"|translate}}</p>
+    </div>
+  </div>
+
+  <div class="content-confirmed">
+    <div class="card">
+      <p>⚖️ {{"servies"|translate}}</p>
+      <p>{{ getCurrentLanguage() == 'ar' ? name().name_ar : name().name_en }}</p>
+    </div>
+
+    <div class="card">
+      <p>👤 {{ 'name' | translate }}</p>
+      <p>{{ bookingService.bookingForm().value?.name }}</p>
+    </div>
+
+    <div class="card">
+      <p>✉️ {{ 'email' | translate }}</p>
+      <p>{{ bookingService.bookingForm().value?.clientEmail }}</p>
+    </div>
+
+    <div class="card">
+      <p>📱 {{ 'phone' | translate }}</p>
+      <p>{{ bookingService.bookingForm().value?.phone_number }}</p>
+    </div>
+
+    <div class="card">
+      <p>📅 {{ 'Date' | translate }}</p>
+      <p>{{ bookingService.bookingForm().value?.date | date:'dd/MM/yyyy'}}</p>
+    </div>
+
+    <div class="card">
+      <p>🕐 {{"time"|translate}}</p>
+      <p>{{ bookingService.bookingForm().value?.startTime }}</p>
+    </div>
+  </div>
+
+  <div class="footer-confirmed">
+    <p>
+      {{"CONFIRMATION_NOTICE"|translate}}
+    </p>
+  </div>
+
+  <button (click)="onSubmit()"> {{"confirme_booking"|translate}} ✓</button>
+</div>

@@ -1,0 +1,123 @@
+<p-dialog maskStyleClass="backdrop-blur-sm" [(visible)]="visible" (onHide)="onClose()" [modal]="true"
+  [baseZIndex]="10000" styleClass="modern-modal" [style]="{ width: '90vw', maxWidth: '600px' }">
+  <ng-template pTemplate="headless">
+    <div class="booking-dialog-wrapper">
+      <!-- HEADER -->
+      <div class="booking-header">
+        <div class="logo-container">
+          <img src="/assets/Img/LOGO-GOLD.svg" alt="Company Logo" />
+        </div>
+        <h2 class="booking-title">
+          {{ 'Reservations' | translate }}
+        </h2>
+        <div class="booking-divider"></div>
+      </div>
+
+      <!-- MAIN CONTENT -->
+      <div class="booking-content">
+        <!-- Status Badge -->
+        <div class="booking-status-section">
+          <span class="status-label">{{ 'status' | translate }}</span>
+          <span class="status-badge" [ngClass]="dataobj().status">{{ dataobj().status | translate }}</span>
+        </div>
+
+        <!-- Section 1: Client Details -->
+        <div class="detail-section">
+          <h3 class="section-title"><i class="fa-solid fa-user-circle"></i> {{ 'name_client' | translate }}</h3>
+          <div class="info-grid">
+            <div class="info-card">
+              <div class="info-icon"><i class="fa-solid fa-id-badge"></i></div>
+              <div class="info-text">
+                <span class="info-label">{{ 'name_client' | translate }}</span>
+                <span class="info-value">{{ dataobj().name }}</span>
+              </div>
+            </div>
+
+            <div class="info-card">
+              <div class="info-icon"><i class="fa-solid fa-envelope"></i></div>
+              <div class="info-text">
+                <span class="info-label">{{ 'Email_client' | translate }}</span>
+                <span class="info-value">{{ dataobj().clientEmail }}</span>
+              </div>
+            </div>
+
+            <div class="info-card" *ngIf="dataobj().phone">
+              <div class="info-icon"><i class="fa-solid fa-phone"></i></div>
+              <div class="info-text">
+                <span class="info-label">{{ 'phone' | translate }}</span>
+                <span class="info-value" dir="ltr">{{ dataobj().phone }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="section-divider" />
+
+        <!-- Section 2: Booking Details -->
+        <div class="detail-section">
+          <h3 class="section-title"><i class="fa-regular fa-calendar-check"></i> {{ 'Reservations' | translate }}</h3>
+          <div class="info-grid">
+            <div class="info-card">
+              <div class="info-icon"><i class="fa-regular fa-calendar-days"></i></div>
+              <div class="info-text">
+                <span class="info-label">{{ 'Date' | translate }}</span>
+                <span class="info-value">{{ dataobj().date | date:'mediumDate' }}</span>
+              </div>
+            </div>
+
+            <div class="info-card">
+              <div class="info-icon"><i class="fa-solid fa-clock"></i></div>
+              <div class="info-text">
+                <span class="info-label">{{ 'time' | translate }}</span>
+                <div class="info-time">
+                  <span class="info-value" dir="ltr">{{ dataobj().startTime }} Am</span> :
+                  <span class="info-value" dir="ltr">{{ dataobj().endTime }} Pm</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="section-divider" />
+
+        <!-- Section 3: Service Info -->
+        <div class="detail-section">
+          <h3 class="section-title"><i class="fa-solid fa-briefcase"></i> {{ 'servies' | translate }}</h3>
+
+          <div class="service-highlight">
+            <h4 class="service-name">
+              {{ getcuurentLangauage() == 'ar' ? dataobj().service.name_ar : dataobj().service.name_en }}
+            </h4>
+            <div class="service-price">
+              <span class="price-value">{{ dataobj().service.price }}</span>
+              <span class="price-currency">SAR</span>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="booking-notes mt-3">
+            <i class="fa-solid fa-circle-info notes-icon"></i>
+            <p>
+              {{ getcuurentLangauage() == 'ar' ? dataobj().service.description_ar : dataobj().service.description_en }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACTIONS -->
+      <div class="booking-actions">
+        <div class="action-group">
+          @if (dataobj().status == 'PENDING') {
+          <button class="btn-accept" (click)="HandelActionBooking('confirm')">
+            <i class="fa-regular fa-circle-check"></i> {{ 'Accept' | translate }}
+          </button>
+          <button class="btn-reject" (click)="HandelActionBooking('cancel')">
+            <i class="fa-solid fa-xmark"></i> {{ 'reject' | translate }}
+          </button>
+          }
+        </div>
+        <button class="btn-close" (click)="closeDialog()">{{ 'close' | translate }}</button>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>

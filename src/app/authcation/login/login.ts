@@ -1,6 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Data } from '../../core/Servies/data';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,8 @@ export class Login implements OnInit {
   constructor(
     private FB: FormBuilder,
     private Data: Data,
-  ) { }
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.OnCreateForm();
@@ -42,12 +44,13 @@ export class Login implements OnInit {
       this.Form().markAllAsTouched();
       return;
     }
-    this.Data.post('auth/login', this.Form().value).subscribe((res) => {
-      // Handle success appropriately, e.g., navigation or storing token
+    this.Data.post('auth/login', this.Form().value).subscribe((res: any) => {
       this.Form().reset();
+      sessionStorage.setItem('token', res.data.token);
+      sessionStorage.setItem('user', JSON.stringify(res.data.user));
+      this.router.navigate(['/dashboard/content']);
     });
   }
-
 
   getControlName(controlName: string) {
     return this.Form().get(controlName);

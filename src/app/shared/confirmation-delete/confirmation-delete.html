@@ -1,0 +1,27 @@
+<div class="modern-confirm-overlay" [ngClass]="{ 'is-visible': visibel() }"
+  (click)="onControlStatusPopupConfirmation('notdelete')">
+  <div class="modern-confirm-card" (click)="$event.stopPropagation()">
+    <!-- Decorative Icon Background -->
+    <div class="icon-header">
+      <div class="icon-circle">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+      </div>
+    </div>
+
+    <!-- Text Content -->
+    <div class="text-content">
+      <h3 class="title">{{ 'Deleted_Confirmed' | translate }}</h3>
+      <p class="message">{{ 'sure_account' | translate }}</p>
+    </div>
+
+    <!-- Actions -->
+    <div class="confirm-actions">
+      <button class="btn-cancel" (click)="onControlStatusPopupConfirmation('notdelete')">
+        {{ 'no' | translate }}
+      </button>
+      <button class="btn-delete" (click)="onControlStatusPopupConfirmation('delete')">
+        {{ 'yes' | translate }} <i class="fa-regular fa-trash-can"></i>
+      </button>
+    </div>
+  </div>
+</div>

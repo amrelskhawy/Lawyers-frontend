@@ -11,7 +11,22 @@ import { CarouselModule } from 'primeng/carousel';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 import { AnimateOnScrollModule } from 'primeng/animateonscroll';
-import { HowItWork } from './Components/how-it-work/how-it-work';
+import { TranslateModule } from '@ngx-translate/core';
+import { DeatailsDescrption } from './Components/slider-serves/deatails-descrption/deatails-descrption';
+import { DialogModule } from 'primeng/dialog';
+import { Reservations } from './Components/reservations/reservations';
+import { StepperModule } from 'primeng/stepper';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CheckboxModule } from 'primeng/checkbox';
+import { DatePickerModule } from 'primeng/datepicker';
+import { SelectModule } from 'primeng/select';
+import { ServiesBooking } from './Components/reservations/servies-booking/servies-booking';
+import { DataBooking } from './Components/reservations/data-booking/data-booking';
+import { MeetingBooking } from './Components/reservations/meeting-booking/meeting-booking';
+import { ConfirmeBooking } from './Components/reservations/confirme-booking/confirme-booking';
+import { TeamWork } from './Components/team-work/team-work';
+import { Payment } from './Components/reservations/payment/payment';
+import { Counter } from './Components/counter/counter';
 
 @NgModule({
   declarations: [
@@ -20,16 +35,33 @@ import { HowItWork } from './Components/how-it-work/how-it-work';
     About,
     Servies,
     SliderServes,
-    HowItWork
+    DeatailsDescrption,
+    Reservations,
+    ServiesBooking,
+    DataBooking,
+    MeetingBooking,
+    ConfirmeBooking,
+    TeamWork,
+    Payment,
+    Counter,
   ],
   imports: [
+    TranslateModule,
     CommonModule,
+    FormsModule,
     LayoutRoutingModule,
     SharedModule,
     CarouselModule,
     ButtonModule,
     TagModule,
     AnimateOnScrollModule,
+    DialogModule,
+    StepperModule,
+    CheckboxModule,
+    DatePickerModule,
+    SelectModule,
+    ReactiveFormsModule,
+    ReactiveFormsModule,
   ]
 })
 export class LayoutModule { }

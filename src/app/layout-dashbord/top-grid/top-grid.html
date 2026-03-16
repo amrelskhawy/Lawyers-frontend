@@ -1,0 +1,28 @@
+<div class="header-grid">
+  @if (pages() !== 'Admin') {
+    <button class="btn-add" (click)="visibelform()">
+      <i class="fa-solid fa-plus"></i> {{ 'add' | translate }}
+    </button>
+  }
+
+  <div class="filed-search">
+    <input (input)="onSearch($event)" placeholder="{{ 'searchByName' | translate }}" />
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </div>
+
+  <div class="account-admin" *ngIf="userData()">
+    <div class="user-info">
+      <h4>
+        {{ userData().name }}
+        <i *ngIf="!userData().isDerivedName" class="fa-regular fa-user"></i>
+      </h4>
+      <p>{{ userData().email }}</p>
+    </div>
+    <img
+      height="40"
+      width="40"
+       src="/assets/Img/2a.png"
+      alt="hero-section-img"
+    />
+  </div>
+</div>

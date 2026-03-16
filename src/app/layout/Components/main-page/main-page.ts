@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Data } from '../../../core/Servies/data';
 
 @Component({
   selector: 'app-main-page',
@@ -6,7 +7,13 @@ import { Component } from '@angular/core';
   templateUrl: './main-page.html',
   styleUrl: './main-page.scss',
 })
-export class MainPage {
+export class MainPage implements OnInit {
+  constructor(private dataService: Data) { }
+
+  ngOnInit() {
+    this.dataService.getPublicData().subscribe();
+  }
+
   navigation: string = '';
 
   onEventRoute(event: string) {
@@ -16,4 +23,5 @@ export class MainPage {
       el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
+
 }
