@@ -1,4 +1,13 @@
-import { Component, EventEmitter, HostListener, Input, Output, signal } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnInit,
+  Output,
+  signal,
+} from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-menue',
@@ -6,12 +15,25 @@ import { Component, EventEmitter, HostListener, Input, Output, signal } from '@a
   templateUrl: './menue.html',
   styleUrl: './menue.scss',
 })
-export class Menue {
+export class Menue implements OnInit {
+  ngOnInit(): void {
+    this.GetDataMenue();
+  }
+
+  constructor(private router: Router) {}
+
   @Output() toggelMenue = new EventEmitter<boolean>();
   isOpen = signal<boolean>(true);
   statusMenue = signal<boolean>(true);
   widthScreen = signal<boolean>(false);
-
+  ListMenue = signal<
+    {
+      name: string;
+      icon: string;
+      route: string;
+    }[]
+  >([]);
+  visibelform = signal<boolean>(false);
 
   @Input()
   set toggel(event: boolean) {
@@ -28,11 +50,57 @@ export class Menue {
     this.isOpen.set(!this.isOpen());
   }
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    const isMobile = window.innerWidth < 768;
+    this.widthScreen.set(isMobile);
+  }
 
-   @HostListener('window:resize', ['$event'])
-onResize(event: any) {
-  // نعتبر الشاشة صغيرة (موبايل) فقط إذا كانت أقل من 768 بكسل
-  const isMobile = window.innerWidth < 768;
-  this.widthScreen.set(isMobile);
-}
+  GetDataMenue() {
+    let get_usre = sessionStorage.getItem('user');
+    let parseUser: any = null;
+
+    if (get_usre) {
+      parseUser = JSON.parse(get_usre);
+    }
+
+    if (parseUser) {
+      this.ListMenue.set([
+        {
+          name: 'Reservations',
+          icon: 'fa-solid fa-business-time',
+          route: '/dashboard/content',
+        },
+        ...(parseUser.role === 'ADMIN'
+          ? [
+              {
+                name: 'Admins',
+                icon: 'fa-solid fa-user',
+                route: '/dashboard/content/admin',
+              },
+              {
+                name: 'Moderators',
+                icon: 'fa-solid fa-user-tie',
+                route: '/dashboard/content/Moderators',
+              },
+            ]
+          : []),
+        {
+          name: 'services',
+          icon: 'fa-solid fa-gear',
+          route: '/dashboard/content/addservies',
+        },
+        {
+          name: 'holidays_Day',
+          icon: 'fa-solid fa-holly-berry',
+          route: '/dashboard/content/Holidays',
+        },
+      ]);
+    }
+  }
+
+  onLogout() {
+    sessionStorage.removeItem('token');
+    this.router.navigate(['/']);
+  }
 }

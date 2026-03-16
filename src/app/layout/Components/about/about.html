@@ -1,82 +1,53 @@
 <div class="container">
   <section class="about-section">
     <div class="img-about-container">
-      <div
-        pAnimateOnScroll
-        enterClass="my-enter-right"
-        leaveClass="my-leave-animation"
-        class="img-left"
-      >
-        <img
-          height="300"
-          width="200"
-          src="/assets/Img/court-justice-scales-gavel-generative-ai_74760-4832.avif"
-          alt="About Image"
-          class="img-1"
-        />
+      <div pAnimateOnScroll enterClass="my-enter-right" leaveClass="my-leave-animation" class="img-left">
+        <img height="300" width="200" src="/assets/Img/2a.png" alt="About Image" class="img-1" />
       </div>
 
-      <div
-        pAnimateOnScroll
-        enterClass="my-enter-animation"
-        leaveClass="my-leave-animation"
-        class="img-right"
-      >
-        <img
-          height="220"
-          width="180"
-          src="/assets/Img/portrait-young-female-lawyer-smiling-happy-her-workplace-office-lawyer-technologist-professional-face-female-lawyer-legal-consultant-law-firm_785351-3460.avif"
-          alt="hero-section-img"
-          class="img-2"
-        />
+      <div pAnimateOnScroll enterClass="my-enter-animation" leaveClass="my-leave-animation" class="img-right">
+        <img height="220" width="180" src="/assets/Img/2.png" alt="hero-section-img" class="img-2" />
 
-        <img
-          height="100"
-          width="100"
-          src="/assets/Img/logo.svg"
-          alt="Logo"
-          class="logo-header img-3"
-        />
+        <img height="100" width="100" src="/assets/Img/logo.svg" alt="Logo" class="logo-header img-3" />
       </div>
+
+
     </div>
 
     <div class="about-text-container">
       <div class="section-title">
         <i class="fa-solid fa-circle"></i>
         <span class="line"></span>
-        <h2 pAnimateOnScroll enterClass="my-enter-zoom" leaveClass="my-leave-animation">
-          عملية العمل
-        </h2>
+        <h2 pAnimateOnScroll enterClass="my-enter-zoom" leaveClass="my-leave-animation">{{"NAV_ABOUT"|translate}}</h2>
         <span class="line"></span>
         <i class="fa-solid fa-circle"></i>
       </div>
 
-      <h2 pAnimateOnScroll enterClass="my-enter-top" leaveClass="my-leave-animation">عن شركتنا</h2>
+      <h2 pAnimateOnScroll enterClass="my-enter-top" leaveClass="my-leave-animation">
+        {{ 'ABOUT_COMPANY' | translate }}
+      </h2>
 
-      <p
-        pAnimateOnScroll
-        enterClass="my-enter-animation"
-        leaveClass="my-leave-animation"
-        class="animation-duration-1000"
-      >
-        نحن شركة محاماة رائدة نكرس جهودنا لتقديم خدمات قانونية استثنائية لعملائنا. فريقنا من
-        المحامين ذوي الخبرة متخصص في مجالات قانونية متنوعة، مما يضمن حلولاً شاملة مصممة لتلبية
-        احتياجاتك. مع التزامنا بالتميز والنزاهة، نسعى لتحقيق أفضل النتائج لعملائنا.
+      <p pAnimateOnScroll enterClass="my-enter-animation" leaveClass="my-leave-animation"
+        class="animation-duration-1000">
+        <!-- {{ 'COMPANY_DESCRIPTION' | translate }} -->
+      </p>
+      <p style="margin-top: 20px;" pAnimateOnScroll enterClass="my-enter-animation" leaveClass="my-leave-animation"
+        class="animation-duration-1000">
+        {{ 'EXPERIENCE_YEARS' | translate }}
       </p>
       <ul>
-        <li><i class="fa-solid fa-check"></i>فريق قانوني ذو خبرة</li>
-        <li><i class="fa-solid fa-check"></i>النهج المتمحور حول العميل</li>
-        <li><i class="fa-solid fa-check"></i>خدمات قانونية شاملة</li>
-        <li><i class="fa-solid fa-check"></i>سجل حافل بالنجاح</li>
+        <li>
+          <i class="fa-solid fa-check"></i>
+          {{ 'METHODOLOGY_TEAM' | translate }}
+        </li>
+        <li>
+          <i class="fa-solid fa-check"></i>
+          {{ 'STRATEGIC_SUCCESS' | translate }}
+        </li>
       </ul>
-      <button
-        pAnimateOnScroll
-        enterClass="my-enter-zoom"
-        leaveClass="my-leave-animation"
-        class="btn-about-section"
-      >
-       قراءة المزيد
-      </button>
+      <!-- <button pAnimateOnScroll enterClass="my-enter-zoom" leaveClass="my-leave-animation" class="btn-about-section">
+        {{ 'READ_MORE' | translate }}
+      </button> -->
     </div>
   </section>
 </div>

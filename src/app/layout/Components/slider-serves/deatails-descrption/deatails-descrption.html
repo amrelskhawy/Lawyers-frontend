@@ -1,0 +1,23 @@
+<p-dialog maskStyleClass="backdrop-blur-sm" [(visible)]="visible" (onHide)="onClose()" [modal]="true"
+  [baseZIndex]="10000" [style]="{  width: '90vw', maxWidth: '650px', overflow: 'hidden', borderRadius: '20px' }">
+  <ng-template #headless>
+    <div class="wrapper-datailsData" [class.ltr]="getcuurentLangauage() !== 'ar'">
+      <div class="header-popup">
+        <img height="90" width="90" src="/assets/Img/LOGO-GOLD.svg" alt="Logo" class="logo-header" />
+        <h2>{{getcuurentLangauage()=="ar"?dataobj().name_ar:dataobj().name_en}}</h2>
+      </div>
+
+      <div class="content-body">
+        <p>
+          {{getcuurentLangauage()=="ar"?dataobj().description_ar:dataobj().description_en}}
+        </p>
+      </div>
+
+      <div class="footer-actions">
+        <button class="btn-close-dilog" (click)="closeDialog()">
+          <i class="fa-solid fa-xmark"></i> {{ 'close' | translate }}
+        </button>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>

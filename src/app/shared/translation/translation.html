@@ -1,0 +1,6 @@
+<section class="wrapper-langaue">
+  <button (click)="switchLanguage(currentLang === 'ar' ? 'en' : 'ar')" class="lang">
+    <i class="fa-solid fa-language"></i> {{ (currentLang === 'ar' ? 'en' : 'ar') | translate }}
+    <i class="fa-solid fa-caret-down"></i>
+  </button>
+</section>

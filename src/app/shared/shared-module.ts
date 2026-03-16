@@ -9,15 +9,22 @@ import { ChatBoot } from './chat-boot/chat-boot';
 import { DrawerLeft } from './drawer-left/drawer-left';
 import { DrawerModule } from 'primeng/drawer';
 import { ChangeLangauage } from './change-langauage/change-langauage';
-import { TranslatePipe } from '../core/Pipes/translate-pipe';
 import { Success } from './success/success';
 import { Tabel } from './tabel/tabel';
 import { Footer } from './footer/footer';
+import { Translation } from './translation/translation';
+import { TranslateModule } from '@ngx-translate/core';
+import { DatePipe } from '@angular/common';
+import { ConfirmationDelete } from './confirmation-delete/confirmation-delete';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { SkeletonModule } from 'primeng/skeleton';
+import { Error } from './error/error';
+import { NoData } from './no-data/no-data';
 
 
 @NgModule({
   declarations: [
-    TranslatePipe,
     Header,
     Loader,
     TopHeader,
@@ -26,15 +33,22 @@ import { Footer } from './footer/footer';
     ChangeLangauage,
     Success,
     Tabel,
-    Footer
+    Footer,
+    Translation,
+    ConfirmationDelete,
+    Error,
+    NoData
   ],
   imports: [
     CommonModule,
     SharedRoutingModule,
     DrawerModule,
-    TableModule
+    TableModule,
+    TranslateModule,
+    ToastModule,
+    SkeletonModule,
   ],
-  exports:[
+  exports: [
     Header,
     Loader,
     TopHeader,
@@ -42,7 +56,17 @@ import { Footer } from './footer/footer';
     DrawerLeft,
     Success,
     Tabel,
-    Footer
+    Translation,
+    ConfirmationDelete,
+    Error,
+    Footer,
+    NoData
+  ],
+
+  providers: [
+    DatePipe,
+    MessageService
   ]
+
 })
 export class SharedModule { }

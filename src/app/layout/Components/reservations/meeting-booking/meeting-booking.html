@@ -1,0 +1,50 @@
+<div class="wrapper-date">
+  <div class="header-date">
+    <i class="fa-solid fa-address-book"></i>
+    <div>
+      <h3>{{"DATE_TIME"|translate}}</h3>
+      <p>{{"DATE_TIME_DESC"|translate}}</p>
+    </div>
+  </div>
+  <form [formGroup]="bookingService.bookingForm()">
+    <div class="Group datepicker">
+      <p-datepicker
+      formControlName="date"
+       [inline]="true"
+       [showWeek]="false"
+        [disabledDates]="disibledDays()"
+        [minDate]="minDate"
+        [firstDayOfWeek]="6"
+        >
+      </p-datepicker>
+
+      <div class="wrapper-error">
+        <small class="error-message" *ngIf="getControlName('date')?.invalid && getControlName('date')?.touched">{{
+          'filed_reqierd' | translate }}</small>
+      </div>
+    </div>
+    @if (timeSlots().length > 0) {
+    <div class="Times-container">
+      @for (slot of timeSlots(); track $index) {
+      <div (click)="PathTime(slot)" class="Time-slot" [ngClass]="{
+                'selected-time': slot.startTime == selectedTime(),
+                'slot-unavailable': !slot.available
+              }">
+        <span class="slot-time">
+          {{ slot.startTime }} - {{ slot.endTime}}
+        </span>
+        <span class="slot-status">
+          {{ slot.available ? ('AVAILABLE' | translate) : ('BOOKED' | translate) }}
+        </span>
+      </div>
+      }
+      <div class="wrapper-error">
+        <small class="error-message"
+          *ngIf="getControlName('startTime')?.invalid && getControlName('startTime')?.touched">{{ 'SELECT_DATE_TIME' |
+          translate }}</small>
+      </div>
+    </div>
+    }
+  </form>
+  <button (click)="onNextStep()" class="next-btn">{{ 'NEXT_BTN' | translate }}</button>
+</div>

@@ -1,0 +1,26 @@
+@if(servise().length>0){
+<div class="wrapper-servies-booking">
+  <div class="header-booking">
+    <i class="fa-solid fa-scale-balanced"></i>
+    <div>
+      <h3>{{ 'SELECT_SERVICE' | translate }}</h3>
+      <p>{{ 'SELECT_SERVICE_DESC' | translate }}</p>
+    </div>
+  </div>
+
+  <div class="content-servies-booking">
+    @for (item of servise(); track item.id) {
+    <button [ngClass]="{ 'active-servies': item.id == selectServies().id }" class="card" (click)="onSelctServies(item)">
+      <div class="check-badge" *ngIf="item.id == selectServies().id">
+        <i *ngIf="item.id == selectServies().id" class="fa-solid fa-circle-check"></i>
+      </div>
+      <img height="80" width="80" src="/assets/Img/unnamed.jpg" />
+      <p>{{ getCurrentLanguage() == 'ar' ? item.name_ar : item.name_en }}</p>
+    </button>
+    }
+  </div>
+  <button (click)="onNextStep()" class="next-btn">{{ 'NEXT_BTN' | translate }}</button>
+</div>
+}@else {
+    <app-no-data></app-no-data>
+}

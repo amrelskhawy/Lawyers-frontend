@@ -1,62 +1,108 @@
-<section class="section-footer-wrapper">
-  <div class="container footer-container">
+<section class="section-footer">
+  <div class="container Content-footer">
 
-    <div class="footer-upper">
-      <!-- Left Side: Brand, Desc, Socials, Back to Top -->
-      <div class="footer-left">
-        <div class="brand-area">
-          <div class="logo-group">
-            <img width="280" src="/assets/Img/NAME-GOLD.svg" alt="logo" />
+    <div class="footer-info">
+      <img width="220" src="/assets/Img/NAME-GOLD.svg" alt="logo" class="footer-logo" />
 
-          </div>
-
-          <p class="brand-desc">
-            تمكين العملاء بحلول قانونية متقدمة ومتكاملة لتحقيق العدالة وحماية الحقوق.
-          </p>
-
-          <div class="social-icons">
-            <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-            <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-            <a href="#"><i class="fa-brands fa-instagram"></i></a>
-            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-          </div>
-
-          <button class="back-to-top-btn" (click)="scrollToTop()">
-            <i class="fa-solid fa-angles-up"></i>
-            BACK TO TOP
-          </button>
-        </div>
+      <div class="company-desc">
+        <p class="footer-slogan">{{ 'FOOTER_LEGAL_SLOGAN' | translate }}</p>
+        <p>{{ 'FOOTER_CORE_VALUES' | translate }} {{ 'FOOTER_PROFESSIONAL_STANDARDS' | translate }}</p>
       </div>
 
-      <!-- Right Side: Links Columns -->
-      <div class="footer-right">
-        <div class="links-column">
-          <h3>خريطة الموقع</h3>
-          <ul>
-            <li (click)="onClickListActive('Home')"><a>الرئيسية</a></li>
-            <li (click)="onClickListActive('Services')"><a>الخدمات</a></li>
-            <li (click)="onClickListActive('About')"><a>من نحن</a></li>
-            <li (click)="onClickListActive('HowWork')"><a>كيف نعمل</a></li>
-          </ul>
-        </div>
+      <div class="social-links">
+        <!-- Twitter -->
+        <a href="https://x.com/saadalbogamiksa" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+        <!-- Linkedin -->
+        <a href="https://www.linkedin.com/in/saad-albogami-5670a73a3" target="_blank"><i
+            class="fa-brands fa-linkedin-in"></i></a>
+        <!-- Instagram -->
+        <a href="https://www.instagram.com/saadalbogami.ksa" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+        <!-- Whatsapp -->
+        <a href="https://api.whatsapp.com/send?phone=966535041555" target="_blank"><i
+            class="fa-brands fa-whatsapp"></i></a>
+        <!-- Youtube -->
+        <a href="https://www.youtube.com/@saad.albogami_ksa" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+        <!-- Tiktok -->
+        <a href="https://www.tiktok.com/@saadalbogami.ksa" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+        <!-- Facebook -->
+        <a href="https://www.facebook.com/profile.php?id=61587033267676&mibextid=wwXIfr&rdid=dYjcYfkwSJtolMjL&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F14Mp6c7APgL%2F%3Fmibextid%3DwwXIfr#"
+          target="_blank"><i class="fa-brands fa-facebook"></i></a>
+        <!-- Email -->
+        <a href="mailto:saadalbogami.ksa@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+      </div>
 
-        <div class="links-column">
-          <h3>معلومات قانونية</h3>
-          <ul>
-            <li><a>سياسة الخصوصية</a></li>
-            <li><a>شروط الخدمة</a></li>
-            <li><a>زاوية المحامين</a></li>
-            <li><a>بوابة العملاء</a></li>
-          </ul>
-        </div>
+      <div class="scroll-top-container">
+        <button class="scroll-top-btn" (click)="scrollToTop()" title="Scroll to Top">
+          <i class="fa-solid fa-arrow-up"></i>
+        </button>
       </div>
     </div>
 
+    <div class="footer-column">
+      <h3>
+        <i class="fa-regular fa-clock"></i>
+        {{ "work_days" | translate }}
+      </h3>
+      <ul class="work-days-list">
+        @for (item of data(); track $index) {
+        <li class="day-item">
+          <span class="day-name">{{ item.translationKey | translate }}</span>
+          @if(item.status === 'Open') {
+          <span class="day-time">{{ item.startTime }} - {{ item.endTime }}</span>
+          } @else {
+          <span class="day-time closed-status">{{ 'work_holidays' | translate }}</span>
+          }
+        </li>
+        }
+      </ul>
+    </div>
 
+    <div class="footer-column">
+      <h3>
+        <i class="fa-solid fa-link"></i>
+        {{ 'QUICK_LINKS' | translate }}
+      </h3>
+      <ul>
+        <li (click)="onClickListActive('Home')">
+          <i class="fa-solid fa-chevron-left"></i>
+          <a>{{ 'NAV_HOME' | translate }}</a>
+        </li>
+        <li (click)="onClickListActive('About')">
+          <i class="fa-solid fa-chevron-left"></i>
+          <a>{{ 'NAV_ABOUT' | translate }}</a>
+        </li>
+        <li (click)="onClickListActive('HowWork')">
+          <i class="fa-solid fa-chevron-left"></i>
+          <a>{{ 'NAV_HOW_IT_WORKS' | translate }}</a>
+        </li>
+        <li (click)="onClickListActive('Services')">
+          <i class="fa-solid fa-chevron-left"></i>
+          <a>{{ 'NAV_SERVICES' | translate }}</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="footer-column">
+      <h3>
+        <i class="fa-solid fa-paper-plane"></i>
+        {{ 'CONTACT_INFORMATION' | translate }}
+      </h3>
+      <ul>
+        <li>
+          <i class="fa-solid fa-phone"></i>
+          <span>055 228 3030</span>
+        </li>
+        <li>
+          <i class="fa-solid fa-envelope"></i>
+          <span>saadalbogami.ksa@gmail.com</span>
+        </li>
+        <li>
+          <i class="fa-solid fa-location-dot"></i>
+          <span>{{ 'LOCATION_JEDDAH' | translate }}</span>
+        </li>
+      </ul>
+    </div>
 
   </div>
-  <!-- Bottom Bar -->
-  <div class="footer-bottom-bar">
-    <p>Copyright © 2026, Saadbqami. All Rights Reserved.</p>
-  </div>
+  <p class="endDesc">{{ 'COPYRIGHT_TEXT' | translate }}</p>
 </section>

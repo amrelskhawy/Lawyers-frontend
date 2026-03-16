@@ -55,13 +55,12 @@ $error-red: #ef4444;
 .login-card .brand-header {
   text-align: center;
   margin-bottom: 1.5rem;
-  position: relative; // Context for absolute button
+  position: relative;
 }
 
 .home-nav {
-  position: absolute;
-  top: -10px;
-  right: -10px; // LTR/RTL might need adjustment (using right for RTL since direction is likely RTL)
+display: flex;
+justify-content: space-between;
 }
 
 .btn-home {
