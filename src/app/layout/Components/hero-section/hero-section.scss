@@ -1,51 +1,43 @@
 @use '../../../../styles' as *;
 
+// Variables / Mixins for easier updates
+$border-radius-lg: 150px;
+$border-radius-sm: 80px;
+
 .hero-section {
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 80vh;
-
   max-height: 1000px;
-
   font-size: 30px;
   color: var(--white-color);
-}
 
-@media (max-width: 750px) {
-  .hero-section {
-    font-size: 20px !important;
+  // Tablet & Mobile combined logic
+  @media (max-width: 1200px) {
+    flex-direction: column-reverse;
+    justify-content: center;
+    height: auto;
+    padding: 40px 0;
+    text-align: center;
+    font-size: 20px;
+  }
+
+  @media (max-width: 767px) {
+    font-size: 10px;
   }
 }
 
 .overlay {
   position: relative;
-  background-image: url('/assets/Img/court-justice-scales-gavel-generative-ai_74760-4832.avif');
-  background-size: 100% 100%;
-  object-fit: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-
   z-index: 1;
+  background: url('/assets/Img/court-justice-scales-gavel-generative-ai_74760-4832.avif') center/cover no-repeat;
 
   &::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0; // Shorthand for top/left/right/bottom: 0
     background-color: rgb(47 45 45 / 50%);
-    z-index: -1;
-  }
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     z-index: -1;
@@ -53,138 +45,73 @@
 }
 
 .title-hero-section {
-  button {
-    background: linear-gradient(90deg, #b5a863 0%, #8b7a3a 100%);
-    color: var(--white-color);
-    @include button(240px);
-    border-radius: 40px;
-    font-size: 15px;
-    margin-top: 20px;
+  h2 {
+    margin-bottom: 20px;
+    @media (max-width: 1200px) { font-size: 2rem; }
+    @media (max-width: 767px) { font-size: 20px; }
   }
 
   .title_span {
     color: var(--accent-gold);
   }
 
-  h2 {
-    margin-bottom: 20px;
-  }
-}
+  button {
+    @include button(240px);
+    background: linear-gradient(90deg, #b5a863 0%, #8b7a3a 100%);
+    color: var(--white-color);
+    border-radius: 40px;
+    font-size: 15px;
+    margin-top: 20px;
 
-h6 {
-  font-size: 18px;
-}
-
-.img-hero-section {
-  position: relative;
-
-  img {
-    height: 350px;
-    width: 350px;
-    border-top-right-radius: 150px;
-    border-bottom-left-radius: 150px;
-  }
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    width: 100%;
-    height: 95%;
-    border: 4px solid var(--accent-gold);
-    border-top-right-radius: 150px;
-    border-bottom-left-radius: 150px;
-    z-index: -1;
-  }
-}
-
-.imges {
-  position: relative;
-}
-
-@media (min-width: 767px) and (max-width: 1200px) {
-  .hero-section {
-    flex-direction: column-reverse; // Stack: Image bottom, Text top (or vice versa depending on design)
-    justify-content: center;
-    height: auto;
-    padding: 40px 0;
-    text-align: center;
-  }
-
-  .img-hero-section {
-    margin-bottom: 30px; // Space between image and text
-
-    img {
-      display: block; // Show image!
-      width: 250px;
-      height: 250px;
-      margin: 0 auto;
-    }
-
-    &::before {
-      width: 100%;
-      height: 95%;
-      top: -5px;
-      right: -5px;
-    }
-
-    // .logo {
-    //   top: -20px !important; // Adjust logo position
-    //   left: 10px !important;
-    //   height: 80px !important;
-    //   width: 80px !important;
-    // }
-  }
-
-  .title-hero-section {
-    text-align: center;
-
-    h2 {
-      font-size: 2rem; // Smaller font
-      margin-bottom: 20px;
-    }
-
-    p {
-      font-size: 1rem;
-      padding: 0 15px;
-    }
-
-    button {
+    @media (max-width: 1200px) {
       width: 100%;
       max-width: 280px;
     }
   }
 }
 
+h6 {
+  font-size: 18px;
+  @media (max-width: 767px) { font-size: 15px; }
+}
 
+.img-hero-section {
+  position: relative;
+  margin-bottom: 30px;
 
-
-
-@media (max-width: 767px) {
-.hero-section {
-    flex-direction: column-reverse; // Stack: Image bottom, Text top (or vice versa depending on design)
-    justify-content: center;
-    height: auto;
-    padding: 40px 0;
-    text-align: center;
-  }
-
-
-
-  .hero-section {
-    font-size: 10px !important;
-  }
   img {
-    width: 230px !important;
-    height: 230px !important;
+    height: 350px;
+    width: 350px;
+    border-top-right-radius: $border-radius-lg;
+    border-bottom-left-radius: $border-radius-lg;
+    object-fit: cover;
+
+    @media (max-width: 1200px) {
+      width: 230px;
+      height: 230px;
+      border-top-right-radius: $border-radius-sm;
+      border-bottom-left-radius: $border-radius-sm;
+      margin: 0 auto;
+      display: block;
+    }
   }
 
-  h2 {
-    font-size: 20px !important;
-  }
+  &::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 100%;
+    height: 95%;
+    border: 4px solid var(--accent-gold);
+    border-top-right-radius: $border-radius-lg;
+    border-bottom-left-radius: $border-radius-lg;
+    z-index: -1;
 
-  h6 {
-    font-size: 15px !important;
+    @media (max-width: 1200px) {
+      border-width: 2px;
+      border-top-right-radius: $border-radius-sm;
+      border-bottom-left-radius: $border-radius-sm;
+    }
   }
 }
