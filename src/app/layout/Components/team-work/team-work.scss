@@ -94,10 +94,10 @@
 
   .members-flex {
     display: flex;
-    direction: ltr; // Force LTR for predictable infinite scroll logic
+    width: max-content;
     gap: 30px;
-    // padding: 20px 30px 20px 0; // Padding-right (30px) balances the gaps for perfect -50% loop
-    animation: teamScroll 10s linear infinite;
+    padding-left: 30px; // Padding on the left balances the gaps for an RTL +50% loop
+    animation: teamScroll 25s linear infinite; // Increased duration for smoother scroll
     will-change: transform;
     backface-visibility: hidden;
 
@@ -148,7 +148,6 @@
   background: #fff;
   border: 1px solid rgba(0, 0, 0, 0.04);
   box-shadow: 0 15px 45px rgba(0, 0, 0, 0.06);
-  direction: rtl; // Restore RTL for Arabic text content
 }
 
 .member-image-box {
@@ -209,7 +208,7 @@
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translateX(50%); /* Positive moves to the right, creating seamless RTL scroll */
   }
 }
 
@@ -255,6 +254,7 @@
     
     .members-flex {
       gap: 15px;
+      padding-left: 15px;
     }
   }
 
@@ -281,11 +281,12 @@
   
   .member-name {
     font-size: 18px !important;
-    margin-bottom: 4px;
+    
   }
 
   .member-position {
-    font-size: 13px !important;
+    font-size: 10px !important;
+    margin-top: -5px !important;
   }
 
   .member-details {
