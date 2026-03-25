@@ -12,7 +12,7 @@ export class Reservations implements OnInit {
   constructor(
     private data: Data,
     public bookingService: BookingService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getData();
@@ -71,7 +71,7 @@ export class Reservations implements OnInit {
   }
 
   onPayment(valuepayment: string) {
-    this.bookingService.getControl('Provider')?.patchValue(valuepayment);
+    this.bookingService.getControl('provider')?.patchValue(valuepayment);
     this.bookingService.currentStep.set(5);
     setTimeout(() => this.scrollToSection(), 0);
   }

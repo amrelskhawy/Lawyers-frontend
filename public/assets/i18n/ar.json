@@ -239,6 +239,8 @@
     "PUBLIC_DATA_RETRIEVED_SUCCESS": "تم استرداد البيانات العامة بنجاح",
     "RESPONSE_GENERATED_SUCCESS": "تم إنشاء الاستجابة بنجاح",
     "CHAT_SUCCESS": "نجاح الدردشة",
-    "SERVER_ERROR": "خطأ في الخادم"
+    "SERVER_ERROR": "خطأ في الخادم",
+    "AM": "صباحاً",
+    "PM": "مساءً"
   }
 }

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output, signal, effect } from '@angular/core';
 import { Data } from '../../core/Servies/data';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-footer',
@@ -8,7 +9,7 @@ import { Data } from '../../core/Servies/data';
   styleUrls: ['./footer.scss'],
 })
 export class Footer implements OnInit {
-  constructor(private Data: Data) {
+  constructor(private Data: Data, private translate: TranslateService) {
     effect(() => {
       const publicData = this.Data.publicData();
       if (publicData && publicData.workingDays) {
@@ -70,7 +71,7 @@ export class Footer implements OnInit {
   private formatTo12Hour(time: string): string {
     if (!time) return '';
     const [hours, minutes] = time.split(':').map(Number);
-    const period = hours >= 12 ? 'PM' : 'AM';
+    const period = this.translate.instant(hours >= 12 ? 'PM' : 'AM');
     const displayHours = hours % 12 || 12;
     return `${displayHours}:${minutes.toString().padStart(2, '0')} ${period}`;
   }

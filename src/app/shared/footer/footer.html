@@ -48,7 +48,7 @@
         <li class="day-item">
           <span class="day-name">{{ item.translationKey | translate }}</span>
           @if(item.status === 'Open') {
-          <span class="day-time">{{ item.startTime }} - {{ item.endTime }}</span>
+          <span class="day-time" dir="ltr">{{ item.startTime }} - {{ item.endTime }}</span>
           } @else {
           <span class="day-time closed-status">{{ 'work_holidays' | translate }}</span>
           }
