@@ -53,8 +53,8 @@ export class Footer implements OnInit {
       return {
         ...item,
         translationKey: dayTranslationKeys[item.day] || item.day,
-        startTime: isClosed ? '00' : item.startTime,
-        endTime: isClosed ? '00' : item.endTime,
+        startTime: isClosed ? '00' : this.formatTo12Hour(item.startTime),
+        endTime: isClosed ? '00' : this.formatTo12Hour(item.endTime),
         status: isClosed ? 'Closed' : 'Open',
       };
     });
@@ -65,5 +65,13 @@ export class Footer implements OnInit {
     });
 
     this.data.set(formattedData);
+  }
+
+  private formatTo12Hour(time: string): string {
+    if (!time) return '';
+    const [hours, minutes] = time.split(':').map(Number);
+    const period = hours >= 12 ? 'PM' : 'AM';
+    const displayHours = hours % 12 || 12;
+    return `${displayHours}:${minutes.toString().padStart(2, '0')} ${period}`;
   }
 }
