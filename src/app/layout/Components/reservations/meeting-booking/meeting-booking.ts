@@ -2,6 +2,7 @@
 import { Component, EventEmitter, OnInit, Output, signal, Input } from '@angular/core';
 import { Data } from '../../../../core/Servies/data';
 import { BookingService } from '../booking.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-meeting-booking',
@@ -12,7 +13,8 @@ import { BookingService } from '../booking.service';
 export class MeetingBooking implements OnInit {
   constructor(
     private dataService: Data,
-    public bookingService: BookingService
+    public bookingService: BookingService,
+    private translate: TranslateService
   ) { }
 
   private dateSub: any;
@@ -76,6 +78,14 @@ export class MeetingBooking implements OnInit {
       return;
     }
     this.DateClient.emit(this.bookingService.bookingForm().value);
+  }
+
+  formatTime(time: string): string {
+    const [h, m] = time.split(':').map(Number);
+    const periodKey = h >= 12 ? 'PM' : 'AM';
+    const hour = h % 12 || 12;
+    const period = this.translate.instant(periodKey);
+    return `${hour.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')} ${period}`;
   }
 
   getControlName(controlName: string) {

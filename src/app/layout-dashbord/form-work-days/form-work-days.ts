@@ -1,5 +1,5 @@
 import { Core } from './../../core/Servies/core';
-import { debounceTime, Subject } from 'rxjs';
+
 import { Data } from './../../core/Servies/data';
 import { Component, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
 
@@ -66,39 +66,15 @@ export class FormWorkDays implements OnInit {
 
 
 
-convertTo12Hour(time: string) {
-  if (!time) return "";
-  let [hours, minutes] = time.split(':').map(Number);
-  hours = hours % 12 || 12;
-  const paddedHours = hours.toString().padStart(2, '0');
-  return `${paddedHours}:${minutes.toString().padStart(2, '0')}`;
-}
-
 onSubmitData() {
-  const formattedData = this.data().map((day: any) => ({
-    ...day,
-    startTime: this.convertTo12Hour(day.startTime),
-    endTime: this.convertTo12Hour(day.endTime)
-  }));
-
   const payload = {
-    data: formattedData,
+    data: this.data(),
   };
 
   this.Data.patch('workdays', payload).subscribe({
     next: (res) => {
-      console.log('Payload Sent:', payload);
     },
   });
 }
 
-  // onSubmitData() {
-  //   const payload = {
-  //     data: this.data(),
-  //   };
-  //   this.Data.patch('workdays', payload).subscribe({
-  //     next: (res) => {
-  //     },
-  //   });
-  // }
 }

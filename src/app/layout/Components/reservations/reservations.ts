@@ -12,7 +12,7 @@ export class Reservations implements OnInit {
   constructor(
     private data: Data,
     public bookingService: BookingService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getData();
@@ -22,10 +22,44 @@ export class Reservations implements OnInit {
     this.data.getPublicData().subscribe((res: any) => {
       this.bookingService.dataservies.set(res.data.services);
       this.bookingService.workdays.set(res.data.workingDays);
-      const holidaysApi = res.data.holidays;
-      const formattedDates = holidaysApi.map((item: any) => new Date(item.date));
-      this.bookingService.disabledDates.set(formattedDates);
+
+      const holidayDates = res.data.holidays.map((item: any) => new Date(item.date));
+      const closedDayDates = this.getClosedDayDates(res.data.workingDays);
+
+      this.bookingService.disabledDates.set([...holidayDates, ...closedDayDates]);
     });
+  }
+
+  private getClosedDayDates(workingDays: any[]): Date[] {
+    const dayNameToIndex: { [key: string]: number } = {
+      'Sunday': 0, 'Monday': 1, 'Tuesday': 2, 'Wednesday': 3,
+      'Thursday': 4, 'Friday': 5, 'Saturday': 6,
+    };
+
+    const closedDayIndices = workingDays
+      .filter((d: any) => !d.isOpen)
+      .map((d: any) => dayNameToIndex[d.day])
+      .filter((i: number) => i !== undefined);
+
+    if (closedDayIndices.length === 0) return [];
+
+    const dates: Date[] = [];
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // Generate closed dates for the next 6 months
+    const end = new Date(today);
+    end.setMonth(end.getMonth() + 6);
+
+    const current = new Date(today);
+    while (current <= end) {
+      if (closedDayIndices.includes(current.getDay())) {
+        dates.push(new Date(current));
+      }
+      current.setDate(current.getDate() + 1);
+    }
+
+    return dates;
   }
 
   onselectServies(event: any) {
@@ -37,7 +71,7 @@ export class Reservations implements OnInit {
   }
 
   onPayment(valuepayment: string) {
-    this.bookingService.getControl('Provider')?.patchValue(valuepayment);
+    this.bookingService.getControl('provider')?.patchValue(valuepayment);
     this.bookingService.currentStep.set(5);
     setTimeout(() => this.scrollToSection(), 0);
   }

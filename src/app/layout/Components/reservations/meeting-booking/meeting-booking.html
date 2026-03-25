@@ -30,8 +30,8 @@
                 'selected-time': slot.startTime == selectedTime(),
                 'slot-unavailable': !slot.available
               }">
-        <span class="slot-time">
-          {{ slot.startTime }} - {{ slot.endTime}}
+        <span class="slot-time" dir="ltr">
+          {{ formatTime(slot.startTime) }} - {{ formatTime(slot.endTime) }}
         </span>
         <span class="slot-status">
           {{ slot.available ? ('AVAILABLE' | translate) : ('BOOKED' | translate) }}

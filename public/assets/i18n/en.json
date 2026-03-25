@@ -239,6 +239,8 @@
     "PUBLIC_DATA_RETRIEVED_SUCCESS": "Public data retrieved successfully",
     "RESPONSE_GENERATED_SUCCESS": "Response generated successfully",
     "CHAT_SUCCESS": "CHAT SUCCESS",
-    "SERVER_ERROR": "Server Error"
+    "SERVER_ERROR": "Server Error",
+    "AM": "AM",
+    "PM": "PM"
   }
 }
