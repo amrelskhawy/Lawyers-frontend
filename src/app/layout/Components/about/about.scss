@@ -184,6 +184,19 @@
   .img-about-container {
     transform: scale(0.75);
   }
+
+  .about-text-container {
+    padding: 0 10px;
+
+    p {
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    ul li {
+      font-size: 0.85rem !important;
+    }
+  }
 }
 
 @media (max-width: 400px) {

@@ -31,6 +31,7 @@ $border-radius-sm: 80px;
 .overlay {
   position: relative;
   z-index: 1;
+  overflow: hidden;
   background: url('/assets/Img/court-justice-scales-gavel-generative-ai_74760-4832.avif') center/cover no-repeat;
 
   &::before {

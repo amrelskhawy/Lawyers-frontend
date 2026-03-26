@@ -37,7 +37,7 @@ $gray-text: #64748b;
     position: absolute;
     bottom: 0;
     right: 0;
-    
+
     :host-context([dir='rtl']) & {
       right: auto;
       left: 0;
@@ -58,14 +58,14 @@ $gray-text: #64748b;
   // Chat Window Panel
   .chatbot-window {
     position: absolute;
-    bottom: 85px;  // above FAB
+    bottom: 85px; // above FAB
     right: 0;
     width: 360px;
     height: 600px;
     max-height: calc(100vh - 120px);
     background-color: $white;
     border-radius: 20px;
-    box-shadow: 0 12px 40px -10px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0,0,0,0.05);
+    box-shadow: 0 12px 40px -10px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.05);
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -88,12 +88,74 @@ $gray-text: #64748b;
     }
 
     @media (max-width: 480px) {
-      width: calc(100vw - 48px);
+      width: calc(100vw - 30px);
       position: fixed;
-      left: 24px;
-      right: 24px;
-      bottom: 100px;
-      height: calc(100vh - 140px);
+      left: 15px;
+      right: 15px;
+      bottom: 65px;
+      height: 65vh;
+      max-height: 700px;
+      border-radius: 16px;
+
+      .chat-header {
+        padding: 0.7rem 1rem;
+
+        .header-info {
+          gap: 0.5rem;
+
+          .support-avatar {
+            width: 32px;
+            height: 32px;
+            font-size: 0.9rem;
+          }
+
+          .header-text h4 {
+            font-size: 0.9rem;
+          }
+
+          .header-text span {
+            font-size: 0.7rem;
+          }
+        }
+
+        .btn-close {
+          width: 28px;
+          height: 28px;
+        }
+      }
+
+      .chat-messages-container {
+        padding: 0.75rem;
+        gap: 0.75rem;
+
+        .message-bubble {
+
+          &.system-welcome,
+          &.bot-response,
+          &.user-message {
+            padding: 0.7rem 0.9rem;
+            font-size: 0.85rem;
+          }
+        }
+      }
+
+      .chat-input-area {
+        padding: 0.5rem 0.75rem;
+
+        .input-wrapper {
+          padding: 0.25rem 0.25rem 0.25rem 0.85rem;
+
+          input {
+            font-size: 0.85rem;
+            padding: 0.35rem 0.2rem;
+          }
+
+          .btn-send {
+            width: 34px;
+            height: 34px;
+          }
+        }
+      }
     }
 
     // Header Area
@@ -131,13 +193,14 @@ $gray-text: #64748b;
             font-size: 1.1rem;
             font-weight: 600;
           }
+
           span {
             font-size: 0.8rem;
             color: rgba($white, 0.7);
             display: flex;
             align-items: center;
             gap: 0.25rem;
-            
+
             &::before {
               content: '';
               display: inline-block;
@@ -162,7 +225,7 @@ $gray-text: #64748b;
         justify-content: center;
         cursor: pointer;
         transition: all 0.2s;
-        
+
         &:hover {
           background: rgba($white, 0.2);
           transform: rotate(90deg);
@@ -184,9 +247,11 @@ $gray-text: #64748b;
       &::-webkit-scrollbar {
         width: 6px;
       }
+
       &::-webkit-scrollbar-track {
         background: transparent;
       }
+
       &::-webkit-scrollbar-thumb {
         background: rgba($gray-text, 0.2);
         border-radius: 10px;
@@ -195,7 +260,7 @@ $gray-text: #64748b;
       .message-bubble {
         max-width: 85%;
         animation: fadeIn 0.4s ease-out;
-        
+
         &.system-welcome {
           align-self: flex-start;
           background-color: $white;
@@ -203,7 +268,7 @@ $gray-text: #64748b;
           padding: 1rem 1.25rem;
           border-radius: 12px;
           border-top-left-radius: 4px;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
           color: $primary-navy;
           font-weight: 500;
           font-size: 0.95rem;
@@ -229,7 +294,7 @@ $gray-text: #64748b;
           padding: 1rem 1.25rem;
           border-radius: 12px;
           border-top-left-radius: 4px;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
           color: $primary-navy;
           font-weight: 500;
           font-size: 0.95rem;
@@ -244,16 +309,17 @@ $gray-text: #64748b;
           p {
             margin: 0 0 0.5rem 0;
             line-height: 1.6;
-            
+
             &:last-child {
               margin-bottom: 0;
             }
           }
 
-          ul, ol {
+          ul,
+          ol {
             margin: 0.5rem 0;
             padding-left: 1.5rem;
-            
+
             :host-context([dir='rtl']) & {
               padding-left: 0;
               padding-right: 1.5rem;
@@ -316,10 +382,11 @@ $gray-text: #64748b;
           border-radius: 16px;
           font-size: 0.95rem;
           line-height: 1.5;
-          box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
           word-break: break-word;
-          
-          &:not(.user) { // Bot format 
+
+          &:not(.user) {
+            // Bot format 
             align-self: flex-start;
             background-color: $white;
             color: $primary-navy;
@@ -332,7 +399,8 @@ $gray-text: #64748b;
             }
           }
 
-          &.user { // Assuming you add class 'user' to user texts
+          &.user {
+            // Assuming you add class 'user' to user texts
             align-self: flex-end;
             background: linear-gradient(135deg, $accent-gold 0%, $accent-gold-dark 100%);
             color: $white;
@@ -372,7 +440,7 @@ $gray-text: #64748b;
         padding: 0.85rem 1.25rem;
         border-radius: 16px;
         border-bottom-left-radius: 4px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
 
         :host-context([dir='rtl']) & {
           border-bottom-left-radius: 16px;
@@ -391,9 +459,17 @@ $gray-text: #64748b;
             background: $accent-gold;
             animation: modernTyping 1.4s infinite ease-in-out both;
 
-            &:nth-child(1) { animation-delay: -0.32s; }
-            &:nth-child(2) { animation-delay: -0.16s; }
-            &:nth-child(3) { animation-delay: 0s; }
+            &:nth-child(1) {
+              animation-delay: -0.32s;
+            }
+
+            &:nth-child(2) {
+              animation-delay: -0.16s;
+            }
+
+            &:nth-child(3) {
+              animation-delay: 0s;
+            }
           }
         }
       }
@@ -452,7 +528,7 @@ $gray-text: #64748b;
           cursor: pointer;
           transition: all 0.2s;
           margin-left: 0.5rem;
-          
+
           :host-context([dir='rtl']) & {
             margin-left: 0;
             margin-right: 0.5rem;
@@ -462,7 +538,7 @@ $gray-text: #64748b;
           &:hover {
             background: $accent-gold-dark;
             transform: scale(1.05);
-            
+
             :host-context([dir='rtl']) & {
               transform: scale(-1.05, 1.05); // preserve flip on hover
             }
@@ -470,7 +546,7 @@ $gray-text: #64748b;
 
           &:active {
             transform: scale(0.95);
-            
+
             :host-context([dir='rtl']) & {
               transform: scale(-0.95, 0.95); // preserve flip on active
             }
@@ -481,13 +557,43 @@ $gray-text: #64748b;
   }
 }
 
+@media (max-width: 768px) {
+  .modern-chatbot-wrapper {
+    bottom: 10px;
+    right: 10px;
+
+    .chatbot-fab {
+      width: 45px;
+      height: 45px;
+      font-size: 1.1rem;
+    }
+  }
+}
+
 // Animations
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes modernTyping {
-  0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
-  40% { transform: scale(1); opacity: 1; }
+
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
