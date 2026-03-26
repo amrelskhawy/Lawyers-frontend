@@ -23,6 +23,7 @@ export class Footer implements OnInit {
 
   @Output() EventRoute = new EventEmitter<string>();
   data = signal<any[]>([]);
+  currentYear = new Date().getFullYear();
   onClickListActive(route: string) {
     this.EventRoute.emit(route);
   }

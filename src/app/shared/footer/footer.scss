@@ -289,6 +289,16 @@
   border-top: 1px solid rgba(255, 255, 255, 0.05);
   position: relative;
   z-index: 2;
+
+  .copyright-company {
+    margin: 0;
+  }
+
+  .copyright-rights {
+    margin: 4px 0 0;
+    font-size: 0.8rem;
+    opacity: 0.8;
+  }
 }
 
 @media (max-width: 1400px) {
@@ -345,8 +355,31 @@
 
     .footer-info {
       align-items: center;
+
+      .footer-logo {
+        width: 160px;
+      }
+
+      .company-desc p {
+        font-size: 0.85rem;
+      }
+
+      .footer-slogan {
+        font-size: 1rem !important;
+      }
+
       .social-links {
+        display: grid;
+        grid-template-columns: repeat(4, 38px);
         justify-content: center;
+        gap: 10px;
+
+        a {
+          width: 38px;
+          height: 38px;
+          border-radius: 8px;
+          font-size: 0.9rem;
+        }
       }
     }
 
@@ -354,12 +387,23 @@
       justify-content: center;
       margin-top: 10px;
     }
+
+    .scroll-top-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+
+      i {
+        font-size: 1rem;
+      }
+    }
   }
 
   .endDesc {
-    margin-top: 50px;
-    padding: 20px 10px;
-    font-size: 0.8rem;
+    margin-top: 40px;
+    padding: 16px 15px;
+    font-size: 0.75rem;
+    line-height: 1.6;
   }
 
   .footer-column {
@@ -375,6 +419,28 @@
     }
     .day-time {
       font-size: 0.85rem;
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .Content-footer .footer-info .social-links {
+    grid-template-columns: repeat(4, 34px);
+    gap: 8px;
+
+    a {
+      width: 34px;
+      height: 34px;
+      font-size: 0.8rem;
+    }
+  }
+
+  .endDesc {
+    font-size: 0.7rem;
+    padding: 14px 10px;
+
+    .copyright-rights {
+      font-size: 0.65rem;
     }
   }
 }
