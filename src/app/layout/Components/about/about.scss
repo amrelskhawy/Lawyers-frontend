@@ -7,7 +7,7 @@
   align-items: center;
   background-size: 100% 100%;
   background-repeat: no-repeat;
-
+  overflow: hidden;
 }
 
 .img-about-container {
@@ -182,6 +182,12 @@
 
 @media (max-width: 576px) {
   .img-about-container {
-    transform: scale(0.9); // Scale down slightly more for very small screens
+    transform: scale(0.75);
+  }
+}
+
+@media (max-width: 400px) {
+  .img-about-container {
+    transform: scale(0.65);
   }
 }
