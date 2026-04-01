@@ -1,0 +1,80 @@
+
+/***********************************Anmations**********************************/
+@keyframes customFadeInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.my-enter-animation {
+  animation: customFadeInLeft 1s forwards !important;
+}
+
+.my-leave-animation {
+  opacity: 0 !important;
+}
+
+@keyframes customFadeInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.my-enter-right {
+  animation: customFadeInRight 1s forwards !important;
+}
+
+@keyframes customFadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.my-enter-top {
+  animation: customFadeInDown 1s forwards !important;
+}
+
+.my-leave-animation {
+  opacity: 0 !important;
+  transition: opacity 0.5s;
+}
+
+@keyframes customZoomIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.my-enter-zoom {
+  animation: customZoomIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards !important;
+}
+
+.my-leave-animation {
+  opacity: 0 !important;
+  transition: opacity 0.5s;
+}
+/***********************************Anmations**********************************/
