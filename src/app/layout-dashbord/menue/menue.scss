@@ -134,10 +134,9 @@
   }
 
   &.active {
-    background-color: var(--accent-gold);
-    color: var(--white-color);
-    box-shadow: 0 4px 12px rgba(196, 161, 99, 0.2);
-
+    background-color: #8b733d !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 10px rgba(139, 115, 61, 0.2);
     .nav-icon {
       color: var(--accent-gold);
       background-color: var(--white-color);
@@ -172,9 +171,10 @@
   }
 
   .work-btn {
-    background-color: var(--bg-cream-light);
-    color: var(--accent-gold);
-    border: 1px dashed var(--accent-gold);
+    background-color: #f9f7f2;
+    color: #745e2d !important;
+    border: 2px dashed #745e2d !important;
+    font-weight: bold !important;
 
     &:hover {
       background-color: var(--accent-gold);
@@ -184,8 +184,8 @@
   }
 
   .logout-btn {
-    background-color: var(--primary-navy);
-    color: var(--white-color);
+    background-color: #19142e !important;
+    color: #ffffff !important;
 
     &:hover {
       background-color: #e63946;
