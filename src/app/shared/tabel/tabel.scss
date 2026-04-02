@@ -21,13 +21,23 @@ th {
 }
 
 .admin-badge {
-  background-color: var(--mint-whisper);
-  color: var(--seafoam-green);
-  text-align: center;
+   text-align: center;
+  background-color: var(--color-mint-light);
+    color: var(--color-forest-dark);
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: 1px solid rgba(21, 87, 36, 0.2);
 }
 
 .moderator-badge {
-  background-color: var(--state-attention-soft);
-  color: var(--state-attention);
+  background-color: var(--color-info-bg);
+  color: var(--color-info-text);
+  font-weight: bold;
+  padding: 4px 12px;
+  border-radius: 6px;
+  display: inline-block;
+  font-size: 12px;
   text-align: center;
+  border: 1px solid rgba(0, 64, 133, 0.1);
 }
