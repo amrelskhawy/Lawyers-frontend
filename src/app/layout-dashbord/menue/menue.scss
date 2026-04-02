@@ -178,7 +178,7 @@
 
     &:hover {
       background-color: var(--accent-gold);
-      color: var(--white-color);
+      color: var(--white-color) !important;
       border-style: solid;
     }
   }
