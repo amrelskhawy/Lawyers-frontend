@@ -10,16 +10,16 @@
 
   <div class="content-servies-booking">
     @for (item of servise(); track item.id) {
-    <button [ngClass]="{ 'active-servies': item.id == selectServies().id }" class="card" (click)="onSelctServies(item)">
+    <button [attr.aria-label]="item.name_en | translate"  [ngClass]="{ 'active-servies': item.id == selectServies().id }" class="card" (click)="onSelctServies(item)">
       <div class="check-badge" *ngIf="item.id == selectServies().id">
         <i *ngIf="item.id == selectServies().id" class="fa-solid fa-circle-check"></i>
       </div>
-      <img height="80" width="80" src="/assets/Img/unnamed.jpg" />
+      <img height="80" width="80" src="/assets/Img/unnamed.jpg" alt="img Servies"/>
       <p>{{ getCurrentLanguage() == 'ar' ? item.name_ar : item.name_en }}</p>
     </button>
     }
   </div>
-  <button (click)="onNextStep()" class="next-btn">{{ 'NEXT_BTN' | translate }}</button>
+  <button [attr.aria-label]=" 'NEXT_BTN' | translate" (click)="onNextStep()" class="next-btn">{{ 'NEXT_BTN' | translate }}</button>
 </div>
 }@else {
     <app-no-data></app-no-data>
