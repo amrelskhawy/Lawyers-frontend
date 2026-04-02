@@ -15,14 +15,15 @@ export class App implements OnInit {
   constructor(
     private router: Router,
     private meta: Meta,
-    private translate: TranslateService
+    private translate: TranslateService,
   ) {}
 
   ngOnInit(): void {
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe(() => {
-      this.scrollToTop();
+    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
+      setTimeout(() => {
+        this.scrollToTop();
+        this.IntialContentPage();
+      }, 0);
     });
     this.IntialContentPage();
   }
@@ -34,11 +35,11 @@ export class App implements OnInit {
 
   IntialContentPage() {
     this.translate.get('HOME_META_DESCRIPTION').subscribe((translatedText: string) => {
+      this.meta.removeTag("name='description'");
       this.meta.updateTag({
         name: 'description',
-        content: translatedText
+        content: translatedText,
       });
-
     });
   }
 }
