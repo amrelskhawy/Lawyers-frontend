@@ -1,4 +1,5 @@
 @use '../../../../styles' as *;
+@use '../../Anmitions.scss' as *;
 
 
 .team-section {
@@ -114,7 +115,7 @@
   height: 400px;
   transition: all 0.9s cubic-bezier(0.2, 1, 0.2, 1);
   cursor: pointer;
-  
+
   filter: grayscale(0.8);
   &:hover {
     // flex: 0 0 680px;
@@ -132,8 +133,8 @@
     }
     .member-card {
       border-radius: 40px;
-      
-      
+
+
     }
   }
 }
@@ -251,7 +252,7 @@
   .team-flex-container {
     mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
     -webkit-mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
-    
+
     .members-flex {
       gap: 15px;
       padding-left: 15px;
@@ -268,20 +269,20 @@
       .member-details {
         transform: translate(-50%, -20px);
       }
-      
+
       .member-card {
         border-radius: 90px;
       }
     }
   }
-  
+
   .member-card {
     border-radius: 90px;
   }
-  
+
   .member-name {
     font-size: 18px !important;
-    
+
   }
 
   .member-position {
