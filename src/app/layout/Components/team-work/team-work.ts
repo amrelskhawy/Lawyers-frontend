@@ -9,13 +9,23 @@ import { Component, OnInit } from '@angular/core';
 export class TeamWork implements OnInit {
   teamMembers = [
     {
-      name: 'د سعد البقمي',
+      name: 'دكتور سعد البقمي',
       image: '/assets/Img/المؤسس والرئيس التنفيذي دسعد البقمي.jpeg',
       role: 'المؤسس والرئيس التنفيذي',
     },
     {
-      name: 'دكتور عبد الرحمن',
+      name: 'دكتور ناصر البقمي',
+      image: '',
+      role: 'المدير العام',
+    },
+    {
+      name: 'دكتور عبد الرحمن المرلى',
       image: '/assets/Img/دكتور عبد الرحمن.jpeg',
+      role: 'مستشار قانوني',
+    },
+    {
+      name: 'فتحي عبد الجليل',
+      image: '',
       role: 'مستشار قانوني',
     },
     {
@@ -26,27 +36,22 @@ export class TeamWork implements OnInit {
     {
       name: 'حلا البلبيسي',
       image: '/assets/Img/حلا البلبيسي.jpeg',
-      role: 'محامية',
+      role: 'مستشارة قانونية',
     },
     {
       name: 'عفاف الخشرمي',
       image: '/assets/Img/عفاف الخشرمي.jpeg',
-      role: 'مستشارة قانونية',
+      role: 'محامية',
     },
     {
       name: 'نور عز الدين',
       image: '/assets/Img/نور عز الدين.jpeg',
-      role: 'محامية',
+      role: 'مستشارة قانونية',
     },
     {
-      name: 'انار',
+      name: 'انار اجهوري',
       image: '/assets/Img/انار.jpeg',
-      role: 'مساعد قانوني',
-    },
-    {
-      name: 'جشيم',
-      image: '/assets/Img/جشيم.jpeg',
-      role: 'مساعد إداري',
+      role: 'محامية',
     },
     {
       name: 'محمد الخربوش',
@@ -56,13 +61,48 @@ export class TeamWork implements OnInit {
     {
       name: 'عمران الباشا',
       image: '/assets/Img/عمران الباشا.jpeg',
-      role: 'مترجم قانوني',
+      role: 'محامي',
     },
     {
       name: 'محمد خليل',
       image: '/assets/Img/mohamed-khalil.png',
-      role: 'مهندس برمجيات',
+      role: 'مدير التسويق',
     },
+    {
+      name: 'ريناد الفايز',
+      image: '',
+      role: 'محامية',
+    },
+    {
+      name: 'لجين عبدالصمد',
+      image: '',
+      role: 'محامية',
+    },
+    {
+      name: 'شاهر البقمي',
+      image: '',
+      role: 'محامي',
+    },
+    {
+      name: 'سعد البقمي',
+      image: '',
+      role: 'محامي',
+    },
+    {
+      name: 'المها الزهراني',
+      image: '',
+      role: 'محامية',
+    },
+    {
+      name: 'الجازي المطلق',
+      image: '',
+      role: 'محامي',
+    },
+    {
+      name: "جشيم ادين محمد",
+      image: '/assets/Img/جشيم.jpeg',
+      role: 'Tea Boy',
+    }
   ];
 
   responsiveOptions = [

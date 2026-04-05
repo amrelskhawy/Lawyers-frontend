@@ -132,8 +132,17 @@
     }
     .member-card {
       border-radius: 40px;
-      
-      
+    }
+  }
+
+  &.no-image {
+    .member-details {
+      opacity: 1;
+      transform: translate(-50%, -40px);
+    }
+
+    .image-overlay {
+      opacity: 1;
     }
   }
 }
@@ -162,6 +171,21 @@
     object-fit: cover;
     object-position: center 10%;
     transition: transform 1.5s ease;
+  }
+
+  .member-photo-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary-navy), #2c3e6b);
+
+    .placeholder-icon {
+      width: 80px;
+      height: 80px;
+      color: rgba(255, 255, 255, 0.6);
+    }
   }
 
   .image-overlay {
