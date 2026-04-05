@@ -19,9 +19,15 @@
             {{ getServiceDescription(service) }}
           </p>
 
-          <div class="read-more-wrapper">
-            <a class="font-semibold text-sm">{{ 'read_more' | translate }}</a>
-            <i class="fa-solid fa-arrow-left"></i>
+          <div class="card-actions">
+            <div class="read-more-wrapper" >
+              <a class="font-semibold text-sm">{{ 'read_more' | translate }}</a>
+              <i class="fa-solid fa-arrow-left"></i>
+            </div>
+            <button class="book-now-btn" (click)="bookService($event, service)">
+              {{ 'book_now' | translate }}
+              <i class="fa-solid fa-calendar-check"></i>
+            </button>
           </div>
         </div>
       </div>

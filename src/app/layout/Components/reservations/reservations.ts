@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Data } from '../../../core/Servies/data';
 import { BookingService } from './booking.service';
 
@@ -12,6 +13,7 @@ export class Reservations implements OnInit {
   constructor(
     private data: Data,
     public bookingService: BookingService,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
@@ -27,6 +29,17 @@ export class Reservations implements OnInit {
       const closedDayDates = this.getClosedDayDates(res.data.workingDays);
 
       this.bookingService.disabledDates.set([...holidayDates, ...closedDayDates]);
+
+      // Auto-select service if serviceId is passed via query param
+      this.route.queryParams.subscribe(params => {
+        const serviceId = params['serviceId'];
+        if (serviceId) {
+          const service = res.data.services.find((s: any) => s.id === serviceId);
+          if (service) {
+            this.onselectServies(service);
+          }
+        }
+      });
     });
   }
 

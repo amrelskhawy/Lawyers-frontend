@@ -81,6 +81,16 @@ position: relative;
     transition: color 0.3s ease;
   }
 
+  .service-price {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--accent-gold);
+    background: linear-gradient(135deg, #fffdf0 0%, #fff9e6 100%);
+    padding: 4px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(212, 175, 55, 0.15);
+  }
+
   img {
     border-radius: 12px;
     transition: transform 0.3s ease;

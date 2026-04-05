@@ -1,5 +1,6 @@
 import { Data } from './../../../core/Servies/data';
 import { Component, signal, effect } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-slider-serves',
@@ -8,7 +9,7 @@ import { Component, signal, effect } from '@angular/core';
   styleUrl: './slider-serves.scss',
 })
 export class SliderServes {
-  constructor(private Data: Data) {
+  constructor(private Data: Data, private router: Router) {
     effect(() => {
       const publicData = this.Data.publicData();
       if (publicData && publicData.services) {
@@ -81,5 +82,10 @@ export class SliderServes {
   showData(item: any) {
     this.visibelData.set(true)
     this.objData.set(item)
+  }
+
+  bookService(event: Event, service: any) {
+    event.stopPropagation();
+    this.router.navigate(['/booking'], { queryParams: { serviceId: service.id } });
   }
 }
