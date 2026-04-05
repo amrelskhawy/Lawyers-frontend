@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-team-work',
@@ -7,62 +8,151 @@ import { Component, OnInit } from '@angular/core';
   styleUrl: './team-work.scss',
 })
 export class TeamWork implements OnInit {
+  currentLang: string = 'en';
+
+  constructor(private translate: TranslateService) {}
+
+  ngOnInit() {
+    this.currentLang = this.translate.currentLang || this.translate.defaultLang || 'en';
+    this.translate.onLangChange.subscribe((event) => {
+      this.currentLang = event.lang;
+    });
+  }
+
   teamMembers = [
     {
-      name: 'د سعد البقمي',
-      image: '/assets/Img/المؤسس والرئيس التنفيذي دسعد البقمي.jpeg',
-      role: 'المؤسس والرئيس التنفيذي',
+      name_ar: 'دكتور سعد البقمي',
+      name_en: 'Dr. Saad Al-Baqami',
+      image: '/assets/Img/founder-ceo-dr-saad-albaqami.avif',
+      role_ar: 'المؤسس والرئيس التنفيذي',
+      role_en: 'Founder & CEO',
     },
     {
-      name: 'دكتور عبد الرحمن',
-      image: '/assets/Img/دكتور عبد الرحمن.jpeg',
-      role: 'مستشار قانوني',
+      name_ar: 'دكتور ناصر البقمي',
+      name_en: 'Dr. Nasser Al-Baqami',
+      image: '',
+      role_ar: 'المدير العام',
+      role_en: 'General Manager',
     },
     {
-      name: 'سعد الحارثي',
-      image: '/assets/Img/سعد الحارثي.jpeg',
-      role: 'محامي',
+      name_ar: 'دكتور عبد الرحمن المرلى',
+      name_en: 'Dr. Abdulrahman Al-Morla',
+      image: '/assets/Img/dr-abdulrahman.avif',
+      role_ar: 'مستشار قانوني',
+      role_en: 'Legal Consultant',
     },
     {
-      name: 'حلا البلبيسي',
-      image: '/assets/Img/حلا البلبيسي.jpeg',
-      role: 'محامية',
+      name_ar: 'فتحي عبد الجليل',
+      name_en: 'Fathi Abduljalil',
+      image: '',
+      role_ar: 'مستشار قانوني',
+      role_en: 'Legal Consultant',
     },
     {
-      name: 'عفاف الخشرمي',
-      image: '/assets/Img/عفاف الخشرمي.jpeg',
-      role: 'مستشارة قانونية',
+      name_ar: 'سعد الحارثي',
+      name_en: 'Saad Al-Harthi',
+      image: '/assets/Img/saad-alharthi.avif',
+      role_ar: 'محامي',
+      role_en: 'Lawyer',
     },
     {
-      name: 'نور عز الدين',
-      image: '/assets/Img/نور عز الدين.jpeg',
-      role: 'محامية',
+      name_ar: 'حلا البلبيسي',
+      name_en: 'Hala Al-Bulbaisi',
+      image: '/assets/Img/hala-albulbaisi.avif',
+      role_ar: 'مستشارة قانونية',
+      role_en: 'Legal Consultant',
     },
     {
-      name: 'انار',
-      image: '/assets/Img/انار.jpeg',
-      role: 'مساعد قانوني',
+      name_ar: 'عفاف الخشرمي',
+      name_en: 'Afaf Al-Khashrami',
+      image: '/assets/Img/afaf-alkhashrami.avif',
+      role_ar: 'محامية',
+      role_en: 'Lawyer',
     },
     {
-      name: 'جشيم',
-      image: '/assets/Img/جشيم.jpeg',
-      role: 'مساعد إداري',
+      name_ar: 'نور عز الدين',
+      name_en: 'Nour Ezz El-Din',
+      image: '/assets/Img/nour-ezzeldine.avif',
+      role_ar: 'مستشارة قانونية',
+      role_en: 'Legal Consultant',
     },
     {
-      name: 'محمد الخربوش',
-      image: '/assets/Img/محمد الخربوش.jpeg',
-      role: 'محامي',
+      name_ar: 'انار اجهوري',
+      name_en: 'Anar Ajhouri',
+      image: '/assets/Img/anar.avif',
+      role_ar: 'محامية',
+      role_en: 'Lawyer',
     },
     {
-      name: 'عمران الباشا',
-      image: '/assets/Img/عمران الباشا.jpeg',
-      role: 'مترجم قانوني',
+      name_ar: 'محمد الخربوش',
+      name_en: 'Mohammed Al-Kharboush',
+      image: '/assets/Img/mohammed-alkharboush.avif',
+      role_ar: 'محامي',
+      role_en: 'Lawyer',
     },
     {
-      name: 'محمد خليل',
-      image: '/assets/Img/mohamed-khalil.png',
-      role: 'مهندس برمجيات',
+      name_ar: 'عمران الباشا',
+      name_en: 'Imran Al-Basha',
+      image: '/assets/Img/imran-albasha.avif',
+      role_ar: 'محامي',
+      role_en: 'Lawyer',
     },
+    {
+      name_ar: 'محمد خليل',
+      name_en: 'Mohammed Khalil',
+      image: '/assets/Img/mohamed-khalil.avif',
+      role_ar: 'مدير التسويق',
+      role_en: 'Marketing Director',
+    },
+    {
+      name_ar: 'ريناد الفايز',
+      name_en: 'Rinad Al-Fayez',
+      image: '',
+      role_ar: 'محامية',
+      role_en: 'Lawyer',
+    },
+    {
+      name_ar: 'لجين عبدالصمد',
+      name_en: 'Lujain Abdulsamad',
+      image: '',
+      role_ar: 'محامية',
+      role_en: 'Lawyer',
+    },
+    {
+      name_ar: 'شاهر البقمي',
+      name_en: 'Shaher Al-Baqami',
+      image: '',
+      role_ar: 'محامي',
+      role_en: 'Lawyer',
+    },
+    {
+      name_ar: 'سعد البقمي',
+      name_en: 'Saad Al-Baqami',
+      image: '',
+      role_ar: 'محامي',
+      role_en: 'Lawyer',
+    },
+    {
+      name_ar: 'المها الزهراني',
+      name_en: 'Al-Maha Al-Zahrani',
+      image: '',
+      role_ar: 'محامية',
+      role_en: 'Lawyer',
+    },
+    {
+      name_ar: 'الجازي المطلق',
+      name_en: 'Al-Jazi Al-Mutlaq',
+      image: '',
+      role_ar: 'محامي',
+      role_en: 'Lawyer',
+    },
+    {
+      name_ar: 'جشيم ادين محمد',
+      name_en: 'Jashim Uddin Mohammed',
+      image: '/assets/Img/jashim.avif',
+      role_ar: 'Tea Boy',
+      role_en: 'Tea Boy',
+    }
   ];
 
   responsiveOptions = [
@@ -97,6 +187,4 @@ export class TeamWork implements OnInit {
       numScroll: 1,
     },
   ];
-
-  ngOnInit() { }
 }

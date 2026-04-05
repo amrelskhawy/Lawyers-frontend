@@ -1,7 +1,7 @@
 <div class="modern-chatbot-wrapper">
 
   <!-- Toggle Button -->
-  <button class="chatbot-fab" [class.is-hidden]="isOpen" (click)="toggleChat()">
+  <button [attr.aria-label]="'Toggle_CHAT' | translate" class="chatbot-fab" [class.is-hidden]="isOpen" (click)="toggleChat()">
     <div class="fab-icon">
       <i class="fa-solid fa-headset"></i>
     </div>
@@ -21,7 +21,7 @@
           <span>{{ "Online" | translate }}</span>
         </div>
       </div>
-      <button class="btn-close" (click)="toggleChat()">
+      <button [attr.aria-label]="'Close_CHAT' | translate" class="btn-close" (click)="toggleChat()">
         <i class="fa-solid fa-xmark"></i>
       </button>
     </div>
@@ -60,7 +60,7 @@
       <div class="input-wrapper" [class.is-disabled]="isLoading()">
         <input type="text" #msgInput placeholder="{{ 'Type_message' | translate }}"
           (keyup.enter)="!isLoading() && sendMessage(msgInput)" [disabled]="isLoading()" />
-        <button class="btn-send" [disabled]="isLoading()" (click)="sendMessage(msgInput)">
+        <button [attr.aria-label]="'Send_MESSAGE' | translate" class="btn-send" [disabled]="isLoading()" (click)="sendMessage(msgInput)">
           @if(isLoading()){
           <i class="fa-solid fa-spinner fa-spin"></i>
           } @else {

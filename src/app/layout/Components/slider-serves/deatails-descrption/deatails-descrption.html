@@ -7,6 +7,13 @@
         <h2>{{getcuurentLangauage()=="ar"?dataobj().name_ar:dataobj().name_en}}</h2>
       </div>
 
+      <div class="price-section">
+        <div class="price-badge">
+          <span class="price-value">{{ dataobj().price }}</span>
+          <span class="price-currency">﷼</span>
+        </div>
+      </div>
+
       <div class="content-body">
         <p>
           {{getcuurentLangauage()=="ar"?dataobj().description_ar:dataobj().description_en}}

@@ -1,4 +1,5 @@
 @use '../../../../styles' as *;
+@use '../../Anmitions.scss' as *;
 
 // Variables / Mixins for easier updates
 $border-radius-lg: 150px;
@@ -8,10 +9,11 @@ $border-radius-sm: 80px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 80vh;
-  max-height: 1000px;
+  // height: 80vh;
+   max-height: 1000px;
   font-size: 30px;
   color: var(--white-color);
+  min-height: 80vh;
 
   // Tablet & Mobile combined logic
   @media (max-width: 1200px) {

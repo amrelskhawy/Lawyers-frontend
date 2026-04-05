@@ -3,7 +3,10 @@
   <p-drawer #drawerRef [(visible)]="visible">
     <ng-template #headless>
       <div class="drawer-container">
-        <button class="close-btn" (click)="visible = false">
+        <button
+         class="close-btn"
+         [attr.aria-label]="'Toggle_MENU' | translate"
+          (click)="visible = false">
           <i class="fa-solid fa-xmark"></i>
         </button>
 
@@ -87,11 +90,11 @@
 
     <div>
       @if (!getTokenInsession()) {
-      <button class="menue-toggel" (click)="visible = true" icon="pi pi-arrow-right">
+      <button [attr.aria-label]="'Toggle_MENU' | translate" class="menue-toggel" (click)="visible = true" icon="pi pi-arrow-right">
         <i class="fa-solid fa-bars"></i>
       </button>
       } @else {
-      <button class="menue-toggel" (click)="onToggelMenue()" icon="pi pi-arrow-right">
+      <button [attr.aria-label]="'Toggle_MENU' | translate" class="menue-toggel" (click)="onToggelMenue()" icon="pi pi-arrow-right">
         <i class="fa-solid fa-bars"></i>
       </button>
       }

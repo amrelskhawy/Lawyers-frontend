@@ -37,6 +37,37 @@
     }
   }
 
+  .price-section {
+    display: flex;
+    justify-content: center;
+    margin-top: -20px;
+    position: relative;
+    z-index: 2;
+
+    .price-badge {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      background: linear-gradient(135deg, var(--bg-cream-light, #faf9f6) 0%, #ffffff 100%);
+      padding: 10px 24px;
+      border-radius: 14px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(212, 175, 55, 0.15);
+
+      .price-value {
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: var(--accent-gold, #d4af37);
+      }
+
+      .price-currency {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--secondary-color, #6b7280);
+      }
+    }
+  }
+
   .content-body {
     padding: 40px 30px;
     text-align: center;

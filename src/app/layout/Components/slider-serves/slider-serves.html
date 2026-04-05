@@ -4,6 +4,10 @@
     <ng-template let-service #item>
       <div (click)="showData(service)" class="card animation-duration-1000" pAnimateOnScroll enterClass="my-enter-zoom"
         leaveClass="my-leave-animation">
+        <div class="card-price-badge">
+          <span class="price-value">{{ service.price }}</span>
+          <span class="price-currency">﷼</span>
+        </div>
         <div class="card-icon">
           <i class="fa-solid fa-gavel"></i>
         </div>

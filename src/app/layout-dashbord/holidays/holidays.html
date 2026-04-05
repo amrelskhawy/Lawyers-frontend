@@ -9,7 +9,7 @@
   <ng-template let-data>
 
      <div class="action-btn">
-        <button (click)="onDelete(data)" class="delete-btn"><i class="fa-solid fa-trash"></i></button>
+        <button [attr.aria-label]="'delete'|translate" (click)="onDelete(data)" class="delete-btn"><i class="fa-solid fa-trash"></i></button>
       </div>
   </ng-template>
 </app-tabel>

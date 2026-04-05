@@ -1,3 +1,5 @@
+@use '../../Anmitions.scss' as *;
+
 .card {
   position: relative;
   display: flex;
@@ -28,21 +30,49 @@
     z-index: -1;
   }
 
-  .card-icon {
-    margin-bottom: 25px;
+  .card-price-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
     display: flex;
-    justify-content: flex-end;
+    align-items: baseline;
+    gap: 6px;
+    background: linear-gradient(135deg, var(--bg-cream-light, #faf9f6) 0%, #ffffff 100%);
+    padding: 5px 16px;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(212, 175, 55, 0.1);
+    z-index: 2;
+    transition: all 0.4s ease;
+
+    .price-value {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--accent-gold, #d4af37);
+    }
+
+    .price-currency {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--secondary-color, #6b7280);
+    }
+  }
+
+  .card-icon {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
 
     i {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 65px;
-      height: 65px;
-      font-size: 26px;
+      width: 50px;
+      height: 50px;
+      font-size: 20px;
       color: var(--accent-gold);
       background: var(--bg-cream-light);
-      border-radius: 20px;
+      border-radius: 16px;
       transition: all 0.5s ease;
     }
   }
@@ -73,6 +103,27 @@
       -webkit-box-orient: vertical;
       overflow: hidden;
       transition: color 0.4s ease;
+    }
+
+    .card-price {
+      display: flex;
+      align-items: baseline;
+      gap: 5px;
+      margin-bottom: 15px;
+
+      .price-value {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--primary-navy);
+        transition: color 0.4s ease;
+      }
+
+      .price-currency {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--accent-gold);
+        transition: color 0.4s ease;
+      }
     }
 
     .read-more-wrapper {
@@ -119,6 +170,19 @@
 
       p {
         color: rgba(255, 255, 255, 0.9);
+      }
+
+      .card-price-badge {
+        background: rgba(255, 255, 255, 0.2);
+        border-color: rgba(255, 255, 255, 0.3);
+
+        .price-value {
+          color: #ffffff;
+        }
+
+        .price-currency {
+          color: rgba(255, 255, 255, 0.8);
+        }
       }
 
       .read-more-wrapper {
@@ -232,6 +296,7 @@
   }
 
   ::ng-deep .p-carousel {
+
     .p-carousel-prev,
     .p-carousel-next {
       width: 36px;
@@ -339,7 +404,7 @@
 
 
 
-.empty-state{
+.empty-state {
   text-align: center;
   margin: 10px 0;
 }

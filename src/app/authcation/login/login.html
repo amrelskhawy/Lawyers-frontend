@@ -2,7 +2,6 @@
   <div class="side-panel">
 
     <div class="logo-wrapper">
-
       <img src="/assets/Img/logo.svg" alt="Law Firm Logo" width="200" height="auto">
 
     </div>
@@ -55,7 +54,7 @@
           <a routerLink="/auth/forgot-password" class="forgot-password">{{"reset_password"|translate}}</a>
         </div>
 
-        <button type="submit" class="btn-primary" [disabled]="Form().invalid">
+        <button [attr.aria-label]="'LOGIN' | translate" type="submit" class="btn-primary" [disabled]="Form().invalid">
           <span>{{"LOGIN"|translate}}</span>
           <i class="fa-solid fa-arrow-right"></i>
         </button>
