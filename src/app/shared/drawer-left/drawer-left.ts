@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output, signal } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-drawer-left',
@@ -7,6 +8,7 @@ import { Component, EventEmitter, OnInit, Output, signal } from '@angular/core';
   styleUrl: './drawer-left.scss',
 })
 export class DrawerLeft implements OnInit {
+  constructor(private router: Router) {}
   ngOnInit(): void {
 this.getTokenInsession()
   }
@@ -19,6 +21,14 @@ this.getTokenInsession()
   onClickListActive(route: string) {
     this.EventRoute.emit(route);
     this.visible = false;
+    if (this.router.url === '/' || this.router.url.startsWith('/?')) {
+      const el = document.getElementById(route);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    } else {
+      this.router.navigate(['/'], { fragment: route });
+    }
   }
 
   //***************Panel Page**********************/

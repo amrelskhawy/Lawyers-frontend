@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output, signal, effect } from '@angular/core';
+import { Router } from '@angular/router';
 import { Data } from '../../core/Servies/data';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -9,7 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./footer.scss'],
 })
 export class Footer implements OnInit {
-  constructor(private Data: Data, private translate: TranslateService) {
+  constructor(private Data: Data, private translate: TranslateService, private router: Router) {
     effect(() => {
       const publicData = this.Data.publicData();
       if (publicData && publicData.workingDays) {
@@ -26,6 +27,14 @@ export class Footer implements OnInit {
   currentYear = new Date().getFullYear();
   onClickListActive(route: string) {
     this.EventRoute.emit(route);
+    if (this.router.url === '/' || this.router.url.startsWith('/?')) {
+      const el = document.getElementById(route);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    } else {
+      this.router.navigate(['/'], { fragment: route });
+    }
   }
 
   scrollToTop() {
