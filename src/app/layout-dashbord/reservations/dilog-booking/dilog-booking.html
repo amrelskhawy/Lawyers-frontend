@@ -76,6 +76,14 @@
               </div>
             </div>
           </div>
+
+          <!-- Meeting Link -->
+          @if (dataobj().meetLink) {
+          <a [href]="dataobj().meetLink" target="_blank" rel="noopener noreferrer" class="meeting-link-btn">
+            <i class="fa-solid fa-video"></i>
+            {{ 'attend_meeting' | translate }}
+          </a>
+          }
         </div>
 
         <hr class="section-divider" />
