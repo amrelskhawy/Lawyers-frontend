@@ -1,8 +1,9 @@
 @use '../../../../styles' as *;
+@use '../../Anmitions.scss' as *;
 
 
 .team-section {
-   padding: 50px 0;
+  padding: 50px 0;
   background-color: #fcfcfc;
   position: relative;
   overflow: hidden;
@@ -36,6 +37,7 @@
       right: -5%;
       background: var(--accent-gold);
     }
+
     .glow-navy {
       bottom: -10%;
       left: -5%;
@@ -114,8 +116,9 @@
   height: 400px;
   transition: all 0.9s cubic-bezier(0.2, 1, 0.2, 1);
   cursor: pointer;
-  
+
   filter: grayscale(0.8);
+
   &:hover {
     // flex: 0 0 680px;
     flex: 0 0 300px;
@@ -130,6 +133,7 @@
     .image-overlay {
       opacity: 1;
     }
+
     .member-card {
       border-radius: 40px;
     }
@@ -231,8 +235,10 @@
   0% {
     transform: translateX(0);
   }
+
   100% {
-    transform: translateX(50%); /* Positive moves to the right, creating seamless RTL scroll */
+    transform: translateX(50%);
+    /* Positive moves to the right, creating seamless RTL scroll */
   }
 }
 
@@ -265,7 +271,7 @@
 
 
 
-@media (max-width:767px){
+@media (max-width:767px) {
   .section-header {
     .main-title {
       font-size: 25px !important;
@@ -275,7 +281,7 @@
   .team-flex-container {
     mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
     -webkit-mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
-    
+
     .members-flex {
       gap: 15px;
       padding-left: 15px;
@@ -292,20 +298,20 @@
       .member-details {
         transform: translate(-50%, -20px);
       }
-      
+
       .member-card {
         border-radius: 90px;
       }
     }
   }
-  
+
   .member-card {
     border-radius: 90px;
   }
-  
+
   .member-name {
     font-size: 18px !important;
-    
+
   }
 
   .member-position {

@@ -1,4 +1,5 @@
 @use '../../../../styles' as *;
+@use '../../Anmitions.scss' as *;
 
 .about-section {
   display: grid;
@@ -18,9 +19,8 @@
   z-index: 2;
 
   .img-1 {
-    // border-top-right-radius: 50px;
-    // border-bottom-left-radius: 50px;
-
+object-fit: cover;
+  object-position: center;
     border-end-end-radius: 50px;
     border-start-start-radius: 50px;
   }

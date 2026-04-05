@@ -1,4 +1,5 @@
 @use '../../../../styles' as *;
+@use '../../Anmitions.scss' as *;
 
 .counter-section {
   padding: 60px 0 100px;
@@ -9,9 +10,9 @@
 
 .counter-header {
   margin-bottom: 40px;
-  
+
   @include section-header();
-  
+
   .section-title {
     margin-bottom: 24px;
 
@@ -115,7 +116,7 @@
 
 .progress-ticks {
   margin-top: 40px;
-  
+
   .tick-bar {
     display: flex;
     gap: 4px;
@@ -131,7 +132,7 @@
     border-radius: 4px;
     background: rgba(147, 133, 63, 0.1);
     transition: all 0.1s ease;
-    
+
     &.active {
       background: var(--accent-gold);
       transform: scaleY(1.1);
@@ -145,7 +146,7 @@
     opacity: 0.4;
     z-index: 1;
     pointer-events: none;
-    
+
     &.decor-left {
         top: 20px;
         left: 20px;
@@ -176,7 +177,7 @@
           line-height: 1.5;
       }
   }
-  
+
   .divider-wrap {
       margin: 30px auto;
   }
@@ -184,20 +185,20 @@
   .stats-card {
     padding: 40px 20px;
     border-radius: 30px;
-    
+
     .count-number {
       font-size: 48px;
     }
-    
+
     .count-label {
       font-size: 18px;
     }
-    
+
     .count-suffix {
         font-size: 13px;
     }
   }
-  
+
   .progress-ticks {
       margin-top: 30px;
       .tick {

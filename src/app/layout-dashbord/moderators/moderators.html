@@ -10,7 +10,7 @@
   <app-tabel [data]="data()" [bodytabel]="bodytabel()" [no_data]="dataStatus()">
     <ng-template let-item>
       <div class="action-btn">
-        <button (click)="onDelete(item)" class="delete-btn"><i class="fa-solid fa-trash"></i></button>
+        <button [attr.aria-label]="'delete'|translate" (click)="onDelete(item)" class="delete-btn"><i class="fa-solid fa-trash"></i></button>
       </div>
     </ng-template>
   </app-tabel>

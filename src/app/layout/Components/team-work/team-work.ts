@@ -30,7 +30,7 @@ export class TeamWork implements OnInit {
     },
     {
       name: 'سعد الحارثي',
-      image: '/assets/Img/سعد الحارثي.jpeg',
+      image: '/assets/Img/سعد الحارثي.avif',
       role: 'محامي',
     },
     {
@@ -55,7 +55,7 @@ export class TeamWork implements OnInit {
     },
     {
       name: 'محمد الخربوش',
-      image: '/assets/Img/محمد الخربوش.jpeg',
+      image: '/assets/Img/محمد الخربوش.avif',
       role: 'محامي',
     },
     {
