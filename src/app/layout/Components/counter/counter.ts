@@ -1,10 +1,12 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, NgZone, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-counter',
   standalone: false,
   templateUrl: './counter.html',
   styleUrl: './counter.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
+
 })
 export class Counter implements OnInit {
   ngOnInit(): void {

@@ -4,7 +4,7 @@
       <div class="section-title">
         <h2 pAnimateOnScroll enterClass="my-enter-zoom" leaveClass="my-leave-animation">{{"OUR_LEGAL_JOURNEY"|translate}}</h2>
       </div>
-      
+
       <div class="header-text-wrap">
         <h3>
           {{"JOURNEY_START_TEXT"|translate}}
@@ -34,11 +34,13 @@
 
           <div class="progress-ticks">
             <div class="tick-bar">
-              <span *ngFor="let active of ticks" class="tick" [class.active]="active"> </span>
+              @for (active of ticks; track $index) {
+              <span class="tick" [class.active]="active"> </span>
+              }
             </div>
           </div>
         </div>
-        
+
         <!-- Decoration SVGs -->
         <div class="svg-decor decor-left">
             <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
