@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-team-work',
   standalone: false,
   templateUrl: './team-work.html',
   styleUrl: './team-work.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
+
 })
 export class TeamWork implements OnInit {
   currentLang: string = 'en';
 
-  constructor(private translate: TranslateService) {}
+  constructor(private translate: TranslateService) { }
 
   ngOnInit() {
     this.currentLang = this.translate.currentLang || this.translate.defaultLang || 'en';

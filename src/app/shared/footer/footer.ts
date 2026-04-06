@@ -1,5 +1,5 @@
-import { Component, EventEmitter, OnInit, Output, signal, effect } from '@angular/core';
 import { Router } from '@angular/router';
+import { Component, EventEmitter, OnInit, Output, signal, effect, ChangeDetectionStrategy } from '@angular/core';
 import { Data } from '../../core/Servies/data';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -8,6 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
   standalone: false,
   templateUrl: './footer.html',
   styleUrls: ['./footer.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Footer implements OnInit {
   constructor(private Data: Data, private translate: TranslateService, private router: Router) {

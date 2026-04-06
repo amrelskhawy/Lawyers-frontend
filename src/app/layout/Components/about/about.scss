@@ -95,6 +95,7 @@ object-fit: cover;
       margin-bottom: 10px;
       padding: 0 10px !important;
       text-align: justify;
+        white-space: normal !important;
 
       i {
         background-color: var(--accent-gold);

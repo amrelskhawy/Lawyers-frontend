@@ -1,12 +1,13 @@
 import { Data } from './../../../core/Servies/data';
-import { Component, signal, effect } from '@angular/core';
 import { Router } from '@angular/router';
+import { Component, signal, effect, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-slider-serves',
   standalone: false,
   templateUrl: './slider-serves.html',
   styleUrl: './slider-serves.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SliderServes {
   constructor(private Data: Data, private router: Router) {
@@ -78,10 +79,9 @@ export class SliderServes {
     }
   }
 
-
   showData(item: any) {
-    this.visibelData.set(true)
-    this.objData.set(item)
+    this.visibelData.set(true);
+    this.objData.set(item);
   }
 
   bookService(event: Event, service: any) {

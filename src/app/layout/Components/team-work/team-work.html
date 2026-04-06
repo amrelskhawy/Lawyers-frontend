@@ -9,57 +9,69 @@
   <div class="container">
     <div class="section-header">
       <div class="section-title">
-        <h2 pAnimateOnScroll enterClass="my-enter-zoom" leaveClass="my-leave-animation">{{ "teamWork" | translate }}
+        <h2 pAnimateOnScroll enterClass="my-enter-zoom" leaveClass="my-leave-animation">
+          {{ 'teamWork' | translate }}
         </h2>
       </div>
-      <h2 class="main-title">{{ "TEAM_WORK_TITLE" | translate }}</h2>
-      <p class="section-subtitle">{{ "TEAM_WORK_SUBTITLE" | translate }}</p>
+      <h2 class="main-title">{{ 'TEAM_WORK_TITLE' | translate }}</h2>
+      <p class="section-subtitle">{{ 'TEAM_WORK_SUBTITLE' | translate }}</p>
     </div>
 
     <div class="team-flex-container">
       <div class="members-flex">
         <!-- Loop twice for seamless infinite scroll -->
-        <div *ngFor="let member of teamMembers" class="member-card-wrapper" [class.no-image]="!member.image">
-          <div class="member-card">
-            <div class="member-image-box">
-              <img *ngIf="member.image" [src]="member.image" [alt]="member.name_en" class="member-photo" />
-              <div *ngIf="!member.image" class="member-photo-placeholder">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                  class="placeholder-icon">
-                  <path
-                    d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z" />
-                </svg>
+        @for (member of teamMembers; track $index) {
+          <div class="member-card-wrapper" [class.no-image]="!member.image">
+            <div class="member-card">
+              <div class="member-image-box">
+                @if (member.image) {
+                  <img [src]="member.image" [alt]="member.name_en" class="member-photo" />
+                }
+                @if (!member.image) {
+                  <div class="member-photo-placeholder">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                      class="placeholder-icon">
+                      <path
+                        d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z" />
+                    </svg>
+                  </div>
+                }
+                <div class="image-overlay"></div>
               </div>
-              <div class="image-overlay"></div>
-            </div>
 
-            <div class="member-details">
-              <h3 class="member-name">{{ currentLang === 'ar' ? member.name_ar : member.name_en }}</h3>
-              <span class="member-position">{{ currentLang === 'ar' ? member.role_ar : member.role_en }}</span>
+              <div class="member-details">
+                <h3 class="member-name">{{ currentLang === 'ar' ? member.name_ar : member.name_en }}</h3>
+                <span class="member-position">{{ currentLang === 'ar' ? member.role_ar : member.role_en }}</span>
+              </div>
             </div>
           </div>
-        </div>
-
-        <div *ngFor="let member of teamMembers" class="member-card-wrapper" [class.no-image]="!member.image">
-          <div class="member-card">
-            <div class="member-image-box">
-              <img *ngIf="member.image" [src]="member.image" [alt]="member.name_en" class="member-photo" />
-              <div *ngIf="!member.image" class="member-photo-placeholder">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                  class="placeholder-icon">
-                  <path
-                    d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z" />
-                </svg>
+        }
+        @for (member of teamMembers; track $index) {
+          <div class="member-card-wrapper" [class.no-image]="!member.image">
+            <div class="member-card">
+              <div class="member-image-box">
+                @if (member.image) {
+                  <img [src]="member.image" [alt]="member.name_en" class="member-photo" />
+                }
+                @if (!member.image) {
+                  <div class="member-photo-placeholder">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                      class="placeholder-icon">
+                      <path
+                        d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z" />
+                    </svg>
+                  </div>
+                }
+                <div class="image-overlay"></div>
               </div>
-              <div class="image-overlay"></div>
-            </div>
 
-            <div class="member-details">
-              <h3 class="member-name">{{ currentLang === 'ar' ? member.name_ar : member.name_en }}</h3>
-              <span class="member-position">{{ currentLang === 'ar' ? member.role_ar : member.role_en }}</span>
+              <div class="member-details">
+                <h3 class="member-name">{{ currentLang === 'ar' ? member.name_ar : member.name_en }}</h3>
+                <span class="member-position">{{ currentLang === 'ar' ? member.role_ar : member.role_en }}</span>
+              </div>
             </div>
           </div>
-        </div>
+        }
       </div>
     </div>
   </div>

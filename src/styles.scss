@@ -1,4 +1,3 @@
-// @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Mukta:wght@200;300;400;500;600;700;800&family=Playwrite+IT+Trad:wght@100..400&display=swap');
 
 * {
   box-sizing: border-box;
@@ -6,8 +5,16 @@
   margin: 0;
 }
 
+@font-face {
+  font-family: 'Cairo';
+  font-display: swap;
+}
+
+[class^="fa-"], [class*=" fa-"] {
+  font-display: swap !important;
+}
+
 body {
-  background-color: var(--white-color);
   user-select: none;
   overflow-x: hidden;
   font-family: 'Cairo', sans-serif;
@@ -72,7 +79,7 @@ body {
   --surface-base: #f8f9fa;
   --color-mint-light: #f2fbf8;
   --color-forest-dark: #155724;
-  --color-info-bg: #e7f3ff;   
+  --color-info-bg: #e7f3ff;
   --color-info-text: #004085;
 }
 
@@ -124,10 +131,7 @@ input:-webkit-autofill:active {
   -webkit-transition: background-color 5000s ease-in-out 0s;
 }
 
-// .requierd {
-//   color: var(--red-color);
-//   font-weight: bold;
-// }
+
 
 ::-webkit-scrollbar {
   width: 10px;
@@ -139,11 +143,7 @@ input:-webkit-autofill:active {
   border-radius: 10px;
 }
 
-@media (max-width: 768px) {
-  ::-webkit-scrollbar {
-    width: 4px;
-  }
-}
+
 
 .container {
   width: 75%;
@@ -209,7 +209,3 @@ app-servies {
   scroll-margin-top: 100px;
   display: block; // Ensure they respect margin/padding
 }
-
-// html {
-//   scroll-behavior: smooth;
-// }
