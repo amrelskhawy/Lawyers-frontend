@@ -11,4 +11,5 @@ export interface IDataServies {
   description_ar: string;
   description_en: string;
   price: string;
+  isFree: boolean;
 }
