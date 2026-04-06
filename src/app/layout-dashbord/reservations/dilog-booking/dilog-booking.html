@@ -19,6 +19,18 @@
         <div class="booking-status-section">
           <span class="status-label">{{ 'status' | translate }}</span>
           <span class="status-badge" [ngClass]="dataobj().status">{{ dataobj().status | translate }}</span>
+          @if (isManualAuthorized()) {
+            <span class="payment-authorized-badge">
+              <i class="fa-solid fa-lock"></i>
+              {{ 'payment_authorized' | translate }}
+            </span>
+          }
+          @if (dataobj().paymentStatus === 'PAID' && dataobj().createdByRole) {
+            <span class="payment-captured-badge">
+              <i class="fa-solid fa-circle-check"></i>
+              {{ 'payment_captured' | translate }}
+            </span>
+          }
         </div>
 
         <!-- Section 1: Client Details -->
@@ -121,6 +133,12 @@
           </button>
           <button class="btn-reject" (click)="HandelActionBooking('cancel')">
             <i class="fa-solid fa-xmark"></i> {{ 'reject' | translate }}
+          </button>
+          }
+          @if (isManualAuthorized()) {
+          <button class="btn-capture" (click)="capturePayment()" [disabled]="isCapturing()">
+            <i class="fa-solid fa-credit-card"></i>
+            {{ isCapturing() ? ('loading' | translate) : ('capture_payment' | translate) }}
           </button>
           }
         </div>

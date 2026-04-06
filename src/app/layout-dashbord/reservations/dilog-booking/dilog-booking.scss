@@ -106,6 +106,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
   padding: 14px 20px;
   background: linear-gradient(90deg, var(--bg-cream-light, #f8fafc) 0%, #ffffff 100%);
   border-radius: 16px;
@@ -147,6 +149,40 @@
       color: #be123c;
       border: 1px solid rgba(190, 18, 60, 0.1);
     }
+  }
+
+  .payment-authorized-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    color: #92400e;
+    border: 1px solid rgba(146, 64, 14, 0.2);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+
+    i { font-size: 0.7rem; }
+  }
+
+  .payment-captured-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+    color: #065f46;
+    border: 1px solid rgba(6, 95, 70, 0.2);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+
+    i { font-size: 0.7rem; }
   }
 }
 
@@ -440,6 +476,22 @@
       background-color: var(--bg-gray-100, #f1f5f9);
       border-color: var(--gray-400, #94a3b8);
       transform: translateY(-2px);
+    }
+  }
+
+  .btn-capture {
+    background: linear-gradient(135deg, #c5a059 0%, #a07a35 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(197, 160, 89, 0.3);
+
+    &:hover:not(:disabled) {
+      box-shadow: 0 6px 18px rgba(197, 160, 89, 0.5);
+      transform: translateY(-2px);
+    }
+
+    &:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
     }
   }
 }

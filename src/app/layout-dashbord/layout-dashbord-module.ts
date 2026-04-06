@@ -24,6 +24,7 @@ import { Moderators } from './moderators/moderators';
 import { Form } from './moderators/form/form';
 import { Admins } from './admins/admins';
 import { DilogBooking } from './reservations/dilog-booking/dilog-booking';
+import { ManualBookingForm } from './reservations/manual-booking-form/manual-booking-form';
 import { SelectModule } from 'primeng/select';
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { SelectModule } from 'primeng/select';
     Form,
     Admins,
     DilogBooking,
+    ManualBookingForm,
   ],
   imports: [
     CommonModule,

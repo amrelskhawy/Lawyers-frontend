@@ -4,6 +4,13 @@
       [style]="{ width: '40%' }" />
     <h2>{{ displayDate | date: 'MMMM yyyy' }}</h2>
 
+    <div class="calendar-nav-actions">
+      <button class="btn-new-booking" (click)="onOpenManualBooking()">
+        <i class="fa-solid fa-calendar-plus"></i>
+        {{ 'new_manual_booking' | translate }}
+      </button>
+    </div>
+
     <div class="btn-filterbyStatus">
       <button [ngClass]="{ All: selectedStatus() === 'All' }" (click)="GetAllBookingByStatus('All')">
         ⊞ {{"all"|translate}}
@@ -31,7 +38,10 @@
     <div class="empty-cell day-cell" *ngFor="let empty of emptyCells"></div>
 
     <div class="day-cell" *ngFor="let d of daysInMonth">
-      <div class="day-number">{{ d }}</div>
+      <div class="day-number" (click)="onDayClick(d)" title="{{ 'new_manual_booking' | translate }}">
+        {{ d }}
+        <i class="fa-solid fa-plus day-add-icon"></i>
+      </div>
       <div class="booking-container">
         <div (click)="onShowDilogBooking(book)" class="booking-item-compact" [ngClass]="book.status"
           *ngFor="let book of getBookingsForDay(d) | slice:0:3">
@@ -90,3 +100,6 @@
 
 <app-dilog-booking (changeStatusBooking)="onchangeStatusBooking()" [(visible)]="visibelDilogBooking"
   [obj]="obj()"></app-dilog-booking>
+
+<app-manual-booking-form [(visible)]="visibleManualBooking" [selectedDate]="selectedBookingDate()"
+  (bookingCreated)="onManualBookingCreated()"></app-manual-booking-form>
