@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Data } from '../../../core/Servies/data';
 
 @Component({
@@ -6,6 +6,7 @@ import { Data } from '../../../core/Servies/data';
   standalone: false,
   templateUrl: './main-page.html',
   styleUrl: './main-page.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MainPage implements OnInit {
   constructor(private dataService: Data) { }
