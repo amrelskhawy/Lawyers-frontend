@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-team-work',
   standalone: false,
   templateUrl: './team-work.html',
   styleUrl: './team-work.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
+
 })
 export class TeamWork implements OnInit {
   teamMembers = [

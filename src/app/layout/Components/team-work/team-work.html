@@ -9,42 +9,47 @@
   <div class="container">
     <div class="section-header">
       <div class="section-title">
-        <h2 pAnimateOnScroll enterClass="my-enter-zoom" leaveClass="my-leave-animation">{{ "teamWork" | translate }}</h2>
+        <h2 pAnimateOnScroll enterClass="my-enter-zoom" leaveClass="my-leave-animation">
+          {{ 'teamWork' | translate }}
+        </h2>
       </div>
-      <h2 class="main-title">{{ "TEAM_WORK_TITLE" | translate }}</h2>
-      <p class="section-subtitle">{{ "TEAM_WORK_SUBTITLE" | translate }}</p>
+      <h2 class="main-title">{{ 'TEAM_WORK_TITLE' | translate }}</h2>
+      <p class="section-subtitle">{{ 'TEAM_WORK_SUBTITLE' | translate }}</p>
     </div>
 
     <div class="team-flex-container">
       <div class="members-flex">
         <!-- Loop twice for seamless infinite scroll -->
-        <div *ngFor="let member of teamMembers" class="member-card-wrapper">
-          <div class="member-card">
-            <div class="member-image-box">
-              <img [src]="member.image" [alt]="member.name" class="member-photo" />
-              <div class="image-overlay"></div>
-            </div>
+        @for (member of teamMembers; track $index) {
+          <div class="member-card-wrapper">
+            <div class="member-card">
+              <div class="member-image-box">
+                <img [src]="member.image" [alt]="member.name" class="member-photo" />
+                <div class="image-overlay"></div>
+              </div>
 
-            <div class="member-details">
-              <h3 class="member-name">{{ member.name }}</h3>
-              <span class="member-position">{{ member.role }}</span>
+              <div class="member-details">
+                <h3 class="member-name">{{ member.name }}</h3>
+                <span class="member-position">{{ member.role }}</span>
+              </div>
             </div>
           </div>
-        </div>
+        }
+        @for (member of teamMembers; track $index) {
+          <div class="member-card-wrapper">
+            <div class="member-card">
+              <div class="member-image-box">
+                <img [src]="member.image" [alt]="member.name" class="member-photo" />
+                <div class="image-overlay"></div>
+              </div>
 
-        <div *ngFor="let member of teamMembers" class="member-card-wrapper">
-          <div class="member-card">
-            <div class="member-image-box">
-              <img [src]="member.image" [alt]="member.name" class="member-photo" />
-              <div class="image-overlay"></div>
-            </div>
-
-            <div class="member-details">
-              <h3 class="member-name">{{ member.name }}</h3>
-              <span class="member-position">{{ member.role }}</span>
+              <div class="member-details">
+                <h3 class="member-name">{{ member.name }}</h3>
+                <span class="member-position">{{ member.role }}</span>
+              </div>
             </div>
           </div>
-        </div>
+        }
       </div>
     </div>
   </div>
