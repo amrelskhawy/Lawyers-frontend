@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
+Sitemap: https://saadalboqami.com/sitemap.xml
 
-Sitemap: https://clinic-exa.vercel.app/sitemap.xml
