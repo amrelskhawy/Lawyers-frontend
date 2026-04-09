@@ -23,6 +23,7 @@ import { Reservations } from './reservations/reservations';
 import { Moderators } from './moderators/moderators';
 import { Form } from './moderators/form/form';
 import { Admins } from './admins/admins';
+import { DashboardCrudPage } from './dashboard-crud-page/dashboard-crud-page';
 import { DilogBooking } from './reservations/dilog-booking/dilog-booking';
 import { ManualBookingForm } from './reservations/manual-booking-form/manual-booking-form';
 import { Customers } from './customers/customers';
@@ -44,6 +45,7 @@ import { SelectModule } from 'primeng/select';
     Moderators,
     Form,
     Admins,
+    DashboardCrudPage,
     DilogBooking,
     ManualBookingForm,
     Customers,
