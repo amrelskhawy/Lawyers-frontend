@@ -1,0 +1,22 @@
+<ng-template #actions let-item let-onDelete="delete">
+  <div class="action-btn">
+    <button [attr.aria-label]="'delete'|translate" (click)="onDelete(item)" class="delete-btn">
+      <i class="fa-solid fa-trash"></i>
+    </button>
+  </div>
+</ng-template>
+
+<app-dashboard-crud-page
+  endpoint="organizers"
+  deleteEndpoint="organizers"
+  bulkDeleteEndpoint="organizers/many"
+  [columns]="columns"
+  [searchFields]="searchFields"
+  [selectable]="true"
+  [dataMapper]="dataMapper"
+  [actionsTemplate]="actions"
+  (addNew)="visibelform.set(true)">
+
+  <app-organizer-form (success)="HandelResponseSuccess()" [visible]="visibelform()"
+    (visibleChange)="visibelform.set($event)"></app-organizer-form>
+</app-dashboard-crud-page>

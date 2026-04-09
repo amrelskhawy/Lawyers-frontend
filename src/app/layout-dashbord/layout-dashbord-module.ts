@@ -29,6 +29,8 @@ import { ManualBookingForm } from './reservations/manual-booking-form/manual-boo
 import { Customers } from './customers/customers';
 import { FormCustomer } from './customers/form-customer/form-customer';
 import { ShowCustomerData } from './customers/show-customer-data/show-customer-data';
+import { Organizers } from './organizers/organizers';
+import { OrganizerForm } from './organizers/form/form';
 import { SelectModule } from 'primeng/select';
 @NgModule({
   declarations: [
@@ -51,6 +53,8 @@ import { SelectModule } from 'primeng/select';
     Customers,
     FormCustomer,
     ShowCustomerData,
+    Organizers,
+    OrganizerForm,
   ],
   imports: [
     CommonModule,

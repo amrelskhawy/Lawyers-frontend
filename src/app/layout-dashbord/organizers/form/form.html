@@ -1,0 +1,58 @@
+<p-dialog
+  maskStyleClass="backdrop-blur-sm"
+  [(visible)]="visible"
+  (onHide)="onClose()"
+  [modal]="true"
+  [baseZIndex]="10000"
+  styleClass="modern-modal"
+  [style]="{ width: '90vw', maxWidth: '500px' }"
+>
+  <ng-template pTemplate="headless">
+    <div class="Header-Popup-Modertaors">
+      <div>
+        <h3>{{ 'organizers' | translate }}</h3>
+        <p>{{ 'add_organizer' | translate }}</p>
+      </div>
+
+      <img
+        height="100"
+        width="100"
+        src="/assets/Img/LOGO-GOLD.svg"
+        alt="logo"
+        class="header-logo"
+      />
+    </div>
+
+    <div class="content-form">
+      <form [formGroup]="Form()" (ngSubmit)="onSubmit()">
+        <div class="Group">
+          <label>{{ 'select_user' | translate }}</label>
+          <p-select
+            formControlName="userId"
+            [options]="users()"
+            optionLabel="label"
+            optionValue="value"
+            [filter]="true"
+            filterBy="label"
+            appendTo="body"
+            placeholder="{{ 'select_user' | translate }}"
+            [style]="{ width: '100%' }">
+          </p-select>
+          <div class="wrapper-error">
+            <small
+              class="error-message"
+              *ngIf="getControlName('userId')?.invalid && getControlName('userId')?.touched"
+            >{{ 'filed_reqierd' | translate }}</small>
+          </div>
+        </div>
+
+        <div class="Group">
+          <button class="btn-submit" type="submit">{{ 'submit' | translate }}</button>
+        </div>
+      </form>
+      <button type="button" class="btn-close-dilog" (click)="closeDialog()">
+        {{ 'close' | translate }}
+      </button>
+    </div>
+  </ng-template>
+</p-dialog>
