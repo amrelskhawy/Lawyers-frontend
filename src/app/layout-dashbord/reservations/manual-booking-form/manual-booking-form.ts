@@ -29,6 +29,7 @@ export class ManualBookingForm implements OnInit, OnDestroy {
     this.createForm();
     this.watchDateChange();
     this.loadServices();
+    this.loadCustomers();
 
     // Apply a date that was set before the form was ready
     if (this._pendingDate) {
@@ -57,6 +58,7 @@ export class ManualBookingForm implements OnInit, OnDestroy {
 
   Form = signal<FormGroup>(new FormGroup({}));
   services = signal<{ label: string; value: string }[]>([]);
+  customers = signal<{ label: string; value: string }[]>([]);
   timeSlots = signal<any[]>([]);
   selectedSlot = signal<any>(null);
   isLoading = signal<boolean>(false);
@@ -75,9 +77,7 @@ export class ManualBookingForm implements OnInit, OnDestroy {
   createForm() {
     this.Form.set(
       this.FB.group({
-        name: ['', Validators.required],
-        clientEmail: ['', [Validators.required, Validators.email]],
-        phone_number: ['', Validators.required],
+        customerId: ['', Validators.required],
         serviceId: ['', Validators.required],
         date: [null, Validators.required],
         startTime: ['', Validators.required],
@@ -111,6 +111,17 @@ export class ManualBookingForm implements OnInit, OnDestroy {
         (res.data as any[]).map((s) => ({
           label: s.name_ar || s.name_en,
           value: s.id,
+        })),
+      );
+    });
+  }
+
+  loadCustomers() {
+    this.Data.get<any>('customers').subscribe((res) => {
+      this.customers.set(
+        (res.data as any[]).map((c) => ({
+          label: `${c.fullName} — ${c.phone}`,
+          value: c.id,
         })),
       );
     });

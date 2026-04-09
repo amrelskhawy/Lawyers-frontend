@@ -46,7 +46,7 @@
         <div (click)="onShowDilogBooking(book)" class="booking-item-compact" [ngClass]="book.status"
           *ngFor="let book of getBookingsForDay(d) | slice:0:3">
           <span class="book-time">{{ book.startTime}} Am</span>
-          <span class="book-title">{{ book.name }}</span>
+          <span class="book-title">{{ book.customer?.fullName }}</span>
         </div>
 
         <div class="view-more-btn" *ngIf="getBookingsForDay(d).length > 3"
@@ -87,7 +87,7 @@
 
           <div class="event-content">
             <span class="event-time" dir="ltr">{{ book.startTime }} - {{ book.endTime || '...' }}</span>
-            <span class="event-title">{{ book.name }}</span>
+            <span class="event-title">{{ book.customer?.fullName }}</span>
             <span class="event-status-badge">{{ book.status | translate }}</span>
           </div>
 

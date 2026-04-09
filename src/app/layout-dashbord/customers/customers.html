@@ -9,17 +9,16 @@
 </ng-template>
 
 <app-dashboard-crud-page
-  endpoint="services"
-  deleteEndpoint="services"
-  bulkDeleteEndpoint="services/many"
+  endpoint="customers"
+  deleteEndpoint="customers"
+  bulkDeleteEndpoint="customers/many"
   [columns]="columns"
   [searchFields]="searchFields"
   [selectable]="true"
-  [dataMapper]="dataMapper"
   [actionsTemplate]="actions"
   (addNew)="visibelform.set(true)">
 
-  <app-formservies (ResSuccess)="onHandelRespnseProccing()" [objdata]="objdata()"
-    [(visible)]="visibelform"></app-formservies>
-  <app-show-data-in-dilog (visibleChange)="ResetForm()" [(visible)]="visibelAllData" [objdata]="objdata()"></app-show-data-in-dilog>
+  <app-form-customer (ResSuccess)="onHandelRespnseProccing()" [objdata]="objdata()"
+    [(visible)]="visibelform"></app-form-customer>
+  <app-show-customer-data (visibleChange)="ResetForm()" [(visible)]="visibelAllData" [objdata]="objdata()"></app-show-customer-data>
 </app-dashboard-crud-page>

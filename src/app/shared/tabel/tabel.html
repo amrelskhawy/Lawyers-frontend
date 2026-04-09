@@ -7,10 +7,17 @@
     stripedRows
     [tableStyle]="{ 'min-width': '50rem' }"
     [sortOrder]="-1"
+    [selectionMode]="selectable ? 'multiple' : null"
+    [(selection)]="selectedItems"
+    (selectionChange)="onSelectionChange()"
+    dataKey="id"
   >
     <!-- HEADER -->
     <ng-template pTemplate="header">
       <tr>
+        <th *ngIf="selectable" style="width: 3rem">
+          <p-tableHeaderCheckbox />
+        </th>
         <ng-container *ngFor="let col of bodytabel">
           <th [pSortableColumn]="col.value">
             <div class="table-header-content">
@@ -28,6 +35,9 @@
 
     <ng-template pTemplate="body" let-row>
       <tr>
+        <td *ngIf="selectable">
+          <p-tableCheckbox [value]="row" />
+        </td>
         <ng-container *ngFor="let col of bodytabel">
           <td [ngClass]="getCellClass(col, row)">
             {{ formatCell(col.value, row[col.value]) }}

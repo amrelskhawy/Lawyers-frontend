@@ -78,6 +78,12 @@ export class Data {
       params: httpParams,
     });
   }
+
+  deleteMany<T>(endpoint: string, ids: string[]): Observable<T> {
+    return this.http.delete<T>(`${this.baseUrl}${endpoint}`, {
+      body: { ids },
+    });
+  }
   // ============================================== Delete Request ============================================== //
 
   // ============================================== Put Request ============================================== //

@@ -1,17 +1,18 @@
+<ng-template #actions let-item let-onDelete="delete">
+  <div class="action-btn">
+    <button [attr.aria-label]="'delete'|translate" (click)="onDelete(item)" class="delete-btn"><i class="fa-solid fa-trash"></i></button>
+  </div>
+</ng-template>
 
-<app-top-grid (search)="onSearch($event)" (visibelformadd)="visibelform.set(true)"></app-top-grid>
+<app-dashboard-crud-page
+  endpoint="holidays"
+  deleteEndpoint="holidays"
+  bulkDeleteEndpoint="holidays/many"
+  [columns]="columns"
+  [searchFields]="searchFields"
+  [selectable]="true"
+  [actionsTemplate]="actions"
+  (addNew)="visibelform.set(true)">
 
-<app-form-holdays (ResponseSuccess)="onHandelResponseSuccess()" [(visible)]="visibelform"></app-form-holdays>
-<app-confirmation-delete [visibelConfirme]="visibelConfirme()" (handelstatusConfirmation)="onHandelStatusConfirmation($event)"></app-confirmation-delete>
-
-<div class="table-wrapper">
-<app-tabel [data]="data()" [bodytabel]="bodytabel()" [no_data]="dataStatus()">
-  <ng-template let-data>
-
-     <div class="action-btn">
-        <button [attr.aria-label]="'delete'|translate" (click)="onDelete(data)" class="delete-btn"><i class="fa-solid fa-trash"></i></button>
-      </div>
-  </ng-template>
-</app-tabel>
-
-</div>
+  <app-form-holdays (ResponseSuccess)="onHandelResponseSuccess()" [(visible)]="visibelform"></app-form-holdays>
+</app-dashboard-crud-page>
