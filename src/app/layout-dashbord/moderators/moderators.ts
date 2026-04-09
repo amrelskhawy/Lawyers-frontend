@@ -29,8 +29,10 @@ export class Moderators implements OnInit {
   >([]);
   visibelform = signal<boolean>(false);
   visibelConfirme = signal<boolean>(false);
+  visibelConfirmeBulk = signal<boolean>(false);
   objdata = signal<IModerators | null>(null);
   dataStatus = signal<string>('loading');
+  selectedItems = signal<any[]>([]);
   originalData: any[] = [];
   getData() {
     this.Data.get<{ data: IModerators[] }>('admin/users?role=moderator').subscribe((res) => {
@@ -87,6 +89,25 @@ export class Moderators implements OnInit {
     this.visibelConfirme.set(false);
     if (event == 'delete') {
       this.Data.delete<any>(`moderators/${this.objdata()?.id}`).subscribe((res) => {
+        this.getData();
+      });
+    }
+  }
+
+  onSelectionChange(items: any[]) {
+    this.selectedItems.set(items);
+  }
+
+  onBulkDelete() {
+    if (this.selectedItems().length === 0) return;
+    this.visibelConfirmeBulk.set(true);
+  }
+
+  onHandelBulkDeleteConfirmation(event: string) {
+    this.visibelConfirmeBulk.set(false);
+    if (event == 'delete') {
+      const ids = this.selectedItems().map((item: any) => item.id);
+      this.Data.deleteMany('moderators/many', ids).subscribe(() => {
         this.getData();
       });
     }

@@ -4,14 +4,19 @@
 <app-form-holdays (ResponseSuccess)="onHandelResponseSuccess()" [(visible)]="visibelform"></app-form-holdays>
 <app-confirmation-delete [visibelConfirme]="visibelConfirme()" (handelstatusConfirmation)="onHandelStatusConfirmation($event)"></app-confirmation-delete>
 
-<div class="table-wrapper">
-<app-tabel [data]="data()" [bodytabel]="bodytabel()" [no_data]="dataStatus()">
-  <ng-template let-data>
+<app-confirmation-delete [visibelConfirme]="visibelConfirmeBulk()" (handelstatusConfirmation)="onHandelBulkDeleteConfirmation($event)"></app-confirmation-delete>
 
-     <div class="action-btn">
+<div class="table-wrapper">
+  @if (selectedItems().length > 0) {
+    <button class="bulk-delete-btn" (click)="onBulkDelete()">
+      <i class="fa-solid fa-trash"></i> {{ 'delete_selected' | translate }} ({{ selectedItems().length }})
+    </button>
+  }
+  <app-tabel [data]="data()" [bodytabel]="bodytabel()" [no_data]="dataStatus()" [selectable]="true" (selectionChange)="onSelectionChange($event)">
+    <ng-template let-data>
+      <div class="action-btn">
         <button [attr.aria-label]="'delete'|translate" (click)="onDelete(data)" class="delete-btn"><i class="fa-solid fa-trash"></i></button>
       </div>
-  </ng-template>
-</app-tabel>
-
+    </ng-template>
+  </app-tabel>
 </div>

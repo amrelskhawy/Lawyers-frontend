@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, ContentChild, Input, signal, TemplateRef } from '@angular/core';
+import { Component, ContentChild, EventEmitter, Input, Output, signal, TemplateRef } from '@angular/core';
 
 @Component({
   selector: 'app-tabel',
@@ -12,16 +12,26 @@ export class Tabel<T extends object> {
   tableData: T[] = [];
   exsistData = signal<string>('');
   loadingData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+  selectedItems: T[] = [];
 
   @Input() bodytabel: any[] = [];
+  @Input() selectable = false;
+  @Output() selectionChange = new EventEmitter<T[]>();
+
   @Input()
   set data(value: T[]) {
     this.tableData = value ?? [];
+    this.selectedItems = [];
+    this.selectionChange.emit([]);
   }
 
   @Input()
   set no_data(value: string) {
     this.exsistData.set(value);
+  }
+
+  onSelectionChange() {
+    this.selectionChange.emit(this.selectedItems);
   }
 
   formatCell(key: string, value: any): string {

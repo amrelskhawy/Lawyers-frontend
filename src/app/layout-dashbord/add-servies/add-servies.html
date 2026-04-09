@@ -7,11 +7,18 @@
 <app-show-data-in-dilog (visibleChange)="ResetForm()" [(visible)]="visibelAllData" [objdata]="objdata()"></app-show-data-in-dilog>
 
 <app-confirmation-delete (handelstatusConfirmation)="onHandelStatusConfirmation($event)"
-
   [visibelConfirme]="visibelConfirme()"></app-confirmation-delete>
 
+<app-confirmation-delete (handelstatusConfirmation)="onHandelBulkDeleteConfirmation($event)"
+  [visibelConfirme]="visibelConfirmeBulk()"></app-confirmation-delete>
+
 <div class="table-wrapper">
-  <app-tabel [data]="data()" [bodytabel]="bodytabel()" [no_data]="dataStatus()">
+  @if (selectedItems().length > 0) {
+    <button class="bulk-delete-btn" (click)="onBulkDelete()">
+      <i class="fa-solid fa-trash"></i> {{ 'delete_selected' | translate }} ({{ selectedItems().length }})
+    </button>
+  }
+  <app-tabel [data]="data()" [bodytabel]="bodytabel()" [no_data]="dataStatus()" [selectable]="true" (selectionChange)="onSelectionChange($event)">
     <ng-template let-item>
       <div class="action-btn">
         <button [attr.aria-label]="'edit'|translate" (click)="onEditData(item)" class="edit-btn">

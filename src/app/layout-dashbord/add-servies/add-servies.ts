@@ -24,9 +24,11 @@ export class AddServies implements OnInit {
   objdata = signal<IDataServies|null>(null);
   visibelform = signal<boolean>(false);
   visibelConfirme = signal<boolean>(false);
+  visibelConfirmeBulk = signal<boolean>(false);
   visibelAllData = signal<boolean>(false);
   bodytabel = signal<any>({});
- dataStatus = signal<string>('loading');
+  dataStatus = signal<string>('loading');
+  selectedItems = signal<any[]>([]);
 
   GetAllData() {
     this.Data.get('services').subscribe((res: any) => {
@@ -88,6 +90,25 @@ export class AddServies implements OnInit {
     this.visibelConfirme.set(false);
     if (event == 'delete') {
       this.Data.delete(`services/${this.objdata()?.id}`).subscribe((res) => {
+        this.GetAllData();
+      });
+    }
+  }
+
+  onSelectionChange(items: any[]) {
+    this.selectedItems.set(items);
+  }
+
+  onBulkDelete() {
+    if (this.selectedItems().length === 0) return;
+    this.visibelConfirmeBulk.set(true);
+  }
+
+  onHandelBulkDeleteConfirmation(event: string) {
+    this.visibelConfirmeBulk.set(false);
+    if (event == 'delete') {
+      const ids = this.selectedItems().map((item: any) => item.id);
+      this.Data.deleteMany('services/many', ids).subscribe(() => {
         this.GetAllData();
       });
     }

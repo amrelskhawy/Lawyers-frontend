@@ -22,9 +22,11 @@ export class Holidays implements OnInit {
 
   visibelform = signal<boolean>(false);
   visibelConfirme = signal<boolean>(false);
+  visibelConfirmeBulk = signal<boolean>(false);
   data = signal<IHoliday[]>([]);
   objdata = signal<IHoliday | null>(null);
- dataStatus = signal<string>('loading');
+  dataStatus = signal<string>('loading');
+  selectedItems = signal<any[]>([]);
 
   bodytabel = signal<
     {
@@ -60,6 +62,25 @@ export class Holidays implements OnInit {
     this.visibelConfirme.set(false);
     if (event == 'delete') {
       this.Data.delete(`holidays/${this.objdata()?.id}`).subscribe((res) => {
+        this.getData();
+      });
+    }
+  }
+
+  onSelectionChange(items: any[]) {
+    this.selectedItems.set(items);
+  }
+
+  onBulkDelete() {
+    if (this.selectedItems().length === 0) return;
+    this.visibelConfirmeBulk.set(true);
+  }
+
+  onHandelBulkDeleteConfirmation(event: string) {
+    this.visibelConfirmeBulk.set(false);
+    if (event == 'delete') {
+      const ids = this.selectedItems().map((item: any) => item.id);
+      this.Data.deleteMany('holidays/many', ids).subscribe(() => {
         this.getData();
       });
     }

@@ -5,9 +5,16 @@
 <app-confirmation-delete [visibelConfirme]="visibelConfirme()"
   (handelstatusConfirmation)="onHandelStatusConfirmation($event)"></app-confirmation-delete>
 
+<app-confirmation-delete [visibelConfirme]="visibelConfirmeBulk()"
+  (handelstatusConfirmation)="onHandelBulkDeleteConfirmation($event)"></app-confirmation-delete>
 
 <div class="table-wrapper">
-  <app-tabel [data]="data()" [bodytabel]="bodytabel()" [no_data]="dataStatus()">
+  @if (selectedItems().length > 0) {
+    <button class="bulk-delete-btn" (click)="onBulkDelete()">
+      <i class="fa-solid fa-trash"></i> {{ 'delete_selected' | translate }} ({{ selectedItems().length }})
+    </button>
+  }
+  <app-tabel [data]="data()" [bodytabel]="bodytabel()" [no_data]="dataStatus()" [selectable]="true" (selectionChange)="onSelectionChange($event)">
     <ng-template let-item>
       <div class="action-btn">
         <button [attr.aria-label]="'delete'|translate" (click)="onDelete(item)" class="delete-btn"><i class="fa-solid fa-trash"></i></button>
