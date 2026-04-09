@@ -1,4 +1,4 @@
-import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { NgModule, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import Aura from '@primeuix/themes/aura';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -48,6 +48,8 @@ export function createTranslateLoader(http: HttpClient): TranslateLoader {
     }),
   ],
   providers: [
+    provideZonelessChangeDetection(),
+    
     provideBrowserGlobalErrorListeners(),
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(withInterceptorsFromDi()),
