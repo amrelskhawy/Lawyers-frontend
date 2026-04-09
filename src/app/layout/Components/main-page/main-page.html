@@ -5,12 +5,28 @@
 <div>
   <app-hero-section id="Home"></app-hero-section>
   <div class="content-main-page">
-    <app-about id="About"></app-about>
-    <!-- <app-how-it-work id="HowWork"></app-how-it-work> -->
-    <app-servies id="Services"></app-servies>
-    <app-team-work id="teamWork"></app-team-work>
-    <app-counter></app-counter>
+ @defer (on viewport; prefetch on idle) {
+  <app-about id="About"></app-about>
+} @placeholder {
+  <div id="About"></div>
+}
+
+@defer (on viewport; prefetch on idle) {
+  <app-servies id="Services"></app-servies>
+} @placeholder {
+  <div id="Services"></div>
+}
+
+@defer (on viewport; prefetch on idle) {
+  <app-team-work id="teamWork"></app-team-work>
+  <app-counter></app-counter>
+} @placeholder {
+  <div id="teamWork" style="height: 800px; width: 100%;"></div>
+}
   </div>
 </div>
+
+
+
 <app-footer (EventRoute)="onEventRoute($event)"></app-footer>
 <app-chat-boot></app-chat-boot>

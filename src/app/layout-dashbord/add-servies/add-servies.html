@@ -1,26 +1,25 @@
-<app-top-grid (search)="onSearch($event)" (visibelformadd)="visibelform.set(true)"></app-top-grid>
+<ng-template #actions let-item let-onDelete="delete">
+  <div class="action-btn">
+    <button [attr.aria-label]="'edit'|translate" (click)="onEditData(item)" class="edit-btn">
+      <i class="fa-solid fa-pen-to-square"></i>
+    </button>
+    <button [attr.aria-label]="'delete'|translate" (click)="onDelete(item)" class="delete-btn"><i class="fa-solid fa-trash"></i></button>
+    <button [attr.aria-label]="'view'|translate" (click)="onViewData(item)" class="show_data"><i class="fa-solid fa-eye"></i></button>
+  </div>
+</ng-template>
 
+<app-dashboard-crud-page
+  endpoint="services"
+  deleteEndpoint="services"
+  bulkDeleteEndpoint="services/many"
+  [columns]="columns"
+  [searchFields]="searchFields"
+  [selectable]="true"
+  [dataMapper]="dataMapper"
+  [actionsTemplate]="actions"
+  (addNew)="visibelform.set(true)">
 
-<app-formservies (ResSuccess)="onHandelRespnseProccing()" [objdata]="objdata()"
-  [(visible)]="visibelform"></app-formservies>
-
-<app-show-data-in-dilog (visibleChange)="ResetForm()" [(visible)]="visibelAllData" [objdata]="objdata()"></app-show-data-in-dilog>
-
-<app-confirmation-delete (handelstatusConfirmation)="onHandelStatusConfirmation($event)"
-
-  [visibelConfirme]="visibelConfirme()"></app-confirmation-delete>
-
-<div class="table-wrapper">
-  <app-tabel [data]="data()" [bodytabel]="bodytabel()" [no_data]="dataStatus()">
-    <ng-template let-item>
-      <div class="action-btn">
-        <button [attr.aria-label]="'edit'|translate" (click)="onEditData(item)" class="edit-btn">
-          <i class="fa-solid fa-pen-to-square"></i>
-        </button>
-
-        <button [attr.aria-label]="'delete'|translate" (click)="onDelete(item)" class="delete-btn"><i class="fa-solid fa-trash"></i></button>
-        <button [attr.aria-label]="'view'|translate" (click)="onpatchData(item)" class="show_data"><i class="fa-solid fa-eye"></i></button>
-      </div>
-    </ng-template>
-  </app-tabel>
-</div>
+  <app-formservies (ResSuccess)="onHandelRespnseProccing()" [objdata]="objdata()"
+    [(visible)]="visibelform"></app-formservies>
+  <app-show-data-in-dilog (visibleChange)="ResetForm()" [(visible)]="visibelAllData" [objdata]="objdata()"></app-show-data-in-dilog>
+</app-dashboard-crud-page>

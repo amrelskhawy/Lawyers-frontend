@@ -1,0 +1,24 @@
+<ng-template #actions let-item let-onDelete="delete">
+  <div class="action-btn">
+    <button [attr.aria-label]="'edit'|translate" (click)="onEditData(item)" class="edit-btn">
+      <i class="fa-solid fa-pen-to-square"></i>
+    </button>
+    <button [attr.aria-label]="'delete'|translate" (click)="onDelete(item)" class="delete-btn"><i class="fa-solid fa-trash"></i></button>
+    <button [attr.aria-label]="'view'|translate" (click)="onViewData(item)" class="show_data"><i class="fa-solid fa-eye"></i></button>
+  </div>
+</ng-template>
+
+<app-dashboard-crud-page
+  endpoint="customers"
+  deleteEndpoint="customers"
+  bulkDeleteEndpoint="customers/many"
+  [columns]="columns"
+  [searchFields]="searchFields"
+  [selectable]="true"
+  [actionsTemplate]="actions"
+  (addNew)="visibelform.set(true)">
+
+  <app-form-customer (ResSuccess)="onHandelRespnseProccing()" [objdata]="objdata()"
+    [(visible)]="visibelform"></app-form-customer>
+  <app-show-customer-data (visibleChange)="ResetForm()" [(visible)]="visibelAllData" [objdata]="objdata()"></app-show-customer-data>
+</app-dashboard-crud-page>

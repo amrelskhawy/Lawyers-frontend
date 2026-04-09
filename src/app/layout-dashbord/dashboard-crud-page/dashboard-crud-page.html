@@ -1,0 +1,22 @@
+<app-top-grid (search)="onSearch($event)" [page]="page" (visibelformadd)="addNew.emit()"></app-top-grid>
+
+<ng-content></ng-content>
+
+<app-confirmation-delete [visibelConfirme]="visibelConfirme()" (handelstatusConfirmation)="onHandelStatusConfirmation($event)"></app-confirmation-delete>
+
+@if (bulkDeleteEndpoint) {
+  <app-confirmation-delete [visibelConfirme]="visibelConfirmeBulk()" (handelstatusConfirmation)="onHandelBulkDeleteConfirmation($event)"></app-confirmation-delete>
+}
+
+<div class="table-wrapper">
+  @if (selectable && selectedItems().length > 0) {
+    <button class="bulk-delete-btn" (click)="onBulkDelete()">
+      <i class="fa-solid fa-trash"></i> {{ 'delete_selected' | translate }} ({{ selectedItems().length }})
+    </button>
+  }
+  <app-tabel [data]="data()" [bodytabel]="columns" [no_data]="dataStatus()" [selectable]="selectable" (selectionChange)="onSelectionChange($event)">
+    <ng-template let-item>
+      <ng-container *ngTemplateOutlet="actionsTemplate; context: {$implicit: item, delete: deleteHandler}"></ng-container>
+    </ng-template>
+  </app-tabel>
+</div>

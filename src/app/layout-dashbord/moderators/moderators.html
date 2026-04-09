@@ -1,17 +1,19 @@
-<app-top-grid (search)="onSearch($event)" (visibelformadd)="visibelform.set(true)"></app-top-grid>
+<ng-template #actions let-item let-onDelete="delete">
+  <div class="action-btn">
+    <button [attr.aria-label]="'delete'|translate" (click)="onDelete(item)" class="delete-btn"><i class="fa-solid fa-trash"></i></button>
+  </div>
+</ng-template>
 
-<app-form (success)="HandelResponseSuccess()" [visible]="visibelform()"
-  (visibleChange)="visibelform.set($event)"></app-form>
-<app-confirmation-delete [visibelConfirme]="visibelConfirme()"
-  (handelstatusConfirmation)="onHandelStatusConfirmation($event)"></app-confirmation-delete>
+<app-dashboard-crud-page
+  endpoint="admin/users?role=moderator"
+  deleteEndpoint="moderators"
+  bulkDeleteEndpoint="moderators/many"
+  [columns]="columns"
+  [searchFields]="searchFields"
+  [selectable]="true"
+  [actionsTemplate]="actions"
+  (addNew)="visibelform.set(true)">
 
-
-<div class="table-wrapper">
-  <app-tabel [data]="data()" [bodytabel]="bodytabel()" [no_data]="dataStatus()">
-    <ng-template let-item>
-      <div class="action-btn">
-        <button [attr.aria-label]="'delete'|translate" (click)="onDelete(item)" class="delete-btn"><i class="fa-solid fa-trash"></i></button>
-      </div>
-    </ng-template>
-  </app-tabel>
-</div>
+  <app-form (success)="HandelResponseSuccess()" [visible]="visibelform()"
+    (visibleChange)="visibelform.set($event)"></app-form>
+</app-dashboard-crud-page>

@@ -20,6 +20,8 @@ export class Reservations implements OnInit {
   emptyCells: any[] = [];
   visibelDilogBooking: boolean = false;
   visibleBooksPopup: boolean = false;
+  visibleManualBooking: boolean = false;
+  selectedBookingDate = signal<string | null>(null);
   selectedDayBooks = signal<any[]>([]);
   selectedDay = signal<number>(0);
   bookings = signal<any[]>([]);
@@ -125,6 +127,25 @@ export class Reservations implements OnInit {
 
   onchangeStatusBooking() {
     this.visibelDilogBooking = false;
+    this.getAllBooking();
+  }
+
+  onOpenManualBooking() {
+    this.selectedBookingDate.set(null);
+    this.visibleManualBooking = true;
+  }
+
+  onDayClick(day: number) {
+    const year = this.displayDate.getFullYear();
+    const month = this.displayDate.getMonth();
+    // Build YYYY-MM-DD with zero-padding
+    const mm = String(month + 1).padStart(2, '0');
+    const dd = String(day).padStart(2, '0');
+    this.selectedBookingDate.set(`${year}-${mm}-${dd}`);
+    this.visibleManualBooking = true;
+  }
+
+  onManualBookingCreated() {
     this.getAllBooking();
   }
 

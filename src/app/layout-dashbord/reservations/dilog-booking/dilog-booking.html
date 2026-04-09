@@ -19,6 +19,18 @@
         <div class="booking-status-section">
           <span class="status-label">{{ 'status' | translate }}</span>
           <span class="status-badge" [ngClass]="dataobj().status">{{ dataobj().status | translate }}</span>
+          @if (isManualAuthorized()) {
+            <span class="payment-authorized-badge">
+              <i class="fa-solid fa-lock"></i>
+              {{ 'payment_authorized' | translate }}
+            </span>
+          }
+          @if (dataobj().paymentStatus === 'PAID' && dataobj().createdByRole) {
+            <span class="payment-captured-badge">
+              <i class="fa-solid fa-circle-check"></i>
+              {{ 'payment_captured' | translate }}
+            </span>
+          }
         </div>
 
         <!-- Section 1: Client Details -->
@@ -29,7 +41,7 @@
               <div class="info-icon"><i class="fa-solid fa-id-badge"></i></div>
               <div class="info-text">
                 <span class="info-label">{{ 'name_client' | translate }}</span>
-                <span class="info-value">{{ dataobj().name }}</span>
+                <span class="info-value">{{ dataobj().customer?.fullName }}</span>
               </div>
             </div>
 
@@ -37,15 +49,15 @@
               <div class="info-icon"><i class="fa-solid fa-envelope"></i></div>
               <div class="info-text">
                 <span class="info-label">{{ 'Email_client' | translate }}</span>
-                <span class="info-value">{{ dataobj().clientEmail }}</span>
+                <span class="info-value">{{ dataobj().customer?.email }}</span>
               </div>
             </div>
 
-            <div class="info-card" *ngIf="dataobj().phone">
+            <div class="info-card" *ngIf="dataobj().customer?.phone">
               <div class="info-icon"><i class="fa-solid fa-phone"></i></div>
               <div class="info-text">
                 <span class="info-label">{{ 'phone' | translate }}</span>
-                <span class="info-value" dir="ltr">{{ dataobj().phone }}</span>
+                <span class="info-value" dir="ltr">{{ dataobj().customer?.phone }}</span>
               </div>
             </div>
           </div>
@@ -121,6 +133,12 @@
           </button>
           <button class="btn-reject" (click)="HandelActionBooking('cancel')">
             <i class="fa-solid fa-xmark"></i> {{ 'reject' | translate }}
+          </button>
+          }
+          @if (isManualAuthorized()) {
+          <button class="btn-capture" (click)="capturePayment()" [disabled]="isCapturing()">
+            <i class="fa-solid fa-credit-card"></i>
+            {{ isCapturing() ? ('loading' | translate) : ('capture_payment' | translate) }}
           </button>
           }
         </div>

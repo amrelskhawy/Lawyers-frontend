@@ -83,12 +83,22 @@ export class Menue implements OnInit {
                 icon: 'fa-solid fa-user-tie',
                 route: '/dashboard/content/Moderators',
               },
+              {
+                name: 'organizers',
+                icon: 'fa-solid fa-people-group',
+                route: '/dashboard/content/organizers',
+              },
             ]
           : []),
         {
           name: 'services',
           icon: 'fa-solid fa-gear',
           route: '/dashboard/content/addservies',
+        },
+        {
+          name: 'customers',
+          icon: 'fa-solid fa-users',
+          route: '/dashboard/content/customers',
         },
         {
           name: 'holidays_Day',

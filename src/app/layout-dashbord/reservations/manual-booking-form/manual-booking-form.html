@@ -1,0 +1,106 @@
+<p-dialog maskStyleClass="backdrop-blur-sm" [(visible)]="visible" (onHide)="onClose()" [modal]="true"
+  [baseZIndex]="10000" styleClass="modern-modal" [style]="{ width: '90vw', maxWidth: '560px' }">
+
+  <ng-template pTemplate="headless">
+    <div class="modern-form-container">
+
+      <!-- Header -->
+      <div class="form-header">
+        <div class="header-content">
+          <h3>{{ 'new_manual_booking' | translate }}</h3>
+          <p class="subtitle">{{ 'manual_booking_subtitle' | translate }}</p>
+        </div>
+        <img src="/assets/Img/LOGO-GOLD.svg" alt="logo" class="header-logo" />
+        <button class="close-icon-btn" (click)="closeDialog()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Form -->
+      <form [formGroup]="Form()" (ngSubmit)="onSubmit()" class="form-body">
+        <div class="inputs-wrapper">
+
+          <!-- Customer Select -->
+          <div class="input-group">
+            <label>{{ 'select_customer' | translate }}</label>
+            <p-select formControlName="customerId" [options]="customers()" optionLabel="label" optionValue="value"
+              [filter]="true" filterBy="label" appendTo="body" placeholder="{{ 'select_customer' | translate }}"
+              [style]="{ width: '100%' }"></p-select>
+            <small class="error-msg" *ngIf="getControl('customerId')?.invalid && getControl('customerId')?.touched">
+              {{ 'filed_reqierd' | translate }}
+            </small>
+          </div>
+
+          <!-- Service -->
+          <div class="input-group">
+            <label>{{ 'servies' | translate }}</label>
+            <p-select formControlName="serviceId" appendTo="body" [options]="services()" optionLabel="label"
+              optionValue="value" placeholder="{{ 'select_service' | translate }}"
+              [style]="{ width: '100%' }"></p-select>
+            <small class="error-msg" *ngIf="getControl('serviceId')?.invalid && getControl('serviceId')?.touched">
+              {{ 'filed_reqierd' | translate }}
+            </small>
+          </div>
+
+          <!-- Date -->
+          <div class="input-group">
+            <label>{{ 'Date' | translate }}</label>
+            <div class="datepicker-wrapper">
+              <p-datepicker formControlName="date" [minDate]="minDate" [showIcon]="true" icon="fa-regular fa-calendar"
+                [firstDayOfWeek]="6" dateFormat="yy-mm-dd" placeholder="{{ 'Date' | translate }}"
+                appendTo="body" [style]="{ width: '100%' }" inputStyleClass="datepicker-input">
+              </p-datepicker>
+            </div>
+            <small class="error-msg" *ngIf="getControl('date')?.invalid && getControl('date')?.touched">
+              {{ 'filed_reqierd' | translate }}
+            </small>
+          </div>
+
+          <!-- Time Slots -->
+          @if (timeSlots().length > 0) {
+          <div class="input-group">
+            <label>{{ 'start_time' | translate }}</label>
+            <div class="times-container">
+              @for (slot of timeSlots(); track $index) {
+              <div (click)="selectSlot(slot)" class="time-slot" [ngClass]="{
+                  'selected-time': selectedSlot()?.startTime === slot.startTime,
+                  'slot-unavailable': !slot.available
+                }">
+                <span class="slot-time" dir="ltr">
+                  {{ formatTime(slot.startTime) }} - {{ formatTime(slot.endTime) }}
+                </span>
+                <span class="slot-status">
+                  {{ slot.available ? ('AVAILABLE' | translate) : ('BOOKED' | translate) }}
+                </span>
+              </div>
+              }
+            </div>
+            <small class="error-msg" *ngIf="getControl('startTime')?.invalid && getControl('startTime')?.touched">
+              {{ 'SELECT_DATE_TIME' | translate }}
+            </small>
+          </div>
+          }
+
+          <!-- Authorized info note -->
+          <div class="info-note">
+            <i class="fa-solid fa-circle-info"></i>
+            <span>{{ 'manual_booking_note' | translate }}</span>
+          </div>
+
+        </div>
+
+        <!-- Actions -->
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" (click)="closeDialog()">
+            {{ 'close' | translate }}
+          </button>
+          <button type="submit" class="btn-primary" [disabled]="isLoading()">
+            <i class="fa-solid fa-calendar-plus"></i>
+            {{ isLoading() ? ('loading' | translate) : ('create_booking' | translate) }}
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </ng-template>
+</p-dialog>

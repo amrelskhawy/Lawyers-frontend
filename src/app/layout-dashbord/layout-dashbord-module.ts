@@ -23,7 +23,14 @@ import { Reservations } from './reservations/reservations';
 import { Moderators } from './moderators/moderators';
 import { Form } from './moderators/form/form';
 import { Admins } from './admins/admins';
+import { DashboardCrudPage } from './dashboard-crud-page/dashboard-crud-page';
 import { DilogBooking } from './reservations/dilog-booking/dilog-booking';
+import { ManualBookingForm } from './reservations/manual-booking-form/manual-booking-form';
+import { Customers } from './customers/customers';
+import { FormCustomer } from './customers/form-customer/form-customer';
+import { ShowCustomerData } from './customers/show-customer-data/show-customer-data';
+import { Organizers } from './organizers/organizers';
+import { OrganizerForm } from './organizers/form/form';
 import { SelectModule } from 'primeng/select';
 @NgModule({
   declarations: [
@@ -40,7 +47,14 @@ import { SelectModule } from 'primeng/select';
     Moderators,
     Form,
     Admins,
+    DashboardCrudPage,
     DilogBooking,
+    ManualBookingForm,
+    Customers,
+    FormCustomer,
+    ShowCustomerData,
+    Organizers,
+    OrganizerForm,
   ],
   imports: [
     CommonModule,

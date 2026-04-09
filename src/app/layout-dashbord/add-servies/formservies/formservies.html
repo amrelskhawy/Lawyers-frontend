@@ -84,6 +84,17 @@
               {{ 'filed_reqierd' | translate }}
             </small>
           </div>
+
+          <!-- isFree Toggle -->
+          <div class="input-group">
+            <label>{{ 'is_free_label' | translate }}</label>
+            <div class="input-wrapper" style="align-items: center; gap: 0.75rem;">
+              <p-toggleswitch formControlName="isFree"></p-toggleswitch>
+              <span style="font-size: 0.85rem; color: var(--text-muted, #888);">
+                {{ 'is_free_hint' | translate }}
+              </span>
+            </div>
+          </div>
         </div>
 
         <!-- Actions -->
