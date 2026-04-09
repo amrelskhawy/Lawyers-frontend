@@ -48,7 +48,7 @@
             <div class="datepicker-wrapper">
               <p-datepicker formControlName="date" [minDate]="minDate" [showIcon]="true" icon="fa-regular fa-calendar"
                 [firstDayOfWeek]="6" dateFormat="yy-mm-dd" placeholder="{{ 'Date' | translate }}"
-                [style]="{ width: '100%' }" inputStyleClass="datepicker-input">
+                appendTo="body" [style]="{ width: '100%' }" inputStyleClass="datepicker-input">
               </p-datepicker>
             </div>
             <small class="error-msg" *ngIf="getControl('date')?.invalid && getControl('date')?.touched">
