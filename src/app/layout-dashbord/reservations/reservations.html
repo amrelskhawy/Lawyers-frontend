@@ -1,7 +1,7 @@
 <div class="calendar-wrapper">
   <div class="calendar-nav">
-    <p-select [options]="months" [(ngModel)]="selectedMonth" (onChange)="onMonthChange($event)" optionLabel="name"
-      [style]="{ width: '40%' }" />
+    <p-select [options]="months" [(ngModel)]="selectedMonth" appendTo="body" (onChange)="onMonthChange($event)"
+      optionLabel="name" [style]="{ width: '40%' }" />
     <h2>{{ displayDate | date: 'MMMM yyyy' }}</h2>
 
     <div class="calendar-nav-actions">

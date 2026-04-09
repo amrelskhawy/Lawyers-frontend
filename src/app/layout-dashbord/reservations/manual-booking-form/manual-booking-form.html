@@ -24,10 +24,9 @@
           <div class="input-group">
             <label>{{ 'select_customer' | translate }}</label>
             <p-select formControlName="customerId" [options]="customers()" optionLabel="label" optionValue="value"
-              [filter]="true" filterBy="label"
-              placeholder="{{ 'select_customer' | translate }}" [style]="{ width: '100%' }"></p-select>
-            <small class="error-msg"
-              *ngIf="getControl('customerId')?.invalid && getControl('customerId')?.touched">
+              [filter]="true" filterBy="label" appendTo="body" placeholder="{{ 'select_customer' | translate }}"
+              [style]="{ width: '100%' }"></p-select>
+            <small class="error-msg" *ngIf="getControl('customerId')?.invalid && getControl('customerId')?.touched">
               {{ 'filed_reqierd' | translate }}
             </small>
           </div>
@@ -35,10 +34,10 @@
           <!-- Service -->
           <div class="input-group">
             <label>{{ 'servies' | translate }}</label>
-            <p-select formControlName="serviceId" [options]="services()" optionLabel="label" optionValue="value"
-              placeholder="{{ 'select_service' | translate }}" [style]="{ width: '100%' }"></p-select>
-            <small class="error-msg"
-              *ngIf="getControl('serviceId')?.invalid && getControl('serviceId')?.touched">
+            <p-select formControlName="serviceId" appendTo="body" [options]="services()" optionLabel="label"
+              optionValue="value" placeholder="{{ 'select_service' | translate }}"
+              [style]="{ width: '100%' }"></p-select>
+            <small class="error-msg" *ngIf="getControl('serviceId')?.invalid && getControl('serviceId')?.touched">
               {{ 'filed_reqierd' | translate }}
             </small>
           </div>
@@ -47,10 +46,9 @@
           <div class="input-group">
             <label>{{ 'Date' | translate }}</label>
             <div class="datepicker-wrapper">
-              <p-datepicker formControlName="date" [minDate]="minDate" [showIcon]="true"
-                icon="fa-regular fa-calendar" [firstDayOfWeek]="6" dateFormat="yy-mm-dd"
-                placeholder="{{ 'Date' | translate }}" [style]="{ width: '100%' }"
-                inputStyleClass="datepicker-input">
+              <p-datepicker formControlName="date" [minDate]="minDate" [showIcon]="true" icon="fa-regular fa-calendar"
+                [firstDayOfWeek]="6" dateFormat="yy-mm-dd" placeholder="{{ 'Date' | translate }}"
+                [style]="{ width: '100%' }" inputStyleClass="datepicker-input">
               </p-datepicker>
             </div>
             <small class="error-msg" *ngIf="getControl('date')?.invalid && getControl('date')?.touched">
@@ -77,8 +75,7 @@
               </div>
               }
             </div>
-            <small class="error-msg"
-              *ngIf="getControl('startTime')?.invalid && getControl('startTime')?.touched">
+            <small class="error-msg" *ngIf="getControl('startTime')?.invalid && getControl('startTime')?.touched">
               {{ 'SELECT_DATE_TIME' | translate }}
             </small>
           </div>
