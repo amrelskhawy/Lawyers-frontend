@@ -20,41 +20,14 @@
       <form [formGroup]="Form()" (ngSubmit)="onSubmit()" class="form-body">
         <div class="inputs-wrapper">
 
-          <!-- Client Name + Email -->
-          <div class="form-grid">
-            <div class="input-group">
-              <label>{{ 'name_client' | translate }}</label>
-              <div class="input-wrapper">
-                <i class="fa-solid fa-user input-icon"></i>
-                <input formControlName="name" placeholder="{{ 'name_client' | translate }}" type="text" />
-              </div>
-              <small class="error-msg" *ngIf="getControl('name')?.invalid && getControl('name')?.touched">
-                {{ 'filed_reqierd' | translate }}
-              </small>
-            </div>
-
-            <div class="input-group">
-              <label>{{ 'Email_client' | translate }}</label>
-              <div class="input-wrapper">
-                <i class="fa-solid fa-envelope input-icon"></i>
-                <input formControlName="clientEmail" placeholder="{{ 'Email_client' | translate }}" type="email" />
-              </div>
-              <small class="error-msg"
-                *ngIf="getControl('clientEmail')?.invalid && getControl('clientEmail')?.touched">
-                {{ 'filed_reqierd' | translate }}
-              </small>
-            </div>
-          </div>
-
-          <!-- Phone -->
+          <!-- Customer Select -->
           <div class="input-group">
-            <label>{{ 'phone' | translate }}</label>
-            <div class="input-wrapper">
-              <i class="fa-solid fa-phone input-icon"></i>
-              <input formControlName="phone_number" placeholder="{{ 'phone' | translate }}" type="tel" />
-            </div>
+            <label>{{ 'select_customer' | translate }}</label>
+            <p-select formControlName="customerId" [options]="customers()" optionLabel="label" optionValue="value"
+              [filter]="true" filterBy="label"
+              placeholder="{{ 'select_customer' | translate }}" [style]="{ width: '100%' }"></p-select>
             <small class="error-msg"
-              *ngIf="getControl('phone_number')?.invalid && getControl('phone_number')?.touched">
+              *ngIf="getControl('customerId')?.invalid && getControl('customerId')?.touched">
               {{ 'filed_reqierd' | translate }}
             </small>
           </div>

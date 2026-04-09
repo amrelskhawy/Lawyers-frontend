@@ -104,6 +104,7 @@
   "manual_booking_subtitle": "إنشاء حجز مباشر من قِبل الاستقبال",
   "manual_booking_note": "سيتم إنشاء الحجز بحالة دفع (مُفوَّض) ويمكن تأكيد استلام الدفع لاحقاً عبر زر تحصيل الدفع.",
   "create_booking": "إنشاء الحجز",
+  "select_customer": "اختر العميل",
   "select_service": "اختر خدمة",
   "start_time": "وقت البداية",
   "end_time": "وقت النهاية",

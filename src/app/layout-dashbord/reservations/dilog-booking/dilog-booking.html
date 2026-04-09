@@ -41,7 +41,7 @@
               <div class="info-icon"><i class="fa-solid fa-id-badge"></i></div>
               <div class="info-text">
                 <span class="info-label">{{ 'name_client' | translate }}</span>
-                <span class="info-value">{{ dataobj().name }}</span>
+                <span class="info-value">{{ dataobj().customer?.fullName }}</span>
               </div>
             </div>
 
@@ -49,15 +49,15 @@
               <div class="info-icon"><i class="fa-solid fa-envelope"></i></div>
               <div class="info-text">
                 <span class="info-label">{{ 'Email_client' | translate }}</span>
-                <span class="info-value">{{ dataobj().clientEmail }}</span>
+                <span class="info-value">{{ dataobj().customer?.email }}</span>
               </div>
             </div>
 
-            <div class="info-card" *ngIf="dataobj().phone">
+            <div class="info-card" *ngIf="dataobj().customer?.phone">
               <div class="info-icon"><i class="fa-solid fa-phone"></i></div>
               <div class="info-text">
                 <span class="info-label">{{ 'phone' | translate }}</span>
-                <span class="info-value" dir="ltr">{{ dataobj().phone }}</span>
+                <span class="info-value" dir="ltr">{{ dataobj().customer?.phone }}</span>
               </div>
             </div>
           </div>

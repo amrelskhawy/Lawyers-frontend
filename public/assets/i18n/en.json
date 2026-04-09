@@ -104,6 +104,7 @@
   "manual_booking_subtitle": "Create a booking directly from reception",
   "manual_booking_note": "This booking will be created with an Authorized payment status. Use Capture Payment once the client has paid.",
   "create_booking": "Create Booking",
+  "select_customer": "Select Customer",
   "select_service": "Select a service",
   "start_time": "Start Time",
   "end_time": "End Time",
