@@ -7,6 +7,7 @@ import { AddServies } from './add-servies/add-servies';
 import { Reservations } from './reservations/reservations';
 import { Moderators } from './moderators/moderators';
 import { Admins } from './admins/admins';
+import { Customers } from './customers/customers';
 
 const routes: Routes = [
   {
@@ -19,6 +20,7 @@ const routes: Routes = [
       { path: 'admin', component: Admins, canActivate: [isAdminGuard] },
       { path: 'addservies', component: AddServies },
       { path: 'Holidays', component: Holidays },
+      { path: 'customers', component: Customers },
       { path: '**', redirectTo: '', pathMatch: 'full' }
     ],
   },

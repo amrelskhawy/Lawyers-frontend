@@ -25,6 +25,9 @@ import { Form } from './moderators/form/form';
 import { Admins } from './admins/admins';
 import { DilogBooking } from './reservations/dilog-booking/dilog-booking';
 import { ManualBookingForm } from './reservations/manual-booking-form/manual-booking-form';
+import { Customers } from './customers/customers';
+import { FormCustomer } from './customers/form-customer/form-customer';
+import { ShowCustomerData } from './customers/show-customer-data/show-customer-data';
 import { SelectModule } from 'primeng/select';
 @NgModule({
   declarations: [
@@ -43,6 +46,9 @@ import { SelectModule } from 'primeng/select';
     Admins,
     DilogBooking,
     ManualBookingForm,
+    Customers,
+    FormCustomer,
+    ShowCustomerData,
   ],
   imports: [
     CommonModule,

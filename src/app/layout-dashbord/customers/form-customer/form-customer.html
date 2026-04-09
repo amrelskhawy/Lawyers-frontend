@@ -1,0 +1,82 @@
+<p-dialog maskStyleClass="backdrop-blur-sm" [(visible)]="visible" (onHide)="onClose()" [modal]="true"
+  [baseZIndex]="10000" styleClass="modern-modal" [style]="{ width: '90vw', maxWidth: '500px' }">
+
+  <ng-template pTemplate="headless">
+    <div class="modern-form-container">
+
+      <!-- Header -->
+      <div class="form-header">
+        <div class="header-content">
+          <h3>{{ (objData() ? 'edit_customer' : 'add_customer') | translate }}</h3>
+          <p class="subtitle">{{ 'details_customer' | translate }}</p>
+        </div>
+        <img src="/assets/Img/LOGO-GOLD.svg" alt="logo" class="header-logo" />
+        <button class="close-icon-btn" (click)="closeDialog()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Form -->
+      <form [formGroup]="Form()" (ngSubmit)="onSubmitData()" class="form-body">
+
+        <div class="inputs-wrapper">
+          <!-- Full Name -->
+          <div class="input-group">
+            <label>{{ 'full_name' | translate }}</label>
+            <div class="input-wrapper">
+              <i class="fa-regular fa-user input-icon"></i>
+              <input formControlName="fullName" placeholder="{{ 'full_name' | translate }}" type="text" />
+            </div>
+            <small class="error-msg" *ngIf="getControlName('fullName')?.invalid && getControlName('fullName')?.touched">
+              {{ 'filed_reqierd' | translate }}
+            </small>
+          </div>
+
+          <!-- Email -->
+          <div class="input-group">
+            <label>{{ 'email' | translate }}</label>
+            <div class="input-wrapper">
+              <i class="fa-regular fa-envelope input-icon"></i>
+              <input formControlName="email" placeholder="{{ 'email' | translate }}" type="email" />
+            </div>
+            <small class="error-msg" *ngIf="getControlName('email')?.invalid && getControlName('email')?.touched">
+              {{ (getControlName('email')?.errors?.['email'] ? 'vaild_email' : 'filed_reqierd') | translate }}
+            </small>
+          </div>
+
+          <!-- Phone -->
+          <div class="input-group">
+            <label>{{ 'phone' | translate }}</label>
+            <div class="input-wrapper">
+              <i class="fa-solid fa-phone input-icon"></i>
+              <input formControlName="phone" placeholder="{{ 'phone' | translate }}" type="tel" />
+            </div>
+            <small class="error-msg" *ngIf="getControlName('phone')?.invalid && getControlName('phone')?.touched">
+              {{ 'filed_reqierd' | translate }}
+            </small>
+          </div>
+
+          <!-- Location -->
+          <div class="input-group">
+            <label>{{ 'location' | translate }}</label>
+            <div class="input-wrapper">
+              <i class="fa-solid fa-location-dot input-icon"></i>
+              <input formControlName="location" placeholder="{{ 'location' | translate }}" type="text" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" (click)="closeDialog()">
+            {{ 'close' | translate }}
+          </button>
+          <button type="submit" class="btn-primary">
+            {{ 'submit' | translate }} <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </ng-template>
+</p-dialog>

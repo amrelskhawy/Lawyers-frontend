@@ -91,6 +91,11 @@ export class Menue implements OnInit {
           route: '/dashboard/content/addservies',
         },
         {
+          name: 'customers',
+          icon: 'fa-solid fa-users',
+          route: '/dashboard/content/customers',
+        },
+        {
           name: 'holidays_Day',
           icon: 'fa-solid fa-holly-berry',
           route: '/dashboard/content/Holidays',

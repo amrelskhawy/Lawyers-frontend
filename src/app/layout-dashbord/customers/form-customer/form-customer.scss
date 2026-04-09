@@ -1,0 +1,213 @@
+@use "../../glopalstyles.scss";
+
+// Variables
+$primary-navy: #1a2b4b;
+$accent-gold: #c5a059;
+$error-red: #ef4444;
+$gray-border: #e2e8f0;
+$gray-text: #64748b;
+$white: #ffffff;
+
+.modern-form-container {
+  display: flex;
+  flex-direction: column;
+  background-color: $white;
+  overflow: hidden;
+  font-family: inherit;
+  max-height: 70vh;
+
+  .form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $primary-navy;
+    padding: 1.5rem;
+    color: $white;
+    position: relative;
+
+    .header-content {
+      h3 {
+        margin: 0;
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: $accent-gold;
+        margin-bottom: 0.25rem;
+      }
+
+      .subtitle {
+        margin: 0;
+        font-size: 0.85rem;
+        opacity: 0.8;
+      }
+    }
+
+    .header-logo {
+      height: 40px;
+      width: auto;
+    }
+
+    .close-icon-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: $white;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      :host-context([dir="rtl"]) & {
+        right: auto;
+        left: 1rem;
+      }
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: rotate(90deg);
+      }
+    }
+  }
+
+  .form-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .inputs-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-bottom: 5rem;
+  }
+
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: $primary-navy;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+
+      .input-icon {
+        position: absolute;
+        left: 1rem;
+        color: $accent-gold;
+        font-size: 1rem;
+        pointer-events: none;
+      }
+
+      :host-context([dir="rtl"]) & .input-icon {
+        left: auto;
+        right: 1rem;
+      }
+
+      input {
+        width: 100%;
+        padding: 0.75rem 1rem 0.75rem 2.8rem;
+        border: 1px solid $gray-border;
+        border-radius: 12px;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        background-color: #f8fafc;
+        font-family: inherit;
+
+        &:focus {
+          outline: none;
+          border-color: $accent-gold;
+          box-shadow: 0 0 0 3px rgba($accent-gold, 0.1);
+          background-color: $white;
+        }
+
+        &::placeholder {
+          color: #cbd5e1;
+        }
+      }
+
+      :host-context([dir="rtl"]) & input {
+        padding: 0.75rem 3rem 0.75rem 1rem;
+      }
+    }
+
+    .error-msg {
+      color: $error-red;
+      font-size: 0.8rem;
+    }
+  }
+
+  .form-actions {
+    margin-top: auto;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    border-top: 1px solid $gray-border;
+    background: $white;
+    position: absolute;
+    bottom: 0;
+    z-index: 10;
+    width: 100%;
+    left: 0;
+
+    button {
+      padding: 0.75rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      &.btn-secondary {
+        background: transparent;
+        border: 1px solid $primary-navy;
+        color: $primary-navy;
+
+        &:hover {
+          background: rgba($primary-navy, 0.05);
+        }
+      }
+
+      &.btn-primary {
+        background: linear-gradient(135deg, $accent-gold 0%, darken($accent-gold, 15%) 100%);
+        border: none;
+        color: $white;
+        box-shadow: 0 4px 15px rgba($accent-gold, 0.4);
+
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba($accent-gold, 0.6);
+        }
+      }
+    }
+  }
+}
+
+::ng-deep .modern-modal .p-dialog-content {
+  padding: 0 !important;
+  border-radius: 16px;
+}
+
+::ng-deep .modern-modal .p-dialog-header {
+  display: none;
+}
