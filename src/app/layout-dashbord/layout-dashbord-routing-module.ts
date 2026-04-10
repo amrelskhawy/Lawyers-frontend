@@ -9,6 +9,8 @@ import { Moderators } from './moderators/moderators';
 import { Admins } from './admins/admins';
 import { Customers } from './customers/customers';
 import { Organizers } from './organizers/organizers';
+import { ClientCases } from './client-cases/client-cases';
+import { EditCase } from './client-cases/edit-case/edit-case';
 
 const routes: Routes = [
   {
@@ -23,6 +25,8 @@ const routes: Routes = [
       { path: 'Holidays', component: Holidays },
       { path: 'customers', component: Customers },
       { path: 'organizers', component: Organizers, canActivate: [isAdminGuard] },
+      { path: 'client-cases', component: ClientCases },
+      { path: 'client-cases/:id/edit', component: EditCase },
       { path: '**', redirectTo: '', pathMatch: 'full' }
     ],
   },

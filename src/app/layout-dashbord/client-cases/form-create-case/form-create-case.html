@@ -1,0 +1,79 @@
+<p-dialog
+  maskStyleClass="backdrop-blur-sm"
+  [(visible)]="visible"
+  (onHide)="closeDialog()"
+  [modal]="true"
+  [baseZIndex]="10000"
+  styleClass="modern-modal"
+  [style]="{ width: '90vw', maxWidth: '520px' }">
+
+  <ng-template pTemplate="headless">
+    <div class="modern-form-container">
+
+      <div class="form-header">
+        <div class="header-content">
+          <h3>{{ 'create_case' | translate }}</h3>
+          <p class="subtitle">{{ 'create_case_subtitle' | translate }}</p>
+        </div>
+        <img src="/assets/Img/LOGO-GOLD.svg" alt="logo" class="header-logo" />
+        <button class="close-icon-btn" (click)="closeDialog()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form [formGroup]="Form()" (ngSubmit)="onSubmit()" class="form-body">
+        <div class="inputs-wrapper">
+
+          <div class="input-group">
+            <label>{{ 'case_customer' | translate }}</label>
+            <p-select
+              formControlName="customerId"
+              [options]="customers()"
+              optionLabel="fullName"
+              optionValue="id"
+              [filter]="true"
+              filterBy="fullName,phone,email"
+              [placeholder]="'select_customer' | translate"
+              styleClass="w-full">
+            </p-select>
+            <small class="error-msg"
+              *ngIf="getControlName('customerId')?.invalid && getControlName('customerId')?.touched">
+              {{ 'filed_reqierd' | translate }}
+            </small>
+          </div>
+
+          <div class="input-group">
+            <label>{{ 'case_type' | translate }}</label>
+            <p-select
+              formControlName="caseType"
+              [options]="caseTypes"
+              optionLabel="label"
+              optionValue="value"
+              styleClass="w-full">
+            </p-select>
+          </div>
+
+          <div class="input-group">
+            <label>{{ 'case_date' | translate }}</label>
+            <p-datepicker
+              formControlName="caseDate"
+              [showIcon]="true"
+              dateFormat="dd/mm/yy"
+              styleClass="w-full">
+            </p-datepicker>
+          </div>
+
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" (click)="closeDialog()">
+            {{ 'close' | translate }}
+          </button>
+          <button type="submit" class="btn-primary" [disabled]="submitting()">
+            {{ 'create' | translate }} <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+</p-dialog>

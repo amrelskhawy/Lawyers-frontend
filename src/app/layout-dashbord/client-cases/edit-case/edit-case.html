@@ -1,0 +1,251 @@
+<div class="edit-case-page" dir="rtl">
+
+  <!-- ============ ACTION BAR ============ -->
+  <div class="action-bar">
+    <div class="left">
+      <button class="back-btn" (click)="back()" [attr.aria-label]="'back' | translate">
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+      <h2>{{ 'edit_case' | translate }}</h2>
+
+      <span class="save-pill"
+            [class.unsaved]="saveStatus() === 'unsaved'"
+            [class.saving]="saveStatus() === 'saving'"
+            [class.saved]="saveStatus() === 'saved'"
+            [class.error]="saveStatus() === 'error'">
+        <ng-container [ngSwitch]="saveStatus()">
+          <ng-container *ngSwitchCase="'unsaved'">
+            <i class="fa-solid fa-circle-dot"></i> {{ 'unsaved_changes' | translate }}
+          </ng-container>
+          <ng-container *ngSwitchCase="'saving'">
+            <i class="fa-solid fa-cloud-arrow-up"></i> {{ 'saving' | translate }}
+          </ng-container>
+          <ng-container *ngSwitchCase="'saved'">
+            <i class="fa-solid fa-check"></i> {{ 'saved' | translate }}
+          </ng-container>
+          <ng-container *ngSwitchCase="'error'">
+            <i class="fa-solid fa-triangle-exclamation"></i> {{ 'save_error' | translate }}
+          </ng-container>
+        </ng-container>
+      </span>
+    </div>
+
+    <div class="right">
+      <button class="btn-save"
+              (click)="save()"
+              [disabled]="saveStatus() === 'saving' || saveStatus() === 'idle' || saveStatus() === 'saved'">
+        <i class="fa-solid fa-floppy-disk"></i>
+        {{ 'save' | translate }}
+      </button>
+      <button class="btn-secondary"
+              (click)="generatePdf()"
+              [disabled]="generating() || saveStatus() === 'unsaved' || saveStatus() === 'saving'"
+              [pTooltip]="saveStatus() === 'unsaved' ? ('save_first' | translate) : ''"
+              tooltipPosition="bottom">
+        <i class="fa-solid fa-file-pdf"></i>
+        {{ (generating() ? 'generating' : 'generate_pdf') | translate }}
+      </button>
+      <button class="btn-primary"
+              (click)="sendToClient()"
+              [disabled]="sending() || saveStatus() === 'unsaved' || saveStatus() === 'saving'"
+              [pTooltip]="saveStatus() === 'unsaved' ? ('save_first' | translate) : ''"
+              tooltipPosition="bottom">
+        <i class="fa-solid fa-paper-plane"></i>
+        {{ (sending() ? 'sending' : 'send_to_client') | translate }}
+      </button>
+    </div>
+  </div>
+
+  <!-- ============ 2-COLUMN GRID ============ -->
+  <div class="grid" *ngIf="!loading(); else loadingTpl">
+
+    <!-- LEFT: form -->
+    <section class="card form-card">
+      <form [formGroup]="Form" class="form-body">
+
+        <h3 class="section-title">{{ 'client_intake' | translate }}</h3>
+
+        <div class="row">
+          <div class="input-group">
+            <label>{{ 'case_customer' | translate }}</label>
+            <p-select
+              formControlName="customerId"
+              [options]="customers()"
+              optionLabel="fullName"
+              optionValue="id"
+              [filter]="true"
+              filterBy="fullName,phone,email"
+              [placeholder]="'select_customer' | translate"
+              styleClass="w-full">
+            </p-select>
+          </div>
+
+          <div class="input-group">
+            <label>{{ 'case_type' | translate }}</label>
+            <p-select
+              formControlName="caseType"
+              [options]="caseTypes"
+              optionLabel="label"
+              optionValue="value"
+              styleClass="w-full">
+            </p-select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-group">
+            <label>{{ 'case_date' | translate }}</label>
+            <p-datepicker
+              formControlName="caseDate"
+              [showIcon]="true"
+              dateFormat="dd/mm/yy"
+              styleClass="w-full">
+            </p-datepicker>
+          </div>
+        </div>
+
+        <div class="row toggle-row">
+          <label class="inline-toggle">
+            <p-toggleswitch formControlName="wantsSpecificLawyer"></p-toggleswitch>
+            <span>{{ 'wants_specific_lawyer' | translate }}</span>
+          </label>
+        </div>
+
+        <div class="row" *ngIf="Form.value.wantsSpecificLawyer">
+          <div class="input-group">
+            <label>{{ 'preferred_lawyer' | translate }}</label>
+            <p-select
+              formControlName="preferredLawyerId"
+              [options]="lawyers()"
+              optionLabel="name"
+              optionValue="id"
+              [filter]="true"
+              filterBy="name,email"
+              [placeholder]="'select_lawyer' | translate"
+              [showClear]="true"
+              styleClass="w-full">
+            </p-select>
+          </div>
+        </div>
+
+        <h3 class="section-title">{{ 'session_notes' | translate }}</h3>
+
+        <div class="row">
+          <div class="input-group">
+            <label>{{ 'session_receiver' | translate }}</label>
+            <p-select
+              formControlName="sessionReceiverId"
+              [options]="lawyers()"
+              optionLabel="name"
+              optionValue="id"
+              [filter]="true"
+              filterBy="name,email"
+              [placeholder]="'select_lawyer' | translate"
+              [showClear]="true"
+              styleClass="w-full">
+            </p-select>
+          </div>
+
+          <div class="input-group">
+            <label>{{ 'session_date' | translate }}</label>
+            <p-datepicker
+              formControlName="sessionDate"
+              [showIcon]="true"
+              dateFormat="dd/mm/yy"
+              [showClear]="true"
+              styleClass="w-full">
+            </p-datepicker>
+          </div>
+        </div>
+
+        <div class="row toggle-row">
+          <label class="inline-toggle">
+            <p-toggleswitch formControlName="hasStructuredNotes"></p-toggleswitch>
+            <span>{{ 'use_structured_notes' | translate }}</span>
+          </label>
+        </div>
+
+        <ng-container *ngIf="Form.value.hasStructuredNotes; else freeNotesTpl">
+          <div class="notes-block">
+            <div class="notes-block-header">
+              <span class="dot dot-weakness"></span>
+              <h4>{{ 'weaknesses' | translate }}</h4>
+              <button type="button" class="add-line" (click)="addLine('weaknesses')">
+                <i class="fa-solid fa-plus"></i>
+              </button>
+            </div>
+            <div formArrayName="weaknesses" class="lines">
+              <div class="line" *ngFor="let ctrl of weaknesses.controls; let i = index">
+                <input type="text" [formControlName]="i" [placeholder]="'add_line' | translate" />
+                <button type="button" class="remove-line" (click)="removeLine('weaknesses', i)">
+                  <i class="fa-solid fa-xmark"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="notes-block">
+            <div class="notes-block-header">
+              <span class="dot dot-strength"></span>
+              <h4>{{ 'strengths' | translate }}</h4>
+              <button type="button" class="add-line" (click)="addLine('strengths')">
+                <i class="fa-solid fa-plus"></i>
+              </button>
+            </div>
+            <div formArrayName="strengths" class="lines">
+              <div class="line" *ngFor="let ctrl of strengths.controls; let i = index">
+                <input type="text" [formControlName]="i" [placeholder]="'add_line' | translate" />
+                <button type="button" class="remove-line" (click)="removeLine('strengths', i)">
+                  <i class="fa-solid fa-xmark"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="notes-block">
+            <div class="notes-block-header">
+              <span class="dot dot-gap"></span>
+              <h4>{{ 'gaps' | translate }}</h4>
+              <button type="button" class="add-line" (click)="addLine('gaps')">
+                <i class="fa-solid fa-plus"></i>
+              </button>
+            </div>
+            <div formArrayName="gaps" class="lines">
+              <div class="line" *ngFor="let ctrl of gaps.controls; let i = index">
+                <input type="text" [formControlName]="i" [placeholder]="'add_line' | translate" />
+                <button type="button" class="remove-line" (click)="removeLine('gaps', i)">
+                  <i class="fa-solid fa-xmark"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-template #freeNotesTpl>
+          <div class="input-group">
+            <label>{{ 'free_notes' | translate }}</label>
+            <textarea formControlName="freeNotes" rows="12"
+                      [placeholder]="'free_notes_placeholder' | translate"></textarea>
+          </div>
+        </ng-template>
+
+      </form>
+    </section>
+
+    <!-- RIGHT: sticky preview -->
+    <aside class="preview-card">
+      <div class="preview-sticky">
+        <h3 class="preview-title">{{ 'live_preview' | translate }}</h3>
+        <app-case-report-template [value]="previewData()"></app-case-report-template>
+      </div>
+    </aside>
+
+  </div>
+
+  <ng-template #loadingTpl>
+    <div class="loading-state">
+      <i class="fa-solid fa-spinner fa-spin"></i>
+      {{ 'loading' | translate }}
+    </div>
+  </ng-template>
+</div>
