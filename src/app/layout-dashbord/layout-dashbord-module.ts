@@ -32,6 +32,10 @@ import { ShowCustomerData } from './customers/show-customer-data/show-customer-d
 import { Organizers } from './organizers/organizers';
 import { OrganizerForm } from './organizers/form/form';
 import { SelectModule } from 'primeng/select';
+import { ClientCases } from './client-cases/client-cases';
+import { FormCreateCase } from './client-cases/form-create-case/form-create-case';
+import { EditCase } from './client-cases/edit-case/edit-case';
+import { CaseReportTemplate } from './client-cases/case-report-template/case-report-template';
 @NgModule({
   declarations: [
     Menue,
@@ -55,6 +59,10 @@ import { SelectModule } from 'primeng/select';
     ShowCustomerData,
     Organizers,
     OrganizerForm,
+    ClientCases,
+    FormCreateCase,
+    EditCase,
+    CaseReportTemplate,
   ],
   imports: [
     CommonModule,

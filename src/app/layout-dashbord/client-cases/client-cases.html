@@ -1,0 +1,25 @@
+<ng-template #actions let-item let-onDelete="delete">
+  <div class="action-btn">
+    <button [attr.aria-label]="'edit' | translate" (click)="onEditCase(item)" class="edit-btn">
+      <i class="fa-solid fa-pen-to-square"></i>
+    </button>
+    <button [attr.aria-label]="'delete' | translate" (click)="onDelete(item)" class="delete-btn">
+      <i class="fa-solid fa-trash"></i>
+    </button>
+  </div>
+</ng-template>
+
+<app-dashboard-crud-page
+  endpoint="cases"
+  deleteEndpoint="cases"
+  [columns]="columns"
+  [searchFields]="searchFields"
+  [actionsTemplate]="actions"
+  [dataMapper]="dataMapper"
+  (addNew)="visibelform.set(true)">
+
+  <app-form-create-case
+    [(visible)]="visibelform"
+    (created)="onCreated($event)">
+  </app-form-create-case>
+</app-dashboard-crud-page>
