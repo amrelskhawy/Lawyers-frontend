@@ -1,4 +1,4 @@
 export const environment = {
-    baseApi: "https://saadalboqami.com/api/v1/",
+    baseApi: "http://localhost:3000/api/v1/",
     production: true
 }

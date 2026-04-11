@@ -161,6 +161,17 @@ form {
         }
       }
 
+      &.session-report-btn {
+        background-color: rgba(201, 168, 76, 0.12);
+        color: #c9a84c;
+
+        &:hover {
+          background-color: #c9a84c;
+          color: #fff;
+          box-shadow: 0 4px 12px rgba(201, 168, 76, 0.35);
+        }
+      }
+
       &.show_data {
         background-color: rgba(99, 102, 241, 0.1);
         color: #6366f1;

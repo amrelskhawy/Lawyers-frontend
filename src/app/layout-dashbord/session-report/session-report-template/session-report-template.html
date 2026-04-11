@@ -1,0 +1,26 @@
+<div class="sr-shell" dir="rtl">
+  <div class="sr-page">
+    <div class="ov f-report-number">{{ reportNumber() || '—' }}</div>
+    <div class="ov f-gregorian-date" dir="ltr">{{ formattedSessionDate() || '—' }}</div>
+
+    <div class="ov f-customer-name">{{ data().customerName || '' }}</div>
+
+    <!-- Info table — ordered to match the form (court_name → case_charge →
+         opponent_name → case_number → court_city). -->
+    <div class="ov f-court-name">{{ data().courtName || '' }}</div>
+    <div class="ov f-case-charge">{{ data().caseCharge || '' }}</div>
+    <div class="ov f-opponent-name">{{ data().opponentName || '' }}</div>
+    <div class="ov f-case-number" dir="ltr">{{ data().caseNumber || '' }}</div>
+    <div class="ov f-case-data">{{ data().caseData || '' }}</div>
+    <div class="ov f-court-city">{{ data().courtCircuit || '' }}</div>
+
+    <!-- Body narrative — session_ordinal → session_date (strip) →
+         session_time → hijri_date → session_summary. -->
+    <div class="ov f-body-customer">{{ data().customerName || '' }}</div>
+    <div class="ov f-session-ordinal">{{ data().sessionOrdinal || '' }}</div>
+    <div class="ov f-session-time" dir="ltr">{{ data().sessionTime || '' }}</div>
+    <div class="ov f-hijri-date" dir="ltr">{{ data().hijriDate || '' }}</div>
+
+    <div class="ov f-session-summary">{{ data().sessionSummary || '' }}</div>
+  </div>
+</div>

@@ -36,6 +36,8 @@ import { ClientCases } from './client-cases/client-cases';
 import { FormCreateCase } from './client-cases/form-create-case/form-create-case';
 import { EditCase } from './client-cases/edit-case/edit-case';
 import { CaseReportTemplate } from './client-cases/case-report-template/case-report-template';
+import { SessionReport } from './session-report/session-report';
+import { SessionReportTemplate } from './session-report/session-report-template/session-report-template';
 @NgModule({
   declarations: [
     Menue,
@@ -63,6 +65,8 @@ import { CaseReportTemplate } from './client-cases/case-report-template/case-rep
     FormCreateCase,
     EditCase,
     CaseReportTemplate,
+    SessionReport,
+    SessionReportTemplate,
   ],
   imports: [
     CommonModule,
