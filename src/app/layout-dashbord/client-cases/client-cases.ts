@@ -44,6 +44,10 @@ export class ClientCases implements OnInit {
     this.router.navigate(['/dashboard/content/client-cases', item.id, 'edit']);
   }
 
+  onCreateSessionReport(item: IDataCase) {
+    this.router.navigate(['/dashboard/content/session-reports', item.id]);
+  }
+
   onCreated(newCase: IDataCase) {
     this.visibelform.set(false);
     this.router.navigate(['/dashboard/content/client-cases', newCase.id, 'edit']);

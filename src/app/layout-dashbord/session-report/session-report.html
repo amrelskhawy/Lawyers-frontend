@@ -1,0 +1,157 @@
+<div class="session-report-page" dir="rtl">
+
+  <div class="action-bar">
+    <div class="left">
+      <button class="back-btn" (click)="back()" [attr.aria-label]="'back' | translate">
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+      <h2>{{ 'session_report' | translate }}</h2>
+
+      <span class="save-pill" [class.unsaved]="saveStatus() === 'unsaved'" [class.saving]="saveStatus() === 'saving'"
+        [class.saved]="saveStatus() === 'saved'" [class.error]="saveStatus() === 'error'">
+        <ng-container [ngSwitch]="saveStatus()">
+          <ng-container *ngSwitchCase="'unsaved'">
+            <i class="fa-solid fa-circle-dot"></i> {{ 'unsaved_changes' | translate }}
+          </ng-container>
+          <ng-container *ngSwitchCase="'saving'">
+            <i class="fa-solid fa-cloud-arrow-up"></i> {{ 'saving' | translate }}
+          </ng-container>
+          <ng-container *ngSwitchCase="'saved'">
+            <i class="fa-solid fa-check"></i> {{ 'saved' | translate }}
+          </ng-container>
+          <ng-container *ngSwitchCase="'error'">
+            <i class="fa-solid fa-triangle-exclamation"></i> {{ 'save_error' | translate }}
+          </ng-container>
+        </ng-container>
+      </span>
+    </div>
+
+    <div class="right">
+      <button class="btn-save" (click)="save()"
+        [disabled]="saveStatus() === 'saving' || saveStatus() === 'idle' || saveStatus() === 'saved'">
+        <i class="fa-solid fa-floppy-disk"></i>
+        {{ 'save' | translate }}
+      </button>
+      <button class="btn-secondary" (click)="generatePdf()"
+        [disabled]="generating() || saveStatus() === 'unsaved' || saveStatus() === 'saving'"
+        [pTooltip]="saveStatus() === 'unsaved' ? ('save_first' | translate) : ''" tooltipPosition="bottom">
+        <i class="fa-solid fa-file-pdf"></i>
+        {{ (generating() ? 'generating' : 'generate_pdf') | translate }}
+      </button>
+      <button class="btn-primary" (click)="sendToClient()"
+        [disabled]="sending() || saveStatus() === 'unsaved' || saveStatus() === 'saving'"
+        [pTooltip]="saveStatus() === 'unsaved' ? ('save_first' | translate) : ''" tooltipPosition="bottom">
+        <i class="fa-solid fa-paper-plane"></i>
+        {{ (sending() ? 'sending' : 'send_to_client') | translate }}
+      </button>
+    </div>
+  </div>
+
+  <div class="grid" *ngIf="!loading(); else loadingTpl">
+
+    <section class="card form-card">
+      <form [formGroup]="Form" class="form-body">
+
+        <h3 class="section-title">{{ 'report_header' | translate }}</h3>
+
+        <div class="row">
+          <div class="input-group">
+            <label>{{ 'report_number' | translate }}</label>
+            <input type="text" formControlName="reportNumber" placeholder="5395" />
+          </div>
+          <div class="input-group">
+            <label>{{ 'session_date' | translate }}</label>
+            <p-datepicker formControlName="sessionDate" [showIcon]="true" dateFormat="dd/mm/yy" [showClear]="true"
+              styleClass="w-full">
+            </p-datepicker>
+          </div>
+
+
+        </div>
+
+        <h3 class="section-title">{{ 'case_context' | translate }}</h3>
+
+        <div class="row">
+          <div class="input-group">
+            <label>{{ 'court_name' | translate }}</label>
+            <input type="text" formControlName="courtName" placeholder="المحكمة الجزائية بالرياض" />
+          </div>
+          <div class="input-group">
+            <label>{{ 'case_charge' | translate }}</label>
+            <input type="text" formControlName="caseCharge" placeholder="تعزير – مخالفة النظام الجزائي..." />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-group">
+            <label>{{ 'opponent_name' | translate }}</label>
+            <input type="text" formControlName="opponentName" />
+          </div>
+          <div class="input-group">
+            <label>{{ 'case_number' | translate }}</label>
+            <input type="text" formControlName="caseNumber" />
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label>{{ 'case_data' | translate }}</label>
+          <textarea formControlName="caseData" rows="3"></textarea>
+        </div>
+
+        <div class="row">
+          <div class="input-group">
+            <label>{{ 'court_city' | translate }}</label>
+            <input type="text" formControlName="courtCircuit" placeholder="الرياض" />
+          </div>
+        </div>
+
+        <h3 class="section-title">{{ 'session_meta' | translate }}</h3>
+
+        <div class="row">
+          <div class="input-group">
+            <label>{{ 'session_ordinal' | translate }}</label>
+            <input type="text" formControlName="sessionOrdinal" placeholder="السابعة عشر بعد المائة" />
+          </div>
+        </div>
+
+        <div class="row">
+
+          <div class="input-group">
+            <label>{{ 'session_time' | translate }}</label>
+            <input type="text" formControlName="sessionTime" placeholder="08:00 ص" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-group">
+            <label>{{ 'hijri_date' | translate }}</label>
+            <input type="text" formControlName="hijriDate" placeholder="12 / 10 / 1447" />
+          </div>
+        </div>
+
+        <h3 class="section-title">{{ 'session_content' | translate }}</h3>
+
+        <div class="input-group">
+          <label>{{ 'session_summary' | translate }}</label>
+          <textarea formControlName="sessionSummary" rows="6"></textarea>
+        </div>
+
+      </form>
+    </section>
+
+    <aside class="preview-card">
+      <div class="preview-sticky">
+        <h3 class="preview-title">{{ 'live_preview' | translate }}</h3>
+        <app-session-report-template [value]="previewData()"></app-session-report-template>
+      </div>
+    </aside>
+
+  </div>
+
+  <ng-template #loadingTpl>
+    <div class="loading-state">
+      <i class="fa-solid fa-spinner fa-spin"></i>
+      {{ 'loading' | translate }}
+    </div>
+  </ng-template>
+</div>

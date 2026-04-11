@@ -11,6 +11,8 @@ import { Customers } from './customers/customers';
 import { Organizers } from './organizers/organizers';
 import { ClientCases } from './client-cases/client-cases';
 import { EditCase } from './client-cases/edit-case/edit-case';
+import { SessionReport } from './session-report/session-report';
+import { SessionReportsList } from './session-reports-list/session-reports-list';
 
 const routes: Routes = [
   {
@@ -27,6 +29,9 @@ const routes: Routes = [
       { path: 'organizers', component: Organizers, canActivate: [isAdminGuard] },
       { path: 'client-cases', component: ClientCases },
       { path: 'client-cases/:id/edit', component: EditCase },
+      { path: 'session-reports/:caseId', component: SessionReportsList },
+      { path: 'session-report/:caseId', component: SessionReport },
+      { path: 'session-report/:caseId/:reportId', component: SessionReport },
       { path: '**', redirectTo: '', pathMatch: 'full' }
     ],
   },

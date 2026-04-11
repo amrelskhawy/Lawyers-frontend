@@ -45,14 +45,6 @@
         <i class="fa-solid fa-file-pdf"></i>
         {{ (generating() ? 'generating' : 'generate_pdf') | translate }}
       </button>
-      <button class="btn-primary"
-              (click)="sendToClient()"
-              [disabled]="sending() || saveStatus() === 'unsaved' || saveStatus() === 'saving'"
-              [pTooltip]="saveStatus() === 'unsaved' ? ('save_first' | translate) : ''"
-              tooltipPosition="bottom">
-        <i class="fa-solid fa-paper-plane"></i>
-        {{ (sending() ? 'sending' : 'send_to_client') | translate }}
-      </button>
     </div>
   </div>
 
