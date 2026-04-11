@@ -38,6 +38,7 @@ import { EditCase } from './client-cases/edit-case/edit-case';
 import { CaseReportTemplate } from './client-cases/case-report-template/case-report-template';
 import { SessionReport } from './session-report/session-report';
 import { SessionReportTemplate } from './session-report/session-report-template/session-report-template';
+import { SessionReportsList } from './session-reports-list/session-reports-list';
 @NgModule({
   declarations: [
     Menue,
@@ -67,6 +68,7 @@ import { SessionReportTemplate } from './session-report/session-report-template/
     CaseReportTemplate,
     SessionReport,
     SessionReportTemplate,
+    SessionReportsList,
   ],
   imports: [
     CommonModule,

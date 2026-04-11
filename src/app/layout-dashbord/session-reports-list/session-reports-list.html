@@ -1,0 +1,30 @@
+<div class="session-reports-list-page" dir="rtl">
+  <div class="page-header">
+    <button class="back-btn" (click)="back()" [attr.aria-label]="'back' | translate">
+      <i class="fa-solid fa-arrow-right"></i>
+    </button>
+    <h2>{{ 'session_reports' | translate }}</h2>
+  </div>
+
+  <ng-template #actions let-item let-onDelete="delete">
+    <div class="action-btn">
+      <button [attr.aria-label]="'edit' | translate" (click)="onEdit(item)" class="edit-btn">
+        <i class="fa-solid fa-pen-to-square"></i>
+      </button>
+      <button [attr.aria-label]="'delete' | translate" (click)="onDelete(item)" class="delete-btn">
+        <i class="fa-solid fa-trash"></i>
+      </button>
+    </div>
+  </ng-template>
+
+  <app-dashboard-crud-page
+    *ngIf="endpoint()"
+    [endpoint]="endpoint()"
+    deleteEndpoint="session-reports"
+    [columns]="columns"
+    [searchFields]="searchFields"
+    [actionsTemplate]="actions"
+    [dataMapper]="dataMapper"
+    (addNew)="onAddNew()">
+  </app-dashboard-crud-page>
+</div>

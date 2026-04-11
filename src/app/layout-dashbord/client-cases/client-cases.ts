@@ -45,7 +45,7 @@ export class ClientCases implements OnInit {
   }
 
   onCreateSessionReport(item: IDataCase) {
-    this.router.navigate(['/dashboard/content/session-report', item.id]);
+    this.router.navigate(['/dashboard/content/session-reports', item.id]);
   }
 
   onCreated(newCase: IDataCase) {

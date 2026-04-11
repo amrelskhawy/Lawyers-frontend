@@ -39,9 +39,11 @@ export class SessionReport implements OnInit, OnDestroy {
 
   ngOnInit() {
     const caseId = this.route.snapshot.paramMap.get('caseId') ?? '';
+    const rawReportId = this.route.snapshot.paramMap.get('reportId') ?? '';
+    const reportId = rawReportId === 'new' ? '' : rawReportId;
     this.caseId.set(caseId);
     this.buildForm();
-    this.bootstrap(caseId);
+    this.bootstrap(caseId, reportId);
     this.wireDirtyTracking();
   }
 
@@ -70,32 +72,77 @@ export class SessionReport implements OnInit, OnDestroy {
   }
 
   /**
-   * Creates a fresh draft session report for this case, then loads the case
-   * for pre-fill and starts the preview pipeline.
-   * Per product: each visit opens a new draft (no existing-report picker).
+   * Loads the case for pre-fill, then either:
+   * - fetches the existing session report by id (edit mode), or
+   * - creates a fresh draft (new mode) when no reportId is in the route.
    */
-  private bootstrap(caseId: string) {
+  private bootstrap(caseId: string, reportId: string) {
     this.loading.set(true);
     this.data.get<{ data: IDataCase }>(`cases/${caseId}`).subscribe({
       next: (caseRes) => {
         this.loadedCase.set(caseRes.data);
-        this.data
-          .post<{ data: IDataSessionReport }>('session-reports', { caseId })
-          .subscribe({
-            next: (reportRes) => {
-              this.loadedReport.set(reportRes.data);
-              this.reportId.set(reportRes.data.id);
-              this.skipNextDirty = true;
-              // Nothing to pre-fill on the form (draft starts empty) — case
-              // fields render from loadedCase() directly into the preview.
-              this.loading.set(false);
-              this.saveStatus.set('idle');
-            },
-            error: () => this.loading.set(false),
-          });
+        if (reportId) {
+          this.loadExisting(reportId);
+        } else {
+          this.createDraft(caseId);
+        }
       },
       error: () => this.loading.set(false),
     });
+  }
+
+  private createDraft(caseId: string) {
+    this.data
+      .post<{ data: IDataSessionReport }>('session-reports', { caseId })
+      .subscribe({
+        next: (reportRes) => {
+          const report = reportRes.data;
+          this.loadedReport.set(report);
+          this.reportId.set(report.id);
+          this.skipNextDirty = true;
+          this.loading.set(false);
+          this.saveStatus.set('idle');
+          // Replace the URL so refresh/back doesn't keep creating drafts.
+          this.router.navigate(
+            ['/dashboard/content/session-report', caseId, report.id],
+            { replaceUrl: true },
+          );
+        },
+        error: () => this.loading.set(false),
+      });
+  }
+
+  private loadExisting(reportId: string) {
+    this.data
+      .get<{ data: IDataSessionReport }>(`session-reports/${reportId}`)
+      .subscribe({
+        next: (reportRes) => {
+          const r = reportRes.data;
+          this.loadedReport.set(r);
+          this.reportId.set(r.id);
+          this.skipNextDirty = true;
+          this.Form.patchValue(
+            {
+              reportNumber: r.reportNumber ?? '',
+              courtName: r.courtName ?? '',
+              courtCircuit: r.courtCircuit ?? '',
+              caseCharge: r.caseCharge ?? '',
+              opponentName: r.opponentName ?? '',
+              caseNumber: r.caseNumber ?? '',
+              caseData: r.caseData ?? '',
+              sessionOrdinal: r.sessionOrdinal ?? '',
+              sessionDate: r.sessionDate ? new Date(r.sessionDate) : null,
+              sessionTime: r.sessionTime ?? '',
+              hijriDate: r.hijriDate ?? '',
+              sessionSummary: r.sessionSummary ?? '',
+            },
+            { emitEvent: true },
+          );
+          this.loading.set(false);
+          this.saveStatus.set('saved');
+        },
+        error: () => this.loading.set(false),
+      });
   }
 
   private wireDirtyTracking() {
@@ -212,6 +259,11 @@ export class SessionReport implements OnInit, OnDestroy {
   }
 
   back() {
-    this.router.navigate(['/dashboard/content/client-cases']);
+    const caseId = this.caseId();
+    if (caseId) {
+      this.router.navigate(['/dashboard/content/session-reports', caseId]);
+    } else {
+      this.router.navigate(['/dashboard/content/client-cases']);
+    }
   }
 }
