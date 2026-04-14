@@ -62,7 +62,7 @@
           <div class="input-group">
             <label>{{ 'session_date' | translate }}</label>
             <p-datepicker formControlName="sessionDate" [showIcon]="true" dateFormat="dd/mm/yy" [showClear]="true"
-              styleClass="w-full">
+              appendTo="body" styleClass="w-full">
             </p-datepicker>
           </div>
 
@@ -118,14 +118,18 @@
 
           <div class="input-group">
             <label>{{ 'session_time' | translate }}</label>
-            <input type="text" formControlName="sessionTime" placeholder="08:00 ص" />
+            <p-datepicker formControlName="sessionTime" [timeOnly]="true" hourFormat="12" [showIcon]="true"
+              iconDisplay="input" [showClear]="true" appendTo="body" styleClass="w-full">
+            </p-datepicker>
           </div>
         </div>
 
         <div class="row">
           <div class="input-group">
             <label>{{ 'hijri_date' | translate }}</label>
-            <input type="text" formControlName="hijriDate" placeholder="12 / 10 / 1447" />
+            <p-datepicker formControlName="hijriDate" [showIcon]="true" dateFormat="dd/mm/yy" [showClear]="true"
+              appendTo="body" styleClass="w-full">
+            </p-datepicker>
           </div>
         </div>
 
@@ -134,6 +138,11 @@
         <div class="input-group">
           <label>{{ 'session_summary' | translate }}</label>
           <textarea formControlName="sessionSummary" rows="6"></textarea>
+        </div>
+
+        <div class="input-group">
+          <label>{{ 'closing_note' | translate }}</label>
+          <textarea formControlName="closingNote" rows="4"></textarea>
         </div>
 
       </form>

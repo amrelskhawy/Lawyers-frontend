@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { Data } from '../../../core/Servies/data';
 import { CASE_TYPE_OPTIONS, IDataCase, ILawyerOption } from '../../../core/Models/case.model';
+import { TEAM_MEMBERS } from '../../../core/Models/team-members';
 import { IDataCustomer } from '../../../core/Models/customers.model';
 import { CaseReportData } from '../case-report-template/case-report-template';
 
@@ -89,7 +90,15 @@ export class EditCase implements OnInit, OnDestroy {
       this.customers.set(res.data ?? []);
     });
     this.data.get<{ data: ILawyerOption[] }>('cases/lawyers').subscribe((res) => {
-      this.lawyers.set(res.data ?? []);
+      const backend = res.data ?? [];
+      const teamOptions: ILawyerOption[] = TEAM_MEMBERS
+        .filter((m) => m.isLawyer)
+        .map((m) => ({
+          id: `team:${m.name_en}`,
+          name: m.name_ar,
+          email: m.role_ar,
+        }));
+      this.lawyers.set([...backend, ...teamOptions]);
     });
   }
 

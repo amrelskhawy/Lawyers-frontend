@@ -65,9 +65,10 @@ export class SessionReport implements OnInit, OnDestroy {
       caseData: [''],
       sessionOrdinal: [''],
       sessionDate: [null],
-      sessionTime: [''],
-      hijriDate: [''],
+      sessionTime: [null],
+      hijriDate: [null],
       sessionSummary: [''],
+      closingNote: [''],
     });
   }
 
@@ -132,9 +133,10 @@ export class SessionReport implements OnInit, OnDestroy {
               caseData: r.caseData ?? '',
               sessionOrdinal: r.sessionOrdinal ?? '',
               sessionDate: r.sessionDate ? new Date(r.sessionDate) : null,
-              sessionTime: r.sessionTime ?? '',
-              hijriDate: r.hijriDate ?? '',
+              sessionTime: this.parseTimeString(r.sessionTime),
+              hijriDate: this.parseHijriString(r.hijriDate),
               sessionSummary: r.sessionSummary ?? '',
+              closingNote: r.closingNote ?? '',
             },
             { emitEvent: true },
           );
@@ -177,9 +179,10 @@ export class SessionReport implements OnInit, OnDestroy {
       caseData: v.caseData,
       sessionOrdinal: v.sessionOrdinal,
       sessionDate: v.sessionDate,
-      sessionTime: v.sessionTime,
-      hijriDate: v.hijriDate,
+      sessionTime: this.formatTime(v.sessionTime) ?? '',
+      hijriDate: this.formatHijri(v.hijriDate) ?? '',
       sessionSummary: v.sessionSummary,
+      closingNote: v.closingNote,
     };
   });
 
@@ -218,9 +221,50 @@ export class SessionReport implements OnInit, OnDestroy {
       caseNumber: v.caseNumber || null,
       caseData: v.caseData || null,
       sessionOrdinal: v.sessionOrdinal || null,
-      sessionTime: v.sessionTime || null,
-      hijriDate: v.hijriDate || null,
+      sessionTime: this.formatTime(v.sessionTime),
+      hijriDate: this.formatHijri(v.hijriDate),
+      closingNote: v.closingNote || null,
     };
+  }
+
+  private parseTimeString(s: string | null | undefined): Date | null {
+    if (!s) return null;
+    const m = s.match(/(\d{1,2}):(\d{2})\s*(AM|PM|ص|م)?/i);
+    if (!m) return null;
+    let h = parseInt(m[1], 10);
+    const min = parseInt(m[2], 10);
+    const period = (m[3] || '').toUpperCase();
+    if (period === 'PM' || period === 'م') { if (h < 12) h += 12; }
+    else if (period === 'AM' || period === 'ص') { if (h === 12) h = 0; }
+    const d = new Date();
+    d.setHours(h, min, 0, 0);
+    return d;
+  }
+
+  private formatTime(v: any): string | null {
+    if (!v) return null;
+    const d = v instanceof Date ? v : new Date(v);
+    if (isNaN(d.getTime())) return null;
+    let h = d.getHours();
+    const min = d.getMinutes();
+    const period = h >= 12 ? 'م' : 'ص';
+    h = h % 12 || 12;
+    return `${String(h).padStart(2, '0')}:${String(min).padStart(2, '0')} ${period}`;
+  }
+
+  private parseHijriString(s: string | null | undefined): Date | null {
+    if (!s) return null;
+    const parts = s.split('/').map((p) => parseInt(p.trim(), 10));
+    if (parts.length !== 3 || parts.some(isNaN)) return null;
+    const [day, month, year] = parts;
+    return new Date(year, month - 1, day);
+  }
+
+  private formatHijri(v: any): string | null {
+    if (!v) return null;
+    const d = v instanceof Date ? v : new Date(v);
+    if (isNaN(d.getTime())) return null;
+    return `${String(d.getDate()).padStart(2, '0')} / ${String(d.getMonth() + 1).padStart(2, '0')} / ${d.getFullYear()}`;
   }
 
   generatePdf() {

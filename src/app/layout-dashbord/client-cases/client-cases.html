@@ -1,13 +1,12 @@
 <ng-template #actions let-item let-onDelete="delete">
   <div class="action-btn">
-    <button [attr.aria-label]="'edit' | translate" (click)="onEditCase(item)" class="edit-btn">
+    <button [pTooltip]="'meeting_report' | translate" tooltipPosition="top" [attr.aria-label]="'edit' | translate"
+      (click)="onEditCase(item)" class="edit-btn">
       <i class="fa-solid fa-pen-to-square"></i>
     </button>
-    <button [attr.aria-label]="'create_session_report' | translate"
-            [pTooltip]="'create_session_report' | translate"
-            tooltipPosition="top"
-            (click)="onCreateSessionReport(item)"
-            class="session-report-btn">
+
+    <button [attr.aria-label]="'create_session_report' | translate" [pTooltip]="'create_session_report' | translate"
+      tooltipPosition="top" (click)="onCreateSessionReport(item)" class="session-report-btn">
       <i class="fa-solid fa-file-lines"></i>
     </button>
     <button [attr.aria-label]="'delete' | translate" (click)="onDelete(item)" class="delete-btn">
@@ -16,17 +15,9 @@
   </div>
 </ng-template>
 
-<app-dashboard-crud-page
-  endpoint="cases"
-  deleteEndpoint="cases"
-  [columns]="columns"
-  [searchFields]="searchFields"
-  [actionsTemplate]="actions"
-  [dataMapper]="dataMapper"
-  (addNew)="visibelform.set(true)">
+<app-dashboard-crud-page endpoint="cases" deleteEndpoint="cases" [columns]="columns" [searchFields]="searchFields"
+  [actionsTemplate]="actions" [dataMapper]="dataMapper" (addNew)="visibelform.set(true)">
 
-  <app-form-create-case
-    [(visible)]="visibelform"
-    (created)="onCreated($event)">
+  <app-form-create-case [(visible)]="visibelform" (created)="onCreated($event)">
   </app-form-create-case>
 </app-dashboard-crud-page>
