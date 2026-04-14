@@ -50,7 +50,7 @@ export class SessionReportTemplate {
   });
 
   formattedSessionDate = computed(() => this.formatDate(this.data().sessionDate));
-  closingText = computed(() => this.data().closingNote?.trim() || DEFAULT_CLOSING_NOTE);
+  closingText = computed(() => this.data().closingNote?.trim());
   reportNumber = computed(() => {
     const manual = (this.data().reportNumber ?? '').toString().trim();
     if (manual) return manual;

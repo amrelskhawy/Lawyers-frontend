@@ -198,3 +198,29 @@
   word-break: break-word;
   overflow: hidden;
 }
+
+.f-closing-note {
+  top: 79%;
+  left: 6.7%;
+  width: 83.9%;
+  height: 13%;
+  font-size: 1.826cqw;
+  line-height: 1.7;
+  text-align: justify;
+  color: #140C39;
+  display: block;
+  padding: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  overflow: hidden;
+  font-weight: 400;
+
+  // ✅ Add this
+  &::before {
+    content: '';
+    float: right; // right because RTL — text wraps to the left of it
+    width: 33%;
+    height: calc(1.826cqw * 1.7 * 1.5); // font-size × line-height × 2 lines
+  }
+}

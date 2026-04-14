@@ -68,6 +68,7 @@ export class SessionReport implements OnInit, OnDestroy {
       sessionTime: [null],
       hijriDate: [null],
       sessionSummary: [''],
+      closingNote: [''],
     });
   }
 
@@ -135,6 +136,7 @@ export class SessionReport implements OnInit, OnDestroy {
               sessionTime: this.parseTimeString(r.sessionTime),
               hijriDate: this.parseHijriString(r.hijriDate),
               sessionSummary: r.sessionSummary ?? '',
+              closingNote: r.closingNote ?? '',
             },
             { emitEvent: true },
           );
@@ -180,6 +182,7 @@ export class SessionReport implements OnInit, OnDestroy {
       sessionTime: this.formatTime(v.sessionTime) ?? '',
       hijriDate: this.formatHijri(v.hijriDate) ?? '',
       sessionSummary: v.sessionSummary,
+      closingNote: v.closingNote,
     };
   });
 
@@ -220,6 +223,7 @@ export class SessionReport implements OnInit, OnDestroy {
       sessionOrdinal: v.sessionOrdinal || null,
       sessionTime: this.formatTime(v.sessionTime),
       hijriDate: this.formatHijri(v.hijriDate),
+      closingNote: v.closingNote || null,
     };
   }
 
