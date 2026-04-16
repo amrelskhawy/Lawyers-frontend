@@ -58,7 +58,9 @@ export class EditCase implements OnInit, OnDestroy {
     this.Form = this.fb.group({
       customerId: ['', Validators.required],
       caseType: ['LABOR', Validators.required],
+      otherCaseType: [''],
       caseDate: [new Date(), Validators.required],
+      hijriDate: [null],
 
       wantsSpecificLawyer: [false],
       preferredLawyerId: [null],
@@ -126,7 +128,9 @@ export class EditCase implements OnInit, OnDestroy {
         this.Form.patchValue({
           customerId: c.customerId,
           caseType: c.caseType,
+          otherCaseType: c.otherCaseType ?? '',
           caseDate: c.caseDate ? new Date(c.caseDate) : null,
+          hijriDate: c.hijriDate ?? null,
           wantsSpecificLawyer: c.wantsSpecificLawyer,
           preferredLawyerId: c.preferredLawyerId,
           sessionReceiverId: c.sessionReceiverId,
@@ -170,6 +174,7 @@ export class EditCase implements OnInit, OnDestroy {
     return {
       customerId: value.customerId,
       caseType: value.caseType,
+      otherCaseType: value.caseType === 'OTHER' ? (value.otherCaseType || null) : null,
       caseDate: value.caseDate
         ? (value.caseDate instanceof Date ? value.caseDate : new Date(value.caseDate)).toISOString()
         : undefined,
@@ -184,6 +189,7 @@ export class EditCase implements OnInit, OnDestroy {
       strengths: (value.strengths ?? []).filter((s: string) => s && s.trim().length),
       gaps: (value.gaps ?? []).filter((s: string) => s && s.trim().length),
       freeNotes: value.freeNotes ?? null,
+      hijriDate: value.hijriDate || null,
     };
   }
 
@@ -198,7 +204,9 @@ export class EditCase implements OnInit, OnDestroy {
       customerName: customer?.fullName ?? '',
       customerPhone: customer?.phone ?? '',
       caseType: v.caseType,
+      otherCaseType: v.caseType === 'OTHER' ? v.otherCaseType : null,
       caseDate: v.caseDate ?? null,
+      hijriDate: v.hijriDate ?? null,
       wantsSpecificLawyer: v.wantsSpecificLawyer,
       preferredLawyerName: preferredLawyer?.name ?? '',
       sessionReceiverName: sessionReceiver?.name ?? '',
@@ -251,4 +259,5 @@ export class EditCase implements OnInit, OnDestroy {
   back() {
     this.router.navigate(['/dashboard/content/client-cases']);
   }
+
 }

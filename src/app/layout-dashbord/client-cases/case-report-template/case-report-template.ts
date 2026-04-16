@@ -9,7 +9,9 @@ export interface CaseReportData {
   customerName?: string | null;
   customerPhone?: string | null;
   caseType?: CaseType | null;
+  otherCaseType?: string | null;
   caseDate?: string | Date | null;
+  hijriDate?: string | null;
 
   wantsSpecificLawyer?: boolean | null;
   preferredLawyerName?: string | null;
@@ -41,6 +43,7 @@ export class CaseReportTemplate {
   }
 
   formattedCaseDate = computed(() => this.formatDate(this.data().caseDate));
+  formattedHijriDate = computed(() => this.data().hijriDate ?? '');
   formattedSessionDate = computed(() => this.formatDate(this.data().sessionDate));
 
   freeLines = computed(() => {
@@ -50,6 +53,13 @@ export class CaseReportTemplate {
 
   isChecked(t: CaseType): boolean {
     return this.data().caseType === t;
+  }
+
+  getLabel(t: { value: CaseType; label: string }): string {
+    if (t.value === 'OTHER' && this.data().otherCaseType) {
+      return `أخرى: ${this.data().otherCaseType}`;
+    }
+    return t.label;
   }
 
   private formatDate(value: string | Date | null | undefined): string {

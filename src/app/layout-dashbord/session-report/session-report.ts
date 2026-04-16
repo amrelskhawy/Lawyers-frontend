@@ -134,7 +134,7 @@ export class SessionReport implements OnInit, OnDestroy {
               sessionOrdinal: r.sessionOrdinal ?? '',
               sessionDate: r.sessionDate ? new Date(r.sessionDate) : null,
               sessionTime: this.parseTimeString(r.sessionTime),
-              hijriDate: this.parseHijriString(r.hijriDate),
+              hijriDate: r.hijriDate ?? null,
               sessionSummary: r.sessionSummary ?? '',
               closingNote: r.closingNote ?? '',
             },
@@ -180,7 +180,7 @@ export class SessionReport implements OnInit, OnDestroy {
       sessionOrdinal: v.sessionOrdinal,
       sessionDate: v.sessionDate,
       sessionTime: this.formatTime(v.sessionTime) ?? '',
-      hijriDate: this.formatHijri(v.hijriDate) ?? '',
+      hijriDate: v.hijriDate ?? '',
       sessionSummary: v.sessionSummary,
       closingNote: v.closingNote,
     };
@@ -222,7 +222,7 @@ export class SessionReport implements OnInit, OnDestroy {
       caseData: v.caseData || null,
       sessionOrdinal: v.sessionOrdinal || null,
       sessionTime: this.formatTime(v.sessionTime),
-      hijriDate: this.formatHijri(v.hijriDate),
+      hijriDate: v.hijriDate || null,
       closingNote: v.closingNote || null,
     };
   }
@@ -250,21 +250,6 @@ export class SessionReport implements OnInit, OnDestroy {
     const period = h >= 12 ? 'م' : 'ص';
     h = h % 12 || 12;
     return `${String(h).padStart(2, '0')}:${String(min).padStart(2, '0')} ${period}`;
-  }
-
-  private parseHijriString(s: string | null | undefined): Date | null {
-    if (!s) return null;
-    const parts = s.split('/').map((p) => parseInt(p.trim(), 10));
-    if (parts.length !== 3 || parts.some(isNaN)) return null;
-    const [day, month, year] = parts;
-    return new Date(year, month - 1, day);
-  }
-
-  private formatHijri(v: any): string | null {
-    if (!v) return null;
-    const d = v instanceof Date ? v : new Date(v);
-    if (isNaN(d.getTime())) return null;
-    return `${String(d.getDate()).padStart(2, '0')} / ${String(d.getMonth() + 1).padStart(2, '0')} / ${d.getFullYear()}`;
   }
 
   generatePdf() {

@@ -84,6 +84,14 @@
           </div>
         </div>
 
+        <div class="row" *ngIf="Form.value.caseType === 'OTHER'">
+          <div class="input-group">
+            <label>{{ 'other_case_type' | translate }}</label>
+            <input type="text" pInputText formControlName="otherCaseType"
+                   [placeholder]="'other_case_type_placeholder' | translate" />
+          </div>
+        </div>
+
         <div class="row">
           <div class="input-group">
             <label>{{ 'case_date' | translate }}</label>
@@ -94,6 +102,11 @@
               appendTo="body"
               styleClass="w-full">
             </p-datepicker>
+          </div>
+
+          <div class="input-group">
+            <label>{{ 'hijri_date' | translate }}</label>
+            <app-hijri-datepicker formControlName="hijriDate" [showClear]="true"></app-hijri-datepicker>
           </div>
         </div>
 

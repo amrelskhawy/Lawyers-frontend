@@ -127,9 +127,7 @@
         <div class="row">
           <div class="input-group">
             <label>{{ 'hijri_date' | translate }}</label>
-            <p-datepicker formControlName="hijriDate" [showIcon]="true" dateFormat="dd/mm/yy" [showClear]="true"
-              appendTo="body" styleClass="w-full">
-            </p-datepicker>
+            <app-hijri-datepicker formControlName="hijriDate" [showClear]="true"></app-hijri-datepicker>
           </div>
         </div>
 

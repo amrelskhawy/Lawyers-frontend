@@ -35,13 +35,17 @@
           <span class="label">التاريخ:</span>
           <span class="value">{{ formattedCaseDate() || '\u00A0' }}</span>
         </div>
+        <div class="form-group">
+          <span class="label">التاريخ الهجري:</span>
+          <span class="value">{{ formattedHijriDate() || '\u00A0' }}</span>
+        </div>
       </div>
 
       <span class="section-pill">نوع القضية</span>
       <div class="checkbox-grid">
         <div class="checkbox-item" *ngFor="let t of caseTypes">
           <span class="checkbox-box" [class.checked]="isChecked(t.value)"></span>
-          <span class="checkbox-label">{{ t.label }}</span>
+          <span class="checkbox-label">{{ getLabel(t) }}</span>
         </div>
       </div>
 
@@ -95,7 +99,7 @@
     </header>
 
     <div class="instruction-banner">
-      برجاء التركيز على النقاط التالية أثناء الجلسة ومراجعتها بعناية
+      برجاء التركيز على النقاط التالية أثناء الاجتماع ومراجعتها بعناية
     </div>
 
     <div class="focus-tags">
@@ -108,7 +112,7 @@
 
       <div class="form-row">
         <div class="form-group">
-          <span class="label">إسم مستقبل الجلسة:</span>
+          <span class="label">إسم مستقبل الاجتماع:</span>
           <span class="value">{{ data().sessionReceiverName || '\u00A0' }}</span>
         </div>
         <div class="form-group">

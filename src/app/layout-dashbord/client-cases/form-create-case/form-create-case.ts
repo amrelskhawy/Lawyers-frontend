@@ -34,6 +34,7 @@ export class FormCreateCase implements OnInit {
         caseType: ['LABOR', Validators.required],
         otherCaseType: [''],
         caseDate: [new Date(), Validators.required],
+        hijriDate: [null],
       }),
     );
   }
@@ -64,6 +65,9 @@ export class FormCreateCase implements OnInit {
     if (v.caseType === 'OTHER' && v.otherCaseType) {
       payload.otherCaseType = v.otherCaseType;
     }
+    if (v.hijriDate) {
+      payload.hijriDate = v.hijriDate;
+    }
     this.submitting.set(true);
     this.data.post<{ data: IDataCase }>('cases', payload).subscribe({
       next: (res) => {
@@ -78,4 +82,5 @@ export class FormCreateCase implements OnInit {
   getControlName(name: string) {
     return this.Form().get(name);
   }
+
 }
