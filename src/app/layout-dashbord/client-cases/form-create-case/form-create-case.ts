@@ -32,6 +32,7 @@ export class FormCreateCase implements OnInit {
       this.fb.group({
         customerId: ['', Validators.required],
         caseType: ['LABOR', Validators.required],
+        otherCaseType: [''],
         caseDate: [new Date(), Validators.required],
       }),
     );
@@ -46,7 +47,7 @@ export class FormCreateCase implements OnInit {
   closeDialog() {
     this.visible = false;
     this.visibleChange.emit(false);
-    this.Form().reset({ caseType: 'LABOR', caseDate: new Date() });
+    this.Form().reset({ caseType: 'LABOR', otherCaseType: '', caseDate: new Date() });
   }
 
   onSubmit() {
@@ -55,11 +56,14 @@ export class FormCreateCase implements OnInit {
       return;
     }
     const v = this.Form().value;
-    const payload = {
+    const payload: any = {
       customerId: v.customerId,
       caseType: v.caseType,
       caseDate: (v.caseDate instanceof Date ? v.caseDate : new Date(v.caseDate)).toISOString(),
     };
+    if (v.caseType === 'OTHER' && v.otherCaseType) {
+      payload.otherCaseType = v.otherCaseType;
+    }
     this.submitting.set(true);
     this.data.post<{ data: IDataCase }>('cases', payload).subscribe({
       next: (res) => {

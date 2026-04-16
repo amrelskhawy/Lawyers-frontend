@@ -5,12 +5,14 @@ export type CaseType =
   | 'COMMERCIAL'
   | 'PENAL'
   | 'GENERAL'
-  | 'PERSONAL_STATUS';
+  | 'PERSONAL_STATUS'
+  | 'OTHER';
 
 export interface IDataCase {
   id: string;
   customerId: string;
   caseType: CaseType;
+  otherCaseType: string | null;
   caseDate: string;
 
   wantsSpecificLawyer: boolean;
@@ -57,6 +59,7 @@ export const CASE_TYPE_OPTIONS: { value: CaseType; label: string }[] = [
   { value: 'PENAL', label: 'جزائية' },
   { value: 'GENERAL', label: 'عامة' },
   { value: 'PERSONAL_STATUS', label: 'أحوال شخصية' },
+  { value: 'OTHER', label: 'أخرى' },
 ];
 
 export const REPORT_REQUIREMENTS: string[] = [
@@ -64,5 +67,5 @@ export const REPORT_REQUIREMENTS: string[] = [
   'رقم جوال أبشر',
   'العنوان الوطني',
   'صورة من المستندات',
-  'تحميل تطبيق توكلنا',
+  'تحميل تطبيق نفاذ',
 ];

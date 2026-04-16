@@ -53,6 +53,12 @@
             </p-select>
           </div>
 
+          <div class="input-group" *ngIf="Form().value.caseType === 'OTHER'">
+            <label>{{ 'other_case_type' | translate }}</label>
+            <input type="text" pInputText formControlName="otherCaseType"
+                   [placeholder]="'other_case_type_placeholder' | translate" />
+          </div>
+
           <div class="input-group">
             <label>{{ 'case_date' | translate }}</label>
             <p-datepicker
