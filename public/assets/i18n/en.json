@@ -435,6 +435,8 @@
   "attendance_ordinal": "Attendance order",
   "session_time": "Session time",
   "hijri_date": "Hijri date",
+  "agency_number": "Agency Number",
+  "agency_number_placeholder": "Enter agency number",
   "next_session_date": "Next session date",
   "session_content": "Session content",
   "session_title": "Session title",

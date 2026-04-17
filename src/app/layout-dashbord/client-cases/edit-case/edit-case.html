@@ -110,6 +110,14 @@
           </div>
         </div>
 
+        <div class="row">
+          <div class="input-group">
+            <label>{{ 'agency_number' | translate }}</label>
+            <input type="text" pInputText formControlName="agencyNumber"
+                   [placeholder]="'agency_number_placeholder' | translate" />
+          </div>
+        </div>
+
         <div class="row toggle-row">
           <label class="inline-toggle">
             <p-toggleswitch formControlName="wantsSpecificLawyer"></p-toggleswitch>

@@ -12,6 +12,7 @@ export interface CaseReportData {
   otherCaseType?: string | null;
   caseDate?: string | Date | null;
   hijriDate?: string | null;
+  agencyNumber?: string | null;
 
   wantsSpecificLawyer?: boolean | null;
   preferredLawyerName?: string | null;

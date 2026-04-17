@@ -435,6 +435,8 @@
   "attendance_ordinal": "ترتيب الحضور",
   "session_time": "وقت الجلسة",
   "hijri_date": "التاريخ الهجري",
+  "agency_number": "رقم الوكالة",
+  "agency_number_placeholder": "أدخل رقم الوكالة",
   "next_session_date": "تاريخ الجلسة القادمة",
   "session_content": "محتوى الجلسة",
   "session_title": "عنوان الجلسة",

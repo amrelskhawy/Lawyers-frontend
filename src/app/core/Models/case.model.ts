@@ -15,6 +15,7 @@ export interface IDataCase {
   otherCaseType: string | null;
   caseDate: string;
   hijriDate: string | null;
+  agencyNumber: string | null;
 
   wantsSpecificLawyer: boolean;
   preferredLawyerId: string | null;

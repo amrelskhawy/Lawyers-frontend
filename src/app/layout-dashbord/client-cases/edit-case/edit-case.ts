@@ -61,6 +61,7 @@ export class EditCase implements OnInit, OnDestroy {
       otherCaseType: [''],
       caseDate: [new Date(), Validators.required],
       hijriDate: [null],
+      agencyNumber: [''],
 
       wantsSpecificLawyer: [false],
       preferredLawyerId: [null],
@@ -131,6 +132,7 @@ export class EditCase implements OnInit, OnDestroy {
           otherCaseType: c.otherCaseType ?? '',
           caseDate: c.caseDate ? new Date(c.caseDate) : null,
           hijriDate: c.hijriDate ?? null,
+          agencyNumber: c.agencyNumber ?? '',
           wantsSpecificLawyer: c.wantsSpecificLawyer,
           preferredLawyerId: c.preferredLawyerId,
           sessionReceiverId: c.sessionReceiverId,
@@ -190,6 +192,7 @@ export class EditCase implements OnInit, OnDestroy {
       gaps: (value.gaps ?? []).filter((s: string) => s && s.trim().length),
       freeNotes: value.freeNotes ?? null,
       hijriDate: value.hijriDate || null,
+      agencyNumber: value.agencyNumber || null,
     };
   }
 
@@ -207,6 +210,7 @@ export class EditCase implements OnInit, OnDestroy {
       otherCaseType: v.caseType === 'OTHER' ? v.otherCaseType : null,
       caseDate: v.caseDate ?? null,
       hijriDate: v.hijriDate ?? null,
+      agencyNumber: v.agencyNumber ?? null,
       wantsSpecificLawyer: v.wantsSpecificLawyer,
       preferredLawyerName: preferredLawyer?.name ?? '',
       sessionReceiverName: sessionReceiver?.name ?? '',

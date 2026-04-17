@@ -74,6 +74,12 @@
             <app-hijri-datepicker formControlName="hijriDate"></app-hijri-datepicker>
           </div>
 
+          <div class="input-group">
+            <label>{{ 'agency_number' | translate }}</label>
+            <input type="text" pInputText formControlName="agencyNumber"
+                   [placeholder]="'agency_number_placeholder' | translate" />
+          </div>
+
         </div>
 
         <div class="form-actions">

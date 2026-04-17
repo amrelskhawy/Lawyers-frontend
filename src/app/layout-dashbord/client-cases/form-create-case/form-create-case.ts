@@ -35,6 +35,7 @@ export class FormCreateCase implements OnInit {
         otherCaseType: [''],
         caseDate: [new Date(), Validators.required],
         hijriDate: [null],
+        agencyNumber: [''],
       }),
     );
   }
@@ -48,7 +49,7 @@ export class FormCreateCase implements OnInit {
   closeDialog() {
     this.visible = false;
     this.visibleChange.emit(false);
-    this.Form().reset({ caseType: 'LABOR', otherCaseType: '', caseDate: new Date() });
+    this.Form().reset({ caseType: 'LABOR', otherCaseType: '', caseDate: new Date(), agencyNumber: '' });
   }
 
   onSubmit() {
@@ -67,6 +68,9 @@ export class FormCreateCase implements OnInit {
     }
     if (v.hijriDate) {
       payload.hijriDate = v.hijriDate;
+    }
+    if (v.agencyNumber) {
+      payload.agencyNumber = v.agencyNumber;
     }
     this.submitting.set(true);
     this.data.post<{ data: IDataCase }>('cases', payload).subscribe({
