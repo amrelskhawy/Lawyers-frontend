@@ -1,0 +1,199 @@
+.hijri-datepicker {
+  position: relative;
+  direction: rtl;
+}
+
+/* ── Input ── */
+
+.hijri-input-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #fff;
+  padding: 0 10px;
+  gap: 8px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+  height: 42px;
+
+  &:hover {
+    border-color: #94a3b8;
+  }
+
+  &:focus-within {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+  }
+}
+
+.hijri-icon-btn {
+  background: none;
+  border: none;
+  color: #64748b;
+  font-size: 14px;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.hijri-input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  color: #1e293b;
+  flex: 1;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: right;
+
+  &::placeholder {
+    color: #94a3b8;
+  }
+}
+
+.hijri-clear-btn {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    color: #ef4444;
+  }
+}
+
+.disabled .hijri-input-wrapper {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* ── Calendar panel ── */
+
+.hijri-panel {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  min-width: 280px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  padding: 12px;
+  z-index: 1000;
+  animation: hijriFadeIn 0.12s ease-out;
+}
+
+@keyframes hijriFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Header ── */
+
+.hijri-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  padding: 0 2px;
+}
+
+.hijri-title {
+  font-weight: 700;
+  font-size: 14px;
+  color: #1e293b;
+}
+
+.hijri-nav-btn {
+  background: none;
+  border: none;
+  color: #64748b;
+  font-size: 12px;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.12s;
+
+  &:hover {
+    background: #f1f5f9;
+    color: #1e293b;
+  }
+}
+
+/* ── Weekday labels ── */
+
+.hijri-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  margin-bottom: 4px;
+
+  span {
+    font-size: 11px;
+    font-weight: 600;
+    color: #94a3b8;
+    padding: 4px 0;
+  }
+}
+
+/* ── Day grid ── */
+
+.hijri-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.hijri-day {
+  background: none;
+  border: none;
+  font-size: 13px;
+  width: 36px;
+  height: 36px;
+  margin: 0 auto;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.12s;
+  font-family: inherit;
+
+  &.in-month {
+    color: #1e293b;
+
+    &:hover {
+      background: #f1f5f9;
+    }
+  }
+
+  &.out-month {
+    color: #cbd5e1;
+  }
+
+  &.today {
+    font-weight: 700;
+    background: #f1f5f9;
+  }
+
+  &.selected {
+    background: #3b82f6 !important;
+    color: #fff !important;
+    font-weight: 600;
+  }
+}

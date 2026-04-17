@@ -21,6 +21,8 @@ import { MessageService } from 'primeng/api';
 import { SkeletonModule } from 'primeng/skeleton';
 import { Error } from './error/error';
 import { NoData } from './no-data/no-data';
+import { HijriDatepicker } from './hijri-datepicker/hijri-datepicker';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -37,7 +39,8 @@ import { NoData } from './no-data/no-data';
     Translation,
     ConfirmationDelete,
     Error,
-    NoData
+    NoData,
+    HijriDatepicker
   ],
   imports: [
     CommonModule,
@@ -47,6 +50,7 @@ import { NoData } from './no-data/no-data';
     TranslateModule,
     ToastModule,
     SkeletonModule,
+    FormsModule,
   ],
   exports: [
     Header,
@@ -60,7 +64,8 @@ import { NoData } from './no-data/no-data';
     ConfirmationDelete,
     Error,
     Footer,
-    NoData
+    NoData,
+    HijriDatepicker
   ],
 
   providers: [
