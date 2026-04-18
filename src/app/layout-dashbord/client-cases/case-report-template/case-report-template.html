@@ -1,170 +1,41 @@
 <div class="report-shell" dir="rtl">
 
-  <!-- ============ PAGE 1: CLIENT FORM ============ -->
-  <section class="report-page">
-    <header class="report-header">
-      <div class="brand">
-        <div class="brand-logo">SB</div>
-        <div class="brand-text">
-          <div class="brand-name">شركة سعد البقمي</div>
-          <div class="brand-subtitle">للمحاماة والاستشارات القانونية</div>
-        </div>
-      </div>
-      <div class="welcome">حياكم</div>
-    </header>
+  <!-- ============ PAGE 1: CLIENT FORM (image overlay) ============ -->
+  <section class="cf-page">
+    <div class="ov cf-name">{{ data().customerName || '' }}</div>
+    <div class="ov cf-phone" dir="ltr">{{ data().customerPhone || '' }}</div>
+    <div class="ov cf-date" dir="ltr">{{ formattedCaseDate() || '' }}</div>
+    <div class="ov cf-agency-number" dir="ltr">{{ data().agencyNumber || '' }}</div>
 
-    <div class="title-bar">
-      <h2>نـمـوذج بـيـانـات الـعـمـيـل</h2>
+    <!-- Case-type checkboxes -->
+    <div class="ov cb cf-ct-criminal"        [class.checked]="isChecked('CRIMINAL')"></div>
+    <div class="ov cb cf-ct-administrative"  [class.checked]="isChecked('ADMINISTRATIVE')"></div>
+    <div class="ov cb cf-ct-labor"           [class.checked]="isChecked('LABOR')"></div>
+    <div class="ov cb cf-ct-commercial"      [class.checked]="isChecked('COMMERCIAL')"></div>
+    <div class="ov cb cf-ct-penal"           [class.checked]="isChecked('PENAL')"></div>
+    <div class="ov cb cf-ct-general"         [class.checked]="isChecked('GENERAL')"></div>
+    <div class="ov cb cf-ct-personal-status" [class.checked]="isChecked('PERSONAL_STATUS')"></div>
+    <div class="ov cb cf-ct-other"           [class.checked]="isChecked('OTHER')"></div>
+
+    <div class="ov cf-other-case-type" *ngIf="isChecked('OTHER')">
+      {{ data().otherCaseType || '' }}
     </div>
 
-    <div class="report-body">
+    <!-- Specific-lawyer Yes/No -->
+    <div class="ov cb cf-sl-yes" [class.checked]="data().wantsSpecificLawyer === true"></div>
+    <div class="ov cb cf-sl-no"  [class.checked]="data().wantsSpecificLawyer === false"></div>
 
-      <div class="form-row">
-        <div class="form-group">
-          <span class="label">الإسم:</span>
-          <span class="value">{{ data().customerName || '\u00A0' }}</span>
-        </div>
-        <div class="form-group">
-          <span class="label">رقم الجوال:</span>
-          <span class="value">{{ data().customerPhone || '\u00A0' }}</span>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <span class="label">التاريخ:</span>
-          <span class="value">{{ formattedCaseDate() || '\u00A0' }}</span>
-        </div>
-        <div class="form-group">
-          <span class="label">التاريخ الهجري:</span>
-          <span class="value">{{ formattedHijriDate() || '\u00A0' }}</span>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <span class="label">رقم الوكالة:</span>
-          <span class="value">{{ data().agencyNumber || '\u00A0' }}</span>
-        </div>
-      </div>
-
-      <span class="section-pill">نوع القضية</span>
-      <div class="checkbox-grid">
-        <div class="checkbox-item" *ngFor="let t of caseTypes">
-          <span class="checkbox-box" [class.checked]="isChecked(t.value)"></span>
-          <span class="checkbox-label">{{ getLabel(t) }}</span>
-        </div>
-      </div>
-
-      <div class="question-row">
-        <span class="question">هل تطلب التعامل مع محامي معين من الشركة ؟</span>
-        <div class="yes-no">
-          <div class="checkbox-item">
-            <span class="checkbox-box" [class.checked]="data().wantsSpecificLawyer === true"></span>
-            <span class="checkbox-label">نعم</span>
-          </div>
-          <div class="checkbox-item">
-            <span class="checkbox-box" [class.checked]="data().wantsSpecificLawyer === false"></span>
-            <span class="checkbox-label">لا</span>
-          </div>
-        </div>
-      </div>
-
-      <span class="section-pill">إسم المحامي</span>
-      <div class="form-row">
-        <div class="form-group">
-          <span class="value">{{ data().preferredLawyerName || '\u00A0' }}</span>
-        </div>
-      </div>
-
-      <div class="requirements">
-        <div class="requirements-title">*متطلبات مهمة يجب توافرها سواءً بشكل الكتروني أو مطبوع...</div>
-        <ul>
-          <li *ngFor="let r of requirements">{{ r }}</li>
-        </ul>
-      </div>
-
-    </div>
-
-    <footer class="report-footer">
-      يرجي إرفاق النموذج مع نموذج الضبط وتسليمه للقسم المسؤول
-    </footer>
+    <div class="ov cf-lawyer-name">{{ data().preferredLawyerName || '' }}</div>
   </section>
 
-  <!-- ============ PAGE 2: LAWYER FORM ============ -->
-  <section class="report-page">
-    <header class="report-header">
-      <div class="brand">
-        <div class="brand-logo">SB</div>
-        <div class="brand-text">
-          <div class="brand-name">شركة سعد البقمي</div>
-          <div class="brand-subtitle">للمحاماة والاستشارات القانونية</div>
-        </div>
-      </div>
-      <div class="form-title-header">نموذج المحامي</div>
-      <div class="welcome">حياكم</div>
-    </header>
+  <!-- ============ PAGE 2: LAWYER FORM (image overlay) ============ -->
+  <section class="cf2-page">
+    <div class="ov cf2-receiver">{{ data().sessionReceiverName || '' }}</div>
+    <div class="ov cf2-date" dir="ltr">{{ formattedSessionDate() || '' }}</div>
 
-    <div class="instruction-banner">
-      برجاء التركيز على النقاط التالية أثناء الاجتماع ومراجعتها بعناية
+    <div class="ov cf2-notes">
+      <div class="nl" *ngFor="let line of freeLines()">{{ line || '\u00A0' }}</div>
     </div>
-
-    <div class="focus-tags">
-      <span class="focus-tag"><span class="dot dot-weakness"></span>نقاط الضعف</span>
-      <span class="focus-tag"><span class="dot dot-strength"></span>نقاط القوة</span>
-      <span class="focus-tag"><span class="dot dot-gap"></span>الثغرات</span>
-    </div>
-
-    <div class="report-body">
-
-      <div class="form-row">
-        <div class="form-group">
-          <span class="label">إسم مستقبل الاجتماع:</span>
-          <span class="value">{{ data().sessionReceiverName || '\u00A0' }}</span>
-        </div>
-        <div class="form-group">
-          <span class="label">التاريخ:</span>
-          <span class="value">{{ formattedSessionDate() || '\u00A0' }}</span>
-        </div>
-      </div>
-
-      <ng-container *ngIf="data().hasStructuredNotes !== false; else freeNotes">
-        <div class="notes-section">
-          <div class="notes-title"><span class="dot dot-weakness"></span>نقاط الضعف</div>
-          <div class="notes-body">
-            <div *ngFor="let line of (data().weaknesses || [])">- {{ line }}</div>
-            <div *ngIf="!(data().weaknesses || []).length" class="empty">—</div>
-          </div>
-        </div>
-
-        <div class="notes-section">
-          <div class="notes-title"><span class="dot dot-strength"></span>نقاط القوة</div>
-          <div class="notes-body">
-            <div *ngFor="let line of (data().strengths || [])">- {{ line }}</div>
-            <div *ngIf="!(data().strengths || []).length" class="empty">—</div>
-          </div>
-        </div>
-
-        <div class="notes-section">
-          <div class="notes-title"><span class="dot dot-gap"></span>الثغرات</div>
-          <div class="notes-body">
-            <div *ngFor="let line of (data().gaps || [])">- {{ line }}</div>
-            <div *ngIf="!(data().gaps || []).length" class="empty">—</div>
-          </div>
-        </div>
-      </ng-container>
-
-      <ng-template #freeNotes>
-        <div class="free-lines">
-          <div class="free-line" *ngFor="let line of freeLines()">{{ line || '\u00A0' }}</div>
-        </div>
-      </ng-template>
-
-    </div>
-
-    <footer class="report-footer">
-      شركة سعد البقمي للمحاماة والاستشارات القانونية
-    </footer>
   </section>
 
 </div>

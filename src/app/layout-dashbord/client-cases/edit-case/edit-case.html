@@ -8,11 +8,8 @@
       </button>
       <h2>{{ 'edit_case' | translate }}</h2>
 
-      <span class="save-pill"
-            [class.unsaved]="saveStatus() === 'unsaved'"
-            [class.saving]="saveStatus() === 'saving'"
-            [class.saved]="saveStatus() === 'saved'"
-            [class.error]="saveStatus() === 'error'">
+      <span class="save-pill" [class.unsaved]="saveStatus() === 'unsaved'" [class.saving]="saveStatus() === 'saving'"
+        [class.saved]="saveStatus() === 'saved'" [class.error]="saveStatus() === 'error'">
         <ng-container [ngSwitch]="saveStatus()">
           <ng-container *ngSwitchCase="'unsaved'">
             <i class="fa-solid fa-circle-dot"></i> {{ 'unsaved_changes' | translate }}
@@ -31,17 +28,14 @@
     </div>
 
     <div class="right">
-      <button class="btn-save"
-              (click)="save()"
-              [disabled]="saveStatus() === 'saving' || saveStatus() === 'idle' || saveStatus() === 'saved'">
+      <button class="btn-save" (click)="save()"
+        [disabled]="saveStatus() === 'saving' || saveStatus() === 'idle' || saveStatus() === 'saved'">
         <i class="fa-solid fa-floppy-disk"></i>
         {{ 'save' | translate }}
       </button>
-      <button class="btn-secondary"
-              (click)="generatePdf()"
-              [disabled]="generating() || saveStatus() === 'unsaved' || saveStatus() === 'saving'"
-              [pTooltip]="saveStatus() === 'unsaved' ? ('save_first' | translate) : ''"
-              tooltipPosition="bottom">
+      <button class="btn-secondary" (click)="generatePdf()"
+        [disabled]="generating() || saveStatus() === 'unsaved' || saveStatus() === 'saving'"
+        [pTooltip]="saveStatus() === 'unsaved' ? ('save_first' | translate) : ''" tooltipPosition="bottom">
         <i class="fa-solid fa-file-pdf"></i>
         {{ (generating() ? 'generating' : 'generate_pdf') | translate }}
       </button>
@@ -60,25 +54,15 @@
         <div class="row">
           <div class="input-group">
             <label>{{ 'case_customer' | translate }}</label>
-            <p-select
-              formControlName="customerId"
-              [options]="customers()"
-              optionLabel="fullName"
-              optionValue="id"
-              [filter]="true"
-              filterBy="fullName,phone,email"
-              [placeholder]="'select_customer' | translate"
+            <p-select formControlName="customerId" [options]="customers()" optionLabel="fullName" optionValue="id"
+              [filter]="true" filterBy="fullName,phone,email" [placeholder]="'select_customer' | translate"
               styleClass="w-full">
             </p-select>
           </div>
 
           <div class="input-group">
             <label>{{ 'case_type' | translate }}</label>
-            <p-select
-              formControlName="caseType"
-              [options]="caseTypes"
-              optionLabel="label"
-              optionValue="value"
+            <p-select formControlName="caseType" [options]="caseTypes" optionLabel="label" optionValue="value"
               styleClass="w-full">
             </p-select>
           </div>
@@ -88,33 +72,25 @@
           <div class="input-group">
             <label>{{ 'other_case_type' | translate }}</label>
             <input type="text" pInputText formControlName="otherCaseType"
-                   [placeholder]="'other_case_type_placeholder' | translate" />
+              [placeholder]="'other_case_type_placeholder' | translate" />
           </div>
         </div>
 
         <div class="row">
           <div class="input-group">
             <label>{{ 'case_date' | translate }}</label>
-            <p-datepicker
-              formControlName="caseDate"
-              [showIcon]="true"
-              dateFormat="dd/mm/yy"
-              appendTo="body"
+            <p-datepicker formControlName="caseDate" [showIcon]="true" dateFormat="dd/mm/yy" appendTo="body"
               styleClass="w-full">
             </p-datepicker>
           </div>
 
-          <div class="input-group">
-            <label>{{ 'hijri_date' | translate }}</label>
-            <app-hijri-datepicker formControlName="hijriDate" [showClear]="true"></app-hijri-datepicker>
-          </div>
         </div>
 
         <div class="row">
           <div class="input-group">
             <label>{{ 'agency_number' | translate }}</label>
             <input type="text" pInputText formControlName="agencyNumber"
-                   [placeholder]="'agency_number_placeholder' | translate" />
+              [placeholder]="'agency_number_placeholder' | translate" />
           </div>
         </div>
 
@@ -128,15 +104,8 @@
         <div class="row" *ngIf="Form.value.wantsSpecificLawyer">
           <div class="input-group">
             <label>{{ 'preferred_lawyer' | translate }}</label>
-            <p-select
-              formControlName="preferredLawyerId"
-              [options]="lawyers()"
-              optionLabel="name"
-              optionValue="id"
-              [filter]="true"
-              filterBy="name,email"
-              [placeholder]="'select_lawyer' | translate"
-              [showClear]="true"
+            <p-select formControlName="preferredLawyerId" [options]="lawyers()" optionLabel="name" optionValue="id"
+              [filter]="true" filterBy="name,email" [placeholder]="'select_lawyer' | translate" [showClear]="true"
               styleClass="w-full">
             </p-select>
           </div>
@@ -147,102 +116,25 @@
         <div class="row">
           <div class="input-group">
             <label>{{ 'session_receiver' | translate }}</label>
-            <p-select
-              formControlName="sessionReceiverId"
-              [options]="lawyers()"
-              optionLabel="name"
-              optionValue="id"
-              [filter]="true"
-              filterBy="name,email"
-              [placeholder]="'select_lawyer' | translate"
-              [showClear]="true"
+            <p-select formControlName="sessionReceiverId" [options]="lawyers()" optionLabel="name" optionValue="id"
+              [filter]="true" filterBy="name,email" [placeholder]="'select_lawyer' | translate" [showClear]="true"
               styleClass="w-full">
             </p-select>
           </div>
 
           <div class="input-group">
             <label>{{ 'session_date' | translate }}</label>
-            <p-datepicker
-              formControlName="sessionDate"
-              [showIcon]="true"
-              dateFormat="dd/mm/yy"
-              [showClear]="true"
-              appendTo="body"
-              styleClass="w-full">
+            <p-datepicker formControlName="sessionDate" [showIcon]="true" dateFormat="dd/mm/yy" [showClear]="true"
+              appendTo="body" styleClass="w-full">
             </p-datepicker>
           </div>
         </div>
 
-        <div class="row toggle-row">
-          <label class="inline-toggle">
-            <p-toggleswitch formControlName="hasStructuredNotes"></p-toggleswitch>
-            <span>{{ 'use_structured_notes' | translate }}</span>
-          </label>
+        <div class="input-group">
+          <label>{{ 'free_notes' | translate }}</label>
+          <textarea formControlName="freeNotes" rows="12"
+            [placeholder]="'free_notes_placeholder' | translate"></textarea>
         </div>
-
-        <ng-container *ngIf="Form.value.hasStructuredNotes; else freeNotesTpl">
-          <div class="notes-block">
-            <div class="notes-block-header">
-              <span class="dot dot-weakness"></span>
-              <h4>{{ 'weaknesses' | translate }}</h4>
-              <button type="button" class="add-line" (click)="addLine('weaknesses')">
-                <i class="fa-solid fa-plus"></i>
-              </button>
-            </div>
-            <div formArrayName="weaknesses" class="lines">
-              <div class="line" *ngFor="let ctrl of weaknesses.controls; let i = index">
-                <input type="text" [formControlName]="i" [placeholder]="'add_line' | translate" />
-                <button type="button" class="remove-line" (click)="removeLine('weaknesses', i)">
-                  <i class="fa-solid fa-xmark"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="notes-block">
-            <div class="notes-block-header">
-              <span class="dot dot-strength"></span>
-              <h4>{{ 'strengths' | translate }}</h4>
-              <button type="button" class="add-line" (click)="addLine('strengths')">
-                <i class="fa-solid fa-plus"></i>
-              </button>
-            </div>
-            <div formArrayName="strengths" class="lines">
-              <div class="line" *ngFor="let ctrl of strengths.controls; let i = index">
-                <input type="text" [formControlName]="i" [placeholder]="'add_line' | translate" />
-                <button type="button" class="remove-line" (click)="removeLine('strengths', i)">
-                  <i class="fa-solid fa-xmark"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="notes-block">
-            <div class="notes-block-header">
-              <span class="dot dot-gap"></span>
-              <h4>{{ 'gaps' | translate }}</h4>
-              <button type="button" class="add-line" (click)="addLine('gaps')">
-                <i class="fa-solid fa-plus"></i>
-              </button>
-            </div>
-            <div formArrayName="gaps" class="lines">
-              <div class="line" *ngFor="let ctrl of gaps.controls; let i = index">
-                <input type="text" [formControlName]="i" [placeholder]="'add_line' | translate" />
-                <button type="button" class="remove-line" (click)="removeLine('gaps', i)">
-                  <i class="fa-solid fa-xmark"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-        </ng-container>
-
-        <ng-template #freeNotesTpl>
-          <div class="input-group">
-            <label>{{ 'free_notes' | translate }}</label>
-            <textarea formControlName="freeNotes" rows="12"
-                      [placeholder]="'free_notes_placeholder' | translate"></textarea>
-          </div>
-        </ng-template>
 
       </form>
     </section>

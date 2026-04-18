@@ -69,7 +69,7 @@ export class EditCase implements OnInit, OnDestroy {
       sessionReceiverId: [null],
       sessionDate: [null],
 
-      hasStructuredNotes: [true],
+      hasStructuredNotes: [false],
       weaknesses: this.fb.array([] as FormControl<string>[]),
       strengths: this.fb.array([] as FormControl<string>[]),
       gaps: this.fb.array([] as FormControl<string>[]),
@@ -186,7 +186,7 @@ export class EditCase implements OnInit, OnDestroy {
       sessionDate: value.sessionDate
         ? (value.sessionDate instanceof Date ? value.sessionDate : new Date(value.sessionDate)).toISOString()
         : null,
-      hasStructuredNotes: value.hasStructuredNotes,
+      hasStructuredNotes: false,
       weaknesses: (value.weaknesses ?? []).filter((s: string) => s && s.trim().length),
       strengths: (value.strengths ?? []).filter((s: string) => s && s.trim().length),
       gaps: (value.gaps ?? []).filter((s: string) => s && s.trim().length),
@@ -215,7 +215,7 @@ export class EditCase implements OnInit, OnDestroy {
       preferredLawyerName: preferredLawyer?.name ?? '',
       sessionReceiverName: sessionReceiver?.name ?? '',
       sessionDate: v.sessionDate ?? null,
-      hasStructuredNotes: v.hasStructuredNotes,
+      hasStructuredNotes: false,
       weaknesses: (v.weaknesses ?? []).filter((s: string) => !!s),
       strengths: (v.strengths ?? []).filter((s: string) => !!s),
       gaps: (v.gaps ?? []).filter((s: string) => !!s),
