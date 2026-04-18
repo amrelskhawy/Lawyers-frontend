@@ -1,28 +1,36 @@
 <div class="sr-shell" dir="rtl">
   <div class="sr-page">
-    <div class="ov f-report-number">{{ reportNumber() || '—' }}</div>
-    <div class="ov f-gregorian-date" dir="ltr">{{ formattedSessionDate() || '—' }}</div>
 
+    <!-- Title strip -->
+    <div class="ov f-report-number">{{ reportNumber() || '' }}</div>
+    <div class="ov f-gregorian-date" dir="ltr">{{ formattedSessionDate() || '' }}</div>
+
+    <!-- Row 1: إسم العميل | إسم الخصم | الدائرة -->
+    <div class="ov f-client-name">{{ data().customerName || '' }}</div>
+    <div class="ov f-agent-name">{{ data().opponentName || '' }}</div>
+    <div class="ov f-circle">{{ data().courtCircuit || '' }}</div>
+
+    <!-- Row 2: جهة الاختصاص | بيانات القضية | رقم القضية -->
+    <div class="ov f-specialist-place">{{ data().courtName || '' }}</div>
+    <div class="ov f-case-info">{{ data().caseData || '' }}</div>
+    <div class="ov f-case-num" dir="ltr">{{ data().caseNumber || '' }}</div>
+
+    <!-- Body: السيد/ة -->
     <div class="ov f-customer-name">{{ data().customerName || '' }}</div>
 
-    <!-- Info table — ordered to match the form (court_name → case_charge →
-         opponent_name → case_number → court_city). -->
-    <div class="ov f-court-name">{{ data().courtName || '' }}</div>
-    <div class="ov f-case-charge">{{ data().caseCharge || '' }}</div>
-    <div class="ov f-opponent-name">{{ data().opponentName || '' }}</div>
-    <div class="ov f-case-number" dir="ltr">{{ data().caseNumber || '' }}</div>
-    <div class="ov f-case-data">{{ data().caseData || '' }}</div>
-    <div class="ov f-court-city">{{ data().courtCircuit || '' }}</div>
+    <!-- Body: date + time -->
+    <div class="ov f-higri-date" dir="ltr">{{ data().hijriDate || '' }}</div>
+    <div class="ov f-time" dir="ltr">{{ data().sessionTime || '' }}</div>
 
-    <!-- Body narrative — session_ordinal → session_date (strip) →
-         session_time → hijri_date → session_summary. -->
-    <div class="ov f-body-customer">{{ data().customerName || '' }}</div>
-    <div class="ov f-session-ordinal">{{ data().sessionOrdinal || '' }}</div>
-    <div class="ov f-session-time" dir="ltr">{{ data().sessionTime || '' }}</div>
-    <div class="ov f-hijri-date" dir="ltr">{{ data().hijriDate || '' }}</div>
+    <!-- Body: لدى الدائرة + بمحكمة -->
+    <div class="ov f-circle-info">{{ data().courtCircuit || '' }}</div>
+    <div class="ov f-circle-place">{{ data().courtName || '' }}</div>
 
-    <div class="ov f-session-summary">{{ data().sessionSummary || '' }}</div>
+    <!-- Session details -->
+    <div class="ov f-details">{{ data().sessionSummary || '' }}</div>
 
-    <div class="ov f-closing-note">{{ closingText() }}</div>
+    <!-- Requirements -->
+    <div class="ov f-requirements">{{ data().closingNote || '' }}</div>
+
   </div>
 </div>
