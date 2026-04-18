@@ -120,7 +120,7 @@ export class FieldVisitReport implements OnInit, OnDestroy {
       reviewLawyer:  r.reviewLawyer  ?? '',
       reviewPlace:   r.reviewPlace   ?? '',
       agencyNumber:  r.agencyNumber  ?? '',
-      clientName:    r.clientName    ?? '',
+      clientName:    this.loadedCase()?.customer?.fullName ?? r.clientName ?? '',
       caseNumber:    r.caseNumber    ?? '',
       reviewDate:    r.reviewDate ? new Date(r.reviewDate) : null,
       reportSummary: r.reportSummary ?? '',
@@ -195,7 +195,7 @@ export class FieldVisitReport implements OnInit, OnDestroy {
     this.data
       .patch<{ data: IFieldVisitReport }>(
         `field-visit-reports/${this.reportId()}`,
-        this.toPayload(this.Form.value),
+        this.toPayload(this.Form.getRawValue()),
       )
       .subscribe({
         next: (res) => { this.loadedReport.set(res.data); this.saveStatus.set('saved'); },

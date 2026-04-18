@@ -87,8 +87,8 @@
           <div class="input-group">
             <label>{{ 'client_name' | translate }}</label>
             <p-select formControlName="clientName" [options]="customers()" optionLabel="fullName" optionValue="fullName"
-              [filter]="true" filterBy="fullName,phone" [placeholder]="'select_customer' | translate" [showClear]="true"
-              styleClass="w-full" appendTo="body">
+              [filter]="true" filterBy="fullName,phone" [placeholder]="'select_customer' | translate"
+              [disabled]="true" styleClass="w-full" appendTo="body">
             </p-select>
           </div>
           <div class="input-group">
