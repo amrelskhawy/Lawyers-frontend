@@ -126,6 +126,12 @@ export class EditCase implements OnInit, OnDestroy {
           this.gaps.push(new FormControl(v, { nonNullable: true })),
         );
 
+        let preferredLawyerFormId: string | null = c.preferredLawyerId;
+        if (!preferredLawyerFormId && c.preferredLawyerName) {
+          const match = TEAM_MEMBERS.find((m) => m.name_ar === c.preferredLawyerName);
+          if (match) preferredLawyerFormId = `team:${match.name_en}`;
+        }
+
         this.Form.patchValue({
           customerId: c.customerId,
           caseType: c.caseType,
@@ -134,7 +140,7 @@ export class EditCase implements OnInit, OnDestroy {
           hijriDate: c.hijriDate ?? null,
           agencyNumber: c.agencyNumber ?? '',
           wantsSpecificLawyer: c.wantsSpecificLawyer,
-          preferredLawyerId: c.preferredLawyerId,
+          preferredLawyerId: preferredLawyerFormId,
           sessionReceiverId: c.sessionReceiverId,
           sessionDate: c.sessionDate ? new Date(c.sessionDate) : null,
           hasStructuredNotes: c.hasStructuredNotes,
@@ -173,6 +179,13 @@ export class EditCase implements OnInit, OnDestroy {
   }
 
   private toPayload(value: any) {
+    const rawId: string | null = value.preferredLawyerId || null;
+    const isTeamMember = rawId?.startsWith('team:') ?? false;
+    const preferredLawyerId = isTeamMember ? null : rawId;
+    const preferredLawyerName = isTeamMember
+      ? (TEAM_MEMBERS.find((m) => `team:${m.name_en}` === rawId)?.name_ar ?? null)
+      : null;
+
     return {
       customerId: value.customerId,
       caseType: value.caseType,
@@ -181,7 +194,8 @@ export class EditCase implements OnInit, OnDestroy {
         ? (value.caseDate instanceof Date ? value.caseDate : new Date(value.caseDate)).toISOString()
         : undefined,
       wantsSpecificLawyer: value.wantsSpecificLawyer,
-      preferredLawyerId: value.preferredLawyerId || null,
+      preferredLawyerId,
+      preferredLawyerName,
       sessionReceiverId: value.sessionReceiverId || null,
       sessionDate: value.sessionDate
         ? (value.sessionDate instanceof Date ? value.sessionDate : new Date(value.sessionDate)).toISOString()

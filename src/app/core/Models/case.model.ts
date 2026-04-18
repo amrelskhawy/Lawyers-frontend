@@ -19,6 +19,7 @@ export interface IDataCase {
 
   wantsSpecificLawyer: boolean;
   preferredLawyerId: string | null;
+  preferredLawyerName: string | null;
   sessionReceiverId: string | null;
   sessionDate: string | null;
 
@@ -37,7 +38,7 @@ export interface IDataCase {
   createdAt: string;
   updatedAt: string;
 
-  customer?: { id: string; fullName: string; email: string; phone: string } | null;
+  customer?: { id: string; fullName: string; email: string; phone: string; caseReportsFolderId?: string | null } | null;
   preferredLawyer?: { id: string; name: string } | null;
   sessionReceiver?: { id: string; name: string } | null;
   createdBy?: { id: string; name: string } | null;

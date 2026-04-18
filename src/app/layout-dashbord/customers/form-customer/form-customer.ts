@@ -31,10 +31,11 @@ export class FormCustomer {
       return;
     }
     this.objData.set(value);
+    const phone = value.phone?.startsWith('966') ? value.phone.slice(3) : value.phone;
     this.Form().patchValue({
       fullName: value.fullName,
       email: value.email,
-      phone: value.phone,
+      phone: phone,
       location: value.location,
     });
   }
@@ -56,7 +57,7 @@ export class FormCustomer {
     this.Form.set(
       this.FB.group({
         fullName: ['', Validators.required],
-        email: ['', [Validators.required, Validators.email]],
+        email: ['', [Validators.email]],
         phone: ['', Validators.required],
         location: [''],
       }),
@@ -68,12 +69,17 @@ export class FormCustomer {
       this.Form().markAllAsTouched();
       return;
     }
+    const formValue = { ...this.Form().value };
+    formValue.phone = '966' + formValue.phone;
+    if (!formValue.email) {
+      delete formValue.email;
+    }
     if (!this.objData()?.id) {
-      this.Data.post('customers', this.Form().value).subscribe((res) => {
+      this.Data.post('customers', formValue).subscribe((res) => {
         this.HandelResponseSuccess();
       });
     } else {
-      this.Data.put(`customers/${this.objData().id}`, this.Form().value).subscribe((res) => {
+      this.Data.put(`customers/${this.objData().id}`, formValue).subscribe((res) => {
         this.HandelResponseSuccess();
       });
     }

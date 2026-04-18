@@ -40,16 +40,16 @@
               <input formControlName="email" placeholder="{{ 'email' | translate }}" type="email" />
             </div>
             <small class="error-msg" *ngIf="getControlName('email')?.invalid && getControlName('email')?.touched">
-              {{ (getControlName('email')?.errors?.['email'] ? 'vaild_email' : 'filed_reqierd') | translate }}
+              {{ 'vaild_email' | translate }}
             </small>
           </div>
 
           <!-- Phone -->
           <div class="input-group">
             <label>{{ 'phone' | translate }}</label>
-            <div class="input-wrapper">
-              <i class="fa-solid fa-phone input-icon"></i>
-              <input formControlName="phone" placeholder="{{ 'phone' | translate }}" type="tel" />
+            <div class="input-wrapper phone-wrapper">
+              <span class="phone-prefix">+966</span>
+              <input formControlName="phone" placeholder="5XXXXXXXX" type="tel" />
             </div>
             <small class="error-msg" *ngIf="getControlName('phone')?.invalid && getControlName('phone')?.touched">
               {{ 'filed_reqierd' | translate }}
