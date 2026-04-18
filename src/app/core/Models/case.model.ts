@@ -37,7 +37,7 @@ export interface IDataCase {
   createdAt: string;
   updatedAt: string;
 
-  customer?: { id: string; fullName: string; email: string; phone: string } | null;
+  customer?: { id: string; fullName: string; email: string; phone: string; caseReportsFolderId?: string | null } | null;
   preferredLawyer?: { id: string; name: string } | null;
   sessionReceiver?: { id: string; name: string } | null;
   createdBy?: { id: string; name: string } | null;

@@ -9,6 +9,13 @@
       tooltipPosition="top" (click)="onCreateSessionReport(item)" class="session-report-btn">
       <i class="fa-solid fa-file-lines"></i>
     </button>
+    <a *ngIf="item.customer?.caseReportsFolderId"
+      [href]="'https://drive.google.com/drive/folders/' + item.customer.caseReportsFolderId"
+      target="_blank" rel="noopener noreferrer"
+      [pTooltip]="'drive_folder' | translate" tooltipPosition="top"
+      class="drive-btn">
+      <i class="fa-brands fa-google-drive"></i>
+    </a>
     <button [attr.aria-label]="'delete' | translate" (click)="onDelete(item)" class="delete-btn">
       <i class="fa-solid fa-trash"></i>
     </button>
