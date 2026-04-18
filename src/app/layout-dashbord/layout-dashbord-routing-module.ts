@@ -13,6 +13,7 @@ import { ClientCases } from './client-cases/client-cases';
 import { EditCase } from './client-cases/edit-case/edit-case';
 import { SessionReport } from './session-report/session-report';
 import { SessionReportsList } from './session-reports-list/session-reports-list';
+import { FieldVisitReport } from './field-visit-report/field-visit-report';
 
 const routes: Routes = [
   {
@@ -32,6 +33,8 @@ const routes: Routes = [
       { path: 'session-reports/:caseId', component: SessionReportsList },
       { path: 'session-report/:caseId', component: SessionReport },
       { path: 'session-report/:caseId/:reportId', component: SessionReport },
+      { path: 'field-visit-report/:caseId', component: FieldVisitReport },
+      { path: 'field-visit-report/:caseId/:reportId', component: FieldVisitReport },
       { path: '**', redirectTo: '', pathMatch: 'full' }
     ],
   },

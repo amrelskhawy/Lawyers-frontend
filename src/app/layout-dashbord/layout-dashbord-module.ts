@@ -39,6 +39,8 @@ import { CaseReportTemplate } from './client-cases/case-report-template/case-rep
 import { SessionReport } from './session-report/session-report';
 import { SessionReportTemplate } from './session-report/session-report-template/session-report-template';
 import { SessionReportsList } from './session-reports-list/session-reports-list';
+import { FieldVisitReport } from './field-visit-report/field-visit-report';
+import { FieldVisitReportTemplate } from './field-visit-report/field-visit-report-template/field-visit-report-template';
 @NgModule({
   declarations: [
     Menue,
@@ -69,6 +71,8 @@ import { SessionReportsList } from './session-reports-list/session-reports-list'
     SessionReport,
     SessionReportTemplate,
     SessionReportsList,
+    FieldVisitReport,
+    FieldVisitReportTemplate,
   ],
   imports: [
     CommonModule,

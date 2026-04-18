@@ -1,0 +1,124 @@
+<div class="fvr-page" dir="rtl">
+
+  <div class="action-bar">
+    <div class="left">
+      <button class="back-btn" (click)="back()" [attr.aria-label]="'back' | translate">
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+      <h2>{{ 'field_visit_report' | translate }}</h2>
+
+      <span class="save-pill" [class.unsaved]="saveStatus() === 'unsaved'" [class.saving]="saveStatus() === 'saving'"
+        [class.saved]="saveStatus() === 'saved'" [class.error]="saveStatus() === 'error'">
+        <ng-container [ngSwitch]="saveStatus()">
+          <ng-container *ngSwitchCase="'unsaved'">
+            <i class="fa-solid fa-circle-dot"></i> {{ 'unsaved_changes' | translate }}
+          </ng-container>
+          <ng-container *ngSwitchCase="'saving'">
+            <i class="fa-solid fa-cloud-arrow-up"></i> {{ 'saving' | translate }}
+          </ng-container>
+          <ng-container *ngSwitchCase="'saved'">
+            <i class="fa-solid fa-check"></i> {{ 'saved' | translate }}
+          </ng-container>
+          <ng-container *ngSwitchCase="'error'">
+            <i class="fa-solid fa-triangle-exclamation"></i> {{ 'save_error' | translate }}
+          </ng-container>
+        </ng-container>
+      </span>
+    </div>
+
+    <div class="right">
+      <button class="btn-save" (click)="save()"
+        [disabled]="saveStatus() === 'saving' || saveStatus() === 'idle' || saveStatus() === 'saved'">
+        <i class="fa-solid fa-floppy-disk"></i>
+        {{ 'save' | translate }}
+      </button>
+      <button class="btn-secondary" (click)="generatePdf()"
+        [disabled]="generating() || saveStatus() === 'unsaved' || saveStatus() === 'saving'"
+        [pTooltip]="saveStatus() === 'unsaved' ? ('save_first' | translate) : ''" tooltipPosition="bottom">
+        <i class="fa-solid fa-file-pdf"></i>
+        {{ (generating() ? 'generating' : 'generate_pdf') | translate }}
+      </button>
+      <button class="btn-primary" (click)="sendToClient()"
+        [disabled]="sending() || saveStatus() === 'unsaved' || saveStatus() === 'saving'"
+        [pTooltip]="saveStatus() === 'unsaved' ? ('save_first' | translate) : ''" tooltipPosition="bottom">
+        <i class="fa-solid fa-paper-plane"></i>
+        {{ (sending() ? 'sending' : 'send_to_client') | translate }}
+      </button>
+    </div>
+  </div>
+
+  <div class="grid" *ngIf="!loading(); else loadingTpl">
+
+    <section class="card form-card">
+      <form [formGroup]="Form" class="form-body">
+
+        <h3 class="section-title">{{ 'review_info' | translate }}</h3>
+
+        <div class="row">
+          <div class="input-group">
+            <label>{{ 'review_lawyer' | translate }}</label>
+            <p-select formControlName="reviewLawyer" [options]="lawyers()" optionLabel="name" optionValue="name"
+              [filter]="true" filterBy="name" [placeholder]="'select_lawyer' | translate" [showClear]="true"
+              styleClass="w-full" appendTo="body">
+            </p-select>
+          </div>
+          <div class="input-group">
+            <label>{{ 'review_place' | translate }}</label>
+            <input type="text" formControlName="reviewPlace" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-group">
+            <label>{{ 'agency_number' | translate }}</label>
+            <input type="text" formControlName="agencyNumber" />
+          </div>
+          <div class="input-group">
+            <label>{{ 'review_date' | translate }}</label>
+            <p-datepicker formControlName="reviewDate" [showIcon]="true" dateFormat="dd/mm/yy" [showClear]="true"
+              appendTo="body" styleClass="w-full">
+            </p-datepicker>
+          </div>
+        </div>
+
+        <h3 class="section-title">{{ 'case_context' | translate }}</h3>
+
+        <div class="row">
+          <div class="input-group">
+            <label>{{ 'client_name' | translate }}</label>
+            <p-select formControlName="clientName" [options]="customers()" optionLabel="fullName" optionValue="fullName"
+              [filter]="true" filterBy="fullName,phone" [placeholder]="'select_customer' | translate" [showClear]="true"
+              styleClass="w-full" appendTo="body">
+            </p-select>
+          </div>
+          <div class="input-group">
+            <label>{{ 'case_number' | translate }}</label>
+            <input type="text" formControlName="caseNumber" />
+          </div>
+        </div>
+
+        <h3 class="section-title">{{ 'report_summary' | translate }}</h3>
+
+        <div class="input-group">
+          <textarea formControlName="reportSummary" rows="8"></textarea>
+        </div>
+
+      </form>
+    </section>
+
+    <aside class="preview-card">
+      <div class="preview-sticky">
+        <h3 class="preview-title">{{ 'live_preview' | translate }}</h3>
+        <app-field-visit-report-template [value]="previewData()"></app-field-visit-report-template>
+      </div>
+    </aside>
+
+  </div>
+
+  <ng-template #loadingTpl>
+    <div class="loading-state">
+      <i class="fa-solid fa-spinner fa-spin"></i>
+      {{ 'loading' | translate }}
+    </div>
+  </ng-template>
+</div>
