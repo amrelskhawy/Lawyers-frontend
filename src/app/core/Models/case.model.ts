@@ -19,6 +19,7 @@ export interface IDataCase {
 
   wantsSpecificLawyer: boolean;
   preferredLawyerId: string | null;
+  preferredLawyerName: string | null;
   sessionReceiverId: string | null;
   sessionDate: string | null;
 
