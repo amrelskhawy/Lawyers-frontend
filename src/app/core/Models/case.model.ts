@@ -21,6 +21,7 @@ export interface IDataCase {
   preferredLawyerId: string | null;
   preferredLawyerName: string | null;
   sessionReceiverId: string | null;
+  sessionReceiverName: string | null;
   sessionDate: string | null;
 
   hasStructuredNotes: boolean;

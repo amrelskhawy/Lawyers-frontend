@@ -453,6 +453,8 @@
   "court_circuit": "Court circuit",
   "case_charge": "Circuit",
   "court_city": "Court city",
+  "body_court_circuit": "Circuit (in session text)",
+  "body_court_name": "Court (in session text)",
   "case_data": "Case data",
   "opponent_name": "Opponent name",
   "case_number": "Case number",

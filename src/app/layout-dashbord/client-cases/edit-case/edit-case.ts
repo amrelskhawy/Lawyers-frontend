@@ -132,6 +132,12 @@ export class EditCase implements OnInit, OnDestroy {
           if (match) preferredLawyerFormId = `team:${match.name_en}`;
         }
 
+        let sessionReceiverFormId: string | null = c.sessionReceiverId;
+        if (!sessionReceiverFormId && c.sessionReceiverName) {
+          const match = TEAM_MEMBERS.find((m) => m.name_ar === c.sessionReceiverName);
+          if (match) sessionReceiverFormId = `team:${match.name_en}`;
+        }
+
         this.Form.patchValue({
           customerId: c.customerId,
           caseType: c.caseType,
@@ -141,7 +147,7 @@ export class EditCase implements OnInit, OnDestroy {
           agencyNumber: c.agencyNumber ?? '',
           wantsSpecificLawyer: c.wantsSpecificLawyer,
           preferredLawyerId: preferredLawyerFormId,
-          sessionReceiverId: c.sessionReceiverId,
+          sessionReceiverId: sessionReceiverFormId,
           sessionDate: c.sessionDate ? new Date(c.sessionDate) : null,
           hasStructuredNotes: c.hasStructuredNotes,
           freeNotes: c.freeNotes ?? '',
@@ -186,6 +192,13 @@ export class EditCase implements OnInit, OnDestroy {
       ? (TEAM_MEMBERS.find((m) => `team:${m.name_en}` === rawId)?.name_ar ?? null)
       : null;
 
+    const rawSessionId: string | null = value.sessionReceiverId || null;
+    const isSessionTeamMember = rawSessionId?.startsWith('team:') ?? false;
+    const sessionReceiverId = isSessionTeamMember ? null : rawSessionId;
+    const sessionReceiverName = isSessionTeamMember
+      ? (TEAM_MEMBERS.find((m) => `team:${m.name_en}` === rawSessionId)?.name_ar ?? null)
+      : null;
+
     return {
       customerId: value.customerId,
       caseType: value.caseType,
@@ -196,7 +209,8 @@ export class EditCase implements OnInit, OnDestroy {
       wantsSpecificLawyer: value.wantsSpecificLawyer,
       preferredLawyerId,
       preferredLawyerName,
-      sessionReceiverId: value.sessionReceiverId || null,
+      sessionReceiverId,
+      sessionReceiverName,
       sessionDate: value.sessionDate
         ? (value.sessionDate instanceof Date ? value.sessionDate : new Date(value.sessionDate)).toISOString()
         : null,

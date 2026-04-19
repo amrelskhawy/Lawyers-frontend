@@ -73,17 +73,6 @@
 
         <div class="row">
           <div class="input-group">
-            <label>{{ 'court_name' | translate }}</label>
-            <input type="text" formControlName="courtName" placeholder="المحكمة الجزائية بالرياض" />
-          </div>
-          <div class="input-group">
-            <label>{{ 'case_charge' | translate }}</label>
-            <input type="text" formControlName="caseCharge" placeholder="تعزير – مخالفة النظام الجزائي..." />
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="input-group">
             <label>{{ 'opponent_name' | translate }}</label>
             <input type="text" formControlName="opponentName" />
           </div>
@@ -93,41 +82,45 @@
           </div>
         </div>
 
+        <div class="row">
+          <div class="input-group">
+            <label>{{ 'court_circuit' | translate }}</label>
+            <input type="text" formControlName="courtCircuit" placeholder="مكتب العمل" />
+          </div>
+          <div class="input-group">
+            <label>{{ 'court_name' | translate }}</label>
+            <input type="text" formControlName="courtName" placeholder="التسوية الودية" />
+          </div>
+        </div>
+
         <div class="input-group">
           <label>{{ 'case_data' | translate }}</label>
           <textarea formControlName="caseData" rows="3"></textarea>
-        </div>
-
-        <div class="row">
-          <div class="input-group">
-            <label>{{ 'court_city' | translate }}</label>
-            <input type="text" formControlName="courtCircuit" placeholder="الرياض" />
-          </div>
         </div>
 
         <h3 class="section-title">{{ 'session_meta' | translate }}</h3>
 
         <div class="row">
           <div class="input-group">
-            <label>{{ 'session_ordinal' | translate }}</label>
-            <input type="text" formControlName="sessionOrdinal" placeholder="السابعة عشر بعد المائة" />
-          </div>
-        </div>
-
-        <div class="row">
-
-          <div class="input-group">
             <label>{{ 'session_time' | translate }}</label>
             <p-datepicker formControlName="sessionTime" [timeOnly]="true" hourFormat="12" [showIcon]="true"
               iconDisplay="input" [showClear]="true" appendTo="body" styleClass="w-full">
             </p-datepicker>
           </div>
+          <div class="input-group">
+            <label>{{ 'hijri_date' | translate }}</label>
+            <app-hijri-datepicker formControlName="hijriDate" [showClear]="true"></app-hijri-datepicker>
+          </div>
         </div>
 
         <div class="row">
           <div class="input-group">
-            <label>{{ 'hijri_date' | translate }}</label>
-            <app-hijri-datepicker formControlName="hijriDate" [showClear]="true"></app-hijri-datepicker>
+            <label>{{ 'body_court_circuit' | translate }}</label>
+            <input type="text" formControlName="caseCharge" placeholder="مكتب العمل" />
+          </div>
+          <div class="input-group">
+            <label>{{ 'body_court_name' | translate }}</label>
+            <input type="text" formControlName="sessionOrdinal" placeholder="التسوية الودية" />
           </div>
         </div>
 

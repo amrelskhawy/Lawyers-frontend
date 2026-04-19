@@ -453,6 +453,8 @@
   "court_circuit": "الدائرة",
   "case_charge": "الدائرة",
   "court_city": "مدينة المحكمة",
+  "body_court_circuit": "الدائرة (في نص الجلسة)",
+  "body_court_name": "المحكمة (في نص الجلسة)",
   "case_data": "بيانات القضية",
   "opponent_name": "اسم الخصم",
   "case_number": "رقم القضية",
