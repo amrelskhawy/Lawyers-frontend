@@ -251,51 +251,43 @@ $cream: #f5f0e0;
   font-size: 1.917cqw;
 }
 
+.cf2-add-page {
+  background-image: url('/assets/Img/notes-add-bg.png');
+}
+
 .cf2-page .cf2-notes {
+  position: absolute;
   top: 34%;
   left: 5.5%;
   width: 91.5%;
   height: 55%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: stretch;
-  text-align: right;
+  text-align: justify;
   direction: rtl;
   padding: 0;
-  font-size: 2cqw;
-  // line-height: 1;
+  font-family: 'Cairo', 'Segoe UI', Tahoma, Arial, sans-serif;
+  font-size: 1.7cqw;
+  font-weight: 500;
+  line-height: 4.5cqw;
   color: #140c39;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  overflow: hidden;
+  box-sizing: border-box;
+}
 
-  .nl {
-    display: flex;
-    align-items: center;
-    gap: 0.5cqw;
-    height: 5cqw;
-    flex: 0 0 5.1cqw;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+.cf2-page .cf2-notes-add {
+  top: 3.5% !important;
+  height: 84% !important;
+}
 
-  .dot {
-    width: 0.8cqw;
-    height: 0.8cqw;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .dot-weakness {
-    background: #d9534f;
-  }
-
-  .dot-strength {
-    background: #5cb85c;
-  }
-
-  .dot-gap {
-    background: #f0ad4e;
-  }
+.cf-measure-host {
+  position: absolute;
+  left: -99999px;
+  top: 0;
+  width: 794px;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .report-header {

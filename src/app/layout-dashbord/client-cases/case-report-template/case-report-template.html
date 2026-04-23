@@ -33,9 +33,22 @@
     <div class="ov cf2-receiver">{{ data().sessionReceiverName || '' }}</div>
     <div class="ov cf2-date" dir="ltr">{{ formattedSessionDate() || '' }}</div>
 
-    <div class="ov cf2-notes">
-      <div class="nl" *ngFor="let line of freeLines()">{{ line || '\u00A0' }}</div>
-    </div>
+    <div class="cf2-notes">{{ pages()[0] || '' }}</div>
   </section>
+
+  <!-- ============ ADD PAGES: continuation pages when freeNotes overflows ============ -->
+  <section class="cf2-page cf2-add-page" *ngFor="let txt of pages().slice(1)">
+    <div class="cf2-notes cf2-notes-add">{{ txt }}</div>
+  </section>
+
+  <!-- ============ Hidden measurement host (off-screen) ============ -->
+  <div class="cf-measure-host" aria-hidden="true">
+    <div class="cf2-page">
+      <div class="cf2-notes" #measureFirst></div>
+    </div>
+    <div class="cf2-page cf2-add-page">
+      <div class="cf2-notes cf2-notes-add" #measureAdd></div>
+    </div>
+  </div>
 
 </div>
