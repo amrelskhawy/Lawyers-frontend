@@ -48,9 +48,32 @@
           <div class="input-group">
             <label>{{ 'phone' | translate }}</label>
             <div class="input-wrapper phone-wrapper">
-              <span class="phone-prefix">+966</span>
-              <input formControlName="phone" placeholder="5XXXXXXXX" type="tel" />
+              <p-select
+                [options]="countries"
+                [(ngModel)]="selectedCountry"
+                [ngModelOptions]="{ standalone: true }"
+                optionLabel="name"
+                [filter]="true"
+                filterBy="name,code"
+                styleClass="country-select"
+                appendTo="body">
+                <ng-template pTemplate="selectedItem">
+                  <span class="country-selected">
+                    {{ selectedCountry.flag }} +{{ selectedCountry.code }}
+                  </span>
+                </ng-template>
+                <ng-template pTemplate="item" let-country>
+                  <span class="country-option">
+                    {{ country.flag }} {{ country.name }} <span class="country-dial">+{{ country.code }}</span>
+                  </span>
+                </ng-template>
+              </p-select>
+              <input formControlName="phone" [placeholder]="selectedCountry.example" type="tel" class="phone-input" />
             </div>
+            <small class="phone-hint">
+              <i class="fa-solid fa-circle-info"></i>
+              مثال: +{{ selectedCountry.code }} {{ selectedCountry.example }}
+            </small>
             <small class="error-msg" *ngIf="getControlName('phone')?.invalid && getControlName('phone')?.touched">
               {{ 'filed_reqierd' | translate }}
             </small>

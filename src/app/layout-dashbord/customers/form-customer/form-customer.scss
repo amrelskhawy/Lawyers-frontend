@@ -148,32 +148,54 @@ $white: #ffffff;
     }
 
     .phone-wrapper {
-      .phone-prefix {
-        padding: 0.75rem 0.75rem;
-        background-color: #f1f5f9;
-        border: 1px solid $gray-border;
-        border-right: none;
-        border-radius: 12px 0 0 12px;
-        font-size: 0.95rem;
-        font-weight: 600;
-        color: $primary-navy;
-        white-space: nowrap;
-        user-select: none;
+      gap: 0;
+      direction: ltr;
+      border: 1px solid $gray-border;
+      border-radius: 12px;
+      overflow: hidden;
+      background-color: #f8fafc;
+      transition: all 0.3s ease;
 
-        :host-context([dir="rtl"]) & {
-          border-right: 1px solid $gray-border;
-          border-left: none;
-          border-radius: 0 12px 12px 0;
-        }
+      &:focus-within {
+        border-color: $accent-gold;
+        box-shadow: 0 0 0 3px rgba($accent-gold, 0.1);
+        background-color: $white;
       }
 
-      input {
+      .phone-input {
         padding: 0.75rem 1rem !important;
-        border-radius: 0 12px 12px 0 !important;
+        border: none !important;
+        border-radius: 0 !important;
+        border-left: 1px solid $gray-border !important;
+        flex: 1;
+        background: transparent !important;
+        box-shadow: none !important;
 
-        :host-context([dir="rtl"]) & {
-          border-radius: 12px 0 0 12px !important;
+        &:focus {
+          outline: none;
+          box-shadow: none !important;
+          border-color: $gray-border !important;
         }
+      }
+    }
+
+    .phone-hint {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      color: #0369a1;
+      background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+      border: 1px solid #bae6fd;
+      border-radius: 8px;
+      padding: 0.45rem 0.75rem;
+      margin-top: 0.25rem;
+      direction: rtl;
+
+      i {
+        color: #0ea5e9;
+        font-size: 0.75rem;
+        flex-shrink: 0;
       }
     }
 
@@ -240,4 +262,58 @@ $white: #ffffff;
 
 ::ng-deep .modern-modal .p-dialog-header {
   display: none;
+}
+
+::ng-deep .country-select {
+  height: 100%;
+  border: none !important;
+  border-radius: 0 !important;
+  background-color: #f1f5f9 !important;
+  min-width: 115px;
+  box-shadow: none !important;
+
+  .p-select-label {
+    padding: 0.6rem 0.25rem 0.6rem 0.75rem !important;
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: #1a2b4b;
+  }
+
+  .p-select-dropdown {
+    width: 1.75rem;
+    color: #64748b;
+  }
+
+  &:focus,
+  &.p-focus {
+    box-shadow: none !important;
+    outline: none !important;
+  }
+}
+
+.country-selected {
+  font-size: 0.88rem;
+  font-weight: 700;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  letter-spacing: 0.3px;
+  color: #1a2b4b;
+}
+
+.country-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  direction: ltr;
+  padding: 0.1rem 0;
+
+  .country-dial {
+    margin-left: auto;
+    color: #94a3b8;
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
 }
