@@ -327,6 +327,29 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
     navigator.clipboard?.writeText(url);
   }
 
+  sendingWhatsapp = signal<boolean>(false);
+  whatsappSentAt = signal<string>('');
+
+  sendSigningLinkWhatsapp() {
+    if (!this.contractId() || this.sendingWhatsapp()) return;
+    this.sendingWhatsapp.set(true);
+    this.data
+      .post<{ data: { url: string; expiresAt: string; sentTo: string } }>(
+        `lawyer-fees-contracts/${this.contractId()}/signing-link/send-whatsapp`,
+        {},
+      )
+      .subscribe({
+        next: (res) => {
+          // The endpoint may have refreshed an expired token, so sync the URL
+          this.signingUrl.set(res.data.url);
+          this.signingExpiresAt.set(res.data.expiresAt);
+          this.whatsappSentAt.set(new Date().toISOString());
+          this.sendingWhatsapp.set(false);
+        },
+        error: () => this.sendingWhatsapp.set(false),
+      });
+  }
+
   generatePdf() {
     if (!this.contractId()) return;
     this.generating.set(true);

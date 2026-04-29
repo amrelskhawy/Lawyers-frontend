@@ -61,6 +61,15 @@
       <i class="fa-solid fa-copy"></i>
       {{ 'copy' | translate }}
     </button>
+    <button type="button" class="btn-whatsapp" (click)="sendSigningLinkWhatsapp()"
+            [disabled]="sendingWhatsapp()">
+      <i class="fa-brands fa-whatsapp"></i>
+      {{ (sendingWhatsapp() ? 'sending' : (whatsappSentAt() ? 'resend_via_whatsapp' : 'send_via_whatsapp')) | translate }}
+    </button>
+    <span *ngIf="whatsappSentAt()" class="whatsapp-sent-pill">
+      <i class="fa-solid fa-check"></i>
+      {{ 'sent' | translate }} {{ whatsappSentAt() | date:'short' }}
+    </span>
   </div>
 
   <div class="grid" *ngIf="!loading(); else loadingTpl">

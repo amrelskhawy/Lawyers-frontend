@@ -117,6 +117,35 @@ $gold: #c9a84c;
     color: $navy;
     background: #fafbff;
   }
+
+  .btn-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 13px;
+    background: #25D366;
+    color: #fff;
+    transition: 0.2s ease;
+    &:hover:not(:disabled) { background: darken(#25D366, 6%); }
+    &:disabled { opacity: 0.55; cursor: not-allowed; }
+  }
+
+  .whatsapp-sent-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #e6fffb;
+    color: #237a5b;
+    padding: 4px 10px;
+    border-radius: 14px;
+    font-size: 12px;
+    font-weight: 600;
+  }
 }
 
 .grid {
