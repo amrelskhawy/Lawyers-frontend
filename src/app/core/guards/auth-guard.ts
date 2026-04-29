@@ -36,3 +36,11 @@ export const isAdminGuard: CanActivateFn = (route, state) => {
   router.navigate(['/dashboard/content']);
   return false;
 }
+
+import { Passcode } from '../Servies/passcode';
+
+/** Prompts for the dashboard passcode (cached per session) before allowing the navigation. */
+export const passcodeGuard: CanActivateFn = async (_route, _state) => {
+  const passcode = inject(Passcode);
+  return passcode.requireAccess();
+};

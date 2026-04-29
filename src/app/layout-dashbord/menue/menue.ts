@@ -8,6 +8,7 @@ import {
   signal,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { Passcode } from '../../core/Servies/passcode';
 
 @Component({
   selector: 'app-menue',
@@ -20,7 +21,12 @@ export class Menue implements OnInit {
     this.GetDataMenue();
   }
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private passcode: Passcode) { }
+
+  async openWorkDay() {
+    const ok = await this.passcode.requireAccess();
+    if (ok) this.visibelform.set(true);
+  }
 
   @Output() toggelMenue = new EventEmitter<boolean>();
   isOpen = signal<boolean>(true);
@@ -71,35 +77,36 @@ export class Menue implements OnInit {
           icon: 'fa-solid fa-business-time',
           route: '/dashboard/content',
         },
+        {
+          name: 'customers',
+          icon: 'fa-solid fa-users',
+          route: '/dashboard/content/customers',
+        },
         ...(parseUser.role === 'ADMIN'
           ? [
-              {
-                name: 'Admins',
-                icon: 'fa-solid fa-user',
-                route: '/dashboard/content/admin',
-              },
-              {
-                name: 'Moderators',
-                icon: 'fa-solid fa-user-tie',
-                route: '/dashboard/content/Moderators',
-              },
-              {
-                name: 'organizers',
-                icon: 'fa-solid fa-people-group',
-                route: '/dashboard/content/organizers',
-              },
-            ]
+            {
+              name: 'Admins',
+              icon: 'fa-solid fa-user',
+              route: '/dashboard/content/admin',
+            },
+            {
+              name: 'Moderators',
+              icon: 'fa-solid fa-user-tie',
+              route: '/dashboard/content/Moderators',
+            },
+            {
+              name: 'organizers',
+              icon: 'fa-solid fa-people-group',
+              route: '/dashboard/content/organizers',
+            },
+          ]
           : []),
         {
           name: 'services',
           icon: 'fa-solid fa-gear',
           route: '/dashboard/content/addservies',
         },
-        {
-          name: 'customers',
-          icon: 'fa-solid fa-users',
-          route: '/dashboard/content/customers',
-        },
+
         {
           name: 'client_cases',
           icon: 'fa-solid fa-folder-open',

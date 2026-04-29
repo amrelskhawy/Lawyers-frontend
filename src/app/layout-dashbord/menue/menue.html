@@ -28,7 +28,7 @@
   </section>
 
   <div class="menue-footer" [ngClass]="{ collpasedMenue: statusMenue() && !widthScreen() }">
-    <button [attr.aria-label]="'Work_Day' | translate" class="action-btn work-btn" (click)="visibelform.set(true)">
+    <button [attr.aria-label]="'Work_Day' | translate" class="action-btn work-btn" (click)="openWorkDay()">
       <i class="fa-solid fa-business-time"></i>
       <span *ngIf="widthScreen() || !statusMenue()">{{ 'Work_Day' | translate }}</span>
     </button>

@@ -1,4 +1,4 @@
-import { isAdminGuard, securityAuthGuard } from './../core/guards/auth-guard';
+import { isAdminGuard, securityAuthGuard, passcodeGuard } from './../core/guards/auth-guard';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Content } from './content/content';
@@ -21,26 +21,26 @@ const routes: Routes = [
   {
     path: 'content',
     component: Content,
-     canActivate: [securityAuthGuard],
+    canActivate: [securityAuthGuard],
     children: [
       { path: '', component: Reservations },
-      { path: 'Moderators', component: Moderators, canActivate: [isAdminGuard] },
-      { path: 'admin', component: Admins, canActivate: [isAdminGuard] },
-      { path: 'addservies', component: AddServies },
-      { path: 'Holidays', component: Holidays },
+      { path: 'Moderators', component: Moderators, canActivate: [isAdminGuard, passcodeGuard] },
+      { path: 'admin', component: Admins, canActivate: [isAdminGuard, passcodeGuard] },
+      { path: 'addservies', component: AddServies, canActivate: [passcodeGuard] },
       { path: 'customers', component: Customers },
-      { path: 'organizers', component: Organizers, canActivate: [isAdminGuard] },
-      { path: 'client-cases', component: ClientCases },
-      { path: 'client-cases/:id/edit', component: EditCase },
-      { path: 'session-reports/:caseId', component: SessionReportsList },
-      { path: 'session-report/:caseId', component: SessionReport },
-      { path: 'session-report/:caseId/:reportId', component: SessionReport },
-      { path: 'field-visit-report/:caseId', component: FieldVisitReport },
-      { path: 'field-visit-report/:caseId/:reportId', component: FieldVisitReport },
-      { path: 'lawyer-fees-contracts', component: LawyerFeesContractsList },
-      { path: 'lawyer-fees-contract/case/:caseId', component: LawyerFeesContract },
-      { path: 'lawyer-fees-contract/case/:caseId/:id', component: LawyerFeesContract },
-      { path: 'lawyer-fees-contract/:id', component: LawyerFeesContract },
+      { path: 'Holidays', component: Holidays, canActivate: [passcodeGuard] },
+      { path: 'organizers', component: Organizers, canActivate: [isAdminGuard, passcodeGuard] },
+      { path: 'client-cases', component: ClientCases, canActivate: [passcodeGuard] },
+      { path: 'client-cases/:id/edit', component: EditCase, canActivate: [passcodeGuard] },
+      { path: 'session-reports/:caseId', component: SessionReportsList, canActivate: [passcodeGuard] },
+      { path: 'session-report/:caseId', component: SessionReport, canActivate: [passcodeGuard] },
+      { path: 'session-report/:caseId/:reportId', component: SessionReport, canActivate: [passcodeGuard] },
+      { path: 'field-visit-report/:caseId', component: FieldVisitReport, canActivate: [passcodeGuard] },
+      { path: 'field-visit-report/:caseId/:reportId', component: FieldVisitReport, canActivate: [passcodeGuard] },
+      { path: 'lawyer-fees-contracts', component: LawyerFeesContractsList, canActivate: [passcodeGuard] },
+      { path: 'lawyer-fees-contract/case/:caseId', component: LawyerFeesContract, canActivate: [passcodeGuard] },
+      { path: 'lawyer-fees-contract/case/:caseId/:id', component: LawyerFeesContract, canActivate: [passcodeGuard] },
+      { path: 'lawyer-fees-contract/:id', component: LawyerFeesContract, canActivate: [passcodeGuard] },
       { path: '**', redirectTo: '', pathMatch: 'full' }
     ],
   },
