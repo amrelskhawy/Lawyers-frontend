@@ -16,15 +16,19 @@ export interface LawyerFeesContractPreviewData {
   firstInstallment?:  string | number | null;
   secondInstallment?: string | number | null;
   currency?:          string | null;
+
+  firstPartySignature?:  string | null;
+  secondPartySignature?: string | null;
+  secondPartySignedAt?:  string | Date | null;
 }
 
 @Component({
-  selector: 'app-lawyer-fees-contract-template',
+  selector: 'app-lawyer-fees-contract-preview',
   standalone: false,
-  templateUrl: './lawyer-fees-contract-template.html',
-  styleUrl: './lawyer-fees-contract-template.scss',
+  templateUrl: './lawyer-fees-contract-preview.html',
+  styleUrl: './lawyer-fees-contract-preview.scss',
 })
-export class LawyerFeesContractTemplate {
+export class LawyerFeesContractPreview {
   data = signal<LawyerFeesContractPreviewData>({});
 
   @Input() set value(v: LawyerFeesContractPreviewData | null | undefined) {

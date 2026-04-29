@@ -392,7 +392,26 @@
     "HOLIDAYS_DELETED_SUCCESS": "Holidays deleted successfully",
     "SERVICES_DELETED_SUCCESS": "Services deleted successfully",
     "ORGANIZER_RETRIEVED_SUCCESS": "Organizer retrieved successfully",
-    "ADMIN_ROLE_REQUIRED": "Admin role required"
+    "ADMIN_ROLE_REQUIRED": "Admin role required",
+    "LAWYER_FEES_CONTRACTS_RETRIEVED_SUCCESS": "Fees contracts retrieved successfully",
+    "LAWYER_FEES_CONTRACT_RETRIEVED_SUCCESS": "Fees contract retrieved successfully",
+    "LAWYER_FEES_CONTRACT_CREATED_SUCCESS": "Fees contract created successfully",
+    "LAWYER_FEES_CONTRACT_UPDATED_SUCCESS": "Fees contract updated successfully",
+    "LAWYER_FEES_CONTRACT_DELETED_SUCCESS": "Fees contract deleted successfully",
+    "LAWYER_FEES_CONTRACT_NOT_FOUND": "Fees contract not found",
+    "LAWYER_FEES_CONTRACT_PDF_GENERATED_SUCCESS": "Fees contract PDF generated successfully",
+    "LAWYER_FEES_CONTRACT_PDF_UNCHANGED_USING_EXISTING": "No changes since last generation — using existing PDF",
+    "SIGNING_LINK_CREATED_SUCCESS": "Signing link created successfully",
+    "CLIENT_ID_NUMBER_REQUIRED_FOR_SIGNING": "Client ID number is required to issue a signing link",
+    "SIGNING_TOKEN_INVALID": "Signing link is invalid",
+    "SIGNING_TOKEN_EXPIRED": "Signing link has expired",
+    "SIGNING_TOKEN_ALREADY_USED": "This link has already been used",
+    "IDENTITY_MISMATCH": "ID number does not match",
+    "ID_NUMBER_REQUIRED": "ID number is required",
+    "SIGNATURE_REQUIRED": "Signature is required",
+    "INVALID_SIGNATURE_PAYLOAD": "Invalid signature data",
+    "SIGNING_IDENTITY_VERIFIED": "Identity verified",
+    "CONTRACT_SIGNED_SUCCESS": "Contract signed successfully"
   },
   "client_cases": "Client Cases",
   "case_customer": "Customer",
@@ -507,5 +526,9 @@
   "submitting": "Submitting...",
   "sign_success_title": "Contract signed successfully",
   "sign_success_subtitle": "Your signature has been saved and the contract is now in effect.",
-  "view_signed_pdf": "View signed PDF"
+  "view_signed_pdf": "View signed PDF",
+  "sign_review_then_sign": "Review the contract carefully before signing. You'll see your signature appear on page 3 the moment you draw it.",
+  "contract_preview": "Contract preview",
+  "open_full_pdf": "Open full PDF",
+  "signature_live_preview_hint": "Draw your signature in the box — it mirrors live onto page 3 of the contract on the left."
 }

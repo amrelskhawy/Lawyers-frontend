@@ -6,7 +6,7 @@ import { Data } from '../../core/Servies/data';
 import { IDataCustomer } from '../../core/Models/customers.model';
 import { IDataCase } from '../../core/Models/case.model';
 import { ILawyerFeesContract } from '../../core/Models/lawyer-fees-contract.model';
-import { LawyerFeesContractPreviewData } from './lawyer-fees-contract-template/lawyer-fees-contract-template';
+import { LawyerFeesContractPreviewData } from '../../shared/lawyer-fees-contract-preview/lawyer-fees-contract-preview';
 
 type SaveStatus = 'idle' | 'unsaved' | 'saving' | 'saved' | 'error';
 

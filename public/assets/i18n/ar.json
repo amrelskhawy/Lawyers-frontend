@@ -392,7 +392,26 @@
     "HOLIDAYS_DELETED_SUCCESS": "تم حذف العطلات بنجاح",
     "SERVICES_DELETED_SUCCESS": "تم حذف الخدمات بنجاح",
     "ORGANIZER_RETRIEVED_SUCCESS": "تم استرداد المنظم بنجاح",
-    "ADMIN_ROLE_REQUIRED": "مطلوب دور المسؤول"
+    "ADMIN_ROLE_REQUIRED": "مطلوب دور المسؤول",
+    "LAWYER_FEES_CONTRACTS_RETRIEVED_SUCCESS": "تم استرجاع عقود الأتعاب بنجاح",
+    "LAWYER_FEES_CONTRACT_RETRIEVED_SUCCESS": "تم استرجاع عقد الأتعاب بنجاح",
+    "LAWYER_FEES_CONTRACT_CREATED_SUCCESS": "تم إنشاء عقد الأتعاب بنجاح",
+    "LAWYER_FEES_CONTRACT_UPDATED_SUCCESS": "تم تحديث عقد الأتعاب بنجاح",
+    "LAWYER_FEES_CONTRACT_DELETED_SUCCESS": "تم حذف عقد الأتعاب بنجاح",
+    "LAWYER_FEES_CONTRACT_NOT_FOUND": "عقد الأتعاب غير موجود",
+    "LAWYER_FEES_CONTRACT_PDF_GENERATED_SUCCESS": "تم توليد ملف PDF لعقد الأتعاب بنجاح",
+    "LAWYER_FEES_CONTRACT_PDF_UNCHANGED_USING_EXISTING": "لا توجد تغييرات منذ آخر توليد — سيتم استخدام العقد الحالي",
+    "SIGNING_LINK_CREATED_SUCCESS": "تم إنشاء رابط التوقيع بنجاح",
+    "CLIENT_ID_NUMBER_REQUIRED_FOR_SIGNING": "رقم هوية العميل مطلوب لإصدار رابط التوقيع",
+    "SIGNING_TOKEN_INVALID": "رابط التوقيع غير صالح",
+    "SIGNING_TOKEN_EXPIRED": "انتهت صلاحية رابط التوقيع",
+    "SIGNING_TOKEN_ALREADY_USED": "تم استخدام هذا الرابط بالفعل",
+    "IDENTITY_MISMATCH": "رقم الهوية غير مطابق",
+    "ID_NUMBER_REQUIRED": "رقم الهوية مطلوب",
+    "SIGNATURE_REQUIRED": "التوقيع مطلوب",
+    "INVALID_SIGNATURE_PAYLOAD": "بيانات التوقيع غير صالحة",
+    "SIGNING_IDENTITY_VERIFIED": "تم التحقق من الهوية",
+    "CONTRACT_SIGNED_SUCCESS": "تم توقيع العقد بنجاح"
   },
   "client_cases": "قضايا العملاء",
   "case_customer": "العميل",
@@ -507,5 +526,9 @@
   "submitting": "جاري الإرسال...",
   "sign_success_title": "تم توقيع العقد بنجاح",
   "sign_success_subtitle": "تم حفظ توقيعكم وأصبح العقد ساري المفعول.",
-  "view_signed_pdf": "عرض العقد الموقّع"
+  "view_signed_pdf": "عرض العقد الموقّع",
+  "sign_review_then_sign": "راجع العقد جيداً قبل التوقيع. سترى توقيعك يظهر على الصفحة الثالثة لحظة رسمه.",
+  "contract_preview": "معاينة العقد",
+  "open_full_pdf": "فتح ملف PDF الكامل",
+  "signature_live_preview_hint": "ارسم توقيعك في المربع وسيُنعكس مباشرة على الصفحة الثالثة من العقد إلى يسارك."
 }

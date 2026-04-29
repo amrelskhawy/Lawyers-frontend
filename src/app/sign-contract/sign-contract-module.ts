@@ -5,6 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
 import { SignContractRoutingModule } from './sign-contract-routing-module';
 import { SignContract } from './sign-contract';
+import { LawyerFeesContractPreviewModule } from '../shared/lawyer-fees-contract-preview/lawyer-fees-contract-preview-module';
 
 @NgModule({
   declarations: [SignContract],
@@ -14,6 +15,7 @@ import { SignContract } from './sign-contract';
     TranslateModule,
     ButtonModule,
     SignContractRoutingModule,
+    LawyerFeesContractPreviewModule,
   ],
 })
 export class SignContractModule {}

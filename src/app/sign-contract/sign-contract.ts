@@ -1,31 +1,45 @@
 import {
-  AfterViewInit,
   Component,
   ElementRef,
   OnDestroy,
   OnInit,
   ViewChild,
+  computed,
   signal,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Data } from '../core/Servies/data';
+import { LawyerFeesContractPreviewData } from '../shared/lawyer-fees-contract-preview/lawyer-fees-contract-preview';
 
 type Phase = 'verify' | 'sign' | 'success' | 'error';
 
 interface SigningPreview {
   id: string;
   contractNumber: string | null;
-  contractDate: string | null;
-  hijriDate: string | null;
-  clientName: string | null;
+  contractDay:    string | null;
+  contractDate:   string | null;
+  hijriDate:      string | null;
+
+  clientName:     string | null;
+  clientIdNumber: string | null;
+  clientPhone:    string | null;
+
   serviceDescription: string | null;
-  totalFees: string | number | null;
-  firstInstallment: string | number | null;
+
+  totalFees:         string | number | null;
+  firstInstallment:  string | number | null;
   secondInstallment: string | number | null;
-  currency: string | null;
-  firmName: string;
-  expiresAt: string | null;
+  currency:          string | null;
+
+  firstPartySignature:  string | null;
+  secondPartySignature: string | null;
+  secondPartySignedAt:  string | null;
+
+  existingPdfUrl: string | null;
+  firmName:       string;
+  expiresAt:      string | null;
 }
 
 @Component({
@@ -34,13 +48,14 @@ interface SigningPreview {
   templateUrl: './sign-contract.html',
   styleUrl: './sign-contract.scss',
 })
-export class SignContract implements OnInit, AfterViewInit, OnDestroy {
+export class SignContract implements OnInit, OnDestroy {
   @ViewChild('pad') padRef!: ElementRef<HTMLCanvasElement>;
 
   constructor(
     private fb: FormBuilder,
     private data: Data,
     private route: ActivatedRoute,
+    private translate: TranslateService,
   ) {}
 
   token = signal<string>('');
@@ -50,22 +65,54 @@ export class SignContract implements OnInit, AfterViewInit, OnDestroy {
   preview = signal<SigningPreview | null>(null);
   signedPdfUrl = signal<string>('');
 
-  verifyForm!: FormGroup;
+  // Live signature data URL — re-emitted on every stroke so the preview
+  // can mirror it on page 3 in real time.
+  liveSignature = signal<string>('');
   hasStrokes = signal<boolean>(false);
+
+  verifyForm!: FormGroup;
+
+  // The data fed into the embedded contract preview (pages 1-3).
+  livePreview = computed<LawyerFeesContractPreviewData>(() => {
+    const p = this.preview();
+    if (!p) return {};
+    return {
+      contractNumber:    p.contractNumber,
+      contractDay:       p.contractDay,
+      contractDate:      p.contractDate,
+      hijriDate:         p.hijriDate,
+      clientName:        p.clientName,
+      clientIdNumber:    p.clientIdNumber,
+      clientPhone:       p.clientPhone,
+      serviceDescription: p.serviceDescription,
+      totalFees:         p.totalFees,
+      firstInstallment:  p.firstInstallment,
+      secondInstallment: p.secondInstallment,
+      currency:          p.currency,
+      firstPartySignature:  p.firstPartySignature,
+      secondPartySignature: this.liveSignature() || p.secondPartySignature,
+      secondPartySignedAt:  this.liveSignature() ? new Date().toISOString() : p.secondPartySignedAt,
+    };
+  });
 
   private ctx: CanvasRenderingContext2D | null = null;
   private drawing = false;
   private last: { x: number; y: number } | null = null;
 
   ngOnInit() {
+    // The public sign page is reached without going through the layouts that
+    // normally call translate.use(...), so we have to load translations here.
+    const saved = (typeof localStorage !== 'undefined' && localStorage.getItem('Language')) || 'ar';
+    const lang = saved === 'ar' || saved === 'en' ? saved : 'ar';
+    this.translate.setDefaultLang('ar');
+    this.translate.use(lang);
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.lang = lang;
+
     this.token.set(this.route.snapshot.paramMap.get('token') ?? '');
     this.verifyForm = this.fb.group({
       idNumber: ['', [Validators.required, Validators.minLength(4)]],
     });
-  }
-
-  ngAfterViewInit() {
-    // Canvas is only mounted in the 'sign' phase; bind on demand instead
   }
 
   ngOnDestroy() {
@@ -135,7 +182,11 @@ export class SignContract implements OnInit, AfterViewInit, OnDestroy {
       this.hasStrokes.set(true);
     };
     const stop = () => {
-      this.drawing = false;
+      if (this.drawing) {
+        this.drawing = false;
+        // Push to live preview when a stroke ends (cheaper than per-frame)
+        this.refreshLiveSignature();
+      }
       this.last = null;
     };
     canvas.onpointerup = stop;
@@ -143,11 +194,18 @@ export class SignContract implements OnInit, AfterViewInit, OnDestroy {
     canvas.onpointerleave = stop;
   }
 
+  private refreshLiveSignature() {
+    const canvas = this.padRef?.nativeElement;
+    if (!canvas) return;
+    this.liveSignature.set(canvas.toDataURL('image/png'));
+  }
+
   clearPad() {
     const canvas = this.padRef?.nativeElement;
     if (!canvas || !this.ctx) return;
     this.ctx.clearRect(0, 0, canvas.width, canvas.height);
     this.hasStrokes.set(false);
+    this.liveSignature.set('');
   }
 
   submit() {

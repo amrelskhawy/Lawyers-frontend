@@ -22,9 +22,19 @@
     <div class="ov f-second-installment" dir="ltr">{{ amount(data().secondInstallment) }}</div>
   </div>
 
-  <!-- ============ PAGE 3 ============ -->
+  <!-- ============ PAGE 3 — signatures ============ -->
   <div class="lfc-page page-3">
-    <!-- Signatures will be overlaid here in the next phase -->
+    <div class="f-first-party-signature" *ngIf="data().firstPartySignature">
+      <img [src]="data().firstPartySignature" alt="first party signature" />
+    </div>
+
+    <div class="f-second-party-signature" *ngIf="data().secondPartySignature">
+      <img [src]="data().secondPartySignature" alt="second party signature" />
+    </div>
+    <div class="ov f-second-party-signed-at" dir="ltr"
+         *ngIf="data().secondPartySignedAt">
+      {{ formattedDate(data().secondPartySignedAt) }}
+    </div>
   </div>
 
 </div>

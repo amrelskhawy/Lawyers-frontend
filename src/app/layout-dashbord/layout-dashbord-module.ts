@@ -43,7 +43,7 @@ import { FieldVisitReport } from './field-visit-report/field-visit-report';
 import { FieldVisitReportTemplate } from './field-visit-report/field-visit-report-template/field-visit-report-template';
 import { LawyerFeesContractsList } from './lawyer-fees-contracts-list/lawyer-fees-contracts-list';
 import { LawyerFeesContract } from './lawyer-fees-contract/lawyer-fees-contract';
-import { LawyerFeesContractTemplate } from './lawyer-fees-contract/lawyer-fees-contract-template/lawyer-fees-contract-template';
+import { LawyerFeesContractPreviewModule } from '../shared/lawyer-fees-contract-preview/lawyer-fees-contract-preview-module';
 @NgModule({
   declarations: [
     Menue,
@@ -78,7 +78,6 @@ import { LawyerFeesContractTemplate } from './lawyer-fees-contract/lawyer-fees-c
     FieldVisitReportTemplate,
     LawyerFeesContractsList,
     LawyerFeesContract,
-    LawyerFeesContractTemplate,
   ],
   imports: [
     CommonModule,
@@ -93,7 +92,8 @@ import { LawyerFeesContractTemplate } from './lawyer-fees-contract/lawyer-fees-c
     TooltipModule,
     ToggleSwitchModule,
     FormsModule,
-    SelectModule
+    SelectModule,
+    LawyerFeesContractPreviewModule,
   ],
 })
 export class LayoutDashbordModule {}

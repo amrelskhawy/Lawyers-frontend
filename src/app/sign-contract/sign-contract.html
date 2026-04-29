@@ -1,8 +1,14 @@
 <div class="sc-page" dir="rtl">
-  <div class="sc-card">
+  <header class="sc-header">
+    <img src="/assets/Img/LOGO-GOLD.svg" alt="Saad Albogami Law Firm" class="sc-logo" />
+    <img src="/assets/Img/NAME-GOLD.svg" alt="Saad Albogami" class="sc-name" />
+  </header>
+
+  <div class="sc-card" [class.wide]="phase() === 'sign'">
     <div class="brand">
+      <span class="brand-eyebrow">{{ 'sign_contract_subtitle' | translate }}</span>
       <h1>{{ 'sign_contract_title' | translate }}</h1>
-      <p class="subtitle">{{ 'sign_contract_subtitle' | translate }}</p>
+      <span class="brand-divider"></span>
     </div>
 
     <!-- ============ Phase: VERIFY ============ -->
@@ -16,7 +22,9 @@
                  [placeholder]="'enter_id_number' | translate" autofocus />
         </div>
 
-        <div class="error" *ngIf="error()">{{ error() }}</div>
+        <div class="error" *ngIf="error()">
+          {{ ('API_MESSAGES.' + error()) | translate }}
+        </div>
 
         <button type="submit" class="btn-primary"
                 [disabled]="verifyForm.invalid || loading()">
@@ -28,40 +36,45 @@
 
     <!-- ============ Phase: SIGN ============ -->
     <ng-container *ngIf="phase() === 'sign' && preview() as p">
-      <div class="summary">
-        <h3>{{ 'contract_summary' | translate }}</h3>
-        <div class="row"><span>{{ 'first_party' | translate }}:</span><strong>{{ p.firmName }}</strong></div>
-        <div class="row"><span>{{ 'client_name' | translate }}:</span><strong>{{ p.clientName || '—' }}</strong></div>
-        <div class="row"><span>{{ 'contract_number' | translate }}:</span><strong>{{ p.contractNumber || '—' }}</strong></div>
-        <div class="row"><span>{{ 'contract_date' | translate }}:</span><strong>{{ formatDate(p.contractDate) }}</strong></div>
-        <div class="row" *ngIf="p.serviceDescription">
-          <span>{{ 'service_description' | translate }}:</span>
-          <strong class="multiline">{{ p.serviceDescription }}</strong>
+      <p class="hint">{{ 'sign_review_then_sign' | translate }}</p>
+
+      <div class="sign-grid">
+        <div class="preview-col">
+          <h3 class="section-title">{{ 'contract_preview' | translate }}</h3>
+          <app-lawyer-fees-contract-preview [value]="livePreview()"></app-lawyer-fees-contract-preview>
+
+          <a *ngIf="p.existingPdfUrl" [href]="p.existingPdfUrl" target="_blank" rel="noopener noreferrer"
+             class="pdf-link">
+            <i class="fa-solid fa-file-pdf"></i> {{ 'open_full_pdf' | translate }}
+          </a>
         </div>
-        <div class="row"><span>{{ 'total_fees' | translate }}:</span><strong>{{ formatAmount(p.totalFees) }} {{ p.currency || 'SAR' }}</strong></div>
-        <div class="row"><span>{{ 'first_installment' | translate }}:</span><strong>{{ formatAmount(p.firstInstallment) }} {{ p.currency || 'SAR' }}</strong></div>
-        <div class="row"><span>{{ 'second_installment' | translate }}:</span><strong>{{ formatAmount(p.secondInstallment) }} {{ p.currency || 'SAR' }}</strong></div>
-      </div>
 
-      <h3 class="section-title">{{ 'draw_your_signature' | translate }}</h3>
-      <div class="pad-wrap">
-        <canvas #pad class="pad"></canvas>
-        <div class="pad-baseline"></div>
-      </div>
+        <div class="sign-col">
+          <h3 class="section-title">{{ 'draw_your_signature' | translate }}</h3>
+          <div class="pad-wrap">
+            <canvas #pad class="pad"></canvas>
+            <div class="pad-baseline"></div>
+          </div>
 
-      <div class="actions">
-        <button type="button" class="btn-secondary" (click)="clearPad()" [disabled]="!hasStrokes() || loading()">
-          <i class="fa-solid fa-eraser"></i>
-          {{ 'clear' | translate }}
-        </button>
-        <button type="button" class="btn-primary" (click)="submit()"
-                [disabled]="!hasStrokes() || loading()">
-          <i class="fa-solid fa-signature"></i>
-          {{ (loading() ? 'submitting' : 'sign_and_submit') | translate }}
-        </button>
-      </div>
+          <p class="hint small">{{ 'signature_live_preview_hint' | translate }}</p>
 
-      <div class="error" *ngIf="error()">{{ error() }}</div>
+          <div class="actions">
+            <button type="button" class="btn-secondary" (click)="clearPad()" [disabled]="!hasStrokes() || loading()">
+              <i class="fa-solid fa-eraser"></i>
+              {{ 'clear' | translate }}
+            </button>
+            <button type="button" class="btn-primary" (click)="submit()"
+                    [disabled]="!hasStrokes() || loading()">
+              <i class="fa-solid fa-signature"></i>
+              {{ (loading() ? 'submitting' : 'sign_and_submit') | translate }}
+            </button>
+          </div>
+
+          <div class="error" *ngIf="error()">
+            {{ ('API_MESSAGES.' + error()) | translate }}
+          </div>
+        </div>
+      </div>
     </ng-container>
 
     <!-- ============ Phase: SUCCESS ============ -->
@@ -78,4 +91,8 @@
       </div>
     </ng-container>
   </div>
+
+  <footer class="sc-footer">
+    © {{ 'sign_contract_subtitle' | translate }}
+  </footer>
 </div>
