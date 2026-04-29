@@ -471,5 +471,22 @@
   "session_summary": "Session summary",
   "court_decision": "Court decision",
   "lawyer_notes": "Lawyer notes",
-  "closing_note": "Closing note"
+  "closing_note": "Closing note",
+  "lawyer_fees_contract": "Lawyer Fees Contract",
+  "lawyer_fees_contracts": "Lawyer Fees Contracts",
+  "contract_metadata": "Contract Info",
+  "contract_number": "Contract No.",
+  "contract_day": "Day",
+  "contract_date": "Date (Gregorian)",
+  "hijri_date": "Date (Hijri)",
+  "second_party_info": "Second Party (Client)",
+  "link_customer": "Link Customer",
+  "client_id_number": "ID Number",
+  "client_phone": "Phone",
+  "fees_breakdown": "Fees & Installments",
+  "total_fees": "Total Fees",
+  "first_installment": "First Installment",
+  "second_installment": "Second Installment",
+  "currency": "Currency",
+  "service_description": "Service / Engagement Scope"
 }

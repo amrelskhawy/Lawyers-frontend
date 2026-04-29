@@ -14,6 +14,8 @@ import { EditCase } from './client-cases/edit-case/edit-case';
 import { SessionReport } from './session-report/session-report';
 import { SessionReportsList } from './session-reports-list/session-reports-list';
 import { FieldVisitReport } from './field-visit-report/field-visit-report';
+import { LawyerFeesContractsList } from './lawyer-fees-contracts-list/lawyer-fees-contracts-list';
+import { LawyerFeesContract } from './lawyer-fees-contract/lawyer-fees-contract';
 
 const routes: Routes = [
   {
@@ -35,6 +37,10 @@ const routes: Routes = [
       { path: 'session-report/:caseId/:reportId', component: SessionReport },
       { path: 'field-visit-report/:caseId', component: FieldVisitReport },
       { path: 'field-visit-report/:caseId/:reportId', component: FieldVisitReport },
+      { path: 'lawyer-fees-contracts', component: LawyerFeesContractsList },
+      { path: 'lawyer-fees-contract/case/:caseId', component: LawyerFeesContract },
+      { path: 'lawyer-fees-contract/case/:caseId/:id', component: LawyerFeesContract },
+      { path: 'lawyer-fees-contract/:id', component: LawyerFeesContract },
       { path: '**', redirectTo: '', pathMatch: 'full' }
     ],
   },

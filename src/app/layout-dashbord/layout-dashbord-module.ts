@@ -41,6 +41,9 @@ import { SessionReportTemplate } from './session-report/session-report-template/
 import { SessionReportsList } from './session-reports-list/session-reports-list';
 import { FieldVisitReport } from './field-visit-report/field-visit-report';
 import { FieldVisitReportTemplate } from './field-visit-report/field-visit-report-template/field-visit-report-template';
+import { LawyerFeesContractsList } from './lawyer-fees-contracts-list/lawyer-fees-contracts-list';
+import { LawyerFeesContract } from './lawyer-fees-contract/lawyer-fees-contract';
+import { LawyerFeesContractTemplate } from './lawyer-fees-contract/lawyer-fees-contract-template/lawyer-fees-contract-template';
 @NgModule({
   declarations: [
     Menue,
@@ -73,6 +76,9 @@ import { FieldVisitReportTemplate } from './field-visit-report/field-visit-repor
     SessionReportsList,
     FieldVisitReport,
     FieldVisitReportTemplate,
+    LawyerFeesContractsList,
+    LawyerFeesContract,
+    LawyerFeesContractTemplate,
   ],
   imports: [
     CommonModule,

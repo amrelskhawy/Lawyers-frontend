@@ -471,5 +471,22 @@
   "session_summary": "ملخص الجلسة",
   "court_decision": "قرار المحكمة",
   "lawyer_notes": "ملاحظات المحامي",
-  "closing_note": "ملاحظة ختامية"
+  "closing_note": "ملاحظة ختامية",
+  "lawyer_fees_contract": "عقد أتعاب محاماة",
+  "lawyer_fees_contracts": "عقود أتعاب المحاماة",
+  "contract_metadata": "بيانات العقد",
+  "contract_number": "رقم العقد",
+  "contract_day": "اليوم",
+  "contract_date": "التاريخ الميلادي",
+  "hijri_date": "التاريخ الهجري",
+  "second_party_info": "بيانات الطرف الثاني",
+  "link_customer": "ربط بعميل",
+  "client_id_number": "رقم الهوية",
+  "client_phone": "رقم الجوال",
+  "fees_breakdown": "الأتعاب والدفعات",
+  "total_fees": "إجمالي الأتعاب",
+  "first_installment": "الدفعة الأولى",
+  "second_installment": "الدفعة الثانية",
+  "currency": "العملة",
+  "service_description": "وصف الخدمة / نطاق الاتفاق"
 }

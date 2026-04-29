@@ -1,0 +1,31 @@
+.lawyer-fees-contracts-list-page {
+  padding: 1rem;
+
+  .page-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+
+    h2 {
+      margin: 0;
+      color: #140c39;
+    }
+  }
+
+  .action-btn {
+    display: inline-flex;
+    gap: 0.4rem;
+
+    button {
+      border: none;
+      border-radius: 6px;
+      padding: 0.4rem 0.55rem;
+      cursor: pointer;
+      color: #fff;
+
+      &.edit-btn { background: #2563eb; }
+      &.delete-btn { background: #dc2626; }
+    }
+  }
+}

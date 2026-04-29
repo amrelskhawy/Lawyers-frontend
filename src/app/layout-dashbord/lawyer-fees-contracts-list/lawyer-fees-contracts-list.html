@@ -1,0 +1,26 @@
+<div class="lawyer-fees-contracts-list-page" dir="rtl">
+  <div class="page-header">
+    <h2>{{ 'lawyer_fees_contracts' | translate }}</h2>
+  </div>
+
+  <ng-template #actions let-item let-onDelete="delete">
+    <div class="action-btn">
+      <button [attr.aria-label]="'edit' | translate" (click)="onEdit(item)" class="edit-btn">
+        <i class="fa-solid fa-pen-to-square"></i>
+      </button>
+      <button [attr.aria-label]="'delete' | translate" (click)="onDelete(item)" class="delete-btn">
+        <i class="fa-solid fa-trash"></i>
+      </button>
+    </div>
+  </ng-template>
+
+  <app-dashboard-crud-page
+    [endpoint]="endpoint()"
+    deleteEndpoint="lawyer-fees-contracts"
+    [columns]="columns"
+    [searchFields]="searchFields"
+    [actionsTemplate]="actions"
+    [dataMapper]="dataMapper"
+    (addNew)="onAddNew()">
+  </app-dashboard-crud-page>
+</div>

@@ -106,6 +106,11 @@ export class Menue implements OnInit {
           route: '/dashboard/content/client-cases',
         },
         {
+          name: 'lawyer_fees_contracts',
+          icon: 'fa-solid fa-file-signature',
+          route: '/dashboard/content/lawyer-fees-contracts',
+        },
+        {
           name: 'holidays_Day',
           icon: 'fa-solid fa-holly-berry',
           route: '/dashboard/content/Holidays',

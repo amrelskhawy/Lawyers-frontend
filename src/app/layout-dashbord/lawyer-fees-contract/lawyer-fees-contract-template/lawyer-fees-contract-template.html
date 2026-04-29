@@ -1,0 +1,30 @@
+<div class="lfc-shell" dir="rtl">
+
+  <!-- ============ PAGE 1 ============ -->
+  <div class="lfc-page page-1">
+    <div class="ov f-contract-number">{{ data().contractNumber || '' }}</div>
+
+    <div class="ov f-contract-day">{{ data().contractDay || '' }}</div>
+    <div class="ov f-contract-date" dir="ltr">{{ formattedDate(data().contractDate) }}</div>
+    <div class="ov f-hijri-date">{{ data().hijriDate || '' }}</div>
+
+    <div class="ov f-client-name">{{ data().clientName || '' }}</div>
+    <div class="ov f-client-id">{{ data().clientIdNumber || '' }}</div>
+    <div class="ov f-client-phone" dir="ltr">{{ data().clientPhone || '' }}</div>
+
+    <div class="ov f-service-description">{{ data().serviceDescription || '' }}</div>
+  </div>
+
+  <!-- ============ PAGE 2 ============ -->
+  <div class="lfc-page page-2">
+    <div class="ov f-total-fees" dir="ltr">{{ amount(data().totalFees) }}</div>
+    <div class="ov f-first-installment" dir="ltr">{{ amount(data().firstInstallment) }}</div>
+    <div class="ov f-second-installment" dir="ltr">{{ amount(data().secondInstallment) }}</div>
+  </div>
+
+  <!-- ============ PAGE 3 ============ -->
+  <div class="lfc-page page-3">
+    <!-- Signatures will be overlaid here in the next phase -->
+  </div>
+
+</div>
