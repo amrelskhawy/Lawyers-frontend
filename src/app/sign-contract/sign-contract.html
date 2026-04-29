@@ -1,0 +1,98 @@
+<div class="sc-page" dir="rtl">
+  <header class="sc-header">
+    <img src="/assets/Img/LOGO-GOLD.svg" alt="Saad Albogami Law Firm" class="sc-logo" />
+    <img src="/assets/Img/NAME-GOLD.svg" alt="Saad Albogami" class="sc-name" />
+  </header>
+
+  <div class="sc-card" [class.wide]="phase() === 'sign'">
+    <div class="brand">
+      <span class="brand-eyebrow">{{ 'sign_contract_subtitle' | translate }}</span>
+      <h1>{{ 'sign_contract_title' | translate }}</h1>
+      <span class="brand-divider"></span>
+    </div>
+
+    <!-- ============ Phase: VERIFY ============ -->
+    <ng-container *ngIf="phase() === 'verify'">
+      <form [formGroup]="verifyForm" (ngSubmit)="verify()" class="form">
+        <p class="prompt">{{ 'sign_verify_prompt' | translate }}</p>
+
+        <div class="input-group">
+          <label>{{ 'client_id_number' | translate }}</label>
+          <input type="text" inputmode="numeric" formControlName="idNumber"
+                 [placeholder]="'enter_id_number' | translate" autofocus />
+        </div>
+
+        <div class="error" *ngIf="error()">
+          {{ ('API_MESSAGES.' + error()) | translate }}
+        </div>
+
+        <button type="submit" class="btn-primary"
+                [disabled]="verifyForm.invalid || loading()">
+          <i class="fa-solid fa-shield-halved"></i>
+          {{ (loading() ? 'verifying' : 'verify_identity') | translate }}
+        </button>
+      </form>
+    </ng-container>
+
+    <!-- ============ Phase: SIGN ============ -->
+    <ng-container *ngIf="phase() === 'sign' && preview() as p">
+      <p class="hint">{{ 'sign_review_then_sign' | translate }}</p>
+
+      <div class="sign-grid">
+        <div class="preview-col">
+          <h3 class="section-title">{{ 'contract_preview' | translate }}</h3>
+          <app-lawyer-fees-contract-preview [value]="livePreview()"></app-lawyer-fees-contract-preview>
+
+          <a *ngIf="p.existingPdfUrl" [href]="p.existingPdfUrl" target="_blank" rel="noopener noreferrer"
+             class="pdf-link">
+            <i class="fa-solid fa-file-pdf"></i> {{ 'open_full_pdf' | translate }}
+          </a>
+        </div>
+
+        <div class="sign-col">
+          <h3 class="section-title">{{ 'draw_your_signature' | translate }}</h3>
+          <div class="pad-wrap">
+            <canvas #pad class="pad"></canvas>
+            <div class="pad-baseline"></div>
+          </div>
+
+          <p class="hint small">{{ 'signature_live_preview_hint' | translate }}</p>
+
+          <div class="actions">
+            <button type="button" class="btn-secondary" (click)="clearPad()" [disabled]="!hasStrokes() || loading()">
+              <i class="fa-solid fa-eraser"></i>
+              {{ 'clear' | translate }}
+            </button>
+            <button type="button" class="btn-primary" (click)="submit()"
+                    [disabled]="!hasStrokes() || loading()">
+              <i class="fa-solid fa-signature"></i>
+              {{ (loading() ? 'submitting' : 'sign_and_submit') | translate }}
+            </button>
+          </div>
+
+          <div class="error" *ngIf="error()">
+            {{ ('API_MESSAGES.' + error()) | translate }}
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- ============ Phase: SUCCESS ============ -->
+    <ng-container *ngIf="phase() === 'success'">
+      <div class="success-state">
+        <i class="fa-solid fa-circle-check"></i>
+        <h2>{{ 'sign_success_title' | translate }}</h2>
+        <p>{{ 'sign_success_subtitle' | translate }}</p>
+        <a *ngIf="signedPdfUrl()" [href]="signedPdfUrl()" target="_blank" rel="noopener noreferrer"
+           class="btn-primary">
+          <i class="fa-solid fa-file-pdf"></i>
+          {{ 'view_signed_pdf' | translate }}
+        </a>
+      </div>
+    </ng-container>
+  </div>
+
+  <footer class="sc-footer">
+    © {{ 'sign_contract_subtitle' | translate }}
+  </footer>
+</div>

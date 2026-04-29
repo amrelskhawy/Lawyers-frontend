@@ -198,6 +198,17 @@ form {
         }
       }
 
+      &.fees-contract-btn {
+        background-color: rgba(139, 92, 246, 0.12);
+        color: #7c3aed;
+
+        &:hover {
+          background-color: #7c3aed;
+          color: #fff;
+          box-shadow: 0 4px 12px rgba(124, 58, 237, 0.35);
+        }
+      }
+
       &.show_data {
         background-color: rgba(99, 102, 241, 0.1);
         color: #6366f1;

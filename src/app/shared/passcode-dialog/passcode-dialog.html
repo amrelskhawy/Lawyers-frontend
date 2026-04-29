@@ -1,0 +1,37 @@
+<div class="pc-overlay" *ngIf="visible()" (click)="cancel()" dir="rtl">
+  <div class="pc-card" (click)="$event.stopPropagation()">
+    <button type="button" class="pc-close" (click)="cancel()" aria-label="close">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+
+    <div class="pc-icon"><i class="fa-solid fa-shield-halved"></i></div>
+    <h3 class="pc-title">{{ 'passcode_title' | translate }}</h3>
+    <p class="pc-subtitle">{{ 'passcode_subtitle' | translate }}</p>
+
+    <form (ngSubmit)="onSubmit()" class="pc-form">
+      <input #input
+             type="password"
+             inputmode="numeric"
+             autocomplete="one-time-code"
+             [attr.maxlength]="expectedLength"
+             [value]="value()"
+             (input)="onInput($any($event.target).value)"
+             [class.shake]="!!error()"
+             placeholder="• • • • • •" />
+
+      <div class="pc-error" *ngIf="error()">
+        {{ ('API_MESSAGES.' + error()) | translate }}
+      </div>
+
+      <div class="pc-actions">
+        <button type="button" class="pc-btn-secondary" (click)="cancel()">
+          {{ 'cancel' | translate }}
+        </button>
+        <button type="submit" class="pc-btn-primary"
+                [disabled]="value().length !== expectedLength">
+          {{ 'unlock' | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
