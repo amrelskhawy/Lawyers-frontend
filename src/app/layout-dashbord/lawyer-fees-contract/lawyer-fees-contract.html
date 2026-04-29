@@ -41,7 +41,26 @@
         <i class="fa-solid fa-file-pdf"></i>
         {{ (generating() ? 'generating' : 'generate_pdf') | translate }}
       </button>
+      <button class="btn-secondary" (click)="generateSigningLink()"
+              [disabled]="generatingLink() || saveStatus() === 'unsaved' || saveStatus() === 'saving'"
+              [pTooltip]="saveStatus() === 'unsaved' ? ('save_first' | translate) : ''" tooltipPosition="bottom">
+        <i class="fa-solid fa-link"></i>
+        {{ (generatingLink() ? 'generating' : 'generate_signing_link') | translate }}
+      </button>
     </div>
+  </div>
+
+  <div class="signing-link-banner" *ngIf="signingUrl()">
+    <div class="signing-link-info">
+      <i class="fa-solid fa-link"></i>
+      <span class="label">{{ 'signing_link_ready' | translate }}</span>
+      <span class="ttl">{{ 'expires_at' | translate }} {{ signingExpiresAt() | date:'short' }}</span>
+    </div>
+    <input class="signing-link-input" [value]="signingUrl()" readonly dir="ltr" />
+    <button type="button" class="btn-secondary" (click)="copySigningLink()">
+      <i class="fa-solid fa-copy"></i>
+      {{ 'copy' | translate }}
+    </button>
   </div>
 
   <div class="grid" *ngIf="!loading(); else loadingTpl">

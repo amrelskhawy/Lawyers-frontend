@@ -298,6 +298,35 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
     };
   }
 
+  signingUrl = signal<string>('');
+  signingExpiresAt = signal<string>('');
+  generatingLink = signal<boolean>(false);
+
+  generateSigningLink() {
+    if (!this.contractId() || this.generatingLink()) return;
+    if (this.saveStatus() === 'unsaved') return;
+    this.generatingLink.set(true);
+    this.data
+      .post<{ data: { url: string; token: string; expiresAt: string } }>(
+        `lawyer-fees-contracts/${this.contractId()}/signing-link`,
+        {},
+      )
+      .subscribe({
+        next: (res) => {
+          this.signingUrl.set(res.data.url);
+          this.signingExpiresAt.set(res.data.expiresAt);
+          this.generatingLink.set(false);
+        },
+        error: () => this.generatingLink.set(false),
+      });
+  }
+
+  copySigningLink() {
+    const url = this.signingUrl();
+    if (!url) return;
+    navigator.clipboard?.writeText(url);
+  }
+
   generatePdf() {
     if (!this.contractId()) return;
     this.generating.set(true);

@@ -1,0 +1,81 @@
+<div class="sc-page" dir="rtl">
+  <div class="sc-card">
+    <div class="brand">
+      <h1>{{ 'sign_contract_title' | translate }}</h1>
+      <p class="subtitle">{{ 'sign_contract_subtitle' | translate }}</p>
+    </div>
+
+    <!-- ============ Phase: VERIFY ============ -->
+    <ng-container *ngIf="phase() === 'verify'">
+      <form [formGroup]="verifyForm" (ngSubmit)="verify()" class="form">
+        <p class="prompt">{{ 'sign_verify_prompt' | translate }}</p>
+
+        <div class="input-group">
+          <label>{{ 'client_id_number' | translate }}</label>
+          <input type="text" inputmode="numeric" formControlName="idNumber"
+                 [placeholder]="'enter_id_number' | translate" autofocus />
+        </div>
+
+        <div class="error" *ngIf="error()">{{ error() }}</div>
+
+        <button type="submit" class="btn-primary"
+                [disabled]="verifyForm.invalid || loading()">
+          <i class="fa-solid fa-shield-halved"></i>
+          {{ (loading() ? 'verifying' : 'verify_identity') | translate }}
+        </button>
+      </form>
+    </ng-container>
+
+    <!-- ============ Phase: SIGN ============ -->
+    <ng-container *ngIf="phase() === 'sign' && preview() as p">
+      <div class="summary">
+        <h3>{{ 'contract_summary' | translate }}</h3>
+        <div class="row"><span>{{ 'first_party' | translate }}:</span><strong>{{ p.firmName }}</strong></div>
+        <div class="row"><span>{{ 'client_name' | translate }}:</span><strong>{{ p.clientName || '—' }}</strong></div>
+        <div class="row"><span>{{ 'contract_number' | translate }}:</span><strong>{{ p.contractNumber || '—' }}</strong></div>
+        <div class="row"><span>{{ 'contract_date' | translate }}:</span><strong>{{ formatDate(p.contractDate) }}</strong></div>
+        <div class="row" *ngIf="p.serviceDescription">
+          <span>{{ 'service_description' | translate }}:</span>
+          <strong class="multiline">{{ p.serviceDescription }}</strong>
+        </div>
+        <div class="row"><span>{{ 'total_fees' | translate }}:</span><strong>{{ formatAmount(p.totalFees) }} {{ p.currency || 'SAR' }}</strong></div>
+        <div class="row"><span>{{ 'first_installment' | translate }}:</span><strong>{{ formatAmount(p.firstInstallment) }} {{ p.currency || 'SAR' }}</strong></div>
+        <div class="row"><span>{{ 'second_installment' | translate }}:</span><strong>{{ formatAmount(p.secondInstallment) }} {{ p.currency || 'SAR' }}</strong></div>
+      </div>
+
+      <h3 class="section-title">{{ 'draw_your_signature' | translate }}</h3>
+      <div class="pad-wrap">
+        <canvas #pad class="pad"></canvas>
+        <div class="pad-baseline"></div>
+      </div>
+
+      <div class="actions">
+        <button type="button" class="btn-secondary" (click)="clearPad()" [disabled]="!hasStrokes() || loading()">
+          <i class="fa-solid fa-eraser"></i>
+          {{ 'clear' | translate }}
+        </button>
+        <button type="button" class="btn-primary" (click)="submit()"
+                [disabled]="!hasStrokes() || loading()">
+          <i class="fa-solid fa-signature"></i>
+          {{ (loading() ? 'submitting' : 'sign_and_submit') | translate }}
+        </button>
+      </div>
+
+      <div class="error" *ngIf="error()">{{ error() }}</div>
+    </ng-container>
+
+    <!-- ============ Phase: SUCCESS ============ -->
+    <ng-container *ngIf="phase() === 'success'">
+      <div class="success-state">
+        <i class="fa-solid fa-circle-check"></i>
+        <h2>{{ 'sign_success_title' | translate }}</h2>
+        <p>{{ 'sign_success_subtitle' | translate }}</p>
+        <a *ngIf="signedPdfUrl()" [href]="signedPdfUrl()" target="_blank" rel="noopener noreferrer"
+           class="btn-primary">
+          <i class="fa-solid fa-file-pdf"></i>
+          {{ 'view_signed_pdf' | translate }}
+        </a>
+      </div>
+    </ng-container>
+  </div>
+</div>

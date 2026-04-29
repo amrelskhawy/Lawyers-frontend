@@ -87,6 +87,38 @@ $gold: #c9a84c;
   }
 }
 
+.signing-link-banner {
+  background: #fff;
+  border: 1px solid rgba($gold, 0.4);
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+
+  .signing-link-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: $navy;
+    .label  { font-weight: 700; font-size: 13px; }
+    .ttl    { color: #888; font-size: 12px; }
+  }
+  .signing-link-input {
+    flex: 1;
+    min-width: 240px;
+    padding: 8px 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 12px;
+    color: $navy;
+    background: #fafbff;
+  }
+}
+
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;

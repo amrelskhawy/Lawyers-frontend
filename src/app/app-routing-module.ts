@@ -10,6 +10,12 @@ const routes: Routes = [
   },
 
   {
+    path: 'sign-contract/:token',
+    loadChildren: () =>
+      import('./sign-contract/sign-contract-module').then((m) => m.SignContractModule),
+  },
+
+  {
     path: '',
     loadChildren: () =>
       import('./layout/layout-module').then((m) => m.LayoutModule),
