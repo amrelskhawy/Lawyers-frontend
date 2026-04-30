@@ -33,6 +33,16 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
   loadedCase = signal<IDataCase | null>(null);
   customers = signal<IDataCustomer[]>([]);
 
+  weekdayOptions = [
+    { label: 'السبت',    value: 'السبت' },
+    { label: 'الأحد',    value: 'الأحد' },
+    { label: 'الإثنين',  value: 'الإثنين' },
+    { label: 'الثلاثاء', value: 'الثلاثاء' },
+    { label: 'الأربعاء', value: 'الأربعاء' },
+    { label: 'الخميس',   value: 'الخميس' },
+    { label: 'الجمعة',   value: 'الجمعة' },
+  ];
+
   Form!: FormGroup;
   formTick = signal<number>(0);
   private destroy$ = new Subject<void>();
@@ -71,6 +81,7 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
       totalFees:         [null],
       firstInstallment:  [null],
       secondInstallment: [null],
+      otherFees:         [null],
       currency:          ['SAR'],
     });
   }
@@ -159,6 +170,7 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
       totalFees:         c.totalFees ?? null,
       firstInstallment:  c.firstInstallment ?? null,
       secondInstallment: c.secondInstallment ?? null,
+      otherFees:         c.otherFees ?? null,
       currency:          c.currency ?? 'SAR',
     }, { emitEvent: true });
     this.loading.set(false);
@@ -246,6 +258,7 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
       totalFees:         v.totalFees,
       firstInstallment:  v.firstInstallment,
       secondInstallment: v.secondInstallment,
+      otherFees:         v.otherFees,
       currency:          v.currency,
     };
   });
@@ -294,6 +307,7 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
       totalFees:         this.numOrNull(v.totalFees),
       firstInstallment:  this.numOrNull(v.firstInstallment),
       secondInstallment: this.numOrNull(v.secondInstallment),
+      otherFees:         v.otherFees || null,
       currency:          v.currency || null,
     };
   }

@@ -3,7 +3,9 @@
 $navy: #1a1a3e;
 $gold: #c9a84c;
 
-.lfc-page { padding: 20px; }
+.lfc-page {
+  padding: 20px;
+}
 
 .action-bar {
   display: flex;
@@ -21,7 +23,12 @@ $gold: #c9a84c;
     display: flex;
     align-items: center;
     gap: 14px;
-    h2 { margin: 0; font-size: 18px; color: $navy; }
+
+    h2 {
+      margin: 0;
+      font-size: 18px;
+      color: $navy;
+    }
   }
 
   .back-btn {
@@ -33,7 +40,11 @@ $gold: #c9a84c;
     color: $navy;
     cursor: pointer;
     transition: 0.2s ease;
-    &:hover { background: $navy; color: #fff; }
+
+    &:hover {
+      background: $navy;
+      color: #fff;
+    }
   }
 
   .save-pill {
@@ -46,10 +57,26 @@ $gold: #c9a84c;
     background: #f3f3f3;
     color: #777;
     transition: 0.2s ease;
-    &.unsaved { background: #fff4e6; color: #c2410c; }
-    &.saving  { background: #fff7e6; color: #b58100; }
-    &.saved   { background: #e6fffb; color: #237a5b; }
-    &.error   { background: #fde8e8; color: #b91c1c; }
+
+    &.unsaved {
+      background: #fff4e6;
+      color: #c2410c;
+    }
+
+    &.saving {
+      background: #fff7e6;
+      color: #b58100;
+    }
+
+    &.saved {
+      background: #e6fffb;
+      color: #237a5b;
+    }
+
+    &.error {
+      background: #fde8e8;
+      color: #b91c1c;
+    }
   }
 
   .right {
@@ -59,7 +86,8 @@ $gold: #c9a84c;
     flex-wrap: wrap;
   }
 
-  .btn-save, .btn-secondary {
+  .btn-save,
+  .btn-secondary {
     display: inline-flex;
     align-items: center;
     gap: 7px;
@@ -70,20 +98,31 @@ $gold: #c9a84c;
     cursor: pointer;
     border: none;
     transition: 0.2s ease;
-    &:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
   }
 
   .btn-save {
     background: $navy;
     color: #fff;
-    &:hover:not(:disabled) { background: darken($navy, 8%); }
+
+    &:hover:not(:disabled) {
+      background: darken($navy, 8%);
+    }
   }
 
   .btn-secondary {
     background: rgba($gold, 0.12);
     color: darken($gold, 10%);
     border: 1px solid rgba($gold, 0.3);
-    &:hover:not(:disabled) { background: $gold; color: #fff; }
+
+    &:hover:not(:disabled) {
+      background: $gold;
+      color: #fff;
+    }
   }
 }
 
@@ -104,9 +143,18 @@ $gold: #c9a84c;
     align-items: center;
     gap: 10px;
     color: $navy;
-    .label  { font-weight: 700; font-size: 13px; }
-    .ttl    { color: #888; font-size: 12px; }
+
+    .label {
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .ttl {
+      color: #888;
+      font-size: 12px;
+    }
   }
+
   .signing-link-input {
     flex: 1;
     min-width: 240px;
@@ -131,8 +179,15 @@ $gold: #c9a84c;
     background: #25D366;
     color: #fff;
     transition: 0.2s ease;
-    &:hover:not(:disabled) { background: darken(#25D366, 6%); }
-    &:disabled { opacity: 0.55; cursor: not-allowed; }
+
+    &:hover:not(:disabled) {
+      background: darken(#25D366, 6%);
+    }
+
+    &:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
   }
 
   .whatsapp-sent-pill {
@@ -152,7 +207,11 @@ $gold: #c9a84c;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
-  @media (max-width: 1100px) { grid-template-columns: 1fr; }
+  align-items: start;
+
+  @media (max-width: 1100px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .card {
@@ -162,9 +221,25 @@ $gold: #c9a84c;
   padding: 24px;
 }
 
-.form-card { overflow-y: auto; }
+.form-card {
+  position: sticky;
+  top: 10px;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+  align-self: start;
 
-.form-body { display: flex; flex-direction: column; gap: 16px; }
+  @media (max-width: 1100px) {
+    position: static;
+    max-height: none;
+    overflow-y: visible;
+  }
+}
+
+.form-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
 
 .section-title {
   font-size: 14px;
@@ -179,7 +254,10 @@ $gold: #c9a84c;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 14px;
-  @media (max-width: 600px) { grid-template-columns: 1fr; }
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .input-group {
@@ -187,9 +265,14 @@ $gold: #c9a84c;
   flex-direction: column;
   gap: 6px;
 
-  label { font-size: 12px; font-weight: 600; color: #555; }
+  label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #555;
+  }
 
-  input, textarea {
+  input,
+  textarea {
     width: 100%;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
@@ -199,7 +282,11 @@ $gold: #c9a84c;
     color: $navy;
     outline: none;
     transition: border-color 0.2s;
-    &:focus { border-color: $gold; }
+
+    &:focus {
+      border-color: $gold;
+    }
+
     resize: vertical;
   }
 }
@@ -210,7 +297,9 @@ $gold: #c9a84c;
   padding: 16px;
 }
 
-.preview-sticky { position: sticky; top: 80px; }
+.preview-sticky {
+  position: static;
+}
 
 .preview-title {
   font-size: 13px;

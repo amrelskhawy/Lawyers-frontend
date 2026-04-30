@@ -18,6 +18,7 @@ export interface ILawyerFeesContract {
   totalFees:         string | number | null;
   firstInstallment:  string | number | null;
   secondInstallment: string | number | null;
+  otherFees:         string | null;
   currency:          string | null;
 
   firstPartySignature:  string | null;

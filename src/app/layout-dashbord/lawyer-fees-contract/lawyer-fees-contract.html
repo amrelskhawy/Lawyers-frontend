@@ -7,11 +7,8 @@
       </button>
       <h2>{{ 'lawyer_fees_contract' | translate }}</h2>
 
-      <span class="save-pill"
-            [class.unsaved]="saveStatus() === 'unsaved'"
-            [class.saving]="saveStatus() === 'saving'"
-            [class.saved]="saveStatus() === 'saved'"
-            [class.error]="saveStatus() === 'error'">
+      <span class="save-pill" [class.unsaved]="saveStatus() === 'unsaved'" [class.saving]="saveStatus() === 'saving'"
+        [class.saved]="saveStatus() === 'saved'" [class.error]="saveStatus() === 'error'">
         <ng-container [ngSwitch]="saveStatus()">
           <ng-container *ngSwitchCase="'unsaved'">
             <i class="fa-solid fa-circle-dot"></i> {{ 'unsaved_changes' | translate }}
@@ -31,19 +28,19 @@
 
     <div class="right">
       <button class="btn-save" (click)="save()"
-              [disabled]="saveStatus() === 'saving' || saveStatus() === 'idle' || saveStatus() === 'saved'">
+        [disabled]="saveStatus() === 'saving' || saveStatus() === 'idle' || saveStatus() === 'saved'">
         <i class="fa-solid fa-floppy-disk"></i>
         {{ 'save' | translate }}
       </button>
       <button class="btn-secondary" (click)="generatePdf()"
-              [disabled]="generating() || saveStatus() === 'unsaved' || saveStatus() === 'saving'"
-              [pTooltip]="saveStatus() === 'unsaved' ? ('save_first' | translate) : ''" tooltipPosition="bottom">
+        [disabled]="generating() || saveStatus() === 'unsaved' || saveStatus() === 'saving'"
+        [pTooltip]="saveStatus() === 'unsaved' ? ('save_first' | translate) : ''" tooltipPosition="bottom">
         <i class="fa-solid fa-file-pdf"></i>
         {{ (generating() ? 'generating' : 'generate_pdf') | translate }}
       </button>
       <button class="btn-secondary" (click)="generateSigningLink()"
-              [disabled]="generatingLink() || saveStatus() === 'unsaved' || saveStatus() === 'saving'"
-              [pTooltip]="saveStatus() === 'unsaved' ? ('save_first' | translate) : ''" tooltipPosition="bottom">
+        [disabled]="generatingLink() || saveStatus() === 'unsaved' || saveStatus() === 'saving'"
+        [pTooltip]="saveStatus() === 'unsaved' ? ('save_first' | translate) : ''" tooltipPosition="bottom">
         <i class="fa-solid fa-link"></i>
         {{ (generatingLink() ? 'generating' : 'generate_signing_link') | translate }}
       </button>
@@ -61,10 +58,10 @@
       <i class="fa-solid fa-copy"></i>
       {{ 'copy' | translate }}
     </button>
-    <button type="button" class="btn-whatsapp" (click)="sendSigningLinkWhatsapp()"
-            [disabled]="sendingWhatsapp()">
+    <button type="button" class="btn-whatsapp" (click)="sendSigningLinkWhatsapp()" [disabled]="sendingWhatsapp()">
       <i class="fa-brands fa-whatsapp"></i>
-      {{ (sendingWhatsapp() ? 'sending' : (whatsappSentAt() ? 'resend_via_whatsapp' : 'send_via_whatsapp')) | translate }}
+      {{ (sendingWhatsapp() ? 'sending' : (whatsappSentAt() ? 'resend_via_whatsapp' : 'send_via_whatsapp')) | translate
+      }}
     </button>
     <span *ngIf="whatsappSentAt()" class="whatsapp-sent-pill">
       <i class="fa-solid fa-check"></i>
@@ -86,19 +83,21 @@
           </div>
           <div class="input-group">
             <label>{{ 'contract_day' | translate }}</label>
-            <input type="text" formControlName="contractDay" />
+            <p-select formControlName="contractDay" [options]="weekdayOptions" optionLabel="label" optionValue="value"
+              [placeholder]="'contract_day' | translate" [showClear]="true" styleClass="w-full"
+              appendTo="body"></p-select>
           </div>
         </div>
 
         <div class="row">
           <div class="input-group">
             <label>{{ 'contract_date' | translate }}</label>
-            <p-datepicker formControlName="contractDate" [showIcon]="true" dateFormat="dd/mm/yy"
-                          [showClear]="true" appendTo="body" styleClass="w-full"></p-datepicker>
+            <p-datepicker formControlName="contractDate" [showIcon]="true" dateFormat="dd/mm/yy" [showClear]="true"
+              appendTo="body" styleClass="w-full"></p-datepicker>
           </div>
           <div class="input-group">
             <label>{{ 'hijri_date' | translate }}</label>
-            <input type="text" formControlName="hijriDate" />
+            <app-hijri-datepicker formControlName="hijriDate" [showClear]="true"></app-hijri-datepicker>
           </div>
         </div>
 
@@ -108,10 +107,8 @@
           <div class="input-group">
             <label>{{ 'link_customer' | translate }}</label>
             <p-select formControlName="customerId" [options]="customers()" optionLabel="fullName" optionValue="id"
-                      [filter]="true" filterBy="fullName,phone"
-                      [placeholder]="'select_customer' | translate" [showClear]="true"
-                      styleClass="w-full" appendTo="body"
-                      (onChange)="onCustomerChange($event.value)">
+              [filter]="true" filterBy="fullName,phone" [placeholder]="'select_customer' | translate" [showClear]="true"
+              styleClass="w-full" appendTo="body" (onChange)="onCustomerChange($event.value)">
             </p-select>
           </div>
           <div class="input-group">
@@ -159,6 +156,11 @@
             <label>{{ 'second_installment' | translate }}</label>
             <input type="number" min="0" step="0.01" formControlName="secondInstallment" />
           </div>
+        </div>
+
+        <div class="input-group">
+          <label>{{ 'other_fees' | translate }}</label>
+          <textarea formControlName="otherFees" rows="3"></textarea>
         </div>
 
       </form>
