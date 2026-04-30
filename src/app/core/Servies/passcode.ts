@@ -8,7 +8,6 @@ import { PasscodeDialog } from '../../shared/passcode-dialog/passcode-dialog';
  * verification call when the real passcode flow ships.
  */
 const PASSCODE = '000000';
-const STORAGE_KEY = 'dashboard-passcode-unlocked';
 
 @Injectable({ providedIn: 'root' })
 export class Passcode {
@@ -21,13 +20,8 @@ export class Passcode {
     d.submit$ = (value: string) => this.handleSubmit(value);
   }
 
-  isUnlocked(): boolean {
-    return sessionStorage.getItem(STORAGE_KEY) === '1';
-  }
-
-  /** Resolves true if the user is unlocked (or successfully unlocks now). */
+  /** Always prompt — passcode is required on every gated navigation. */
   async requireAccess(): Promise<boolean> {
-    if (this.isUnlocked()) return true;
     if (!this.dialog) {
       console.warn('Passcode dialog is not registered yet');
       return false;
@@ -37,15 +31,9 @@ export class Passcode {
 
   private handleSubmit(value: string) {
     if (value === PASSCODE) {
-      sessionStorage.setItem(STORAGE_KEY, '1');
       this.dialog?.resolveOk();
     } else {
       this.dialog?.submitInvalid();
     }
-  }
-
-  /** For dev/testing — clears the unlock so the next gated nav re-prompts. */
-  reset() {
-    sessionStorage.removeItem(STORAGE_KEY);
   }
 }
