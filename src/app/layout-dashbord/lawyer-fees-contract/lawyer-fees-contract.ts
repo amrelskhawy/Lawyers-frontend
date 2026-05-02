@@ -206,14 +206,19 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
           this.loaded.set(contract);
           this.contractId.set(contract.id);
 
-          if (opts.prefill) {
-            this.skipNextDirty = true;
-            this.Form.patchValue({
+          this.skipNextDirty = true;
+          this.Form.patchValue({
+            contractNumber: contract.contractNumber ?? '',
+            contractDay:    contract.contractDay ?? '',
+            contractDate:   contract.contractDate ? new Date(contract.contractDate) : null,
+            hijriDate:      contract.hijriDate ?? '',
+            currency:       contract.currency ?? 'SAR',
+            ...(opts.prefill ? {
               clientName:  opts.prefill.clientName ?? '',
               clientPhone: opts.prefill.clientPhone ?? '',
               customerId:  opts.customerId ?? null,
-            });
-          }
+            } : {}),
+          });
 
           this.loading.set(false);
           this.saveStatus.set('idle');
