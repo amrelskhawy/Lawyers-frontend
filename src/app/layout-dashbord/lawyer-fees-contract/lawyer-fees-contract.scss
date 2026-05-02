@@ -309,6 +309,58 @@ $gold: #c9a84c;
   text-align: center;
 }
 
+.phone-wrapper {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  direction: ltr;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #f8fafc;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+
+  &:focus-within {
+    border-color: #c9a55c;
+    box-shadow: 0 0 0 3px rgba(201, 165, 92, 0.15);
+    background-color: #fff;
+  }
+
+  ::ng-deep .country-select {
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .phone-input {
+    flex: 1;
+    padding: 0.6rem 0.85rem !important;
+    border: none !important;
+    border-left: 1px solid #e2e8f0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+
+    &:focus {
+      outline: none;
+      box-shadow: none !important;
+    }
+  }
+}
+
+.country-selected,
+.country-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.country-dial {
+  color: #64748b;
+  font-size: 0.85em;
+}
+
 .loading-state {
   text-align: center;
   padding: 60px 20px;

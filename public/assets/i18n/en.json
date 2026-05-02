@@ -547,5 +547,6 @@
   "sign_review_then_sign": "Review the contract carefully before signing. You'll see your signature appear on page 3 the moment you draw it.",
   "contract_preview": "Contract preview",
   "open_full_pdf": "Open full PDF",
-  "signature_live_preview_hint": "Draw your signature in the box — it mirrors live onto page 3 of the contract on the left."
+  "signature_live_preview_hint": "Draw your signature in the box — it mirrors live onto page 3 of the contract on the left.",
+  "contract_signed_readonly": "Signed — read only"
 }

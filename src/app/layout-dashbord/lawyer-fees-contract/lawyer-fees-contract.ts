@@ -7,6 +7,7 @@ import { IDataCustomer } from '../../core/Models/customers.model';
 import { IDataCase } from '../../core/Models/case.model';
 import { ILawyerFeesContract } from '../../core/Models/lawyer-fees-contract.model';
 import { LawyerFeesContractPreviewData } from '../../shared/lawyer-fees-contract-preview/lawyer-fees-contract-preview';
+import { COUNTRIES, Country } from '../customers/form-customer/form-customer';
 
 type SaveStatus = 'idle' | 'unsaved' | 'saving' | 'saved' | 'error';
 
@@ -32,6 +33,9 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
   loaded = signal<ILawyerFeesContract | null>(null);
   loadedCase = signal<IDataCase | null>(null);
   customers = signal<IDataCustomer[]>([]);
+
+  countries = COUNTRIES;
+  selectedCountry: Country = COUNTRIES[0];
 
   weekdayOptions = [
     { label: 'السبت',    value: 'السبت' },
@@ -157,6 +161,9 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
     this.loaded.set(c);
     this.contractId.set(c.id);
     this.skipNextDirty = true;
+    const rawPhone = c.clientPhone ?? c.customer?.phone ?? this.loadedCase()?.customer?.phone ?? '';
+    const detected = this.detectCountry(rawPhone);
+    this.selectedCountry = detected.country;
     this.Form.patchValue({
       customerId:        c.customerId,
       contractNumber:    c.contractNumber ?? '',
@@ -165,7 +172,7 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
       hijriDate:         c.hijriDate ?? '',
       clientName:        c.clientName ?? c.customer?.fullName ?? this.loadedCase()?.customer?.fullName ?? '',
       clientIdNumber:    c.clientIdNumber ?? '',
-      clientPhone:       c.clientPhone ?? c.customer?.phone ?? this.loadedCase()?.customer?.phone ?? '',
+      clientPhone:       detected.localNumber,
       serviceDescription: c.serviceDescription ?? '',
       totalFees:         c.totalFees ?? null,
       firstInstallment:  c.firstInstallment ?? null,
@@ -175,6 +182,11 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
     }, { emitEvent: true });
     this.loading.set(false);
     this.saveStatus.set('saved');
+    if (c.secondPartySignedAt) {
+      this.Form.disable({ emitEvent: false });
+    } else {
+      this.Form.enable({ emitEvent: false });
+    }
   }
 
   private createDraft(opts: {
@@ -237,15 +249,32 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
     if (!customerId) return;
     const c = this.customers().find((x) => x.id === customerId);
     if (!c) return;
+    const detected = this.detectCountry(c.phone ?? '');
+    this.selectedCountry = detected.country;
     this.Form.patchValue({
       clientName:  c.fullName ?? '',
-      clientPhone: c.phone ?? '',
+      clientPhone: detected.localNumber,
     });
   }
+
+  private detectCountry(phone: string): { country: Country; localNumber: string } {
+    if (!phone) return { country: COUNTRIES[0], localNumber: phone };
+    const stripped = phone.replace(/^\+/, '');
+    const sorted = [...COUNTRIES].sort((a, b) => b.code.length - a.code.length);
+    for (const c of sorted) {
+      if (stripped.startsWith(c.code)) {
+        return { country: c, localNumber: stripped.slice(c.code.length) };
+      }
+    }
+    return { country: COUNTRIES[0], localNumber: phone };
+  }
+
+  isSigned = computed<boolean>(() => !!this.loaded()?.secondPartySignedAt);
 
   previewData = computed<LawyerFeesContractPreviewData>(() => {
     void this.formTick();
     const v = this.Form?.value ?? {};
+    const c = this.loaded();
     return {
       contractNumber:    v.contractNumber,
       contractDay:       v.contractDay,
@@ -260,6 +289,9 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
       secondInstallment: v.secondInstallment,
       otherFees:         v.otherFees,
       currency:          v.currency,
+      firstPartySignature:  c?.firstPartySignature ?? null,
+      secondPartySignature: c?.secondPartySignature ?? null,
+      secondPartySignedAt:  c?.secondPartySignedAt ?? null,
     };
   });
 
@@ -300,7 +332,7 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
 
       clientName:        v.clientName || null,
       clientIdNumber:    v.clientIdNumber || null,
-      clientPhone:       v.clientPhone || null,
+      clientPhone:       v.clientPhone ? this.selectedCountry.code + v.clientPhone : null,
 
       serviceDescription: v.serviceDescription || null,
 

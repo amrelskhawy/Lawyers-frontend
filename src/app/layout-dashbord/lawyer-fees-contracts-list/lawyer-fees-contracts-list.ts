@@ -29,7 +29,9 @@ export class LawyerFeesContractsList implements OnInit {
       ? new Date(item.contractDate).toLocaleDateString()
       : '—',
     totalFeesFormatted: item.totalFees != null ? `${item.totalFees} ${item.currency ?? 'SAR'}` : '—',
-    statusLabel: item.sentToClientAt
+    statusLabel: item.secondPartySignedAt
+      ? this.translate.instant('signed')
+      : item.sentToClientAt
       ? this.translate.instant('sent')
       : this.translate.instant('draft'),
     createdAtFormatted: item.createdAt

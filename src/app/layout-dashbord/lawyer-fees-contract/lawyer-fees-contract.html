@@ -27,23 +27,30 @@
     </div>
 
     <div class="right">
-      <button class="btn-save" (click)="save()"
-        [disabled]="saveStatus() === 'saving' || saveStatus() === 'idle' || saveStatus() === 'saved'">
-        <i class="fa-solid fa-floppy-disk"></i>
-        {{ 'save' | translate }}
-      </button>
-      <button class="btn-secondary" (click)="generatePdf()"
-        [disabled]="generating() || saveStatus() === 'unsaved' || saveStatus() === 'saving'"
-        [pTooltip]="saveStatus() === 'unsaved' ? ('save_first' | translate) : ''" tooltipPosition="bottom">
-        <i class="fa-solid fa-file-pdf"></i>
-        {{ (generating() ? 'generating' : 'generate_pdf') | translate }}
-      </button>
-      <button class="btn-secondary" (click)="generateSigningLink()"
-        [disabled]="generatingLink() || saveStatus() === 'unsaved' || saveStatus() === 'saving'"
-        [pTooltip]="saveStatus() === 'unsaved' ? ('save_first' | translate) : ''" tooltipPosition="bottom">
-        <i class="fa-solid fa-link"></i>
-        {{ (generatingLink() ? 'generating' : 'generate_signing_link') | translate }}
-      </button>
+      @if (isSigned()) {
+        <span class="signed-pill">
+          <i class="fa-solid fa-lock"></i>
+          {{ 'contract_signed_readonly' | translate }}
+        </span>
+      } @else {
+        <button class="btn-save" (click)="save()"
+          [disabled]="saveStatus() === 'saving' || saveStatus() === 'idle' || saveStatus() === 'saved'">
+          <i class="fa-solid fa-floppy-disk"></i>
+          {{ 'save' | translate }}
+        </button>
+        <button class="btn-secondary" (click)="generatePdf()"
+          [disabled]="generating() || saveStatus() === 'unsaved' || saveStatus() === 'saving'"
+          [pTooltip]="saveStatus() === 'unsaved' ? ('save_first' | translate) : ''" tooltipPosition="bottom">
+          <i class="fa-solid fa-file-pdf"></i>
+          {{ (generating() ? 'generating' : 'generate_pdf') | translate }}
+        </button>
+        <button class="btn-secondary" (click)="generateSigningLink()"
+          [disabled]="generatingLink() || saveStatus() === 'unsaved' || saveStatus() === 'saving'"
+          [pTooltip]="saveStatus() === 'unsaved' ? ('save_first' | translate) : ''" tooltipPosition="bottom">
+          <i class="fa-solid fa-link"></i>
+          {{ (generatingLink() ? 'generating' : 'generate_signing_link') | translate }}
+        </button>
+      }
     </div>
   </div>
 
@@ -79,7 +86,7 @@
         <div class="row">
           <div class="input-group">
             <label>{{ 'contract_number' | translate }}</label>
-            <input type="text" formControlName="contractNumber" />
+            <input type="text" formControlName="contractNumber" readonly />
           </div>
           <div class="input-group">
             <label>{{ 'contract_day' | translate }}</label>
@@ -124,7 +131,30 @@
           </div>
           <div class="input-group">
             <label>{{ 'client_phone' | translate }}</label>
-            <input type="text" formControlName="clientPhone" />
+            <div class="input-wrapper phone-wrapper">
+              <p-select
+                [options]="countries"
+                [(ngModel)]="selectedCountry"
+                [ngModelOptions]="{ standalone: true }"
+                [disabled]="isSigned()"
+                optionLabel="name"
+                [filter]="true"
+                filterBy="name,code"
+                styleClass="country-select"
+                appendTo="body">
+                <ng-template pTemplate="selectedItem">
+                  <span class="country-selected">
+                    {{ selectedCountry.flag }} +{{ selectedCountry.code }}
+                  </span>
+                </ng-template>
+                <ng-template pTemplate="item" let-country>
+                  <span class="country-option">
+                    {{ country.flag }} {{ country.name }} <span class="country-dial">+{{ country.code }}</span>
+                  </span>
+                </ng-template>
+              </p-select>
+              <input formControlName="clientPhone" [placeholder]="selectedCountry.example" type="tel" class="phone-input" />
+            </div>
           </div>
         </div>
 
