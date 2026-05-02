@@ -1,12 +1,13 @@
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
+import { Passcode } from './passcode';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Auth {
-  constructor( private Router: Router) {}
+  constructor( private Router: Router, private passcode: Passcode) {}
 
   getDecodedToken(): any | null {
     const token = sessionStorage.getItem('token');
@@ -25,5 +26,6 @@ export class Auth {
   handelLogOut() {
     this.Router.navigate(['']);
     sessionStorage.removeItem('token');
+    this.passcode.lockAll();
   }
 }

@@ -39,8 +39,13 @@ export const isAdminGuard: CanActivateFn = (route, state) => {
 
 import { Passcode } from '../Servies/passcode';
 
-/** Prompts for the dashboard passcode on every gated navigation. */
-export const passcodeGuard: CanActivateFn = async (_route, _state) => {
+/**
+ * Prompts for the dashboard passcode unless the route's `securityGroup`
+ * has already been unlocked in this session. Set the group via route
+ * data: `{ data: { securityGroup: 'client-cases' } }`.
+ */
+export const passcodeGuard: CanActivateFn = async (route, _state) => {
   const passcode = inject(Passcode);
-  return passcode.requireAccess();
+  const group = route.data?.['securityGroup'] as string | undefined;
+  return passcode.requireAccess(group);
 };
