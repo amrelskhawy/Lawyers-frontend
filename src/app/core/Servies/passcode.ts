@@ -13,23 +13,33 @@ import { PasscodeDialog } from '../../shared/passcode-dialog/passcode-dialog';
  */
 const PASSCODE = '000000';
 const GROUP_TTL_MS = 15 * 60 * 1000; // 15 minutes
+const STORAGE_KEY = 'passcode_unlocked_groups';
 
 @Injectable({ providedIn: 'root' })
 export class Passcode {
   private dialog: PasscodeDialog | null = null;
+  private dialogReady: Promise<void>;
+  private resolveDialogReady!: () => void;
   private unlockedUntil = new Map<string, number>();
   private pending: Promise<boolean> | null = null;
   private pendingGroup: string | null = null;
 
   constructor(router: Router) {
+    this.dialogReady = new Promise((res) => (this.resolveDialogReady = res));
+    this.loadFromStorage();
     // Lock any group the user has navigated out of so re-entering re-prompts.
     router.events
       .pipe(filter((e) => e instanceof NavigationEnd))
       .subscribe(() => {
         const activeGroup = this.findActiveGroup(router.routerState.snapshot.root);
+        let changed = false;
         for (const group of Array.from(this.unlockedUntil.keys())) {
-          if (group !== activeGroup) this.unlockedUntil.delete(group);
+          if (group !== activeGroup) {
+            this.unlockedUntil.delete(group);
+            changed = true;
+          }
         }
+        if (changed) this.saveToStorage();
       });
   }
 
@@ -47,6 +57,7 @@ export class Passcode {
   registerDialog(d: PasscodeDialog) {
     this.dialog = d;
     d.submit$ = (value: string) => this.handleSubmit(value);
+    this.resolveDialogReady();
   }
 
   /**
@@ -56,9 +67,12 @@ export class Passcode {
   async requireAccess(group?: string): Promise<boolean> {
     if (group && this.isUnlocked(group)) return true;
 
+    // On a hard reload the dialog is registered by the dashboard shell
+    // component, which mounts after the route guard runs. Wait for it
+    // instead of bailing out (which would cancel navigation and bounce
+    // the user to the wildcard fallback at `/`).
     if (!this.dialog) {
-      console.warn('Passcode dialog is not registered yet');
-      return false;
+      await this.dialogReady;
     }
 
     // Coalesce concurrent requests for the same group so rapid double
@@ -68,9 +82,10 @@ export class Passcode {
     }
 
     this.pendingGroup = group ?? null;
-    this.pending = this.dialog.open().then((ok) => {
+    this.pending = this.dialog!.open().then((ok) => {
       if (ok && group) {
         this.unlockedUntil.set(group, Date.now() + GROUP_TTL_MS);
+        this.saveToStorage();
       }
       this.pending = null;
       this.pendingGroup = null;
@@ -82,11 +97,13 @@ export class Passcode {
   /** Lock a single group (e.g., on sensitive action completion). */
   lockGroup(group: string) {
     this.unlockedUntil.delete(group);
+    this.saveToStorage();
   }
 
   /** Lock everything (call on logout). */
   lockAll() {
     this.unlockedUntil.clear();
+    this.saveToStorage();
   }
 
   private isUnlocked(group: string): boolean {
@@ -94,9 +111,35 @@ export class Passcode {
     if (!expiry) return false;
     if (Date.now() >= expiry) {
       this.unlockedUntil.delete(group);
+      this.saveToStorage();
       return false;
     }
     return true;
+  }
+
+  private loadFromStorage() {
+    try {
+      const raw = sessionStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      const entries = JSON.parse(raw) as [string, number][];
+      const now = Date.now();
+      for (const [group, expiry] of entries) {
+        if (expiry > now) this.unlockedUntil.set(group, expiry);
+      }
+    } catch {
+      // Ignore corrupted storage; user will just be re-prompted.
+    }
+  }
+
+  private saveToStorage() {
+    try {
+      sessionStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(Array.from(this.unlockedUntil.entries())),
+      );
+    } catch {
+      // Storage may be unavailable (e.g., private mode); fall back to memory only.
+    }
   }
 
   private handleSubmit(value: string) {
