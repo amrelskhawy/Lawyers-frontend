@@ -5,10 +5,20 @@
 
   <ng-template #actions let-item let-onDelete="delete">
     <div class="action-btn">
-      <button [attr.aria-label]="'edit' | translate" (click)="onEdit(item)" class="edit-btn">
-        <i class="fa-solid fa-pen-to-square"></i>
+      <button
+        [attr.aria-label]="(item.secondPartySignedAt ? 'view' : 'edit') | translate"
+        (click)="onEdit(item)"
+        class="edit-btn">
+        <i
+          class="fa-solid"
+          [class.fa-eye]="item.secondPartySignedAt"
+          [class.fa-pen-to-square]="!item.secondPartySignedAt"></i>
       </button>
-      <button [attr.aria-label]="'delete' | translate" (click)="onDelete(item)" class="delete-btn">
+      <button
+        *ngIf="!item.secondPartySignedAt"
+        [attr.aria-label]="'delete' | translate"
+        (click)="onDelete(item)"
+        class="delete-btn">
         <i class="fa-solid fa-trash"></i>
       </button>
     </div>
