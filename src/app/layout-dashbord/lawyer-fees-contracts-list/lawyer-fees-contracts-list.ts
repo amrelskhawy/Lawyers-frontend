@@ -25,19 +25,23 @@ export class LawyerFeesContractsList implements OnInit {
     contractNumberDisplay:
       item.contractNumber ?? (item.id ? item.id.slice(0, 4).toUpperCase() : ''),
     clientNameDisplay: item.clientName ?? item.customer?.fullName ?? '—',
-    contractDateFormatted: item.contractDate
-      ? new Date(item.contractDate).toLocaleDateString()
-      : '—',
+    contractDateFormatted: item.contractDate ? this.formatDate(item.contractDate) : '—',
     totalFeesFormatted: item.totalFees != null ? `${item.totalFees} ${item.currency ?? 'SAR'}` : '—',
     statusLabel: item.secondPartySignedAt
       ? this.translate.instant('signed')
       : item.sentToClientAt
       ? this.translate.instant('sent')
       : this.translate.instant('draft'),
-    createdAtFormatted: item.createdAt
-      ? new Date(item.createdAt).toLocaleDateString()
-      : '',
+    createdAtFormatted: item.createdAt ? this.formatDate(item.createdAt) : '',
   });
+
+  private formatDate(value: string | Date): string {
+    const d = value instanceof Date ? value : new Date(value);
+    if (isNaN(d.getTime())) return '';
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${d.getFullYear()}/${month}/${day}`;
+  }
 
   ngOnInit() {
     this.columns = [

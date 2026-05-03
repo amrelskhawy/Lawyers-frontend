@@ -86,7 +86,6 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
       firstInstallment:  [null],
       secondInstallment: [null],
       otherFees:         [null],
-      currency:          ['SAR'],
     });
   }
 
@@ -178,7 +177,6 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
       firstInstallment:  c.firstInstallment ?? null,
       secondInstallment: c.secondInstallment ?? null,
       otherFees:         c.otherFees ?? null,
-      currency:          c.currency ?? 'SAR',
     }, { emitEvent: true });
     this.loading.set(false);
     this.saveStatus.set('saved');
@@ -212,7 +210,6 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
             contractDay:    contract.contractDay ?? '',
             contractDate:   contract.contractDate ? new Date(contract.contractDate) : null,
             hijriDate:      contract.hijriDate ?? '',
-            currency:       contract.currency ?? 'SAR',
             ...(opts.prefill ? {
               clientName:  opts.prefill.clientName ?? '',
               clientPhone: opts.prefill.clientPhone ?? '',
@@ -293,7 +290,6 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
       firstInstallment:  v.firstInstallment,
       secondInstallment: v.secondInstallment,
       otherFees:         v.otherFees,
-      currency:          v.currency,
       firstPartySignature:  c?.firstPartySignature ?? null,
       secondPartySignature: c?.secondPartySignature ?? null,
       secondPartySignedAt:  c?.secondPartySignedAt ?? null,
@@ -345,7 +341,6 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
       firstInstallment:  this.numOrNull(v.firstInstallment),
       secondInstallment: this.numOrNull(v.secondInstallment),
       otherFees:         v.otherFees || null,
-      currency:          v.currency || null,
     };
   }
 
