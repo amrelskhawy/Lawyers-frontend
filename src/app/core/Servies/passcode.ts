@@ -9,9 +9,16 @@ import { PasscodeDialog } from '../../shared/passcode-dialog/passcode-dialog';
  * Routes can declare a `securityGroup` in their route data. Once the
  * passcode is entered for a group, all routes sharing that group are
  * unlocked for `GROUP_TTL_MS`. Routes without a group fall back to the
- * legacy behavior of prompting on every navigation.
+ * legacy behavior of prompting on every navigation with the default code.
  */
-const PASSCODE = '666666';
+const GROUP_PASSCODES: Record<string, string> = {
+  'admin-management': '000000',
+  'services': '000000',
+  'holidays': '000000',
+  'client-cases': '000000',
+  'lawyer-fees': '432156',
+};
+const DEFAULT_PASSCODE = '000000';
 const GROUP_TTL_MS = 15 * 60 * 1000; // 15 minutes
 const STORAGE_KEY = 'passcode_unlocked_groups';
 
@@ -143,7 +150,10 @@ export class Passcode {
   }
 
   private handleSubmit(value: string) {
-    if (value === PASSCODE) {
+    const expected = this.pendingGroup
+      ? GROUP_PASSCODES[this.pendingGroup] ?? DEFAULT_PASSCODE
+      : DEFAULT_PASSCODE;
+    if (value === expected) {
       this.dialog?.resolveOk();
     } else {
       this.dialog?.submitInvalid();
