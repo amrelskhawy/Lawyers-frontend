@@ -11,7 +11,7 @@ import { PasscodeDialog } from '../../shared/passcode-dialog/passcode-dialog';
  * unlocked for `GROUP_TTL_MS`. Routes without a group fall back to the
  * legacy behavior of prompting on every navigation.
  */
-const PASSCODE = '000000';
+const PASSCODE = '666666';
 const GROUP_TTL_MS = 15 * 60 * 1000; // 15 minutes
 const STORAGE_KEY = 'passcode_unlocked_groups';
 
