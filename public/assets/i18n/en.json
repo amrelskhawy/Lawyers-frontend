@@ -447,6 +447,8 @@
   "add_line": "Add line",
   "live_preview": "Live preview",
   "generate_pdf": "Generate PDF",
+  "print": "Print",
+  "open_drive_folder": "Open Drive folder",
   "generating": "Generating...",
   "send_to_client": "Send to client",
   "sending": "Sending...",

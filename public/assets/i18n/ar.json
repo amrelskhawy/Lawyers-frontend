@@ -447,6 +447,8 @@
   "add_line": "إضافة سطر",
   "live_preview": "معاينة مباشرة",
   "generate_pdf": "توليد PDF",
+  "print": "طباعة",
+  "open_drive_folder": "فتح مجلد Drive",
   "generating": "جارٍ التوليد...",
   "send_to_client": "إرسال للعميل",
   "sending": "جارٍ الإرسال...",

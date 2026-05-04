@@ -36,7 +36,7 @@ export interface ILawyerFeesContract {
   createdAt:   string;
   updatedAt:   string;
 
-  customer?: { id: string; fullName: string; email?: string | null; phone: string } | null;
+  customer?: { id: string; fullName: string; email?: string | null; phone: string; caseReportsFolderId?: string | null } | null;
   case?:     { id: string; caseType: string; caseDate: string; agencyNumber: string | null; customerId: string } | null;
   createdBy?: { id: string; name: string } | null;
 }

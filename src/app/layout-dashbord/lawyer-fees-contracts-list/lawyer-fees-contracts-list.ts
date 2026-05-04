@@ -62,4 +62,10 @@ export class LawyerFeesContractsList implements OnInit {
   onAddNew() {
     this.router.navigate(['/dashboard/content/lawyer-fees-contract', 'new']);
   }
+
+  onOpenDriveFolder(item: ILawyerFeesContract) {
+    const folderId = item.customer?.caseReportsFolderId;
+    if (!folderId) return;
+    window.open(`https://drive.google.com/drive/folders/${folderId}`, '_blank');
+  }
 }

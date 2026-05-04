@@ -15,6 +15,13 @@
           [class.fa-pen-to-square]="!item.secondPartySignedAt"></i>
       </button>
       <button
+        *ngIf="item.customer?.caseReportsFolderId"
+        [attr.aria-label]="'open_drive_folder' | translate"
+        (click)="onOpenDriveFolder(item)"
+        class="edit-btn">
+        <i class="fa-brands fa-google-drive"></i>
+      </button>
+      <button
         *ngIf="!item.secondPartySignedAt"
         [attr.aria-label]="'delete' | translate"
         (click)="onDelete(item)"
