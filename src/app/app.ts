@@ -3,6 +3,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { Meta } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
+import { GoogleTagManagerService } from 'angular-google-tag-manager';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,24 @@ export class App implements OnInit {
     private router: Router,
     private meta: Meta,
     private translate: TranslateService,
-  ) {}
+    private gtmService: GoogleTagManagerService
+  ) {
+    this.router.events.forEach(item => {
+      if (item instanceof NavigationEnd) {
+        const gtmTag = {
+          event: 'page',
+          pageName: item.url
+        };
+
+        this.gtmService.pushTag(gtmTag);
+      }
+    });
+  }
+
+
+
+
+
 
   ngOnInit(): void {
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
