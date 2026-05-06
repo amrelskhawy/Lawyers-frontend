@@ -88,6 +88,7 @@ export class SignContract implements OnInit, OnDestroy {
       totalFees:         p.totalFees,
       firstInstallment:  p.firstInstallment,
       secondInstallment: p.secondInstallment,
+      otherFees:         p.otherFees,
       currency:          p.currency,
       firstPartySignature:  p.firstPartySignature,
       secondPartySignature: this.liveSignature() || p.secondPartySignature,
