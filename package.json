@@ -32,6 +32,7 @@
     "@ngx-translate/core": "^17.0.0",
     "@ngx-translate/http-loader": "^17.0.0",
     "@primeuix/themes": "^2.0.3",
+    "angular-google-tag-manager": "^1.13.0",
     "jwt-decode": "^4.0.0",
     "primeicons": "^7.0.0",
     "primeng": "^20.4.0",

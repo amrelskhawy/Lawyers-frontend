@@ -1,4 +1,5 @@
 export const environment = {
     baseApi: "https://www.saadalboqami.com/api/v1/",
-    production: true
+    production: true,
+    gtmId: 'GTM-PWZKGMHH',
 }

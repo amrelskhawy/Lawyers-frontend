@@ -11,6 +11,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { SharedModule } from './shared/shared-module';
 import { providePrimeNG } from 'primeng/config';
 import { Observable } from 'rxjs';
+import { GoogleTagManagerModule } from 'angular-google-tag-manager';
+import { environment } from './environments/environment';
 
 //===========================Translatetion=======================================//
 export class CustomTranslateLoader implements TranslateLoader {
@@ -46,6 +48,7 @@ export function createTranslateLoader(http: HttpClient): TranslateLoader {
         deps: [HttpClient],
       },
     }),
+    GoogleTagManagerModule.forRoot({ id: environment.gtmId }),
   ],
   providers: [
     provideZonelessChangeDetection(),
