@@ -16,8 +16,7 @@
     <p>{{"TABBY_DESC"|translate}}</p>
   </button>
 
-  <button style="pointer-events: none;opacity: 0.3;" [ngClass]="{ active: typepayment() == 'TAMARA' }" class="card"
-    (click)="OnSelectPayment('TAMARA')">
+  <button [ngClass]="{ active: typepayment() == 'TAMARA' }" class="card" (click)="OnSelectPayment('TAMARA')">
     <div class="check-badge">
       <i *ngIf="typepayment() == 'TAMARA'" class="fa-solid fa-circle-check"></i>
     </div>
