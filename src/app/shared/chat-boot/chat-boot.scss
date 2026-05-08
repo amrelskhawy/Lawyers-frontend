@@ -25,8 +25,6 @@ $gray-text: #64748b;
     height: 65px;
     border-radius: 50%;
     background: linear-gradient(135deg, $accent-gold 0%, $accent-gold-dark 100%);
-    color: $white;
-    font-size: 1.5rem;
     border: none;
     cursor: pointer;
     box-shadow: 0 8px 24px rgba($accent-gold, 0.4);
@@ -596,4 +594,19 @@ $gray-text: #64748b;
     transform: scale(1);
     opacity: 1;
   }
+}
+
+.fab-icon img {
+  position: relative;
+  top: 4px;
+
+}
+
+
+.fab-icon img,
+.support-avatar img {
+  width: 58px;
+  height: 58px;
+  object-fit: cover;
+  border-radius: 50%;
 }
