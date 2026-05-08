@@ -12,4 +12,5 @@ export interface IDataServies {
   description_en: string;
   price: string;
   isFree: boolean;
+  isInstallmentPlans: boolean;
 }

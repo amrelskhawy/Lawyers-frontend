@@ -39,6 +39,7 @@ export class Formservies {
       description_en: value.description_en,
       price: +value.price,
       isFree: value.isFree ?? false,
+      isInstallmentPlans: value.isInstallmentPlans ?? false,
     });
   }
   //************************************Varibels***************************************//
@@ -66,6 +67,7 @@ export class Formservies {
         description_en: ['', Validators.required],
         price: [0, Validators.required],
         isFree: [false],
+        isInstallmentPlans: [false],
       }),
     );
   }
