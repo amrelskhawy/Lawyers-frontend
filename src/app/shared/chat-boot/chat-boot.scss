@@ -35,6 +35,7 @@ $gray-text: #64748b;
     position: absolute;
     bottom: 0;
     right: 0;
+    overflow: hidden;
 
     :host-context([dir='rtl']) & {
       right: auto;
@@ -183,6 +184,8 @@ $gray-text: #64748b;
           color: $accent-gold;
           box-shadow: inset 0 0 0 1px rgba($white, 0.1);
           backdrop-filter: blur(4px);
+          overflow: hidden;
+          flex-shrink: 0;
         }
 
         .header-text {
@@ -597,16 +600,17 @@ $gray-text: #64748b;
 }
 
 .fab-icon img {
-  position: relative;
-  top: 4px;
-
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 50%;
 }
 
-
-.fab-icon img,
 .support-avatar img {
-  width: 58px;
-  height: 58px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+  object-position: top center;
   border-radius: 50%;
 }
