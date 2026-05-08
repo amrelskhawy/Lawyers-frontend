@@ -1,10 +1,29 @@
 <section class="servies-section container">
   <div class="section-title">
-    <h2 pAnimateOnScroll enterClass="my-enter-top" leaveClass="my-leave-animation">{{ 'LEGAL_SERVICES_TITLE' | translate
-      }}</h2>
+    <h2 pAnimateOnScroll enterClass="my-enter-top" leaveClass="my-leave-animation">{{ 'LEGAL_SERVICES_TITLE' | translate }}</h2>
   </div>
   <h1 pAnimateOnScroll enterClass="my-enter-zoom" leaveClass="my-leave-animation">
     {{ 'LEGAL_SERVICES_SUBTITLE' | translate }}
   </h1>
-  <app-slider-serves></app-slider-serves>
+
+  <div class="services-tabs">
+    <button
+      class="tab-btn"
+      [class.active]="activeTab() === 'normal'"
+      (click)="activeTab.set('normal')">
+      {{ 'tab_normal_services' | translate }}
+    </button>
+    <button
+      class="tab-btn"
+      [class.active]="activeTab() === 'installment'"
+      (click)="activeTab.set('installment')">
+      {{ 'tab_installment_plans' | translate }}
+    </button>
+  </div>
+
+  @if (activeTab() === 'normal') {
+    <app-slider-serves serviceType="normal"></app-slider-serves>
+  } @else {
+    <app-slider-serves serviceType="installment"></app-slider-serves>
+  }
 </section>

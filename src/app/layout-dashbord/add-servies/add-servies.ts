@@ -30,6 +30,7 @@ export class AddServies implements OnInit {
     ...item,
     index: index + 1,
     priceFormatted: item.price + ' ﷼',
+    isInstallmentPlansFormatted: item.isInstallmentPlans ? '✓' : '—',
   });
 
   ngOnInit() {
@@ -41,6 +42,7 @@ export class AddServies implements OnInit {
       { key: this.translate.instant('description_en'), value: 'description_en' },
       { key: 'created_At', value: 'createdAt' },
       { key: this.translate.instant('price'), value: 'priceFormatted' },
+      { key: this.translate.instant('is_installment_plans_label'), value: 'isInstallmentPlansFormatted' },
     ];
   }
 
