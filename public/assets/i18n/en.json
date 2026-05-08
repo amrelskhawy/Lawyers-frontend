@@ -18,6 +18,8 @@
   "TAMARA_DESC": "Split into 3 interest-free payments",
   "STRIPE_NAME": "Stripe",
   "STRIPE_DESC": "Secure international card payment",
+  "PAYMOB_NAME": "Paymob",
+  "PAYMOB_DESC": "Pay with card or e-wallet via Paymob",
   "CARD_PAYMENT": "Card Payment",
   "CARD_DETAILS": "Enter your card details below",
   "SSL_SECURED": "SSL Secured",

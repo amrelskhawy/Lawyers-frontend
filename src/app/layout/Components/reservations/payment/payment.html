@@ -26,6 +26,15 @@
     <p>{{"TABBY_DESC"|translate}}</p>
   </button>
 
+  <button class="card" [ngClass]="{ active: typepayment() == 'PAYMOB' }" (click)="OnSelectPayment('PAYMOB')">
+    <div class="check-badge">
+      <i *ngIf="typepayment() == 'PAYMOB'" class="fa-solid fa-circle-check"></i>
+    </div>
+    <img src="assets/Img/paymob-logo.png" class="provider-img" alt="paymob" />
+    <h3>{{"PAYMOB_NAME"|translate}}</h3>
+    <p>{{"PAYMOB_DESC"|translate}}</p>
+  </button>
+
   <button class="card" [ngClass]="{ active: typepayment() == 'STRIPE' }" (click)="OnSelectPayment('STRIPE')">
     <div class="check-badge">
       <i *ngIf="typepayment() == 'STRIPE'" class="fa-solid fa-circle-check"></i>
