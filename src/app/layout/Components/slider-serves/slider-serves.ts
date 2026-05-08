@@ -1,6 +1,6 @@
 import { Data } from './../../../core/Servies/data';
 import { Router } from '@angular/router';
-import { Component, signal, effect, ChangeDetectionStrategy } from '@angular/core';
+import { Component, input, signal, computed, effect, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-slider-serves',
@@ -10,13 +10,16 @@ import { Component, signal, effect, ChangeDetectionStrategy } from '@angular/cor
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SliderServes {
+  serviceType = input<'all' | 'normal' | 'installment'>('all');
+
   constructor(private Data: Data, private router: Router) {
     effect(() => {
       const publicData = this.Data.publicData();
       if (publicData && publicData.services) {
-        this.data.set(publicData.services);
+        this._allServices.set(publicData.services);
       }
     });
+
   }
 
   ngOnInit() {
@@ -24,7 +27,14 @@ export class SliderServes {
   }
 
   responsiveOptions: any[] | undefined;
-  data = signal<any[]>([]);
+  _allServices = signal<any[]>([]);
+  data = computed(() => {
+    const all = this._allServices();
+    const type = this.serviceType();
+    if (type === 'normal') return all.filter((s: any) => !s.isInstallmentPlans);
+    if (type === 'installment') return all.filter((s: any) => s.isInstallmentPlans);
+    return all;
+  });
   objData = signal<any>({});
   visibelData = signal<boolean>(false);
 
