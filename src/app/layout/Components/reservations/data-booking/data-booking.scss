@@ -75,6 +75,41 @@ form {
       }
     }
     
+    .optional-label {
+      font-weight: 400;
+      color: var(--medium-gray);
+      font-size: 0.8rem;
+    }
+
+    .phone-group {
+      display: flex;
+      gap: 8px;
+
+      .country-code-select {
+        flex-shrink: 0;
+        width: 110px;
+        background-color: var(--white-color);
+        border: 1.5px solid var(--Platinum);
+        padding: 12px 8px;
+        border-radius: 12px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        appearance: none;
+        text-align: center;
+
+        &:focus {
+          border-color: var(--accent-gold);
+          box-shadow: 0 0 0 4px rgba(147, 133, 63, 0.1);
+          outline: none;
+        }
+      }
+
+      input {
+        flex: 1;
+      }
+    }
+
     .wrapper-error {
       min-height: 20px;
       .error-message {

@@ -556,5 +556,6 @@
   "contract_preview": "معاينة العقد",
   "open_full_pdf": "فتح ملف PDF الكامل",
   "signature_live_preview_hint": "ارسم توقيعك في المربع وسيُنعكس مباشرة على الصفحة الثالثة من العقد إلى يسارك.",
-  "contract_signed_readonly": "موقّع — للقراءة فقط"
+  "contract_signed_readonly": "موقّع — للقراءة فقط",
+  "vaild_phone": "الرجاء إدخال رقم هاتف صحيح (أرقام فقط، 7-15 رقم)"
 }

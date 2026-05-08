@@ -21,7 +21,7 @@ export class DataBooking implements OnInit {
   @Input() initialData: any;
 
   onNextStep() {
-    const controls = ['clientEmail', 'name', 'phone_number'];
+    const controls = ['name', 'phone_number'];
     let isValid = true;
 
     controls.forEach(control => {
