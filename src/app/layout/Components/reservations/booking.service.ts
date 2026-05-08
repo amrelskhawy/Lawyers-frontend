@@ -25,7 +25,7 @@ export class BookingService {
         clientEmail: ['', [Validators.required, Validators.email]],
         name: ['', Validators.required],
         phone_number: ['', Validators.required],
-        provider: ['Stripe', Validators.required],
+        provider: ['STRIPE', Validators.required],
       }),
     );
   }

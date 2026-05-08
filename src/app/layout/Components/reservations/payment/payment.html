@@ -7,7 +7,11 @@
 </div>
 
 <div class="type-of-payment" dir="rtl">
-  <button class="card" [ngClass]="{ active: typepayment() == 'TABBY' }" (click)="OnSelectPayment('TABBY')">
+  <button
+    class="card"
+    [ngClass]="{ active: typepayment() == 'TABBY' }"
+    (click)="OnSelectPayment('TABBY')"
+  >
     <div class="check-badge">
       <i *ngIf="typepayment() == 'TABBY'" class="fa-solid fa-circle-check"></i>
     </div>
@@ -16,7 +20,11 @@
     <p>{{"TABBY_DESC"|translate}}</p>
   </button>
 
-  <button [ngClass]="{ active: typepayment() == 'TAMARA' }" class="card" (click)="OnSelectPayment('TAMARA')">
+  <button
+    [ngClass]="{ active: typepayment() == 'TAMARA' }"
+    class="card"
+    (click)="OnSelectPayment('TAMARA')"
+  >
     <div class="check-badge">
       <i *ngIf="typepayment() == 'TAMARA'" class="fa-solid fa-circle-check"></i>
     </div>
@@ -26,7 +34,24 @@
     <p>{{"TABBY_DESC"|translate}}</p>
   </button>
 
-  <button class="card" [ngClass]="{ active: typepayment() == 'STRIPE' }" (click)="OnSelectPayment('STRIPE')">
+  <button
+    class="card"
+    [ngClass]="{ active: typepayment() == 'PAYMOB' }"
+    (click)="OnSelectPayment('PAYMOB')"
+  >
+    <div class="check-badge">
+      <i *ngIf="typepayment() == 'PAYMOB'" class="fa-solid fa-circle-check"></i>
+    </div>
+    <img src="assets/Img/PayMob_Payments.png" class="provider-img" alt="paymob" />
+    <h3>{{"PAYMOB_NAME"|translate}}</h3>
+    <p>{{"PAYMOB_DESC"|translate}}</p>
+  </button>
+
+  <button
+    class="card"
+    [ngClass]="{ active: typepayment() == 'STRIPE' }"
+    (click)="OnSelectPayment('STRIPE')"
+  >
     <div class="check-badge">
       <i *ngIf="typepayment() == 'STRIPE'" class="fa-solid fa-circle-check"></i>
     </div>
