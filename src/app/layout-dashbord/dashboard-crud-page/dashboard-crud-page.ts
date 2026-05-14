@@ -25,6 +25,7 @@ export class DashboardCrudPage implements OnInit {
   @Input() page: string = '';
   @Input() dataMapper?: (item: any, index: number) => any;
   @Input() actionsTemplate!: TemplateRef<any>;
+  @Input() showAddButton = true;
 
   @Output() addNew = new EventEmitter<void>();
 
@@ -47,6 +48,8 @@ export class DashboardCrudPage implements OnInit {
     this.deleteTarget = item;
     this.visibelConfirme.set(true);
   };
+
+  refresh() { this.loadData(); }
 
   loadData() {
     this.dataService.get(this.endpoint).subscribe((res: any) => {
