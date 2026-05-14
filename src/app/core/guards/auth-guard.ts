@@ -21,7 +21,6 @@ export const securityAuthGuard: CanActivateFn = (route, state) => {
   return inject(AuthGurade).canActivate();
 };
 
-
 export const isAdminGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   const token = sessionStorage.getItem('token');
@@ -35,7 +34,25 @@ export const isAdminGuard: CanActivateFn = (route, state) => {
   }
   router.navigate(['/dashboard/content']);
   return false;
-}
+};
+
+export const roleGuard = (...roles: string[]): CanActivateFn => (route, state) => {
+  const router = inject(Router);
+  const token = sessionStorage.getItem('token');
+  const userData = sessionStorage.getItem('user');
+
+  if (!token || !userData) {
+    router.navigate(['/auth/login']);
+    return false;
+  }
+
+  const user = JSON.parse(userData);
+  if (roles.includes(user.role)) {
+    return true;
+  }
+  router.navigate(['/dashboard/content']);
+  return false;
+};
 
 import { Passcode } from '../Servies/passcode';
 
