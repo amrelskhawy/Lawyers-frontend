@@ -19,6 +19,37 @@ $gray-text: #64748b;
     left: 12px;
   }
 
+  // WhatsApp Button
+  .whatsapp-fab {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: #25d366;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 75px;
+    right: 5px;
+    text-decoration: none;
+    color: $white;
+    font-size: 1.6rem;
+
+    :host-context([dir='rtl']) & {
+      right: auto;
+      left: 5px;
+    }
+
+    &:hover {
+      transform: scale(1.1) translateY(-4px);
+      box-shadow: 0 12px 28px rgba(37, 211, 102, 0.55);
+    }
+  }
+
   // Floating Action Button
   .chatbot-fab {
     width: 65px;
