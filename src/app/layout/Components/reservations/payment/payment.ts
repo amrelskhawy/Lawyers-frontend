@@ -7,7 +7,7 @@ import { Component, EventEmitter, Output, signal } from '@angular/core';
   styleUrl: './payment.scss',
 })
 export class Payment {
-  typepayment = signal<string>("STRIPE")
+  typepayment = signal<string>("PAYMOB")
   @Output() payment = new EventEmitter<string>();
 
   OnSelectPayment(providePayment: string) {

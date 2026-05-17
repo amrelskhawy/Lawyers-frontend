@@ -14,6 +14,8 @@
   "TABBY_NAME": "تابي",
   "Toggle_MENU": "تبديل القائمة",
   "TABBY_DESC": "ادفع بالبطاقة عبر بوابة تابي",
+  "APPLY_PAY_NAME": "أبل باي",
+  "APPLY_PAY_DESC": "ادفع بالبطاقة عبر بوابة أبل باي",
   "TAMARA_NAME": "تمارا",
   "TAMARA_DESC": "قسّمها على 3 دفعات بدون فوائد",
   "STRIPE_NAME": "سترايب",

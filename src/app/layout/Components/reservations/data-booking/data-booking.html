@@ -8,9 +8,15 @@
   </div>
   <form [formGroup]="bookingService.bookingForm()">
     <div class="Group">
-      <label>{{ 'email' | translate }} <span class="optional-label">({{ 'optional' | translate }})</span></label>
+      <label>{{ 'email' | translate }} </label>
       <input formControlName="clientEmail" placeholder="📧  {{ 'email' | translate }}" />
       <div class="wrapper-error">
+        <small class="error-message" *ngIf="
+            getControlName('clientEmail')?.errors?.['required'] &&
+            getControlName('clientEmail')?.touched
+          ">
+          {{ 'filed_reqierd' | translate }}
+        </small>
         <small class="error-message" *ngIf="
             getControlName('clientEmail')?.errors?.['email'] &&
             getControlName('clientEmail')?.touched
@@ -55,12 +61,7 @@
           <option value="+49">🇩🇪 +49</option>
           <option value="+90">🇹🇷 +90</option>
         </select>
-        <input
-          formControlName="phone_number"
-          placeholder="{{ 'phone' | translate }}"
-          type="tel"
-          inputmode="numeric"
-        />
+        <input formControlName="phone_number" placeholder="{{ 'phone' | translate }}" type="tel" inputmode="numeric" />
       </div>
       <div class="wrapper-error">
         <small class="error-message"

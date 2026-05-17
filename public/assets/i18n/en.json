@@ -14,6 +14,8 @@
   "TABBY_NAME": "Tabby",
   "Toggle_MENU": "Toggle Menu",
   "TABBY_DESC": "Pay with card via Tabby gateway",
+  "APPLY_PAY_NAME": "Apple Pay",
+  "APPLY_PAY_DESC": "Pay with card via Apple Pay gateway",
   "TAMARA_NAME": "Tamara",
   "TAMARA_DESC": "Split into 3 interest-free payments",
   "STRIPE_NAME": "Stripe",
