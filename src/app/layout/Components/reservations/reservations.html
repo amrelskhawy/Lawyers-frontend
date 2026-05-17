@@ -42,26 +42,30 @@
         <p-step-panels>
           <p-step-panel [value]="1">
             <ng-template #content let-activateCallback="activateCallback">
-              <app-data-booking
-                [initialData]="bookingService.bookingForm().value"
-                (dataClient)="EventDataClient($event)"
-              ></app-data-booking>
-              <app-servies-booking
-                [dataservies]="bookingService.dataservies()"
-                [selectedService]="bookingService.detailsservies()"
-                (serviesid)="onselectServies($event)"
-              ></app-servies-booking>
+              <div class="booking-grid">
+                <app-data-booking
+                  [initialData]="bookingService.bookingForm().value"
+                  (dataClient)="EventDataClient($event)"
+                ></app-data-booking>
+                <app-servies-booking
+                  [dataservies]="bookingService.dataservies()"
+                  [selectedService]="bookingService.detailsservies()"
+                  (serviesid)="onselectServies($event)"
+                ></app-servies-booking>
+              </div>
             </ng-template>
           </p-step-panel>
 
           <p-step-panel [value]="2">
             <ng-template #content let-activateCallback="activateCallback">
-              <app-meeting-booking
-                [initialData]="bookingService.bookingForm().value"
-                (DateClient)="EventDateClient($event)"
-                [disabledDates]="bookingService.disabledDates()"
-              ></app-meeting-booking>
-              <app-payment (payment)="onPayment($event)"></app-payment>
+              <div class="booking-grid">
+                <app-meeting-booking
+                  [initialData]="bookingService.bookingForm().value"
+                  (DateClient)="EventDateClient($event)"
+                  [disabledDates]="bookingService.disabledDates()"
+                ></app-meeting-booking>
+                <app-payment (payment)="onPayment($event)"></app-payment>
+              </div>
             </ng-template>
           </p-step-panel>
 
