@@ -594,10 +594,28 @@ $gray-text: #64748b;
     bottom: 10px;
     right: 10px;
 
+    :host-context([dir='rtl']) & {
+      right: auto;
+      left: 10px;
+    }
+
     .chatbot-fab {
       width: 45px;
       height: 45px;
       font-size: 1.1rem;
+    }
+
+    .whatsapp-fab {
+      width: 45px;
+      height: 45px;
+      font-size: 1.35rem;
+      bottom: 58px;
+      right: 0;
+
+      :host-context([dir='rtl']) & {
+        right: auto;
+        left: 0;
+      }
     }
   }
 }
