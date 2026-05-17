@@ -79,27 +79,44 @@ export class Reservations implements OnInit {
     if (!event || !event.id) return;
     this.bookingService.detailsservies.set(event);
     this.bookingService.getControl('serviceId')?.patchValue(event.id);
+
+    const infoControls = ['clientEmail', 'name', 'phone_number'];
+    let infoValid = true;
+    infoControls.forEach(name => {
+      const c = this.bookingService.getControl(name);
+      if (c?.invalid) {
+        c.markAsTouched();
+        infoValid = false;
+      }
+    });
+    if (!infoValid) return;
+
     this.bookingService.currentStep.set(2);
     setTimeout(() => this.scrollToSection(), 0);
   }
 
   onPayment(valuepayment: string) {
     this.bookingService.getControl('provider')?.patchValue(valuepayment);
-    this.bookingService.currentStep.set(5);
+
+    const dateCtrl = this.bookingService.getControl('date');
+    const timeCtrl = this.bookingService.getControl('startTime');
+    if (dateCtrl?.invalid || timeCtrl?.invalid) {
+      dateCtrl?.markAsTouched();
+      timeCtrl?.markAsTouched();
+      return;
+    }
+
+    this.bookingService.currentStep.set(3);
     setTimeout(() => this.scrollToSection(), 0);
   }
 
   EventDataClient(event: any) {
-    this.bookingService.currentStep.set(3);
-    setTimeout(() => this.scrollToSection(), 0);
     this.bookingService.getControl('phone_number')?.patchValue(event.phone_number);
     this.bookingService.getControl('name')?.patchValue(event.name);
     this.bookingService.getControl('clientEmail')?.patchValue(event.clientEmail);
   }
 
   EventDateClient(event: any) {
-    this.bookingService.currentStep.set(4);
-    setTimeout(() => this.scrollToSection(), 0);
     this.bookingService.getControl('date')?.patchValue(event.date);
     this.bookingService.getControl('startTime')?.patchValue(event.startTime);
   }
