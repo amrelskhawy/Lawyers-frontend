@@ -154,17 +154,20 @@
 }
 
 .f-other-fees {
-  top: 32.4%;
+  top: 32%;
   left: 5%;
-  width: 36%;
-  height: 2%;
+  width: 90%;
+  height: 5.5%;
   font-size: 1.75cqw;
-  text-align: right;
+  text-align: justify;
+  direction: rtl;
   white-space: pre-wrap;
+  word-break: break-word;
   display: block;
-  padding: 0.4% 1%;
-  align-items: flex-start;
-  justify-content: flex-start;
+  text-indent: 61%;
+  // padding: 0.4% 1%; /
+  overflow: hidden;
+  line-height: 2.33;
 }
 
 .f-page2-body {
