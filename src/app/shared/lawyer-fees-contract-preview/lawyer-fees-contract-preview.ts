@@ -17,6 +17,8 @@ export interface LawyerFeesContractPreviewData {
   secondInstallment?: string | number | null;
   otherFees?:         string | null;
   currency?:          string | null;
+  page2Content?:      string | null;
+  page3Content?:      string | null;
 
   firstPartySignature?:  string | null;
   secondPartySignature?: string | null;

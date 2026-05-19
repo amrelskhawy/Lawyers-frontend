@@ -189,6 +189,44 @@
           <textarea formControlName="otherFees" rows="3"></textarea>
         </div>
 
+        <div class="section-header">
+          <h3 class="section-title">{{ 'page2_content' | translate }}</h3>
+          @if (!isSigned()) {
+            <button type="button" class="btn-edit-terms" [class.active]="editingPage2()" (click)="toggleEditPage2()">
+              <i class="fa-solid" [class.fa-lock]="!editingPage2()" [class.fa-lock-open]="editingPage2()"></i>
+              {{ (editingPage2() ? 'done_editing' : 'edit') | translate }}
+            </button>
+          }
+        </div>
+        <div class="input-group">
+          <textarea
+            formControlName="page2Content"
+            rows="8"
+            [class.terms-locked]="!editingPage2() && !isSigned()"
+            [attr.readonly]="(!editingPage2() && !isSigned()) ? 'readonly' : null"
+            (click)="!editingPage2() && !isSigned() ? toggleEditPage2() : null">
+          </textarea>
+        </div>
+
+        <div class="section-header">
+          <h3 class="section-title">{{ 'page3_content' | translate }}</h3>
+          @if (!isSigned()) {
+            <button type="button" class="btn-edit-terms" [class.active]="editingPage3()" (click)="toggleEditPage3()">
+              <i class="fa-solid" [class.fa-lock]="!editingPage3()" [class.fa-lock-open]="editingPage3()"></i>
+              {{ (editingPage3() ? 'done_editing' : 'edit') | translate }}
+            </button>
+          }
+        </div>
+        <div class="input-group">
+          <textarea
+            formControlName="page3Content"
+            rows="10"
+            [class.terms-locked]="!editingPage3() && !isSigned()"
+            [attr.readonly]="(!editingPage3() && !isSigned()) ? 'readonly' : null"
+            (click)="!editingPage3() && !isSigned() ? toggleEditPage3() : null">
+          </textarea>
+        </div>
+
       </form>
     </section>
 

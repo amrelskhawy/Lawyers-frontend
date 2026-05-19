@@ -20,6 +20,8 @@ export interface ILawyerFeesContract {
   secondInstallment: string | number | null;
   otherFees:         string | null;
   currency:          string | null;
+  page2Content:      string | null;
+  page3Content:      string | null;
 
   firstPartySignature:  string | null;
   firstPartySignedAt:   string | null;
