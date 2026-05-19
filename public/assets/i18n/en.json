@@ -524,6 +524,7 @@
   "fees_breakdown": "Fees & Installments",
   "total_fees": "Total Fees",
   "first_installment": "First Installment",
+  "first_installment_note": "First Installment Note",
   "second_installment": "Second Installment",
   "other_fees": "Other",
   "currency": "Currency",

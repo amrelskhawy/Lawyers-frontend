@@ -524,6 +524,7 @@
   "fees_breakdown": "الأتعاب والدفعات",
   "total_fees": "إجمالي الأتعاب",
   "first_installment": "الدفعة الأولى",
+  "first_installment_note": "ملاحظات الدفعة الأولى",
   "second_installment": "الدفعة الثانية",
   "other_fees": "أخرى",
   "currency": "العملة",
