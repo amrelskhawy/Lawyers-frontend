@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
+
 @Component({
   selector: 'app-hero-section',
   standalone: false,
@@ -9,5 +10,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 })
 export class HeroSection {
+
+  navigateToContactUs() {
+    window.location.href = 'https://wa.me/966535041555';
+  }
 
 }

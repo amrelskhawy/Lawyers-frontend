@@ -2,35 +2,24 @@
   <div class="hero-section container">
     <div class="title-hero-section">
       <h2 pAnimateOnScroll enterClass="my-enter-top" leaveClass="my-leave-animation">
-       {{"EXCEPTIONAL_SERVICE"|translate}}
+        {{"EXCEPTIONAL_SERVICE"|translate}}
       </h2>
       <h6 pAnimateOnScroll enterClass="my-enter-right" leaveClass="my-leave-animation">
-     {{"LEGAL_CONSULTANCY_DESC"|translate}}
+        {{"LEGAL_CONSULTANCY_DESC"|translate}}
       </h6>
 
       <h6 pAnimateOnScroll enterClass="my-enter-right" leaveClass="my-leave-animation">
-     {{"PROFESSIONAL_REPRESENTATION"|translate}}
+        {{"PROFESSIONAL_REPRESENTATION"|translate}}
       </h6>
-      <button
-       pAnimateOnScroll enterClass="my-enter-zoom" leaveClass="my-leave-animation"
-        class="btn-hero-section"
-      >
-       {{"CONTACT_US_NOW"|translate}}
+      <button (click)="navigateToContactUs()" pAnimateOnScroll enterClass="my-enter-zoom"
+        leaveClass="my-leave-animation" class="btn-hero-section">
+        {{"CONTACT_US_NOW"|translate}}
       </button>
     </div>
 
     <div class="img-hero-section" pAnimateOnScroll enterClass="my-enter-top" leaveClass="my-leave-animation">
       <div class="imges">
-
-        <!-- <img pAnimateOnScroll enterClass="my-enter-zoom" leaveClass="my-leave-animation" class="logo"
-          src="/assets/Img/logo.svg" alt="Logo" /> -->
-
-
-
-        <img
-        fetchpriority="high"
-          src="/assets/Img/1.webp"
-          alt="hero-section-img" />
+        <img fetchpriority="high" src="/assets/Img/1.webp" alt="hero-section-img" />
       </div>
     </div>
   </div>
