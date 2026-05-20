@@ -423,6 +423,60 @@ $gold: #c9a84c;
   }
 }
 
+.rich-editor-wrap {
+  ::ng-deep .p-editor {
+    border-radius: 8px;
+    overflow: hidden;
+    direction: rtl;
+
+    .p-editor-toolbar {
+      border-radius: 8px 8px 0 0;
+      background: #f8f7ff;
+      border-color: #e0e0e0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .p-editor-content {
+      border-radius: 0 0 8px 8px;
+      border-color: #e0e0e0;
+
+      .ql-editor {
+        font-family: 'Cairo', 'Segoe UI', Tahoma, Arial, sans-serif;
+        font-size: 14px;
+        direction: rtl;
+        text-align: right;
+        min-height: 200px;
+        max-height: 380px;
+        overflow-y: auto;
+        line-height: 2;
+        color: #1a1a3e;
+
+        p { margin: 0; min-height: 1.6em; }
+        ol, ul { padding-inline-start: 1.5em; }
+      }
+    }
+  }
+
+  &.locked {
+    ::ng-deep .p-editor {
+      .p-editor-toolbar {
+        display: none;
+      }
+
+      .p-editor-content {
+        border-radius: 8px;
+
+        .ql-editor {
+          background: #fafafa;
+          cursor: default;
+        }
+      }
+    }
+  }
+}
+
 .loading-state {
   text-align: center;
   padding: 60px 20px;

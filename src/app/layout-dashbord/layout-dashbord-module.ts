@@ -44,6 +44,7 @@ import { FieldVisitReportTemplate } from './field-visit-report/field-visit-repor
 import { LawyerFeesContractsList } from './lawyer-fees-contracts-list/lawyer-fees-contracts-list';
 import { LawyerFeesContract } from './lawyer-fees-contract/lawyer-fees-contract';
 import { LawyerFeesContractPreviewModule } from '../shared/lawyer-fees-contract-preview/lawyer-fees-contract-preview-module';
+import { EditorModule } from 'primeng/editor';
 @NgModule({
   declarations: [
     Menue,
@@ -94,6 +95,7 @@ import { LawyerFeesContractPreviewModule } from '../shared/lawyer-fees-contract-
     FormsModule,
     SelectModule,
     LawyerFeesContractPreviewModule,
+    EditorModule,
   ],
 })
 export class LayoutDashbordModule {}

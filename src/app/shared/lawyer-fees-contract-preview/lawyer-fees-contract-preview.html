@@ -24,14 +24,14 @@
     <div class="ov f-other-fees">{{ data().otherFees || '' }}</div>
 
     @if (data().page2Content) {
-      <div class="f-page2-body">{{ data().page2Content }}</div>
+      <div class="f-page2-body" [innerHTML]="data().page2Content"></div>
     }
   </div>
 
   <!-- ============ PAGE 3 — free text + signatures ============ -->
   <div class="lfc-page page-3">
     @if (data().page3Content) {
-      <div class="p3-body">{{ data().page3Content }}</div>
+      <div class="p3-body" [innerHTML]="data().page3Content"></div>
     }
 
     <div class="p3-sig-section">

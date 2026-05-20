@@ -203,14 +203,23 @@
             </button>
           }
         </div>
-        <div class="input-group">
-          <textarea
-            formControlName="page2Content"
-            rows="8"
-            [class.terms-locked]="!editingPage2() && !isSigned()"
-            [attr.readonly]="(!editingPage2() && !isSigned()) ? 'readonly' : null"
-            (click)="!editingPage2() && !isSigned() ? toggleEditPage2() : null">
-          </textarea>
+        <div class="input-group rich-editor-wrap" [class.locked]="!editingPage2() && !isSigned()">
+          <p-editor formControlName="page2Content" [readonly]="!editingPage2() && !isSigned()">
+            <ng-template pTemplate="header">
+              <span class="ql-formats">
+                <button type="button" class="ql-bold"></button>
+                <button type="button" class="ql-italic"></button>
+                <button type="button" class="ql-underline"></button>
+              </span>
+              <span class="ql-formats">
+                <button type="button" class="ql-list" value="ordered"></button>
+                <button type="button" class="ql-list" value="bullet"></button>
+              </span>
+              <span class="ql-formats">
+                <button type="button" class="ql-clean"></button>
+              </span>
+            </ng-template>
+          </p-editor>
         </div>
 
         <div class="section-header">
@@ -222,14 +231,23 @@
             </button>
           }
         </div>
-        <div class="input-group">
-          <textarea
-            formControlName="page3Content"
-            rows="10"
-            [class.terms-locked]="!editingPage3() && !isSigned()"
-            [attr.readonly]="(!editingPage3() && !isSigned()) ? 'readonly' : null"
-            (click)="!editingPage3() && !isSigned() ? toggleEditPage3() : null">
-          </textarea>
+        <div class="input-group rich-editor-wrap" [class.locked]="!editingPage3() && !isSigned()">
+          <p-editor formControlName="page3Content" [readonly]="!editingPage3() && !isSigned()">
+            <ng-template pTemplate="header">
+              <span class="ql-formats">
+                <button type="button" class="ql-bold"></button>
+                <button type="button" class="ql-italic"></button>
+                <button type="button" class="ql-underline"></button>
+              </span>
+              <span class="ql-formats">
+                <button type="button" class="ql-list" value="ordered"></button>
+                <button type="button" class="ql-list" value="bullet"></button>
+              </span>
+              <span class="ql-formats">
+                <button type="button" class="ql-clean"></button>
+              </span>
+            </ng-template>
+          </p-editor>
         </div>
 
       </form>
