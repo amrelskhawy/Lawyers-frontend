@@ -9,10 +9,4 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 
 })
-export class HeroSection {
-
-  navigateToContactUs() {
-    window.location.href = 'https://wa.me/966535041555';
-  }
-
-}
+export class HeroSection {}
