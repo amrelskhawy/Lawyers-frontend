@@ -17,10 +17,10 @@
 
   <!-- ============ PAGE 2 — fees overlays + optional free body ============ -->
   <div class="lfc-page page-2">
-    <div class="ov f-total-fees" dir="ltr">{{ amount(data().totalFees) }} {{ data().currency || 'SAR' }}</div>
-    <div class="ov f-first-installment" dir="ltr">{{ amount(data().firstInstallment) }} {{ data().currency || 'SAR' }}</div>
+    <div class="ov f-total-fees" dir="ltr">{{ amount(data().totalFees) }}</div>
+    <div class="ov f-first-installment" dir="ltr">{{ amount(data().firstInstallment) }}</div>
     <div class="ov f-first-installment-note">{{ data().firstInstallmentNote || '' }}</div>
-    <div class="ov f-second-installment" dir="ltr">{{ amount(data().secondInstallment) }} {{ data().currency || 'SAR' }}</div>
+    <div class="ov f-second-installment" dir="ltr">{{ amount(data().secondInstallment) }}</div>
     <div class="ov f-other-fees" [innerHTML]="data().otherFees || ''"></div>
 
     <div class="f-page2-body" [innerHTML]="page2Html()"></div>
