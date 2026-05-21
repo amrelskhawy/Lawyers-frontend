@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 $navy: #0a1f44;
 $gold: #c9a84c;
 
@@ -258,7 +260,7 @@ $gold: #c9a84c;
 
 .btn-secondary {
   background: rgba($gold, 0.12);
-  color: darken($gold, 12%);
+  color: color.adjust($gold, $lightness: -12%);
   border: 1.5px solid rgba($gold, 0.35);
   &:hover:not(:disabled) {
     background: $gold;
