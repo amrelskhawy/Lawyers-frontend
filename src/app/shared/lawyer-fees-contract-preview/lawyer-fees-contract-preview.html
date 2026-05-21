@@ -23,16 +23,12 @@
     <div class="ov f-second-installment" dir="ltr">{{ amount(data().secondInstallment) }} {{ data().currency || 'SAR' }}</div>
     <div class="ov f-other-fees" [innerHTML]="data().otherFees || ''"></div>
 
-    @if (data().page2Content) {
-      <div class="f-page2-body" [innerHTML]="data().page2Content"></div>
-    }
+    <div class="f-page2-body" [innerHTML]="page2Html()"></div>
   </div>
 
   <!-- ============ PAGE 3 — free text + signatures ============ -->
   <div class="lfc-page page-3">
-    @if (data().page3Content) {
-      <div class="p3-body" [innerHTML]="data().page3Content"></div>
-    }
+    <div class="p3-body" [innerHTML]="page3Html()"></div>
 
     <div class="p3-sig-section">
       <div class="p3-sig-party">
