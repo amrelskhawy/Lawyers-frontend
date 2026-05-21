@@ -117,8 +117,8 @@
   left: 5.5%;
   width: 90%;
   max-height: 5.5%;
-  font-size: 1.9cqw;
-  font-weight: 800;
+  font-size: 1.8cqw;
+  font-weight: 700;
   text-align: center;
   word-break: break-word;
   display: block;
@@ -152,6 +152,7 @@
   width: 47%;
   height: 2.1%;
   font-size: 1.8cqw;
+  font-weight: 700;
   display: block;
   overflow: hidden;
   white-space: nowrap;
@@ -170,7 +171,8 @@
 }
 
 .f-other-fees {
-  top: 32%;
+  top: 31.8%;
+  font-weight: 700;
   left: 5%;
   width: 89%;
   height: 5.5%;
@@ -183,7 +185,7 @@
   text-indent: 60.5%;
   // padding: 0.4% 1%; /
   overflow: hidden;
-  line-height: 2.45;
+  line-height: 2.47;
 }
 
 .f-page2-body {
@@ -288,9 +290,9 @@
 
 .p3-sig-section {
   position: absolute;
-  bottom: 10%;
+  bottom: 2%;
   right: 4.5%;
-  left: 4.5%;
+  left: 0;
   height: 18%;
   display: flex;
   direction: rtl;
@@ -303,6 +305,8 @@
   flex-direction: column;
   align-items: center;
   width: 36%;
+  top: 12%;
+  overflow: hidden;
 }
 
 .p3-sig-title {
@@ -313,8 +317,9 @@
 }
 
 .p3-sig-img {
-  max-width: 100%;
-  max-height: 65%;
+  max-width: 80%;
+  max-height: 80%;
+  width: 100%;
   object-fit: contain;
 }
 
@@ -323,5 +328,5 @@
   font-weight: 600;
   color: #555;
   direction: ltr;
-  margin-top: 2%;
+  margin-top: -4%;
 }
