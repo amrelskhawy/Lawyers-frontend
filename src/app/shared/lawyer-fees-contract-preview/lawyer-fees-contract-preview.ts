@@ -49,8 +49,8 @@ export class LawyerFeesContractPreview {
   }
 
   amount(v: string | number | null | undefined): string {
-    if (v === null || v === undefined || v === '') return '—';
+    if (v === null || v === undefined || v === '') return '';
     const n = Number(v);
-    return isNaN(n) ? String(v) : n.toLocaleString();
+    return isNaN(n) ? String(v) : n.toLocaleString('en-US');
   }
 }
