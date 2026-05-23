@@ -23,6 +23,8 @@
 <app-dashboard-crud-page
   [endpoint]="endpoint"
   deleteEndpoint="admin/users"
+  bulkDeleteEndpoint="admin/users/many"
+  [selectable]="true"
   [columns]="columns"
   [searchFields]="searchFields"
   [dataMapper]="dataMapper"
