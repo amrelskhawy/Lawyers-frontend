@@ -16,10 +16,13 @@ export interface ILawyerFeesContract {
   serviceDescription: string | null;
 
   totalFees:         string | number | null;
-  firstInstallment:  string | number | null;
-  secondInstallment: string | number | null;
+  firstInstallment:      string | number | null;
+  firstInstallmentNote:  string | null;
+  secondInstallment:     string | number | null;
   otherFees:         string | null;
   currency:          string | null;
+  page2Content:      string | null;
+  page3Content:      string | null;
 
   firstPartySignature:  string | null;
   firstPartySignedAt:   string | null;

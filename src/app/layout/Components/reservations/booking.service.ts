@@ -22,11 +22,11 @@ export class BookingService {
         serviceId: ['', Validators.required],
         date: ['', Validators.required],
         startTime: ['', Validators.required],
-        clientEmail: ['', [Validators.email]],
+        clientEmail: ['', [Validators.required, Validators.email]],
         name: ['', Validators.required],
         phoneCountryCode: ['+966'],
         phone_number: ['', [Validators.required, Validators.pattern(/^\d{7,15}$/)]],
-        provider: ['STRIPE', Validators.required],
+        provider: ['PAYMOB', Validators.required],
       }),
     );
   }

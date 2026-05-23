@@ -26,7 +26,7 @@ export class LawyerFeesContractsList implements OnInit {
       item.contractNumber ?? (item.id ? item.id.slice(0, 4).toUpperCase() : ''),
     clientNameDisplay: item.clientName ?? item.customer?.fullName ?? '—',
     contractDateFormatted: item.contractDate ? this.formatDate(item.contractDate) : '—',
-    totalFeesFormatted: item.totalFees != null ? `${item.totalFees} ${item.currency ?? 'SAR'}` : '—',
+    totalFeesFormatted: item.totalFees != null ? `${item.totalFees}` : '—',
     statusLabel: item.secondPartySignedAt
       ? this.translate.instant('signed')
       : item.sentToClientAt

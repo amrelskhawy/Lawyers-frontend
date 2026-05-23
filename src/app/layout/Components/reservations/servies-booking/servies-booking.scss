@@ -38,6 +38,31 @@
   }
 }
 
+.services-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 24px;
+
+  .tab-btn {
+    padding: 9px 26px;
+    border: 2px solid var(--accent-gold);
+    background: transparent;
+    color: var(--accent-gold);
+    border-radius: 30px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+
+    &.active,
+    &:hover {
+      background: var(--accent-gold);
+      color: #fff;
+    }
+  }
+}
+
 .content-servies-booking {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));

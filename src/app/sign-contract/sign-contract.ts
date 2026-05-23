@@ -29,8 +29,9 @@ interface SigningPreview {
   serviceDescription: string | null;
 
   totalFees:         string | number | null;
-  firstInstallment:  string | number | null;
-  secondInstallment: string | number | null;
+  firstInstallment:      string | number | null;
+  firstInstallmentNote:  string | null;
+  secondInstallment:     string | number | null;
   otherFees:         string | null;
   currency:          string | null;
 
@@ -87,8 +88,9 @@ export class SignContract implements OnInit, OnDestroy {
       clientPhone:       p.clientPhone,
       serviceDescription: p.serviceDescription,
       totalFees:         p.totalFees,
-      firstInstallment:  p.firstInstallment,
-      secondInstallment: p.secondInstallment,
+      firstInstallment:      p.firstInstallment,
+      firstInstallmentNote:  p.firstInstallmentNote,
+      secondInstallment:     p.secondInstallment,
       otherFees:         p.otherFees,
       currency:          p.currency,
       firstPartySignature:  p.firstPartySignature,

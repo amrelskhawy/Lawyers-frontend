@@ -185,8 +185,69 @@
         </div>
 
         <div class="input-group">
+          <label>{{ 'first_installment_note' | translate }}</label>
+          <input type="text" formControlName="firstInstallmentNote" />
+        </div>
+
+        <div class="input-group">
           <label>{{ 'other_fees' | translate }}</label>
           <textarea formControlName="otherFees" rows="3"></textarea>
+        </div>
+
+        <div class="section-header">
+          <h3 class="section-title">{{ 'page2_content' | translate }}</h3>
+          @if (!isSigned()) {
+            <button type="button" class="btn-edit-terms" [class.active]="editingPage2()" (click)="toggleEditPage2()">
+              <i class="fa-solid" [class.fa-lock]="!editingPage2()" [class.fa-lock-open]="editingPage2()"></i>
+              {{ (editingPage2() ? 'done_editing' : 'edit') | translate }}
+            </button>
+          }
+        </div>
+        <div class="input-group rich-editor-wrap" [class.locked]="!editingPage2() && !isSigned()">
+          <p-editor formControlName="page2Content" [readonly]="!editingPage2() && !isSigned()">
+            <ng-template pTemplate="header">
+              <span class="ql-formats">
+                <button type="button" class="ql-bold"></button>
+                <button type="button" class="ql-italic"></button>
+                <button type="button" class="ql-underline"></button>
+              </span>
+              <span class="ql-formats">
+                <button type="button" class="ql-list" value="ordered"></button>
+                <button type="button" class="ql-list" value="bullet"></button>
+              </span>
+              <span class="ql-formats">
+                <button type="button" class="ql-clean"></button>
+              </span>
+            </ng-template>
+          </p-editor>
+        </div>
+
+        <div class="section-header">
+          <h3 class="section-title">{{ 'page3_content' | translate }}</h3>
+          @if (!isSigned()) {
+            <button type="button" class="btn-edit-terms" [class.active]="editingPage3()" (click)="toggleEditPage3()">
+              <i class="fa-solid" [class.fa-lock]="!editingPage3()" [class.fa-lock-open]="editingPage3()"></i>
+              {{ (editingPage3() ? 'done_editing' : 'edit') | translate }}
+            </button>
+          }
+        </div>
+        <div class="input-group rich-editor-wrap" [class.locked]="!editingPage3() && !isSigned()">
+          <p-editor formControlName="page3Content" [readonly]="!editingPage3() && !isSigned()">
+            <ng-template pTemplate="header">
+              <span class="ql-formats">
+                <button type="button" class="ql-bold"></button>
+                <button type="button" class="ql-italic"></button>
+                <button type="button" class="ql-underline"></button>
+              </span>
+              <span class="ql-formats">
+                <button type="button" class="ql-list" value="ordered"></button>
+                <button type="button" class="ql-list" value="bullet"></button>
+              </span>
+              <span class="ql-formats">
+                <button type="button" class="ql-clean"></button>
+              </span>
+            </ng-template>
+          </p-editor>
         </div>
 
       </form>

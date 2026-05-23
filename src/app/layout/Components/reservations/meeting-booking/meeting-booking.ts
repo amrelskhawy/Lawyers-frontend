@@ -20,13 +20,17 @@ export class MeetingBooking implements OnInit {
   private dateSub: any;
 
   ngOnInit(): void {
+    this.watchDateChange();
     if (this.initialData) {
       this.bookingService.bookingForm().patchValue(this.initialData);
       if (this.initialData.startTime) {
         this.selectedTime.set(this.initialData.startTime);
       }
     }
-    this.watchDateChange();
+    const existingDate = this.bookingService.getControl('date')?.value;
+    if (existingDate) {
+      this.fetchSlots(existingDate);
+    }
   }
 
   ngOnDestroy(): void {
@@ -55,20 +59,21 @@ export class MeetingBooking implements OnInit {
 
   watchDateChange() {
     if (this.dateSub) this.dateSub.unsubscribe();
-    
+
     this.dateSub = this.bookingService.getControl('date')?.valueChanges.subscribe((selectedDate: Date) => {
       if (!selectedDate) return;
-      
-      // Ensure we only trigger when the date string actually changes
-      const finalDate = new Date(selectedDate).toLocaleDateString('en-CA');
-      
-      this.dataService.get(`bookings/availability`, { date: finalDate })
-        .subscribe((res: any) => {
-          if (res.data) {
-            this.timeSlots.set(res.data);
-          }
-        });
+      this.fetchSlots(selectedDate);
     });
+  }
+
+  private fetchSlots(selectedDate: Date) {
+    const finalDate = new Date(selectedDate).toLocaleDateString('en-CA');
+    this.dataService.get(`bookings/availability`, { date: finalDate })
+      .subscribe((res: any) => {
+        if (res.data) {
+          this.timeSlots.set(res.data);
+        }
+      });
   }
 
   onNextStep() {

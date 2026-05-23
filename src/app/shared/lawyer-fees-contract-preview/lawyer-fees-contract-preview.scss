@@ -39,7 +39,7 @@
   position: absolute;
   color: #1A113A;
   font-family: 'Cairo', 'Segoe UI', Tahoma, Arial, sans-serif;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.2;
   display: flex;
   align-items: center;
@@ -59,155 +59,274 @@
 /* Contract number (top-right small slot) */
 .f-contract-number {
   top: 18.22%;
-  left: 5.7%;
+  left: 5.2%;
 
-  width: 6%;
+  width: 7%;
   height: 2%;
   font-size: 1.65cqw;
 }
 
 /* Opening paragraph: "إنه في يوم [day] بتاريخ [date] هـ بوافق [hijri] م" */
 .f-contract-day {
-  top: 24.5%;
-  left: 75%;
-  width: 9%;
+  top: 24%;
+  left: 66.5%;
+  width: 17%;
   height: 1.9%;
 }
 
 .f-contract-date {
-  top: 24.5%;
-  left: 26.6%;
-  width: 14.5%;
+  top: 24%;
+  left: 8%;
+  width: 17.5%;
   height: 1.9%;
 }
 
 .f-hijri-date {
-  top: 24.5%;
-  left: 52.5%;
-  width: 15%;
+  top: 24%;
+  left: 40%;
+  width: 17.3%;
   height: 1.9%;
 }
 
 /* Second paragraph: "ثانياً: السيد/ [name]، هوية رقم [id]، وهاتف رقم [phone]" */
 .f-client-name {
-  top: 33%;
-  left: 63%;
+  top: 33.4%;
+  left: 38%;
   font-size: 1.6cqw;
-  width: 21%;
+  width: 45%;
   height: 2.1%;
 }
 
 .f-client-id {
-  top: 33%;
-  left: 35%;
-  width: 16%;
+  top: 33.5%;
+  left: 5.5%;
+  width: 21%;
   height: 2.1%;
 }
 
 .f-client-phone {
-  top: 33%;
-  left: 6%;
-  width: 14.5%;
+  top: 36.7%;
+  left: 60%;
+  width: 23%;
   height: 2.1%;
 }
 
 /* Service / scope of engagement (free-text strip above البند الأول). Tune visually. */
 .f-service-description {
-  top: 71.9%;
-  left: 4.5%;
-  width: 92%;
-  font-size: 1.9cqw;
-  font-weight: 800;
+  top: 72.8%;
+  left: 5.5%;
+  width: 90%;
+  max-height: 5.5%;
+  font-size: 1.8cqw;
+  font-weight: 700;
   text-align: center;
-  white-space: pre-wrap;
+  word-break: break-word;
   display: block;
-  padding: 0.4% 1%;
+  overflow: hidden;
   align-items: flex-start;
   justify-content: flex-start;
-
+  line-height: 2.35;
 }
 
-/* ============ PAGE 2 — fees ============ */
+/* ============ PAGE 2 — fees overlays (original positions) ============ */
 
-/* Total fees (line: "أن تكون أتعاب الطرف الأول مبلغ [___]") */
 .f-total-fees {
-  top: 24.6%;
-  font-size: 2.2cqw;
+  top: 25.6%;
   left: 22%;
   width: 18%;
   height: 2.6%;
+  font-size: 2.2cqw;
 }
 
-/* First installment (line "أ - الدفعة الأولى") */
 .f-first-installment {
-  top: 28.1%;
+  top: 29.1%;
   left: 58%;
-  font-size: 2.2cqw;
   width: 18%;
   height: 2.1%;
-}
-
-/* Second installment (line "ب - الدفعة الثانية") */
-.f-second-installment {
-  top: 31.4%;
-  left: 58%;
   font-size: 2.2cqw;
-  width: 18%;
-  height: 2.1%;
 }
 
-/* Other fees */
-.f-other-fees {
-  top: 31.4%;
+.f-first-installment-note {
+  top: 29.4%;
   left: 5%;
-  font-size: 1.75cqw;
-  width: 36%;
-  height: 2%;
-  text-align: right;
-  white-space: pre-wrap;
+  width: 47%;
+  height: 2.1%;
+  font-size: 1.8cqw;
+  font-weight: 700;
   display: block;
-  padding: 0.4% 1%;
-  align-items: flex-start;
-  justify-content: flex-start;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: right;
+  direction: rtl;
+  // line-height: 2.1;
 }
 
-/* ============ PAGE 3 — signatures ============ */
-.f-second-party-signature,
-.f-first-party-signature {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  pointer-events: none;
+.f-second-installment {
+  top: 32.4%;
+  left: 58%;
+  width: 18%;
+  height: 2.1%;
+  font-size: 2.2cqw;
+}
 
-  img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
+.f-other-fees {
+  top: 31.8%;
+  font-weight: 700;
+  left: 5%;
+  width: 89%;
+  height: 5.5%;
+  font-size: 1.75cqw;
+  text-align: justify;
+  direction: rtl;
+  white-space: pre-wrap;
+  word-break: break-word;
+  display: block;
+  text-indent: 60.5%;
+  // padding: 0.4% 1%; /
+  overflow: hidden;
+  line-height: 2.47;
+}
+
+.f-page2-body {
+  position: absolute;
+  top: 38%;
+  right: 4.5%;
+  left: 4.5%;
+  bottom: 13%;
+  font-size: 1.9cqw;
+  font-weight: 600;
+  color: #160C3B;
+  white-space: normal;
+  text-align: justify;
+  direction: rtl;
+  line-height: 2;
+  overflow: hidden;
+  overflow-wrap: break-word;
+
+  ::ng-deep {
+    p {
+      margin: 0;
+      min-height: 1em;
+      overflow-wrap: break-word;
+    }
+
+    ol,
+    ul {
+      margin: 0;
+      padding-inline-start: 1.5em;
+      padding-inline-end: 0;
+    }
+
+    li {
+      margin: 0;
+      overflow-wrap: break-word;
+    }
+
+    strong {
+      font-weight: 700;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    u {
+      text-decoration: underline;
+    }
   }
 }
 
-.f-second-party-signature {
-  top: 80%;
-  left: 2%;
-  width: 24%;
-  height: 10%;
+/* ============ PAGE 3 — signatures (full layout on empty background) ============ */
+
+.p3-body {
+  position: absolute;
+  top: 21.5%;
+  right: 4.5%;
+  left: 4.5%;
+  bottom: 28%;
+  font-size: 2cqw;
+  font-weight: 600;
+  color: #160C3B;
+  white-space: normal;
+  text-align: justify;
+  direction: rtl;
+  line-height: 2.4;
+  overflow: hidden;
+  overflow-wrap: break-word;
+
+  ::ng-deep {
+    p {
+      margin: 0;
+      min-height: 1em;
+      overflow-wrap: break-word;
+    }
+
+    ol,
+    ul {
+      margin: 0;
+      padding-inline-start: 1.5em;
+      padding-inline-end: 0;
+    }
+
+    li {
+      margin: 0;
+      overflow-wrap: break-word;
+    }
+
+    strong {
+      font-weight: 700;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    u {
+      text-decoration: underline;
+    }
+  }
 }
 
-.f-first-party-signature {
-  top: 78%;
-  left: 68%;
-  width: 24%;
-  height: 10%;
+.p3-sig-section {
+  position: absolute;
+  bottom: 2%;
+  right: 4.5%;
+  left: 0;
+  height: 18%;
+  display: flex;
+  direction: rtl;
+  align-items: flex-start;
+  justify-content: space-between;
 }
 
-.f-second-party-signed-at {
-  top: 89%;
-  left: 6%;
-  width: 24%;
-  height: 1.6%;
+.p3-sig-party {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 36%;
+  top: 12%;
+  overflow: hidden;
+}
+
+.p3-sig-title {
+  font-weight: 800;
+  font-size: 2.3cqw;
+  color: #1A113A;
+  margin-bottom: 3%;
+}
+
+.p3-sig-img {
+  max-width: 80%;
+  max-height: 80%;
+  width: 100%;
+  object-fit: contain;
+}
+
+.p3-sig-date {
   font-size: 1.5cqw;
   font-weight: 600;
-  color: #444;
+  color: #555;
+  direction: ltr;
+  margin-top: -4%;
 }

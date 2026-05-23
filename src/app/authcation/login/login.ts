@@ -1,5 +1,5 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Data } from '../../core/Servies/data';
 import { Router } from '@angular/router';
 
@@ -11,7 +11,12 @@ import { Router } from '@angular/router';
 })
 export class Login implements OnInit {
   //************************************Varibels***************************************//
-  Form = signal<FormGroup>(new FormGroup({}));
+  Form = signal<FormGroup>(
+    new FormGroup({
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', Validators.required),
+    }),
+  );
   showPassword = signal<boolean>(false);
   //************************************Varibels***************************************//
 
@@ -21,19 +26,9 @@ export class Login implements OnInit {
     private router: Router,
   ) {}
 
-  ngOnInit(): void {
-    this.OnCreateForm();
-  }
+  ngOnInit(): void {}
 
   //************************************Implemantion Methods***************************************//
-  OnCreateForm() {
-    this.Form.set(
-      this.FB.group({
-        email: ['', [Validators.required, Validators.email]],
-        password: ['', Validators.required],
-      }),
-    );
-  }
 
   togglePasswordVisibility() {
     this.showPassword.update((val) => !val);

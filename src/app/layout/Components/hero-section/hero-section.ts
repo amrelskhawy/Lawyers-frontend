@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
+
 @Component({
   selector: 'app-hero-section',
   standalone: false,
@@ -8,6 +9,4 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 
 })
-export class HeroSection {
-
-}
+export class HeroSection {}

@@ -30,6 +30,10 @@
   border-radius: 30px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.4);
+
+  &:has(.booking-grid) {
+    width: 95%;
+  }
 }
 
 .new-meeting {
@@ -120,9 +124,98 @@
   }
 }
 
+.booking-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: stretch;
+  width: 100%;
+  box-sizing: border-box;
+
+  > * {
+    display: block;
+    height: 100%;
+    min-width: 0;
+  }
+
+  ::ng-deep > app-data-booking > section,
+  ::ng-deep > app-servies-booking > .wrapper-servies-booking,
+  ::ng-deep > app-meeting-booking > .wrapper-date {
+    height: 100%;
+    box-sizing: border-box;
+  }
+
+  ::ng-deep > app-data-booking .next-btn,
+  ::ng-deep > app-meeting-booking .next-btn {
+    display: none !important;
+  }
+
+  ::ng-deep > app-payment {
+    display: flex;
+    flex-direction: column;
+
+    .type-of-payment {
+      grid-template-columns: 1fr;
+      gap: 14px;
+      flex: 1;
+
+      .card {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        column-gap: 16px;
+        align-items: center;
+        text-align: start;
+        padding: 18px 20px;
+
+        .check-badge {
+          grid-column: 1 / -1;
+        }
+
+        .provider-img {
+          width: 80px;
+          height: 50px;
+          object-fit: contain;
+          flex-shrink: 0;
+          grid-row: span 2;
+        }
+
+        h3 {
+          font-size: 1.05rem;
+          margin: 0;
+          font-weight: 700;
+          align-self: end;
+        }
+
+        p {
+          margin: 4px 0 0;
+          font-size: 0.85rem;
+          color: var(--secondary-color);
+          align-self: start;
+        }
+      }
+    }
+
+    .next-btn {
+      align-self: flex-end;
+    }
+  }
+}
+
+@media(max-width: 767px) {
+  .booking-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 0 15px;
+  }
+}
+
 @media(max-width: 1200px) {
   .container {
     width: 85%;
+
+    &:has(.booking-grid) {
+      width: 95%;
+    }
   }
 }
 

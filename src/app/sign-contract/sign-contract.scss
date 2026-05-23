@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 $navy: #0a1f44;
 $gold: #c9a84c;
 
@@ -18,7 +20,9 @@ $gold: #c9a84c;
   &::before {
     content: '';
     position: absolute;
-    top: 0; left: 0; right: 0;
+    top: 0;
+    left: 0;
+    right: 0;
     height: 5px;
     background: linear-gradient(90deg, $navy, $gold, $navy);
   }
@@ -31,8 +35,16 @@ $gold: #c9a84c;
   gap: 8px;
   margin-bottom: 22px;
 
-  .sc-logo { height: 70px; width: auto; }
-  .sc-name { height: 22px; width: auto; opacity: 0.9; }
+  .sc-logo {
+    height: 70px;
+    width: auto;
+  }
+
+  .sc-name {
+    height: 22px;
+    width: auto;
+    opacity: 0.9;
+  }
 }
 
 .sc-card {
@@ -56,7 +68,9 @@ $gold: #c9a84c;
     background: linear-gradient(90deg, transparent, $gold, transparent);
   }
 
-  &.wide { max-width: 1200px; }
+  &.wide {
+    max-width: 1200px;
+  }
 
   .brand {
     text-align: center;
@@ -71,6 +85,7 @@ $gold: #c9a84c;
       text-transform: uppercase;
       margin-bottom: 8px;
     }
+
     h1 {
       margin: 0;
       font-size: 26px;
@@ -78,6 +93,7 @@ $gold: #c9a84c;
       color: $navy;
       line-height: 1.3;
     }
+
     .brand-divider {
       display: block;
       width: 56px;
@@ -89,7 +105,9 @@ $gold: #c9a84c;
   }
 }
 
-.form, .summary, .actions {
+.form,
+.summary,
+.actions {
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -109,12 +127,14 @@ $gold: #c9a84c;
   display: flex;
   flex-direction: column;
   gap: 8px;
+
   label {
     font-size: 12px;
     font-weight: 700;
     color: #555;
     letter-spacing: 0.4px;
   }
+
   input {
     width: 100%;
     border: 1.5px solid #e2e3ec;
@@ -126,8 +146,12 @@ $gold: #c9a84c;
     background: #fbfbff;
     outline: none;
     transition: 0.2s ease;
-    &:hover  { border-color: #cdd0e0; }
-    &:focus  {
+
+    &:hover {
+      border-color: #cdd0e0;
+    }
+
+    &:focus {
       border-color: $gold;
       background: #fff;
       box-shadow: 0 0 0 4px rgba($gold, 0.15);
@@ -149,15 +173,28 @@ $gold: #c9a84c;
     padding-bottom: 8px;
     border-bottom: 1px solid #e6e9f5;
   }
+
   .row {
     display: flex;
     gap: 8px;
     font-size: 13px;
     line-height: 1.6;
     margin-bottom: 6px;
-    span    { color: #666;  min-width: 100px; font-weight: 600; }
-    strong  { color: $navy; flex: 1; }
-    .multiline { white-space: pre-wrap; }
+
+    span {
+      color: #666;
+      min-width: 100px;
+      font-weight: 600;
+    }
+
+    strong {
+      color: $navy;
+      flex: 1;
+    }
+
+    .multiline {
+      white-space: pre-wrap;
+    }
   }
 }
 
@@ -185,17 +222,18 @@ $gold: #c9a84c;
   border: 1.5px dashed #c0c4d4;
   border-radius: 14px;
   background:
-    repeating-linear-gradient(
-      45deg,
+    repeating-linear-gradient(45deg,
       #fafbff 0,
       #fafbff 8px,
       #f4f5fb 8px,
-      #f4f5fb 16px
-    );
+      #f4f5fb 16px);
   height: 200px;
   overflow: hidden;
   transition: border-color 0.2s;
-  &:hover { border-color: $gold; }
+
+  &:hover {
+    border-color: $gold;
+  }
 }
 
 .pad {
@@ -223,7 +261,8 @@ $gold: #c9a84c;
   gap: 10px;
 }
 
-.btn-primary, .btn-secondary {
+.btn-primary,
+.btn-secondary {
   display: inline-flex;
   align-items: center;
   gap: 9px;
@@ -235,13 +274,19 @@ $gold: #c9a84c;
   cursor: pointer;
   border: none;
   transition: 0.2s ease;
-  &:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+  }
 }
 
 .btn-primary {
   background: linear-gradient(135deg, $navy, lighten($navy, 12%));
   color: #fff;
   box-shadow: 0 8px 18px rgba($navy, 0.30);
+
   &:hover:not(:disabled) {
     transform: translateY(-1px);
     box-shadow: 0 12px 24px rgba($navy, 0.35);
@@ -258,8 +303,9 @@ $gold: #c9a84c;
 
 .btn-secondary {
   background: rgba($gold, 0.12);
-  color: darken($gold, 12%);
+  color: color.adjust($gold, $lightness: -12%);
   border: 1.5px solid rgba($gold, 0.35);
+
   &:hover:not(:disabled) {
     background: $gold;
     color: #fff;
@@ -289,7 +335,10 @@ $gold: #c9a84c;
   margin: 4px 0 16px;
   line-height: 1.7;
 
-  &.small { font-size: 12px; padding: 9px 12px; }
+  &.small {
+    font-size: 12px;
+    padding: 9px 12px;
+  }
 }
 
 .sign-grid {
@@ -303,7 +352,8 @@ $gold: #c9a84c;
   }
 }
 
-.preview-col, .sign-col {
+.preview-col,
+.sign-col {
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -334,6 +384,7 @@ $gold: #c9a84c;
   font-weight: 600;
   width: fit-content;
   transition: 0.2s ease;
+
   &:hover {
     color: #fff;
     background: $gold;
@@ -356,9 +407,23 @@ $gold: #c9a84c;
     line-height: 110px;
     border-radius: 50%;
   }
-  h2 { margin: 0 0 10px; color: $navy; font-size: 22px; }
-  p  { color: #555; margin: 0 0 22px; font-size: 14px; line-height: 1.7; }
-  a  { display: inline-flex; }
+
+  h2 {
+    margin: 0 0 10px;
+    color: $navy;
+    font-size: 22px;
+  }
+
+  p {
+    color: #555;
+    margin: 0 0 22px;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  a {
+    display: inline-flex;
+  }
 }
 
 .sc-footer {

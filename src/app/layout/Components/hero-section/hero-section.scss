@@ -58,13 +58,17 @@ $border-radius-sm: 80px;
     color: var(--accent-gold);
   }
 
-  button {
+  button, a.btn-hero-section {
     @include button(240px);
     background: linear-gradient(90deg, #b5a863 0%, #8b7a3a 100%);
     color: var(--white-color);
     border-radius: 40px;
     font-size: 15px;
     margin-top: 20px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
     @media (max-width: 1200px) {
       width: 100%;

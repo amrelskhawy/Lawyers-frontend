@@ -26,52 +26,23 @@
     <p>{{"TABBY_DESC"|translate}}</p>
   </button>
 
-  <button class="card" style="pointer-events: none;opacity: 0.3;" [ngClass]="{ active: typepayment() == 'PAYMOB' }"
-    (click)="OnSelectPayment('PAYMOB')">
+  <button class="card" (click)="OnSelectPayment('PAYMOB')">
     <div class="check-badge">
       <i *ngIf="typepayment() == 'PAYMOB'" class="fa-solid fa-circle-check"></i>
     </div>
-    <img src="assets/Img/PayMob_Payments.png" class="provider-img" alt="paymob" />
-    <h3>{{"PAYMOB_NAME"|translate}}</h3>
-    <p>{{"PAYMOB_DESC"|translate}}</p>
+    <img src="assets/Img/apple-pay.png" class="provider-img" alt="apple-pay" />
+    <h3>{{"APPLY_PAY_NAME"|translate}}</h3>
+    <p>{{"APPLY_PAY_DESC"|translate}}</p>
   </button>
 
-  <button class="card" [ngClass]="{ active: typepayment() == 'STRIPE' }" (click)="OnSelectPayment('STRIPE')">
+  <!-- <button class="card" [ngClass]="{ active: typepayment() == 'STRIPE' }" (click)="OnSelectPayment('STRIPE')">
     <div class="check-badge">
       <i *ngIf="typepayment() == 'STRIPE'" class="fa-solid fa-circle-check"></i>
     </div>
     <img src="assets/Img/OIP.webp" class="provider-img" alt="provider-img" />
     <h3>{{"STRIPE_NAME"|translate}}</h3>
     <p>{{"STRIPE_DESC"|translate}}</p>
-  </button>
+  </button> -->
 </div>
-
-<!-- <div class="footer-payment">
-  <div class="header-content">
-    <div class="one-content">
-      <h3 class="">{{typepayment()}}</h3>
-      <div>
-        <h4>{{"CARD_PAYMENT"|translate}}</h4>
-        <p>{{"CARD_DETAILS"|translate}}</p>
-      </div>
-    </div>
-
-    <div class="two-content">
-      <p>🔒{{"SSL_SECURED"|translate}}</p>
-    </div>
-  </div>
-</div> -->
-
-<!-- <div class="card-visual">
-  <div class="square"></div>
-  <span>•••• •••• •••• ••••</span>
-  <div class="card-holder">
-    <p>{{"CARD_HOLDER"|translate}}</p>
-    <div class="circle-color">
-      <div class="circle red-circle"></div>
-      <div class="circle yellow-circle"></div>
-    </div>
-  </div>
-</div> -->
 
 <button (click)="onNextStep()" class="next-btn">{{ 'NEXT_BTN' | translate }}</button>

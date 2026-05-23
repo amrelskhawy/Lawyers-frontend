@@ -11,6 +11,10 @@ import { COUNTRIES, Country } from '../customers/form-customer/form-customer';
 
 type SaveStatus = 'idle' | 'unsaved' | 'saving' | 'saved' | 'error';
 
+const PAGE2_DEFAULT = `<p>2 . جميع الأتعاب المدفوعة تعتبر مقابل الأعمال المنجزة وغير قابلة للاسترداد.</p><p>3 . يتحمل الطرف الثاني الرسوم القضائية، والمصاريف الحكومية، ورسوم الغرف التجارية، وأي مصاريف إدارية لازمة لسير الإجراءات.</p><p>4 . في حال كانت القضية خارج المنطقة الغربية، يتحمل الطرف الثاني تكاليف الإقامة والمعيشة والانتقالات الخاصة بالمحامي أو فريق العمل الميداني، على أن يتم إخطار الطرف الثاني بالمبالغ التقديرية قبل الانتقال وذلك وفق اتفاق منفصل.</p><p>5 . يتحمل الطرف الثاني رسوم الترجمة المعتمدة لأي مستندات أو مراسلات تستلزم ذلك.</p><p>6 . في حال إحالة القضية إلى الخبراء من قبل الجهة القضائية أو بناءً على مقتضى الإجراءات النظامية، يلتزم الطرف الثاني، بدفع كامل تكاليف ومصاريف الخبراء المعتمدين فور طلبها، ويشمل ذلك أتعاب الخبرة، وتكاليف الانتقال إن وجدت، وأي رسوم إدارية ذات صلة، دون أن يتحمل الطرف الأول أي مسؤولية مالية عنها.</p><p><strong>البند الثالث - التزامات الطرف الأول -:</strong></p><p>1. تقديم الخدمات القانونية المتفق عليها بكفاءة واحترافية.</p><p>2. اطلاع الطرف الثاني على أهم المستجدات القانونية.</p><p>3. الحفاظ على سرية جميع المعلومات.</p><p>4. العمل لمصلحة الطرف الثاني في كافة أنواع الدعاوى المتفق عليها، وكذلك مراجعة الجهات الحكومية والشرطية والنيابة العامة والجهات التي تستلزم الأعمال مراجعتها كافة.</p><p>5. بذل عناية الرجل الحريص لتحقيق مصلحة الطرف الثاني، كذلك مطالب ببذل عناية وليس تحقيق غاية وله في ذلك أن يسلك الطرق النظامية من إقامة دعاوى وتقديم بلاغات أو تواصل مع الخصم ... الخ.</p>`;
+
+const PAGE3_DEFAULT = `<p><strong>البند الرابع – التزامات الطرف الثاني-:</strong></p><p>1. تزويد الطرف الأول بجميع المستندات والبيانات المطلوبة بدقة وفي الوقت المحدد.</p><p>أ- يقر الطرف الثاني الموكل بأن المعلومات التي قدمها للطرف الأول صحيحة ويتحمل كافة مسؤوليتها القانونية بما في ذلك العناوين والأرقام والأسماء والموقع ويتحمل ما يترتب على عدم دقة البيانات من تأخير لسير العمل وهدر الجهد والوقت.</p><p>ب- يقر الطرف الثاني بأن كافة الأوراق والمستندات التي يقدمها عبارة عن صور لا يطالب الطرف الأول بردها للموكل وأن اية صورة للمستندات والوثائق التي يلزم تقديمها للجهات المختصة سيقوم بإحضارها ولا يتحمل الطرف الأول مسؤوليتها.</p><p>2. التعاون التام مع الطرف الأول، وعدم تعيين أي محامٍ آخر في نفس القضية دون موافقة خطية منه.</p><p>3. في حالة قيام الطرف الثاني بالغاء الوكالة الممنوحة لطرف الأول في أي مرحلة من مراحل الدعوى بالإرادة المنفردة تعتبر جميع اتعاب الطرف الأول المالية حاله وواجبة السداد في حينه.</p><p><strong>البند الخامس</strong></p><p>يتكون هذا العقد من ورقتين، يتضمن خمسة بنود رئيسية بالإضافة إلى التمهيد، ويُعتبر كل منها مكملاً ومفسراً للآخر، وقع من نسختين أصليتين، ولا يُعتد بأي تعديل أو إضافة ما لم يكن مكتوباً وموقعاً من الطرفين.</p>`;
+
 @Component({
   selector: 'app-lawyer-fees-contract',
   standalone: false,
@@ -83,9 +87,13 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
       serviceDescription: [''],
 
       totalFees:         [null],
-      firstInstallment:  [null],
-      secondInstallment: [null],
+      firstInstallment:      [null],
+      firstInstallmentNote:  [null],
+      secondInstallment:     [null],
       otherFees:         [null],
+
+      page2Content:      [PAGE2_DEFAULT],
+      page3Content:      [PAGE3_DEFAULT],
     });
   }
 
@@ -159,6 +167,8 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
   private patchContract(c: ILawyerFeesContract) {
     this.loaded.set(c);
     this.contractId.set(c.id);
+    this.editingPage2.set(false);
+    this.editingPage3.set(false);
     this.skipNextDirty = true;
     const rawPhone = c.clientPhone ?? c.customer?.phone ?? this.loadedCase()?.customer?.phone ?? '';
     const detected = this.detectCountry(rawPhone);
@@ -174,9 +184,13 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
       clientPhone:       detected.localNumber,
       serviceDescription: c.serviceDescription ?? '',
       totalFees:         c.totalFees ?? null,
-      firstInstallment:  c.firstInstallment ?? null,
-      secondInstallment: c.secondInstallment ?? null,
+      firstInstallment:      c.firstInstallment ?? null,
+      firstInstallmentNote:  c.firstInstallmentNote ?? null,
+      secondInstallment:     c.secondInstallment ?? null,
       otherFees:         c.otherFees ?? null,
+
+      page2Content:      this.ensureHtml(c.page2Content ?? PAGE2_DEFAULT),
+      page3Content:      this.ensureHtml(c.page3Content ?? PAGE3_DEFAULT),
     }, { emitEvent: true });
     this.loading.set(false);
     this.saveStatus.set('saved');
@@ -287,9 +301,12 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
       clientPhone:       v.clientPhone,
       serviceDescription: v.serviceDescription,
       totalFees:         v.totalFees,
-      firstInstallment:  v.firstInstallment,
-      secondInstallment: v.secondInstallment,
-      otherFees:         v.otherFees,
+      firstInstallment:      v.firstInstallment,
+      firstInstallmentNote:  v.firstInstallmentNote,
+      secondInstallment:     v.secondInstallment,
+      otherFees:             v.otherFees,
+      page2Content:          v.page2Content,
+      page3Content:      v.page3Content,
       firstPartySignature:  c?.firstPartySignature ?? null,
       secondPartySignature: c?.secondPartySignature ?? null,
       secondPartySignedAt:  c?.secondPartySignedAt ?? null,
@@ -308,6 +325,15 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
         next: (res) => { this.loaded.set(res.data); this.saveStatus.set('saved'); },
         error: () => this.saveStatus.set('error'),
       });
+  }
+
+  private ensureHtml(text: string | null | undefined): string {
+    if (!text) return '';
+    if (/<[a-zA-Z]/.test(text)) return text;
+    return text
+      .split('\n')
+      .map((line) => (line ? `<p>${line}</p>` : '<p><br></p>'))
+      .join('');
   }
 
   private toIsoOrNull(v: any): string | null {
@@ -338,10 +364,25 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
       serviceDescription: v.serviceDescription || null,
 
       totalFees:         this.numOrNull(v.totalFees),
-      firstInstallment:  this.numOrNull(v.firstInstallment),
-      secondInstallment: this.numOrNull(v.secondInstallment),
+      firstInstallment:      this.numOrNull(v.firstInstallment),
+      firstInstallmentNote:  v.firstInstallmentNote || null,
+      secondInstallment:     this.numOrNull(v.secondInstallment),
       otherFees:         v.otherFees || null,
+
+      page2Content:      v.page2Content || null,
+      page3Content:      v.page3Content || null,
     };
+  }
+
+  editingPage2 = signal<boolean>(false);
+  editingPage3 = signal<boolean>(false);
+
+  toggleEditPage2() {
+    this.editingPage2.update((v) => !v);
+  }
+
+  toggleEditPage3() {
+    this.editingPage3.update((v) => !v);
   }
 
   signingUrl = signal<string>('');

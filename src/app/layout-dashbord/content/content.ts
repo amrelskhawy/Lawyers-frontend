@@ -1,6 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild, signal } from '@angular/core';
-import { Passcode } from '../../core/Servies/passcode';
-import { PasscodeDialog } from '../../shared/passcode-dialog/passcode-dialog';
+import { Component, OnInit, signal } from '@angular/core';
 
 @Component({
   selector: 'app-content',
@@ -8,16 +6,10 @@ import { PasscodeDialog } from '../../shared/passcode-dialog/passcode-dialog';
   templateUrl: './content.html',
   styleUrl: './content.scss',
 })
-export class Content implements OnInit, AfterViewInit {
-  @ViewChild(PasscodeDialog) passcodeDialog!: PasscodeDialog;
-
-  constructor(private passcode: Passcode) {}
+export class Content implements OnInit {
+  constructor() {}
 
   ngOnInit(): void {}
-
-  ngAfterViewInit(): void {
-    if (this.passcodeDialog) this.passcode.registerDialog(this.passcodeDialog);
-  }
 
   toggel = signal<boolean>(false);
 

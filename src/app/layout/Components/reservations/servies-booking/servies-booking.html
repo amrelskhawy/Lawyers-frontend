@@ -8,8 +8,17 @@
     </div>
   </div>
 
+  <div class="services-tabs">
+    <button class="tab-btn" [class.active]="activeTab() === 'normal'" (click)="activeTab.set('normal')">
+      {{ 'tab_normal_services' | translate }}
+    </button>
+    <button class="tab-btn" [class.active]="activeTab() === 'installment'" (click)="activeTab.set('installment')">
+      {{ 'tab_installment_plans' | translate }}
+    </button>
+  </div>
+
   <div class="content-servies-booking">
-    @for (item of servise(); track item.id) {
+    @for (item of filteredServices(); track item.id) {
     <button [attr.aria-label]="item.name_en | translate"  [ngClass]="{ 'active-servies': item.id == selectServies().id }" class="card" (click)="onSelctServies(item)">
       <div class="check-badge" *ngIf="item.id == selectServies().id">
         <i *ngIf="item.id == selectServies().id" class="fa-solid fa-circle-check"></i>

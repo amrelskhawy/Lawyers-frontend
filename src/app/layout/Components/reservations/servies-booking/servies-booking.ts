@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
+import { Component, computed, EventEmitter, Input, Output, signal } from '@angular/core';
 import { BookingService } from '../booking.service';
 
 @Component({
@@ -11,6 +11,14 @@ export class ServiesBooking {
   constructor(private bookingService: BookingService) {}
   servise = signal<any[]>([]);
   selectServies = signal<any>({});
+  activeTab = signal<'normal' | 'installment'>('normal');
+
+  filteredServices = computed(() => {
+    const all = this.servise();
+    return this.activeTab() === 'normal'
+      ? all.filter((s: any) => !s.isInstallmentPlans)
+      : all.filter((s: any) => s.isInstallmentPlans);
+  });
   @Input()
   set dataservies(value: any) {
     this.servise.set(value);
