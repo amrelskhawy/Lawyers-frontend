@@ -1,0 +1,93 @@
+<p-dialog
+  [header]="title"
+  [visible]="visible"
+  (visibleChange)="close()"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  styleClass="user-form-dialog"
+  [style]="{ width: '540px' }"
+  dir="rtl">
+
+  <form [formGroup]="form" (ngSubmit)="submit()" class="user-form">
+
+    <div class="form-row">
+      <!-- Arabic name -->
+      <div class="field">
+        <label>الاسم بالعربية <span class="req">*</span></label>
+        <input pInputText formControlName="nameAr" placeholder="أحمد الرشيدي" />
+        <small class="err" *ngIf="form.get('nameAr')?.invalid && form.get('nameAr')?.touched">
+          هذا الحقل مطلوب
+        </small>
+      </div>
+      <!-- English name -->
+      <div class="field">
+        <label>الاسم بالإنجليزية</label>
+        <input pInputText formControlName="nameEn" placeholder="Ahmed Al-Rashidi" />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <!-- Email -->
+      <div class="field">
+        <label>البريد الإلكتروني <span class="req">*</span></label>
+        <input pInputText formControlName="email" type="email" placeholder="user@example.com"
+          [attr.disabled]="isEdit ? true : null" />
+        <small class="err" *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
+          بريد إلكتروني غير صحيح
+        </small>
+      </div>
+      <!-- Password -->
+      <div class="field">
+        <label>كلمة المرور {{ isEdit ? '(اتركها فارغة للإبقاء)' : '' }} <span class="req" *ngIf="!isEdit">*</span></label>
+        <p-password formControlName="password" [feedback]="false" [toggleMask]="true"
+          placeholder="••••••" styleClass="w-full" inputStyleClass="w-full" />
+        <small class="err" *ngIf="form.get('password')?.invalid && form.get('password')?.touched">
+          6 أحرف على الأقل
+        </small>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <!-- Phone -->
+      <div class="field">
+        <label>رقم الجوال</label>
+        <input pInputText formControlName="phone" placeholder="+966 5x xxx xxxx" />
+      </div>
+      <!-- Role -->
+      <div class="field">
+        <label>الدور الوظيفي <span class="req">*</span></label>
+        <p-select formControlName="role" [options]="roleOptions"
+          optionLabel="label" optionValue="value"
+          placeholder="اختر الدور" styleClass="w-full" />
+      </div>
+    </div>
+
+    <!-- Location -->
+    <div class="field full">
+      <label>الموقع / المدينة</label>
+      <input pInputText formControlName="location" placeholder="الرياض، المملكة العربية السعودية" />
+    </div>
+
+    <!-- Picture URL -->
+    <div class="field full">
+      <label>رابط الصورة الشخصية</label>
+      <input pInputText formControlName="picture" placeholder="https://..." />
+    </div>
+
+    <!-- Error -->
+    <p class="submit-error" *ngIf="error()">
+      <i class="fa-solid fa-circle-exclamation"></i> {{ error() }}
+    </p>
+
+  </form>
+
+  <ng-template pTemplate="footer">
+    <button pButton type="button" class="p-button-text" label="إلغاء" (click)="close()"></button>
+    <button pButton type="submit" [label]="isEdit ? 'حفظ التغييرات' : 'إنشاء المستخدم'"
+      [loading]="saving()" (click)="submit()"
+      [disabled]="form.invalid || saving()">
+    </button>
+  </ng-template>
+
+</p-dialog>

@@ -1,0 +1,40 @@
+<ng-template #actions let-item let-onDelete="delete">
+  <div class="action-btn">
+    <button [pTooltip]="'edit' | translate" tooltipPosition="top"
+      (click)="openEdit(item)" class="edit-btn">
+      <i class="fa-solid fa-pen-to-square"></i>
+    </button>
+    <button [attr.aria-label]="'delete' | translate" (click)="onDelete(item)" class="delete-btn">
+      <i class="fa-solid fa-trash"></i>
+    </button>
+  </div>
+</ng-template>
+
+<!-- Role filter tabs -->
+<div class="role-tabs" dir="rtl">
+  <button *ngFor="let r of roleOptions"
+    class="role-tab"
+    [class.active]="activeRoleFilter() === r.value"
+    (click)="setRoleFilter(r.value)">
+    {{ r.label }}
+  </button>
+</div>
+
+<app-dashboard-crud-page
+  [endpoint]="endpoint"
+  deleteEndpoint="admin/users"
+  [columns]="columns"
+  [searchFields]="searchFields"
+  [dataMapper]="dataMapper"
+  [actionsTemplate]="actions"
+  [showAddButton]="true"
+  (addNew)="openCreate()">
+
+  <app-form-user
+    [visible]="visibleForm"
+    (visibleChange)="visibleForm = $event"
+    [user]="editingUser()"
+    (saved)="onSaved()">
+  </app-form-user>
+
+</app-dashboard-crud-page>
