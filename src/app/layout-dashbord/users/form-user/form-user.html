@@ -42,20 +42,16 @@
 
       <div class="form-row">
         <div class="field">
-          <p-floatlabel variant="on">
-            <input pInputText id="nameAr" formControlName="nameAr" class="field-input" />
-            <label for="nameAr">الاسم بالعربية <span class="req">*</span></label>
-          </p-floatlabel>
+          <label for="nameAr">الاسم بالعربية <span class="req">*</span></label>
+          <input pInputText id="nameAr" formControlName="nameAr" class="field-input" />
           <small class="err" *ngIf="form.get('nameAr')?.invalid && form.get('nameAr')?.touched">
             هذا الحقل مطلوب
           </small>
         </div>
 
         <div class="field">
-          <p-floatlabel variant="on">
-            <input pInputText id="nameEn" formControlName="nameEn" dir="ltr" class="field-input" />
-            <label for="nameEn">الاسم بالإنجليزية</label>
-          </p-floatlabel>
+          <label for="nameEn">الاسم بالإنجليزية</label>
+          <input pInputText id="nameEn" formControlName="nameEn" dir="ltr" class="field-input" />
         </div>
       </div>
     </div>
@@ -69,26 +65,22 @@
 
       <div class="form-row">
         <div class="field">
-          <p-floatlabel variant="on">
-            <input pInputText id="email" formControlName="email" type="email"
-              [attr.disabled]="isEdit ? true : null" dir="ltr" class="field-input" />
-            <label for="email">البريد الإلكتروني <span class="req">*</span></label>
-          </p-floatlabel>
+          <label for="email">البريد الإلكتروني <span class="req">*</span></label>
+          <input pInputText id="email" formControlName="email" type="email"
+            [attr.disabled]="isEdit ? true : null" dir="ltr" class="field-input" />
           <small class="err" *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
             بريد إلكتروني غير صحيح
           </small>
         </div>
 
         <div class="field">
-          <p-floatlabel variant="on">
-            <p-password inputId="password" formControlName="password" [feedback]="false" [toggleMask]="true"
-              styleClass="field-password" inputStyleClass="field-input" />
-            <label for="password">
-              كلمة المرور
-              <span class="hint" *ngIf="isEdit">(اتركها فارغة للإبقاء)</span>
-              <span class="req" *ngIf="!isEdit">*</span>
-            </label>
-          </p-floatlabel>
+          <label for="password">
+            كلمة المرور
+            <span class="hint" *ngIf="isEdit">(اتركها فارغة للإبقاء)</span>
+            <span class="req" *ngIf="!isEdit">*</span>
+          </label>
+          <p-password inputId="password" formControlName="password" [feedback]="false" [toggleMask]="true"
+            styleClass="field-password" inputStyleClass="field-input" />
           <small class="err" *ngIf="form.get('password')?.invalid && form.get('password')?.touched">
             6 أحرف على الأقل
           </small>
@@ -118,25 +110,45 @@
 
       <div class="form-row">
         <div class="field">
-          <p-floatlabel variant="on">
-            <input pInputText id="phone" formControlName="phone" dir="ltr" class="field-input" />
-            <label for="phone">رقم الجوال</label>
-          </p-floatlabel>
+          <label for="phone">رقم الجوال</label>
+          <div class="phone-wrapper">
+            <p-select
+              [options]="countries"
+              [(ngModel)]="selectedCountry"
+              [ngModelOptions]="{ standalone: true }"
+              optionLabel="name"
+              [filter]="true"
+              filterBy="name,code"
+              styleClass="country-select"
+              appendTo="body">
+              <ng-template pTemplate="selectedItem">
+                <span class="country-selected">
+                  {{ selectedCountry.flag }} +{{ selectedCountry.code }}
+                </span>
+              </ng-template>
+              <ng-template pTemplate="item" let-country>
+                <span class="country-option">
+                  {{ country.flag }} {{ country.name }} <span class="country-dial">+{{ country.code }}</span>
+                </span>
+              </ng-template>
+            </p-select>
+            <input pInputText id="phone" formControlName="phone" dir="ltr" class="field-input phone-input" [placeholder]="selectedCountry.example" />
+          </div>
+          <small class="phone-hint" *ngIf="selectedCountry">
+            <i class="fa-solid fa-circle-info"></i>
+            مثال: +{{ selectedCountry.code }} {{ selectedCountry.example }}
+          </small>
         </div>
 
         <div class="field">
-          <p-floatlabel variant="on">
-            <input pInputText id="location" formControlName="location" class="field-input" />
-            <label for="location">الموقع / المدينة</label>
-          </p-floatlabel>
+          <label for="location">الموقع / المدينة</label>
+          <input pInputText id="location" formControlName="location" class="field-input" />
         </div>
       </div>
 
       <div class="field full">
-        <p-floatlabel variant="on">
-          <input pInputText id="picture" formControlName="picture" dir="ltr" class="field-input" />
-          <label for="picture">رابط الصورة الشخصية</label>
-        </p-floatlabel>
+        <label for="picture">رابط الصورة الشخصية</label>
+        <input pInputText id="picture" formControlName="picture" dir="ltr" class="field-input" />
       </div>
     </div>
 

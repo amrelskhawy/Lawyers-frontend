@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, Output, signal, SimpleChange
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Data } from '../../../core/Servies/data';
 import { IUser } from '../users';
+import { Country, COUNTRIES } from '../../../core/Models/countries.model';
 
 @Component({
   selector: 'app-form-user',
@@ -18,6 +19,9 @@ export class FormUser implements OnChanges {
   form!: FormGroup;
   saving = signal<boolean>(false);
   error = signal<string>('');
+
+  countries = COUNTRIES;
+  selectedCountry: Country = COUNTRIES[0];
 
   readonly roleOptions = [
     { label: 'مدير', value: 'ADMIN' },
@@ -53,15 +57,29 @@ export class FormUser implements OnChanges {
     }
   }
 
+  private detectCountry(phone: string | null): { country: Country; localNumber: string } {
+    if (!phone) return { country: COUNTRIES[0], localNumber: '' };
+    const sorted = [...COUNTRIES].sort((a, b) => b.code.length - a.code.length);
+    for (const c of sorted) {
+      if (phone.startsWith(c.code)) {
+        return { country: c, localNumber: phone.slice(c.code.length) };
+      }
+    }
+    return { country: COUNTRIES[0], localNumber: phone };
+  }
+
   private buildForm() {
     const u = this.user;
     this.error.set('');
+    const detected = this.detectCountry(u?.phone ?? '');
+    this.selectedCountry = detected.country;
+
     this.form = this.fb.group({
       nameAr:   [u?.nameAr ?? '', Validators.required],
       nameEn:   [u?.nameEn ?? ''],
       email:    [u?.email ?? '', [Validators.required, Validators.email]],
       password: ['', this.isEdit ? [] : [Validators.required, Validators.minLength(6)]],
-      phone:    [u?.phone ?? ''],
+      phone:    [detected.localNumber],
       location: [u?.location ?? ''],
       picture:  [u?.picture ?? ''],
       role:     [u?.role ?? 'RECEPTIONIST', Validators.required],
@@ -79,12 +97,14 @@ export class FormUser implements OnChanges {
     this.error.set('');
 
     const val = this.form.value;
+    const fullPhone = val.phone ? this.selectedCountry.code + val.phone : null;
+
     const payload: any = {
       name:     val.nameAr,
       nameAr:   val.nameAr || null,
       nameEn:   val.nameEn || null,
       email:    val.email,
-      phone:    val.phone || null,
+      phone:    fullPhone,
       location: val.location || null,
       picture:  val.picture || null,
       role:     val.role,
@@ -108,3 +128,4 @@ export class FormUser implements OnChanges {
     });
   }
 }
+

@@ -7,7 +7,7 @@ import { IDataCustomer } from '../../core/Models/customers.model';
 import { IDataCase } from '../../core/Models/case.model';
 import { ILawyerFeesContract } from '../../core/Models/lawyer-fees-contract.model';
 import { LawyerFeesContractPreviewData } from '../../shared/lawyer-fees-contract-preview/lawyer-fees-contract-preview';
-import { COUNTRIES, Country } from '../customers/form-customer/form-customer';
+import { COUNTRIES, Country } from '../../core/Models/countries.model';
 
 type SaveStatus = 'idle' | 'unsaved' | 'saving' | 'saved' | 'error';
 
