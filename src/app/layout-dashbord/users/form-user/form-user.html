@@ -1,78 +1,143 @@
 <p-dialog
-  [header]="title"
   [visible]="visible"
   (visibleChange)="close()"
   [modal]="true"
   [draggable]="false"
   [resizable]="false"
+  [showHeader]="false"
+  [closeOnEscape]="true"
+  [dismissableMask]="true"
   styleClass="user-form-dialog"
-  [style]="{ width: '540px' }"
+  [style]="{ width: '600px' }"
   dir="rtl">
+
+  <!-- Custom Header -->
+  <div class="dialog-header">
+    <div class="header-main">
+      <div class="header-avatar">
+        <img *ngIf="form?.get('picture')?.value as pic; else placeholderIcon"
+             [src]="pic" (error)="onImgError($event)" alt="" />
+        <ng-template #placeholderIcon>
+          <i class="fa-solid" [class.fa-pen-to-square]="isEdit" [class.fa-user-plus]="!isEdit"></i>
+        </ng-template>
+      </div>
+      <div class="header-text">
+        <h3>{{ title }}</h3>
+        <p>{{ isEdit ? 'قم بتحديث معلومات المستخدم أدناه' : 'أدخل بيانات المستخدم الجديد' }}</p>
+      </div>
+    </div>
+    <button type="button" class="close-btn" (click)="close()" aria-label="إغلاق">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
 
   <form [formGroup]="form" (ngSubmit)="submit()" class="user-form">
 
-    <div class="form-row">
-      <!-- Arabic name -->
-      <div class="field">
-        <label>الاسم بالعربية <span class="req">*</span></label>
-        <input pInputText formControlName="nameAr" placeholder="أحمد الرشيدي" />
-        <small class="err" *ngIf="form.get('nameAr')?.invalid && form.get('nameAr')?.touched">
-          هذا الحقل مطلوب
-        </small>
+    <!-- Section: Identity -->
+    <div class="form-section">
+      <div class="section-title">
+        <i class="fa-solid fa-id-badge"></i>
+        <span>المعلومات الأساسية</span>
       </div>
-      <!-- English name -->
-      <div class="field">
-        <label>الاسم بالإنجليزية</label>
-        <input pInputText formControlName="nameEn" placeholder="Ahmed Al-Rashidi" />
+
+      <div class="form-row">
+        <div class="field">
+          <p-floatlabel variant="on">
+            <input pInputText id="nameAr" formControlName="nameAr" class="field-input" />
+            <label for="nameAr">الاسم بالعربية <span class="req">*</span></label>
+          </p-floatlabel>
+          <small class="err" *ngIf="form.get('nameAr')?.invalid && form.get('nameAr')?.touched">
+            هذا الحقل مطلوب
+          </small>
+        </div>
+
+        <div class="field">
+          <p-floatlabel variant="on">
+            <input pInputText id="nameEn" formControlName="nameEn" dir="ltr" class="field-input" />
+            <label for="nameEn">الاسم بالإنجليزية</label>
+          </p-floatlabel>
+        </div>
       </div>
     </div>
 
-    <div class="form-row">
-      <!-- Email -->
-      <div class="field">
-        <label>البريد الإلكتروني <span class="req">*</span></label>
-        <input pInputText formControlName="email" type="email" placeholder="user@example.com"
-          [attr.disabled]="isEdit ? true : null" />
-        <small class="err" *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
-          بريد إلكتروني غير صحيح
-        </small>
+    <!-- Section: Account -->
+    <div class="form-section">
+      <div class="section-title">
+        <i class="fa-solid fa-lock"></i>
+        <span>بيانات الحساب</span>
       </div>
-      <!-- Password -->
-      <div class="field">
-        <label>كلمة المرور {{ isEdit ? '(اتركها فارغة للإبقاء)' : '' }} <span class="req" *ngIf="!isEdit">*</span></label>
-        <p-password formControlName="password" [feedback]="false" [toggleMask]="true"
-          placeholder="••••••" styleClass="w-full" inputStyleClass="w-full" />
-        <small class="err" *ngIf="form.get('password')?.invalid && form.get('password')?.touched">
-          6 أحرف على الأقل
-        </small>
-      </div>
-    </div>
 
-    <div class="form-row">
-      <!-- Phone -->
-      <div class="field">
-        <label>رقم الجوال</label>
-        <input pInputText formControlName="phone" placeholder="+966 5x xxx xxxx" />
+      <div class="form-row">
+        <div class="field">
+          <p-floatlabel variant="on">
+            <input pInputText id="email" formControlName="email" type="email"
+              [attr.disabled]="isEdit ? true : null" dir="ltr" class="field-input" />
+            <label for="email">البريد الإلكتروني <span class="req">*</span></label>
+          </p-floatlabel>
+          <small class="err" *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
+            بريد إلكتروني غير صحيح
+          </small>
+        </div>
+
+        <div class="field">
+          <p-floatlabel variant="on">
+            <p-password inputId="password" formControlName="password" [feedback]="false" [toggleMask]="true"
+              styleClass="field-password" inputStyleClass="field-input" />
+            <label for="password">
+              كلمة المرور
+              <span class="hint" *ngIf="isEdit">(اتركها فارغة للإبقاء)</span>
+              <span class="req" *ngIf="!isEdit">*</span>
+            </label>
+          </p-floatlabel>
+          <small class="err" *ngIf="form.get('password')?.invalid && form.get('password')?.touched">
+            6 أحرف على الأقل
+          </small>
+        </div>
       </div>
-      <!-- Role -->
-      <div class="field">
+
+      <div class="field full">
         <label>الدور الوظيفي <span class="req">*</span></label>
-        <p-select formControlName="role" [options]="roleOptions"
-          optionLabel="label" optionValue="value"
-          placeholder="اختر الدور" styleClass="w-full" />
+        <div class="role-chips">
+          <button type="button" *ngFor="let r of roleOptions"
+                  class="role-chip"
+                  [class.active]="form.get('role')?.value === r.value"
+                  (click)="form.get('role')?.setValue(r.value)">
+            <i class="fa-solid" [ngClass]="roleIcon(r.value)"></i>
+            <span>{{ r.label }}</span>
+          </button>
+        </div>
       </div>
     </div>
 
-    <!-- Location -->
-    <div class="field full">
-      <label>الموقع / المدينة</label>
-      <input pInputText formControlName="location" placeholder="الرياض، المملكة العربية السعودية" />
-    </div>
+    <!-- Section: Contact -->
+    <div class="form-section">
+      <div class="section-title">
+        <i class="fa-solid fa-phone"></i>
+        <span>التواصل والموقع</span>
+      </div>
 
-    <!-- Picture URL -->
-    <div class="field full">
-      <label>رابط الصورة الشخصية</label>
-      <input pInputText formControlName="picture" placeholder="https://..." />
+      <div class="form-row">
+        <div class="field">
+          <p-floatlabel variant="on">
+            <input pInputText id="phone" formControlName="phone" dir="ltr" class="field-input" />
+            <label for="phone">رقم الجوال</label>
+          </p-floatlabel>
+        </div>
+
+        <div class="field">
+          <p-floatlabel variant="on">
+            <input pInputText id="location" formControlName="location" class="field-input" />
+            <label for="location">الموقع / المدينة</label>
+          </p-floatlabel>
+        </div>
+      </div>
+
+      <div class="field full">
+        <p-floatlabel variant="on">
+          <input pInputText id="picture" formControlName="picture" dir="ltr" class="field-input" />
+          <label for="picture">رابط الصورة الشخصية</label>
+        </p-floatlabel>
+      </div>
     </div>
 
     <!-- Error -->
@@ -80,14 +145,16 @@
       <i class="fa-solid fa-circle-exclamation"></i> {{ error() }}
     </p>
 
-  </form>
+    <!-- Footer Actions -->
+    <div class="form-actions">
+      <button pButton type="button" class="btn-cancel" label="إلغاء" (click)="close()"></button>
+      <button pButton type="submit" class="btn-save"
+              [label]="isEdit ? 'حفظ التغييرات' : 'إنشاء المستخدم'"
+              [loading]="saving()" (click)="submit()"
+              [disabled]="form.invalid || saving()">
+      </button>
+    </div>
 
-  <ng-template pTemplate="footer">
-    <button pButton type="button" class="p-button-text" label="إلغاء" (click)="close()"></button>
-    <button pButton type="submit" [label]="isEdit ? 'حفظ التغييرات' : 'إنشاء المستخدم'"
-      [loading]="saving()" (click)="submit()"
-      [disabled]="form.invalid || saving()">
-    </button>
-  </ng-template>
+  </form>
 
 </p-dialog>

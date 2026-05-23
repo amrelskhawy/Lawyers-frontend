@@ -29,6 +29,20 @@ export class FormUser implements OnChanges {
   get isEdit() { return !!this.user; }
   get title() { return this.isEdit ? 'تعديل المستخدم' : 'إضافة مستخدم جديد'; }
 
+  roleIcon(role: string): string {
+    switch (role) {
+      case 'ADMIN':        return 'fa-user-shield';
+      case 'MODERATOR':    return 'fa-user-tie';
+      case 'RECEPTIONIST': return 'fa-headset';
+      case 'LAWYER':       return 'fa-gavel';
+      default:             return 'fa-user';
+    }
+  }
+
+  onImgError(event: Event) {
+    (event.target as HTMLImageElement).style.display = 'none';
+  }
+
   constructor(private fb: FormBuilder, private data: Data) {
     this.buildForm();
   }

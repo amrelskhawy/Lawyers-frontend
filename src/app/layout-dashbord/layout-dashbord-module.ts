@@ -49,6 +49,7 @@ import { ActivityLogs } from './activity-logs/activity-logs';
 import { Users } from './users/users';
 import { FormUser } from './users/form-user/form-user';
 import { PasswordModule } from 'primeng/password';
+import { InputTextModule } from 'primeng/inputtext';
 
 @NgModule({
   declarations: [
@@ -103,6 +104,7 @@ import { PasswordModule } from 'primeng/password';
     FormsModule,
     SelectModule,
     PasswordModule,
+    InputTextModule,
     LawyerFeesContractPreviewModule,
     EditorModule,
   ],
