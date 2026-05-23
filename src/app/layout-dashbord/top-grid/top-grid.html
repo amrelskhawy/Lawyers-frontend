@@ -1,5 +1,5 @@
 <div class="header-grid">
-  @if (pages() !== 'Admin') {
+  @if (showAddButton) {
     <button class="btn-add" (click)="visibelform()">
       <i class="fa-solid fa-plus"></i> {{ 'add' | translate }}
     </button>
