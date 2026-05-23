@@ -45,6 +45,11 @@ import { LawyerFeesContractsList } from './lawyer-fees-contracts-list/lawyer-fee
 import { LawyerFeesContract } from './lawyer-fees-contract/lawyer-fees-contract';
 import { LawyerFeesContractPreviewModule } from '../shared/lawyer-fees-contract-preview/lawyer-fees-contract-preview-module';
 import { EditorModule } from 'primeng/editor';
+import { ActivityLogs } from './activity-logs/activity-logs';
+import { Users } from './users/users';
+import { FormUser } from './users/form-user/form-user';
+import { PasswordModule } from 'primeng/password';
+
 @NgModule({
   declarations: [
     Menue,
@@ -79,6 +84,9 @@ import { EditorModule } from 'primeng/editor';
     FieldVisitReportTemplate,
     LawyerFeesContractsList,
     LawyerFeesContract,
+    ActivityLogs,
+    Users,
+    FormUser,
   ],
   imports: [
     CommonModule,
@@ -94,8 +102,9 @@ import { EditorModule } from 'primeng/editor';
     ToggleSwitchModule,
     FormsModule,
     SelectModule,
+    PasswordModule,
     LawyerFeesContractPreviewModule,
     EditorModule,
   ],
 })
-export class LayoutDashbordModule {}
+export class LayoutDashbordModule { }

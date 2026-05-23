@@ -1,8 +1,8 @@
 <div class="header-grid">
-  @if (showAddButton) {
-    <button class="btn-add" (click)="visibelform()">
-      <i class="fa-solid fa-plus"></i> {{ 'add' | translate }}
-    </button>
+  @if (pages() !== 'Admin' && showAddButton) {
+  <button class="btn-add" (click)="visibelform()">
+    <i class="fa-solid fa-plus"></i> {{ 'add' | translate }}
+  </button>
   }
 
   <div class="filed-search">
@@ -18,11 +18,6 @@
       </h4>
       <p>{{ userData().email }}</p>
     </div>
-    <img
-      height="40"
-      width="40"
-       src="/assets/Img/2a.webp"
-      alt="hero-section-img"
-    />
+    <img height="40" width="40" src="/assets/Img/2a.webp" alt="hero-section-img" />
   </div>
 </div>

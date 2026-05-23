@@ -1,14 +1,12 @@
-import { isAdminGuard, securityAuthGuard, passcodeGuard } from './../core/guards/auth-guard';
+import { securityAuthGuard, roleGuard } from './../core/guards/auth-guard';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Content } from './content/content';
 import { Holidays } from './holidays/holidays';
 import { AddServies } from './add-servies/add-servies';
 import { Reservations } from './reservations/reservations';
-import { Moderators } from './moderators/moderators';
-import { Admins } from './admins/admins';
+import { Users } from './users/users';
 import { Customers } from './customers/customers';
-import { Organizers } from './organizers/organizers';
 import { ClientCases } from './client-cases/client-cases';
 import { EditCase } from './client-cases/edit-case/edit-case';
 import { SessionReport } from './session-report/session-report';
@@ -16,6 +14,7 @@ import { SessionReportsList } from './session-reports-list/session-reports-list'
 import { FieldVisitReport } from './field-visit-report/field-visit-report';
 import { LawyerFeesContractsList } from './lawyer-fees-contracts-list/lawyer-fees-contracts-list';
 import { LawyerFeesContract } from './lawyer-fees-contract/lawyer-fees-contract';
+import { ActivityLogs } from './activity-logs/activity-logs';
 
 const routes: Routes = [
   {
@@ -23,25 +22,122 @@ const routes: Routes = [
     component: Content,
     canActivate: [securityAuthGuard],
     children: [
-      { path: '', component: Reservations },
-      { path: 'Moderators', component: Moderators, canActivate: [isAdminGuard, passcodeGuard], data: { securityGroup: 'admin-management' } },
-      { path: 'admin', component: Admins, canActivate: [isAdminGuard, passcodeGuard], data: { securityGroup: 'admin-management' } },
-      { path: 'addservies', component: AddServies, canActivate: [passcodeGuard], data: { securityGroup: 'services' } },
-      { path: 'customers', component: Customers },
-      { path: 'Holidays', component: Holidays, canActivate: [passcodeGuard], data: { securityGroup: 'holidays' } },
-      { path: 'organizers', component: Organizers, canActivate: [isAdminGuard, passcodeGuard], data: { securityGroup: 'admin-management' } },
-      { path: 'client-cases', component: ClientCases, canActivate: [passcodeGuard], data: { securityGroup: 'client-cases' } },
-      { path: 'client-cases/:id/edit', component: EditCase, canActivate: [passcodeGuard], data: { securityGroup: 'client-cases' } },
-      { path: 'session-reports/:caseId', component: SessionReportsList, canActivate: [passcodeGuard], data: { securityGroup: 'client-cases' } },
-      { path: 'session-report/:caseId', component: SessionReport, canActivate: [passcodeGuard], data: { securityGroup: 'client-cases' } },
-      { path: 'session-report/:caseId/:reportId', component: SessionReport, canActivate: [passcodeGuard], data: { securityGroup: 'client-cases' } },
-      { path: 'field-visit-report/:caseId', component: FieldVisitReport, canActivate: [passcodeGuard], data: { securityGroup: 'client-cases' } },
-      { path: 'field-visit-report/:caseId/:reportId', component: FieldVisitReport, canActivate: [passcodeGuard], data: { securityGroup: 'client-cases' } },
-      { path: 'lawyer-fees-contracts', component: LawyerFeesContractsList, canActivate: [passcodeGuard], data: { securityGroup: 'lawyer-fees' } },
-      { path: 'lawyer-fees-contract/case/:caseId', component: LawyerFeesContract, canActivate: [passcodeGuard], data: { securityGroup: 'lawyer-fees' } },
-      { path: 'lawyer-fees-contract/case/:caseId/:id', component: LawyerFeesContract, canActivate: [passcodeGuard], data: { securityGroup: 'lawyer-fees' } },
-      { path: 'lawyer-fees-contract/:id', component: LawyerFeesContract, canActivate: [passcodeGuard], data: { securityGroup: 'lawyer-fees' } },
-      { path: '**', redirectTo: '', pathMatch: 'full' }
+      // ── Home / Reservations ──────────────────────────────────────────────
+      // LAWYER is redirected to client-cases in content.ts (ngOnInit redirect)
+      {
+        path: '',
+        component: Reservations,
+        canActivate: [roleGuard('ADMIN', 'MODERATOR', 'RECEPTIONIST')],
+      },
+
+      // ── Admin-only: user management ──────────────────────────────────────
+      {
+        path: 'users',
+        component: Users,
+        canActivate: [roleGuard('ADMIN')],
+      },
+
+      // ── Admin-only: activity logs & insights ─────────────────────────────
+      {
+        path: 'activity-logs',
+        component: ActivityLogs,
+        canActivate: [roleGuard('ADMIN')],
+      },
+
+      // ── Admin + Moderator: services, holidays ────────────────────────────
+      {
+        path: 'addservies',
+        component: AddServies,
+        canActivate: [roleGuard('ADMIN', 'MODERATOR')],
+        data: { securityGroup: 'services' },
+      },
+      {
+        path: 'Holidays',
+        component: Holidays,
+        canActivate: [roleGuard('ADMIN', 'MODERATOR')],
+        data: { securityGroup: 'holidays' },
+      },
+
+      // ── Admin + Moderator + Receptionist: customers ──────────────────────
+      {
+        path: 'customers',
+        component: Customers,
+        canActivate: [roleGuard('ADMIN', 'MODERATOR', 'RECEPTIONIST')],
+      },
+
+      // ── All roles: cases ─────────────────────────────────────────────────
+      // (Lawyers see only assigned cases — enforced server-side)
+      {
+        path: 'client-cases',
+        component: ClientCases,
+        canActivate: [roleGuard('ADMIN', 'MODERATOR', 'RECEPTIONIST', 'LAWYER')],
+        data: { securityGroup: 'client-cases' },
+      },
+      {
+        path: 'client-cases/:id/edit',
+        component: EditCase,
+        canActivate: [roleGuard('ADMIN', 'MODERATOR', 'RECEPTIONIST', 'LAWYER')],
+        data: { securityGroup: 'client-cases' },
+      },
+
+      // ── Admin + Moderator + Lawyer: reports ──────────────────────────────
+      // Receptionist excluded — they only see the first page of the case
+      {
+        path: 'session-reports/:caseId',
+        component: SessionReportsList,
+        canActivate: [roleGuard('ADMIN', 'MODERATOR', 'LAWYER')],
+        data: { securityGroup: 'client-cases' },
+      },
+      {
+        path: 'session-report/:caseId',
+        component: SessionReport,
+        canActivate: [roleGuard('ADMIN', 'MODERATOR', 'LAWYER')],
+        data: { securityGroup: 'client-cases' },
+      },
+      {
+        path: 'session-report/:caseId/:reportId',
+        component: SessionReport,
+        canActivate: [roleGuard('ADMIN', 'MODERATOR', 'LAWYER')],
+        data: { securityGroup: 'client-cases' },
+      },
+      {
+        path: 'field-visit-report/:caseId',
+        component: FieldVisitReport,
+        canActivate: [roleGuard('ADMIN', 'MODERATOR', 'LAWYER')],
+        data: { securityGroup: 'client-cases' },
+      },
+      {
+        path: 'field-visit-report/:caseId/:reportId',
+        component: FieldVisitReport,
+        canActivate: [roleGuard('ADMIN', 'MODERATOR', 'LAWYER')],
+        data: { securityGroup: 'client-cases' },
+      },
+      {
+        path: 'lawyer-fees-contracts',
+        component: LawyerFeesContractsList,
+        canActivate: [roleGuard('ADMIN', 'MODERATOR', 'LAWYER')],
+        data: { securityGroup: 'lawyer-fees' },
+      },
+      {
+        path: 'lawyer-fees-contract/case/:caseId',
+        component: LawyerFeesContract,
+        canActivate: [roleGuard('ADMIN', 'MODERATOR', 'LAWYER')],
+        data: { securityGroup: 'lawyer-fees' },
+      },
+      {
+        path: 'lawyer-fees-contract/case/:caseId/:id',
+        component: LawyerFeesContract,
+        canActivate: [roleGuard('ADMIN', 'MODERATOR', 'LAWYER')],
+        data: { securityGroup: 'lawyer-fees' },
+      },
+      {
+        path: 'lawyer-fees-contract/:id',
+        component: LawyerFeesContract,
+        canActivate: [roleGuard('ADMIN', 'MODERATOR', 'LAWYER')],
+        data: { securityGroup: 'lawyer-fees' },
+      },
+
+      { path: '**', redirectTo: '', pathMatch: 'full' },
     ],
   },
 ];

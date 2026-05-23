@@ -8,7 +8,7 @@
       </button>
       <h2>{{ 'edit_case' | translate }}</h2>
 
-      <span class="save-pill" [class.unsaved]="saveStatus() === 'unsaved'" [class.saving]="saveStatus() === 'saving'"
+      <span *ngIf="canEdit" class="save-pill" [class.unsaved]="saveStatus() === 'unsaved'" [class.saving]="saveStatus() === 'saving'"
         [class.saved]="saveStatus() === 'saved'" [class.error]="saveStatus() === 'error'">
         <ng-container [ngSwitch]="saveStatus()">
           <ng-container *ngSwitchCase="'unsaved'">
@@ -27,7 +27,7 @@
       </span>
     </div>
 
-    <div class="right">
+    <div class="right" *ngIf="canEdit">
       <button class="btn-save" (click)="save()"
         [disabled]="saveStatus() === 'saving' || saveStatus() === 'idle' || saveStatus() === 'saved'">
         <i class="fa-solid fa-floppy-disk"></i>
@@ -42,12 +42,85 @@
     </div>
   </div>
 
+  <!-- ============ ASSIGNMENT BANNER (LAWYER) ============ -->
+  <div *ngIf="isLawyer && !loading()" class="assignment-banner"
+    [class.pending]="assignmentStatus === 'PENDING'"
+    [class.accepted]="assignmentStatus === 'ACCEPTED'"
+    [class.rejected]="assignmentStatus === 'REJECTED'">
+
+    <ng-container [ngSwitch]="assignmentStatus">
+      <ng-container *ngSwitchCase="'PENDING'">
+        <div class="banner-content">
+          <i class="fa-solid fa-user-clock"></i>
+          <span>{{ 'case_assignment_pending' | translate }}</span>
+        </div>
+        <div class="banner-actions">
+          <button class="btn-accept" (click)="acceptAssignment()" [disabled]="assignmentActioning()">
+            <i class="fa-solid fa-check"></i> {{ 'accept_assignment' | translate }}
+          </button>
+          <button class="btn-reject" (click)="rejectAssignment()" [disabled]="assignmentActioning()">
+            <i class="fa-solid fa-xmark"></i> {{ 'reject_assignment' | translate }}
+          </button>
+        </div>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'ACCEPTED'">
+        <div class="banner-content">
+          <i class="fa-solid fa-circle-check"></i>
+          <span>{{ 'case_assignment_accepted' | translate }}</span>
+        </div>
+      </ng-container>
+
+      <ng-container *ngSwitchDefault>
+        <div class="banner-content">
+          <i class="fa-solid fa-circle-info"></i>
+          <span>{{ 'case_not_assigned_to_you' | translate }}</span>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+
   <!-- ============ 2-COLUMN GRID ============ -->
   <div class="grid" *ngIf="!loading(); else loadingTpl">
 
     <!-- LEFT: form -->
     <section class="card form-card">
-      <form [formGroup]="Form" class="form-body">
+
+      <!-- ASSIGN SECTION (staff only) -->
+      <div *ngIf="canAssign" class="assign-section" [formGroup]="assignForm">
+        <h3 class="section-title">{{ 'assign_lawyer' | translate }}</h3>
+
+        <div class="assignment-status-row">
+          <span class="status-badge"
+            [class.status-unassigned]="assignmentStatus === 'UNASSIGNED'"
+            [class.status-pending]="assignmentStatus === 'PENDING'"
+            [class.status-accepted]="assignmentStatus === 'ACCEPTED'"
+            [class.status-rejected]="assignmentStatus === 'REJECTED'">
+            <i class="fa-solid fa-circle"></i>
+            {{ ('assignment_status_' + assignmentStatus.toLowerCase()) | translate }}
+          </span>
+          <span *ngIf="loadedCase()?.preferredLawyerName" class="assigned-lawyer-name">
+            {{ loadedCase()?.preferredLawyerName }}
+          </span>
+        </div>
+
+        <div class="row">
+          <div class="input-group">
+            <p-select formControlName="lawyerId" [options]="lawyers()" optionLabel="name" optionValue="id"
+              [filter]="true" filterBy="name,email" [placeholder]="'select_lawyer' | translate" [showClear]="true"
+              styleClass="w-full">
+            </p-select>
+          </div>
+          <button class="btn-assign" (click)="assignLawyer()"
+            [disabled]="assigning() || assignForm.invalid || !assignForm.value.lawyerId || assignForm.value.lawyerId?.startsWith('team:')">
+            <i class="fa-solid fa-user-plus"></i>
+            {{ (assigning() ? 'assigning' : 'assign') | translate }}
+          </button>
+        </div>
+      </div>
+
+      <!-- MAIN FORM (editable if canEdit, read-only otherwise) -->
+      <form [formGroup]="Form" class="form-body" [class.readonly]="!canEdit">
 
         <h3 class="section-title">{{ 'client_intake' | translate }}</h3>
 
@@ -56,14 +129,14 @@
             <label>{{ 'case_customer' | translate }}</label>
             <p-select formControlName="customerId" [options]="customers()" optionLabel="fullName" optionValue="id"
               [filter]="true" filterBy="fullName,phone,email" [placeholder]="'select_customer' | translate"
-              styleClass="w-full">
+              styleClass="w-full" [disabled]="!canEdit">
             </p-select>
           </div>
 
           <div class="input-group">
             <label>{{ 'case_type' | translate }}</label>
             <p-select formControlName="caseType" [options]="caseTypes" optionLabel="label" optionValue="value"
-              styleClass="w-full">
+              styleClass="w-full" [disabled]="!canEdit">
             </p-select>
           </div>
         </div>
@@ -72,7 +145,7 @@
           <div class="input-group">
             <label>{{ 'other_case_type' | translate }}</label>
             <input type="text" pInputText formControlName="otherCaseType"
-              [placeholder]="'other_case_type_placeholder' | translate" />
+              [placeholder]="'other_case_type_placeholder' | translate" [readonly]="!canEdit" />
           </div>
         </div>
 
@@ -80,61 +153,82 @@
           <div class="input-group">
             <label>{{ 'case_date' | translate }}</label>
             <p-datepicker formControlName="caseDate" [showIcon]="true" dateFormat="dd/mm/yy" appendTo="body"
-              styleClass="w-full">
+              styleClass="w-full" [disabled]="!canEdit">
             </p-datepicker>
           </div>
-
         </div>
 
         <div class="row">
           <div class="input-group">
             <label>{{ 'agency_number' | translate }}</label>
             <input type="text" pInputText formControlName="agencyNumber"
-              [placeholder]="'agency_number_placeholder' | translate" />
+              [placeholder]="'agency_number_placeholder' | translate" [readonly]="!canEdit" />
           </div>
         </div>
 
-        <div class="row toggle-row">
-          <label class="inline-toggle">
-            <p-toggleswitch formControlName="wantsSpecificLawyer"></p-toggleswitch>
-            <span>{{ 'wants_specific_lawyer' | translate }}</span>
-          </label>
-        </div>
+        <ng-container *ngIf="role !== 'RECEPTIONIST'">
+          <h3 class="section-title">{{ 'session_notes' | translate }}</h3>
 
-        <div class="row" *ngIf="Form.value.wantsSpecificLawyer">
-          <div class="input-group">
-            <label>{{ 'preferred_lawyer' | translate }}</label>
-            <p-select formControlName="preferredLawyerId" [options]="lawyers()" optionLabel="name" optionValue="id"
-              [filter]="true" filterBy="name,email" [placeholder]="'select_lawyer' | translate" [showClear]="true"
-              styleClass="w-full">
-            </p-select>
-          </div>
-        </div>
+          <div class="row">
+            <div class="input-group">
+              <label>{{ 'session_receiver' | translate }}</label>
+              <p-select formControlName="sessionReceiverId" [options]="lawyers()" optionLabel="name" optionValue="id"
+                [filter]="true" filterBy="name,email" [placeholder]="'select_lawyer' | translate" [showClear]="true"
+                styleClass="w-full" [disabled]="!canEdit">
+              </p-select>
+            </div>
 
-        <h3 class="section-title">{{ 'session_notes' | translate }}</h3>
-
-        <div class="row">
-          <div class="input-group">
-            <label>{{ 'session_receiver' | translate }}</label>
-            <p-select formControlName="sessionReceiverId" [options]="lawyers()" optionLabel="name" optionValue="id"
-              [filter]="true" filterBy="name,email" [placeholder]="'select_lawyer' | translate" [showClear]="true"
-              styleClass="w-full">
-            </p-select>
+            <div class="input-group">
+              <label>{{ 'session_date' | translate }}</label>
+              <p-datepicker formControlName="sessionDate" [showIcon]="true" dateFormat="dd/mm/yy" [showClear]="true"
+                appendTo="body" styleClass="w-full" [disabled]="!canEdit">
+              </p-datepicker>
+            </div>
           </div>
 
           <div class="input-group">
-            <label>{{ 'session_date' | translate }}</label>
-            <p-datepicker formControlName="sessionDate" [showIcon]="true" dateFormat="dd/mm/yy" [showClear]="true"
-              appendTo="body" styleClass="w-full">
-            </p-datepicker>
+            <label>{{ 'free_notes' | translate }}</label>
+            <textarea formControlName="freeNotes" rows="12"
+              [placeholder]="'free_notes_placeholder' | translate"
+              [readonly]="!canEdit"></textarea>
           </div>
-        </div>
+        </ng-container>
 
-        <div class="input-group">
-          <label>{{ 'free_notes' | translate }}</label>
-          <textarea formControlName="freeNotes" rows="12"
-            [placeholder]="'free_notes_placeholder' | translate"></textarea>
-        </div>
+        <!-- Notes sections (weaknesses, strengths, gaps) — only for accepted lawyers + staff -->
+        <ng-container *ngIf="canEdit">
+          <h3 class="section-title">{{ 'case_weaknesses' | translate }}</h3>
+          <div *ngFor="let ctrl of weaknesses.controls; let i = index" class="line-row">
+            <input pInputText [formControl]="$any(ctrl)" class="line-input" />
+            <button type="button" class="remove-btn" (click)="removeLine('weaknesses', i)">
+              <i class="fa-solid fa-minus"></i>
+            </button>
+          </div>
+          <button type="button" class="add-line-btn" (click)="addLine('weaknesses')">
+            <i class="fa-solid fa-plus"></i> {{ 'add_line' | translate }}
+          </button>
+
+          <h3 class="section-title">{{ 'case_strengths' | translate }}</h3>
+          <div *ngFor="let ctrl of strengths.controls; let i = index" class="line-row">
+            <input pInputText [formControl]="$any(ctrl)" class="line-input" />
+            <button type="button" class="remove-btn" (click)="removeLine('strengths', i)">
+              <i class="fa-solid fa-minus"></i>
+            </button>
+          </div>
+          <button type="button" class="add-line-btn" (click)="addLine('strengths')">
+            <i class="fa-solid fa-plus"></i> {{ 'add_line' | translate }}
+          </button>
+
+          <h3 class="section-title">{{ 'case_gaps' | translate }}</h3>
+          <div *ngFor="let ctrl of gaps.controls; let i = index" class="line-row">
+            <input pInputText [formControl]="$any(ctrl)" class="line-input" />
+            <button type="button" class="remove-btn" (click)="removeLine('gaps', i)">
+              <i class="fa-solid fa-minus"></i>
+            </button>
+          </div>
+          <button type="button" class="add-line-btn" (click)="addLine('gaps')">
+            <i class="fa-solid fa-plus"></i> {{ 'add_line' | translate }}
+          </button>
+        </ng-container>
 
       </form>
     </section>
@@ -143,7 +237,7 @@
     <aside class="preview-card">
       <div class="preview-sticky">
         <h3 class="preview-title">{{ 'live_preview' | translate }}</h3>
-        <app-case-report-template [value]="previewData()"></app-case-report-template>
+        <app-case-report-template [value]="previewData()" [showPage1]="previewShowPage1" [showPage2]="previewShowPage2"></app-case-report-template>
       </div>
     </aside>
 
