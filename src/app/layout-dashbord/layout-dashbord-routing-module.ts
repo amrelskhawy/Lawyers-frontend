@@ -49,13 +49,11 @@ const routes: Routes = [
         path: 'addservies',
         component: AddServies,
         canActivate: [roleGuard('ADMIN', 'MODERATOR')],
-        data: { securityGroup: 'services' },
       },
       {
         path: 'Holidays',
         component: Holidays,
         canActivate: [roleGuard('ADMIN', 'MODERATOR')],
-        data: { securityGroup: 'holidays' },
       },
 
       // ── Admin + Moderator + Receptionist: customers ──────────────────────
@@ -71,13 +69,11 @@ const routes: Routes = [
         path: 'client-cases',
         component: ClientCases,
         canActivate: [roleGuard('ADMIN', 'MODERATOR', 'RECEPTIONIST', 'LAWYER')],
-        data: { securityGroup: 'client-cases' },
       },
       {
         path: 'client-cases/:id/edit',
         component: EditCase,
         canActivate: [roleGuard('ADMIN', 'MODERATOR', 'RECEPTIONIST', 'LAWYER')],
-        data: { securityGroup: 'client-cases' },
       },
 
       // ── Admin + Moderator + Lawyer: reports ──────────────────────────────
@@ -86,55 +82,46 @@ const routes: Routes = [
         path: 'session-reports/:caseId',
         component: SessionReportsList,
         canActivate: [roleGuard('ADMIN', 'MODERATOR', 'LAWYER')],
-        data: { securityGroup: 'client-cases' },
       },
       {
         path: 'session-report/:caseId',
         component: SessionReport,
         canActivate: [roleGuard('ADMIN', 'MODERATOR', 'LAWYER')],
-        data: { securityGroup: 'client-cases' },
       },
       {
         path: 'session-report/:caseId/:reportId',
         component: SessionReport,
         canActivate: [roleGuard('ADMIN', 'MODERATOR', 'LAWYER')],
-        data: { securityGroup: 'client-cases' },
       },
       {
         path: 'field-visit-report/:caseId',
         component: FieldVisitReport,
         canActivate: [roleGuard('ADMIN', 'MODERATOR', 'LAWYER')],
-        data: { securityGroup: 'client-cases' },
       },
       {
         path: 'field-visit-report/:caseId/:reportId',
         component: FieldVisitReport,
         canActivate: [roleGuard('ADMIN', 'MODERATOR', 'LAWYER')],
-        data: { securityGroup: 'client-cases' },
       },
       {
         path: 'lawyer-fees-contracts',
         component: LawyerFeesContractsList,
         canActivate: [roleGuard('ADMIN', 'MODERATOR', 'LAWYER')],
-        data: { securityGroup: 'lawyer-fees' },
       },
       {
         path: 'lawyer-fees-contract/case/:caseId',
         component: LawyerFeesContract,
         canActivate: [roleGuard('ADMIN', 'MODERATOR', 'LAWYER')],
-        data: { securityGroup: 'lawyer-fees' },
       },
       {
         path: 'lawyer-fees-contract/case/:caseId/:id',
         component: LawyerFeesContract,
         canActivate: [roleGuard('ADMIN', 'MODERATOR', 'LAWYER')],
-        data: { securityGroup: 'lawyer-fees' },
       },
       {
         path: 'lawyer-fees-contract/:id',
         component: LawyerFeesContract,
         canActivate: [roleGuard('ADMIN', 'MODERATOR', 'LAWYER')],
-        data: { securityGroup: 'lawyer-fees' },
       },
 
       { path: '**', redirectTo: '', pathMatch: 'full' },

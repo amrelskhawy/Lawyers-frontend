@@ -1,6 +1,4 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { Router } from '@angular/router';
-import { Passcode } from '../../core/Servies/passcode';
 
 @Component({
   selector: 'app-content',
@@ -12,7 +10,7 @@ import { Passcode } from '../../core/Servies/passcode';
 export class Content implements OnInit {
 
 
-  constructor(private passcode: Passcode, private router: Router) { }
+  constructor() { }
 
   ngOnInit(): void {
   }

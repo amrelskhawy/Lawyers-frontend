@@ -8,7 +8,6 @@ import {
   signal,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { Passcode } from '../../core/Servies/passcode';
 
 @Component({
   selector: 'app-menue',
@@ -21,11 +20,10 @@ export class Menue implements OnInit {
     this.GetDataMenue();
   }
 
-  constructor(private router: Router, private passcode: Passcode) { }
+  constructor(private router: Router) { }
 
-  async openWorkDay() {
-    const ok = await this.passcode.requireAccess();
-    if (ok) this.visibelform.set(true);
+  openWorkDay() {
+    this.visibelform.set(true);
   }
 
   @Output() toggelMenue = new EventEmitter<boolean>();

@@ -66,28 +66,3 @@ export const roleGuard = (...roles: string[]): CanActivateFn => (route, state) =
   }
   return false;
 };
-
-import { Passcode } from '../Servies/passcode';
-
-/**
- * Prompts for the dashboard passcode unless the route's `securityGroup`
- * has already been unlocked in this session. Set the group via route
- * data: `{ data: { securityGroup: 'client-cases' } }`.
- */
-export const passcodeGuard: CanActivateFn = async (route, _state) => {
-  const passcode = inject(Passcode);
-  const group = route.data?.['securityGroup'] as string | undefined;
-
-  // If the user is a LAWYER and the group is 'client-cases', bypass the passcode.
-  // This prevents an infinite redirect loop because Content component forces
-  // them here on login, but the dialog might not be ready yet.
-  const userData = sessionStorage.getItem('user');
-  if (userData && group === 'client-cases') {
-    const user = JSON.parse(userData);
-    if (user.role === 'LAWYER') {
-      return true;
-    }
-  }
-
-  return passcode.requireAccess(group);
-};
