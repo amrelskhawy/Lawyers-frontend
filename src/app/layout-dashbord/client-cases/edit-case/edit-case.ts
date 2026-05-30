@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, computed, signal } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
 import { Data } from '../../../core/Servies/data';
 import { CASE_TYPE_OPTIONS, IDataCase, ILawyerOption } from '../../../core/Models/case.model';
@@ -23,6 +24,7 @@ export class EditCase implements OnInit, OnDestroy {
     private data: Data,
     private route: ActivatedRoute,
     private router: Router,
+    private translate: TranslateService,
   ) {}
 
   readonly caseTypes = CASE_TYPE_OPTIONS;
@@ -33,6 +35,7 @@ export class EditCase implements OnInit, OnDestroy {
   generating = signal<boolean>(false);
   sending = signal<boolean>(false);
   assigning = signal<boolean>(false);
+  unassigning = signal<boolean>(false);
   assignmentActioning = signal<boolean>(false);
   loadedCase = signal<IDataCase | null>(null);
 
@@ -55,6 +58,13 @@ export class EditCase implements OnInit, OnDestroy {
   get canAssign(): boolean { return ['ADMIN', 'MODERATOR', 'RECEPTIONIST'].includes(this.role); }
 
   get assignmentStatus() { return this.loadedCase()?.assignmentStatus ?? 'UNASSIGNED'; }
+  get hasActiveAssignment(): boolean {
+    return this.assignmentStatus === 'PENDING' || this.assignmentStatus === 'ACCEPTED';
+  }
+  get assignedLawyerName(): string {
+    const c = this.loadedCase();
+    return c?.preferredLawyerName ?? c?.preferredLawyer?.name ?? '';
+  }
   get isPendingForMe(): boolean {
     const c = this.loadedCase();
     return this.isLawyer && c?.assignmentStatus === 'PENDING' && c?.preferredLawyerId === this.currentUser?.id;
@@ -129,7 +139,7 @@ export class EditCase implements OnInit, OnDestroy {
     this.data.get<{ data: IDataCustomer[] }>('customers').subscribe((res) => {
       this.customers.set(res.data ?? []);
     });
-    this.data.get<{ data: IUser[] }>('admin/users?role=LAWYER').subscribe((res) => {
+    this.data.get<{ data: IUser[] }>('public/lawyers').subscribe((res) => {
       this.lawyers.set(
         (res.data ?? []).map((u) => ({ id: u.id, name: u.nameAr || u.name, email: u.email })),
       );
@@ -243,7 +253,7 @@ export class EditCase implements OnInit, OnDestroy {
   }
 
   assignLawyer() {
-    if (!this.canAssign || this.assigning() || this.assignForm.invalid) return;
+    if (!this.canAssign || this.assigning() || this.hasActiveAssignment || this.assignForm.invalid) return;
     const rawId: string | null = this.assignForm.value.lawyerId || null;
     if (!rawId || rawId.startsWith('team:')) return;
 
@@ -253,9 +263,28 @@ export class EditCase implements OnInit, OnDestroy {
       .subscribe({
         next: (res) => {
           this.loadedCase.set(res.data);
+          this.assignForm.patchValue({ lawyerId: res.data.preferredLawyerId ?? null });
           this.assigning.set(false);
         },
         error: () => this.assigning.set(false),
+      });
+  }
+
+  unassignLawyer() {
+    if (!this.canAssign || this.unassigning() || !this.hasActiveAssignment) return;
+    const confirmed = window.confirm(this.translate.instant('confirm_unassign_lawyer'));
+    if (!confirmed) return;
+
+    this.unassigning.set(true);
+    this.data
+      .patch<{ data: IDataCase }>(`cases/${this.caseId()}/unassign`, {})
+      .subscribe({
+        next: (res) => {
+          this.loadedCase.set(res.data);
+          this.assignForm.reset({ lawyerId: null });
+          this.unassigning.set(false);
+        },
+        error: () => this.unassigning.set(false),
       });
   }
 

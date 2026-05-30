@@ -3,6 +3,8 @@ $gold: #c9a84c;
 $cream: #f5f0e0;
 
 .report-shell {
+  position: relative;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -210,6 +212,10 @@ $cream: #f5f0e0;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
   overflow: hidden;
   container-type: inline-size;
+
+  &:first-child {
+    margin-top: 0;
+  }
 }
 
 .cf2-page .ov {
@@ -282,12 +288,13 @@ $cream: #f5f0e0;
 }
 
 .cf-measure-host {
-  position: absolute;
-  left: -99999px;
+  position: fixed;
+  left: -10000px;
   top: 0;
   width: 794px;
   visibility: hidden;
   pointer-events: none;
+  z-index: -1;
 }
 
 .report-header {

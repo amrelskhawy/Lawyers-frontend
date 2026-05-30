@@ -462,7 +462,10 @@
     "TAMARA_NO_ORDER_ID": "معرف طلب تمارا مفقود",
     "TAMARA_PAYMENT_NOT_CAPTURABLE": "تعذر استلام الدفع لهذا الطلب",
     "TAMARA_URLS_MISSING": "روابط إعادة التوجيه لتمارا غير مضبوطة",
-    "USER_CREATED_SUCCESS": "تم إنشاء المستخدم بنجاح"
+    "USER_CREATED_SUCCESS": "تم إنشاء المستخدم بنجاح",
+    "CASE_UNASSIGNED_SUCCESS": "تم إلغاء تكليف المحامي بنجاح",
+    "CASE_ALREADY_ASSIGNED": "القضية مكلفة بالفعل — يُرجى إلغاء التكليف أولاً",
+    "CASE_NOT_ASSIGNED": "لا يوجد محامٍ مكلف على هذه القضية"
   },
   "client_cases": "قضايا العملاء",
   "case_customer": "العميل",
@@ -610,6 +613,11 @@
   "assign": "تكليف",
   "assigning": "جارٍ التكليف...",
   "assigned_lawyer": "المحامي المكلف",
+  "unassign_lawyer": "إلغاء التكليف",
+  "unassigning": "جارٍ إلغاء التكليف...",
+  "assignment_locked_hint": "القضية مكلفة حالياً. لإسناد محامٍ آخر، يُرجى إلغاء التكليف أولاً.",
+  "confirm_unassign_lawyer": "هل أنت متأكد من إلغاء تكليف المحامي؟",
+  "assignment_rejected_note": "تم رفض التكليف السابق — يمكنك تكليف محامٍ جديد.",
   "activity_logs": "سجل النشاط",
   "activity_logs_title": "سجل النشاط والتتبع",
   "activity_action": "الإجراء",

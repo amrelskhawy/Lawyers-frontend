@@ -90,33 +90,57 @@
       <div *ngIf="canAssign" class="assign-section" [formGroup]="assignForm">
         <h3 class="section-title">{{ 'assign_lawyer' | translate }}</h3>
 
-        <div class="assignment-status-row">
-          <span class="status-badge"
-            [class.status-unassigned]="assignmentStatus === 'UNASSIGNED'"
-            [class.status-pending]="assignmentStatus === 'PENDING'"
-            [class.status-accepted]="assignmentStatus === 'ACCEPTED'"
-            [class.status-rejected]="assignmentStatus === 'REJECTED'">
-            <i class="fa-solid fa-circle"></i>
-            {{ ('assignment_status_' + assignmentStatus.toLowerCase()) | translate }}
-          </span>
-          <span *ngIf="loadedCase()?.preferredLawyerName" class="assigned-lawyer-name">
-            {{ loadedCase()?.preferredLawyerName }}
-          </span>
-        </div>
-
-        <div class="row">
-          <div class="input-group">
-            <p-select formControlName="lawyerId" [options]="lawyers()" optionLabel="name" optionValue="id"
-              [filter]="true" filterBy="name,email" [placeholder]="'select_lawyer' | translate" [showClear]="true"
-              styleClass="w-full">
-            </p-select>
+        <!-- Active assignment: locked card -->
+        <div *ngIf="hasActiveAssignment" class="assigned-lawyer-card"
+          [class.is-pending]="assignmentStatus === 'PENDING'"
+          [class.is-accepted]="assignmentStatus === 'ACCEPTED'">
+          <div class="assigned-lawyer-main">
+            <div class="lawyer-avatar" aria-hidden="true">
+              <i class="fa-solid fa-user-tie"></i>
+            </div>
+            <div class="lawyer-details">
+              <span class="lawyer-label">{{ 'assigned_lawyer' | translate }}</span>
+              <span class="lawyer-name">{{ assignedLawyerName }}</span>
+              <span class="status-badge"
+                [class.status-pending]="assignmentStatus === 'PENDING'"
+                [class.status-accepted]="assignmentStatus === 'ACCEPTED'">
+                <i class="fa-solid fa-circle"></i>
+                {{ ('assignment_status_' + assignmentStatus.toLowerCase()) | translate }}
+              </span>
+            </div>
           </div>
-          <button class="btn-assign" (click)="assignLawyer()"
-            [disabled]="assigning() || assignForm.invalid || !assignForm.value.lawyerId || assignForm.value.lawyerId?.startsWith('team:')">
-            <i class="fa-solid fa-user-plus"></i>
-            {{ (assigning() ? 'assigning' : 'assign') | translate }}
+          <p class="assignment-locked-hint">
+            <i class="fa-solid fa-lock"></i>
+            {{ 'assignment_locked_hint' | translate }}
+          </p>
+          <button type="button" class="btn-unassign" (click)="unassignLawyer()" [disabled]="unassigning()">
+            <i class="fa-solid fa-user-minus"></i>
+            {{ (unassigning() ? 'unassigning' : 'unassign_lawyer') | translate }}
           </button>
         </div>
+
+        <!-- No active assignment: pick + assign -->
+        <ng-container *ngIf="!hasActiveAssignment">
+          <div *ngIf="assignmentStatus === 'REJECTED'" class="assignment-rejected-note">
+            <i class="fa-solid fa-circle-xmark"></i>
+            {{ 'assignment_rejected_note' | translate }}
+          </div>
+
+          <div class="assign-form-row">
+            <div class="input-group assign-select">
+              <label>{{ 'select_lawyer' | translate }}</label>
+              <p-select formControlName="lawyerId" [options]="lawyers()" optionLabel="name" optionValue="id"
+                [filter]="true" filterBy="name,email" [placeholder]="'select_lawyer' | translate"
+                styleClass="w-full">
+              </p-select>
+            </div>
+            <button type="button" class="btn-assign" (click)="assignLawyer()"
+              [disabled]="assigning() || assignForm.invalid || !assignForm.value.lawyerId || assignForm.value.lawyerId?.startsWith('team:')">
+              <i class="fa-solid fa-user-plus"></i>
+              {{ (assigning() ? 'assigning' : 'assign') | translate }}
+            </button>
+          </div>
+        </ng-container>
       </div>
 
       <!-- MAIN FORM (editable if canEdit, read-only otherwise) -->

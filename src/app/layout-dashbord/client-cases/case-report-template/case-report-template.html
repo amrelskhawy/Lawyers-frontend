@@ -29,7 +29,7 @@
   </section>
 
   <!-- ============ PAGE 2: LAWYER FORM (image overlay) ============ -->
-  <section class="cf2-page" *ngIf="showPage2 && hasPage2Content">
+  <section class="cf2-page" *ngIf="showPage2">
     <div class="ov cf2-receiver">{{ data().sessionReceiverName || '' }}</div>
     <div class="ov cf2-date" dir="ltr">{{ formattedSessionDate() || '' }}</div>
 
@@ -37,8 +37,8 @@
   </section>
 
   <!-- ============ ADD PAGES: continuation pages when freeNotes overflows ============ -->
-  <ng-container *ngIf="showPage2 && hasPage2Content">
-    <section class="cf2-page cf2-add-page" *ngFor="let txt of pages().slice(1)">
+  <ng-container *ngIf="showPage2">
+    <section class="cf2-page cf2-add-page" *ngFor="let txt of continuationPages()">
       <div class="cf2-notes cf2-notes-add">{{ txt }}</div>
     </section>
   </ng-container>

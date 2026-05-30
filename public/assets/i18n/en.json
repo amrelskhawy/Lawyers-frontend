@@ -462,7 +462,10 @@
     "TAMARA_NO_ORDER_ID": "Tamara order ID is missing",
     "TAMARA_PAYMENT_NOT_CAPTURABLE": "Payment cannot be captured for this order",
     "TAMARA_URLS_MISSING": "Tamara redirect URLs are not configured",
-    "USER_CREATED_SUCCESS": "User created successfully"
+    "USER_CREATED_SUCCESS": "User created successfully",
+    "CASE_UNASSIGNED_SUCCESS": "Lawyer unassigned successfully",
+    "CASE_ALREADY_ASSIGNED": "Case is already assigned — unassign first",
+    "CASE_NOT_ASSIGNED": "No lawyer is assigned to this case"
   },
   "client_cases": "Client Cases",
   "case_customer": "Customer",
@@ -610,6 +613,11 @@
   "assign": "Assign",
   "assigning": "Assigning...",
   "assigned_lawyer": "Assigned Lawyer",
+  "unassign_lawyer": "Unassign Lawyer",
+  "unassigning": "Unassigning...",
+  "assignment_locked_hint": "This case is currently assigned. Unassign first to assign a different lawyer.",
+  "confirm_unassign_lawyer": "Are you sure you want to unassign this lawyer?",
+  "assignment_rejected_note": "The previous assignment was rejected — you can assign a new lawyer.",
   "activity_logs": "Activity Logs",
   "activity_logs_title": "Activity Log & Tracking",
   "activity_action": "Action",
