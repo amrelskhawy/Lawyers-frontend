@@ -15,13 +15,6 @@ export class Content implements OnInit {
   constructor(private passcode: Passcode, private router: Router) { }
 
   ngOnInit(): void {
-    const raw = sessionStorage.getItem('user');
-    if (raw) {
-      const user = JSON.parse(raw);
-      if (user.role === 'LAWYER') {
-        this.router.navigate(['/dashboard/content/client-cases'], { replaceUrl: true });
-      }
-    }
   }
 
   toggel = signal<boolean>(false);
