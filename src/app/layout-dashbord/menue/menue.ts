@@ -8,7 +8,6 @@ import {
   signal,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { Passcode } from '../../core/Servies/passcode';
 
 @Component({
   selector: 'app-menue',
@@ -21,11 +20,10 @@ export class Menue implements OnInit {
     this.GetDataMenue();
   }
 
-  constructor(private router: Router, private passcode: Passcode) { }
+  constructor(private router: Router) { }
 
-  async openWorkDay() {
-    const ok = await this.passcode.requireAccess();
-    if (ok) this.visibelform.set(true);
+  openWorkDay() {
+    this.visibelform.set(true);
   }
 
   @Output() toggelMenue = new EventEmitter<boolean>();
@@ -63,67 +61,76 @@ export class Menue implements OnInit {
   }
 
   GetDataMenue() {
-    let get_usre = sessionStorage.getItem('user');
-    let parseUser: any = null;
+    const raw = sessionStorage.getItem('user');
+    if (!raw) return;
+    const user = JSON.parse(raw);
+    const role: string = user.role;
 
-    if (get_usre) {
-      parseUser = JSON.parse(get_usre);
-    }
+    const isAdmin = role === 'ADMIN';
+    const isModerator = role === 'MODERATOR';
+    const isReceptionist = role === 'RECEPTIONIST';
+    const isLawyer = role === 'LAWYER';
 
-    if (parseUser) {
-      this.ListMenue.set([
-        {
-          name: 'Reservations',
-          icon: 'fa-solid fa-business-time',
-          route: '/dashboard/content',
-        },
-        {
-          name: 'customers',
-          icon: 'fa-solid fa-users',
-          route: '/dashboard/content/customers',
-        },
-        ...(parseUser.role === 'ADMIN'
-          ? [
-            {
-              name: 'Admins',
-              icon: 'fa-solid fa-user',
-              route: '/dashboard/content/admin',
-            },
-            {
-              name: 'Moderators',
-              icon: 'fa-solid fa-user-tie',
-              route: '/dashboard/content/Moderators',
-            },
-            {
-              name: 'organizers',
-              icon: 'fa-solid fa-people-group',
-              route: '/dashboard/content/organizers',
-            },
-          ]
-          : []),
-        {
-          name: 'services',
-          icon: 'fa-solid fa-gear',
-          route: '/dashboard/content/addservies',
-        },
+    this.ListMenue.set([
 
-        {
-          name: 'client_cases',
-          icon: 'fa-solid fa-folder-open',
-          route: '/dashboard/content/client-cases',
-        },
-        {
-          name: 'lawyer_fees_contracts',
-          icon: 'fa-solid fa-file-signature',
-          route: '/dashboard/content/lawyer-fees-contracts',
-        },
-        {
-          name: 'holidays_Day',
-          icon: 'fa-solid fa-holly-berry',
-          route: '/dashboard/content/Holidays',
-        },
-      ]);
-    }
+
+      // ── Admin-only: activity logs & insights ─────────────────
+      ...(isAdmin ? [{
+        name: 'activity_logs',
+        icon: 'fa-solid fa-timeline',
+        route: '/dashboard/content/activity-logs',
+      }] : []),
+
+      // ── Bookings dashboard (not for lawyers) ────────────────
+      ...(isAdmin || isModerator || isReceptionist ? [{
+        name: 'Reservations',
+        icon: 'fa-solid fa-business-time',
+        route: '/dashboard/content',
+      }] : []),
+
+      // ── Customers (not for lawyers) ─────────────────────────
+      ...(isAdmin || isModerator || isReceptionist ? [{
+        name: 'customers',
+        icon: 'fa-solid fa-users',
+        route: '/dashboard/content/customers',
+      }] : []),
+
+      // ── Admin-only: user management ─────────────────────────
+      ...(isAdmin ? [{
+        name: 'users',
+        icon: 'fa-solid fa-users-gear',
+        route: '/dashboard/content/users',
+      }] : []),
+
+      // ── Admin + Moderator: services management ───────────────
+      ...(isAdmin || isModerator ? [{
+        name: 'services',
+        icon: 'fa-solid fa-gear',
+        route: '/dashboard/content/addservies',
+      }] : []),
+
+      // ── Cases — all roles ────────────────────────────────────
+      {
+        name: 'client_cases',
+        icon: 'fa-solid fa-folder-open',
+        route: '/dashboard/content/client-cases',
+      },
+
+      // ── Reports — admin, moderator, lawyer (not receptionist) ─
+      ...(isAdmin || isModerator || isLawyer ? [{
+        name: 'lawyer_fees_contracts',
+        icon: 'fa-solid fa-file-signature',
+        route: '/dashboard/content/lawyer-fees-contracts',
+      }] : []),
+
+      // ── Admin + Moderator: holidays ──────────────────────────
+      ...(isAdmin || isModerator ? [{
+        name: 'holidays_Day',
+        icon: 'fa-solid fa-holly-berry',
+        route: '/dashboard/content/Holidays',
+      }] : []),
+
+    ]);
   }
 
   onLogout() {

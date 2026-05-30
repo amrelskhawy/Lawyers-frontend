@@ -15,6 +15,7 @@
         "@ngx-translate/core": "^17.0.0",
         "@ngx-translate/http-loader": "^17.0.0",
         "@primeuix/themes": "^2.0.3",
+        "angular-google-tag-manager": "^1.13.0",
         "jwt-decode": "^4.0.0",
         "primeicons": "^7.0.0",
         "primeng": "^20.4.0",
@@ -449,6 +450,8 @@
     "ajv-formats": ["ajv-formats@3.0.1", "", { "dependencies": { "ajv": "^8.0.0" }, "peerDependencies": { "ajv": "^8.0.0" } }, "sha512-8iUql50EUR+uUcdRQ3HDqa6EVyo3docL8g5WJ3FNcWmu62IbkGUue/pEyLBW8VGKKucTPgqeks4fIU1DA4yowQ=="],
 
     "algoliasearch": ["algoliasearch@5.35.0", "", { "dependencies": { "@algolia/abtesting": "1.1.0", "@algolia/client-abtesting": "5.35.0", "@algolia/client-analytics": "5.35.0", "@algolia/client-common": "5.35.0", "@algolia/client-insights": "5.35.0", "@algolia/client-personalization": "5.35.0", "@algolia/client-query-suggestions": "5.35.0", "@algolia/client-search": "5.35.0", "@algolia/ingestion": "1.35.0", "@algolia/monitoring": "1.35.0", "@algolia/recommend": "5.35.0", "@algolia/requester-browser-xhr": "5.35.0", "@algolia/requester-fetch": "5.35.0", "@algolia/requester-node-http": "5.35.0" } }, "sha512-Y+moNhsqgLmvJdgTsO4GZNgsaDWv8AOGAaPeIeHKlDn/XunoAqYbA+XNpBd1dW8GOXAUDyxC9Rxc7AV4kpFcIg=="],
+
+    "angular-google-tag-manager": ["angular-google-tag-manager@1.13.0", "", { "dependencies": { "tslib": "^2.5.0" }, "peerDependencies": { "@angular/common": "^21.0.0", "@angular/compiler": "^21.0.0" } }, "sha512-/WRG4s5NbJKG2YuQP8q9g/Wi8SoD5S9jkyGl5dVjPnqgvGRkaq4JOfSIy3iBSoXe8nQItOVYGHWmE/6fjeCRKA=="],
 
     "ansi-escapes": ["ansi-escapes@7.2.0", "", { "dependencies": { "environment": "^1.0.0" } }, "sha512-g6LhBsl+GBPRWGWsBtutpzBYuIIdBkLEvad5C/va/74Db018+5TZiyA26cZJAr3Rft5lprVqOIPxf5Vid6tqAw=="],
 

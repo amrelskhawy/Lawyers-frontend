@@ -72,6 +72,13 @@ export class CaseReportTemplate implements AfterViewInit, OnDestroy {
     this.data.set(v ?? {});
   }
 
+  @Input() showPage1 = true;
+  @Input() showPage2 = true;
+
+  continuationPages = computed(() =>
+    this.pages().slice(1).filter((p) => p.trim().length > 0),
+  );
+
   ngAfterViewInit(): void {
     this.viewReady = true;
     this.resizeObs = new ResizeObserver(() => this.schedulePaginate());

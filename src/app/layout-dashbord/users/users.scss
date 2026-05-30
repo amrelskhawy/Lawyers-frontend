@@ -1,0 +1,21 @@
+.role-tabs {
+  display: flex;
+  gap: .5rem;
+  padding: 1rem 1.5rem .25rem;
+  flex-wrap: wrap;
+}
+
+.role-tab {
+  padding: .35rem 1rem;
+  border-radius: 20px;
+  border: 1.5px solid #e5e7eb;
+  background: #fff;
+  font-size: .82rem;
+  font-weight: 500;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all .15s;
+
+  &:hover { border-color: #6366f1; color: #6366f1; }
+  &.active { background: #6366f1; color: #fff; border-color: #6366f1; }
+}

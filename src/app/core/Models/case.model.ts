@@ -1,3 +1,5 @@
+export type CaseAssignmentStatus = 'UNASSIGNED' | 'PENDING' | 'ACCEPTED' | 'REJECTED';
+
 export type CaseType =
   | 'CRIMINAL'
   | 'ADMINISTRATIVE'
@@ -20,6 +22,8 @@ export interface IDataCase {
   wantsSpecificLawyer: boolean;
   preferredLawyerId: string | null;
   preferredLawyerName: string | null;
+  assignmentStatus: CaseAssignmentStatus;
+  assignmentRejectedAt: string | null;
   sessionReceiverId: string | null;
   sessionReceiverName: string | null;
   sessionDate: string | null;

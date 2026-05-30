@@ -21,7 +21,6 @@ export const securityAuthGuard: CanActivateFn = (route, state) => {
   return inject(AuthGurade).canActivate();
 };
 
-
 export const isAdminGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   const token = sessionStorage.getItem('token');
@@ -32,20 +31,38 @@ export const isAdminGuard: CanActivateFn = (route, state) => {
     if (user.role === 'ADMIN') {
       return true;
     }
+    // Safe redirect for non-admin roles to avoid loops
+    if (user.role === 'LAWYER') {
+      router.navigate(['/dashboard/content/client-cases']);
+    } else {
+      router.navigate(['/dashboard/content']);
+    }
+    return false;
   }
-  router.navigate(['/dashboard/content']);
+  router.navigate(['/auth/login']);
   return false;
-}
+};
 
-import { Passcode } from '../Servies/passcode';
+export const roleGuard = (...roles: string[]): CanActivateFn => (route, state) => {
+  const router = inject(Router);
+  const token = sessionStorage.getItem('token');
+  const userData = sessionStorage.getItem('user');
 
-/**
- * Prompts for the dashboard passcode unless the route's `securityGroup`
- * has already been unlocked in this session. Set the group via route
- * data: `{ data: { securityGroup: 'client-cases' } }`.
- */
-export const passcodeGuard: CanActivateFn = async (route, _state) => {
-  const passcode = inject(Passcode);
-  const group = route.data?.['securityGroup'] as string | undefined;
-  return passcode.requireAccess(group);
+  if (!token || !userData) {
+    router.navigate(['/auth/login']);
+    return false;
+  }
+
+  const user = JSON.parse(userData);
+  if (roles.includes(user.role)) {
+    return true;
+  }
+
+  // If role check fails, redirect to a safe default for that role to avoid loops
+  if (user.role === 'LAWYER') {
+    router.navigate(['/dashboard/content/client-cases']);
+  } else {
+    router.navigate(['/dashboard/content']);
+  }
+  return false;
 };

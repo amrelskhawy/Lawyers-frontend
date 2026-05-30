@@ -1,0 +1,552 @@
+// ============================================
+// Theme tokens (mapped from global styles)
+// ============================================
+$primary: #14143a; // --primary-navy
+$primary-dark: #0a0a1d; // --dark-navy-deep
+$accent: #93853f; // --accent-gold
+$accent-soft: #e3d597; // --Pale-Gold
+$muted-gold: #dadada59;
+$danger: #d32f2f;
+$danger-soft: #fef2f2;
+$text-main: #1a1a1a;
+$text-muted: #4a556c;
+$border: #e9e9eb;
+$bg-soft: #f8f9fa;
+$bg-card: #ffffff;
+$input-height: 46px;
+
+// ============================================
+// Dialog shell
+// ============================================
+::ng-deep .user-form-dialog {
+  font-family: 'Cairo', sans-serif;
+
+  .p-dialog-content {
+    padding: 0 !important;
+    border-radius: 16px;
+    overflow: hidden;
+    font-family: 'Cairo', sans-serif;
+  }
+
+  .p-dialog {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 25px 60px -15px rgba(20, 20, 58, 0.25);
+    font-family: 'Cairo', sans-serif;
+  }
+
+  input,
+  button,
+  label,
+  h3,
+  p,
+  span,
+  small,
+  .role-chip {
+    font-family: 'Cairo', sans-serif !important;
+  }
+
+  // Never override Font Awesome's font on icon elements
+  i,
+  .fa,
+  .fas,
+  .far,
+  .fab,
+  .fa-solid,
+  .fa-regular,
+  .fa-brands,
+  [class^="fa-"],
+  [class*=" fa-"] {
+    font-family: "Font Awesome 6 Free", "Font Awesome 7 Free",
+      "Font Awesome 5 Free", "FontAwesome" !important;
+  }
+}
+
+// ============================================
+// Header
+// ============================================
+.dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.4rem 1.6rem;
+  background: linear-gradient(135deg, $primary-dark 0%, $primary 100%);
+  color: #fff;
+
+  .header-main {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+  }
+
+  .header-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    background: rgba(147, 133, 63, 0.25);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 2px solid $accent;
+    flex-shrink: 0;
+
+    i {
+      font-size: 1.4rem;
+      color: $accent-soft;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .header-text {
+    h3 {
+      margin: 0 0 0.2rem;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    p {
+      margin: 0;
+      font-size: 0.8rem;
+      opacity: 0.85;
+      color: #fff;
+    }
+  }
+
+  .close-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    font-size: 0.95rem;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.28);
+    }
+  }
+}
+
+// ============================================
+// Form body
+// ============================================
+.user-form {
+  padding: 1.4rem 1.6rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  background: $bg-soft;
+}
+
+.form-section {
+  background: $bg-card;
+  border: 1px solid $border;
+  border-radius: 12px;
+  padding: 1.1rem 1.1rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: $primary;
+    padding-bottom: 0.55rem;
+    border-bottom: 1px dashed $border;
+
+    i {
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      background: $muted-gold;
+      color: $accent;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+    }
+  }
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.95rem;
+
+  @media (max-width: 560px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ============================================
+// Field
+// ============================================
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  &.full {
+    grid-column: 1 / -1;
+  }
+
+  label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: $text-main;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .req {
+    color: $danger;
+  }
+
+  .hint {
+    color: $text-muted;
+    font-weight: 400;
+    font-size: 0.72rem;
+  }
+
+  .phone-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    direction: ltr;
+    border: 1px solid $border;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: $bg-soft;
+    transition: all 0.3s ease;
+
+    &:focus-within {
+      border-color: $accent;
+      box-shadow: 0 0 0 3px rgba(147, 133, 63, 0.1);
+      background-color: #fff;
+    }
+
+    .phone-input {
+      padding: 0.75rem 1rem !important;
+      border: none !important;
+      border-radius: 0 !important;
+      border-left: 1px solid $border !important;
+      flex: 1;
+      background: transparent !important;
+      box-shadow: none !important;
+      height: $input-height;
+
+      &:focus {
+        outline: none;
+        box-shadow: none !important;
+      }
+    }
+  }
+
+  .phone-hint {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.75rem;
+    color: #0369a1;
+    background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+    border: 1px solid #bae6fd;
+    border-radius: 8px;
+    padding: 0.35rem 0.65rem;
+    margin-top: 0.1rem;
+    direction: rtl;
+
+    i {
+      color: #0ea5e9;
+      font-size: 0.7rem;
+      flex-shrink: 0;
+    }
+  }
+}
+
+::ng-deep .country-select {
+  height: 100% !important;
+  border: none !important;
+  border-radius: 0 !important;
+  background-color: #f1f5f9 !important;
+  min-width: 110px !important;
+  box-shadow: none !important;
+
+  .p-select-label {
+    padding: 0.6rem 0.25rem 0.6rem 0.75rem !important;
+    font-weight: 700 !important;
+    font-size: 0.82rem !important;
+    color: $primary !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  .p-select-dropdown {
+    width: 1.5rem !important;
+    color: #64748b !important;
+  }
+
+  &:focus,
+  &.p-focus {
+    box-shadow: none !important;
+    outline: none !important;
+  }
+}
+
+.country-selected {
+  font-size: 0.82rem;
+  font-weight: 700;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  letter-spacing: 0.3px;
+  color: $primary;
+}
+
+.country-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  direction: ltr;
+  padding: 0.1rem 0;
+
+  .country-dial {
+    margin-left: auto;
+    color: #94a3b8;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+}
+
+// ============================================
+// Input wrapper with icon
+// ============================================
+// Shared input styles — applied to every text input AND the password input
+::ng-deep .field-input,
+::ng-deep .p-inputtext.field-input {
+  width: 100% !important;
+  height: $input-height !important;
+  line-height: 1.2 !important;
+  border-radius: 10px !important;
+  font-size: 0.88rem !important;
+  font-family: 'Cairo', sans-serif !important;
+  padding: 0 0.95rem !important;
+  border: 1px solid $border !important;
+  background: $bg-soft !important;
+  color: $text-main !important;
+  transition: all 0.2s !important;
+  box-sizing: border-box !important;
+
+  &:hover {
+    border-color: $accent !important;
+    background: #fff !important;
+  }
+
+  &:focus,
+  &:focus-visible {
+    border-color: $primary !important;
+    background: #fff !important;
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(147, 133, 63, 0.18) !important;
+  }
+
+  &[disabled] {
+    background: #f3f4f6 !important;
+    color: $text-muted !important;
+    cursor: not-allowed !important;
+  }
+
+  &::placeholder {
+    color: #a9a9a9;
+  }
+}
+
+// Password — make the wrapper match input height and put toggle eye on the LEFT (RTL)
+::ng-deep .field-password {
+  width: 100% !important;
+  height: $input-height !important;
+  display: block !important;
+  position: relative !important;
+
+  input,
+  .p-password-input,
+  .p-inputtext {
+    width: 100% !important;
+    height: $input-height !important;
+    padding: 0 0.95rem 0 2.4rem !important; // extra left padding for eye toggle
+    box-sizing: border-box !important;
+  }
+
+  // PrimeNG toggle eye — kill any default button-circle styling and pin to LEFT
+  .p-password-toggle-mask,
+  .p-password-toggle,
+  .p-password-toggle-mask-icon,
+  .p-icon-wrapper,
+  >i,
+  >svg {
+    position: absolute !important;
+    left: 0.7rem !important;
+    right: auto !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    background: transparent !important;
+    border: none !important;
+    width: auto !important;
+    height: auto !important;
+    padding: 0 !important;
+    color: $text-muted !important;
+    cursor: pointer !important;
+    box-shadow: none !important;
+
+    &:hover {
+      color: $primary !important;
+    }
+  }
+}
+
+// ============================================
+// Role chips
+// ============================================
+.role-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+
+  .role-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.55rem 0.95rem;
+    border-radius: 999px;
+    border: 1.5px solid $border;
+    background: #fff;
+    color: $text-muted;
+    font-size: 0.82rem;
+    font-weight: 600;
+    font-family: 'Cairo', sans-serif;
+    cursor: pointer;
+    transition: all 0.18s;
+
+    i {
+      font-size: 0.78rem;
+      opacity: 0.8;
+    }
+
+    &:hover {
+      border-color: $accent;
+      color: $primary;
+    }
+
+    &.active {
+      background: linear-gradient(135deg, $primary-dark, $primary);
+      border-color: $primary;
+      color: #fff;
+      box-shadow: 0 4px 12px -3px rgba(20, 20, 58, 0.4);
+
+      i {
+        opacity: 1;
+        color: $accent-soft;
+      }
+    }
+  }
+}
+
+// ============================================
+// Validation & error
+// ============================================
+.err {
+  color: $danger;
+  font-size: 0.72rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+
+  &::before {
+    content: "\f06a";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    font-size: 0.7rem;
+  }
+}
+
+.submit-error {
+  background: $danger-soft;
+  color: $danger;
+  border: 1px solid lighten($danger, 30%);
+  border-radius: 10px;
+  padding: 0.7rem 0.95rem;
+  font-size: 0.82rem;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0;
+}
+
+// ============================================
+// Footer actions
+// ============================================
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  padding-top: 0.4rem;
+
+  ::ng-deep button {
+    border-radius: 10px;
+    padding: 0 1.5rem;
+    height: 42px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    font-family: 'Cairo', sans-serif;
+    transition: all 0.2s;
+  }
+
+  ::ng-deep .btn-cancel {
+    background: #fff !important;
+    color: $text-muted !important;
+    border: 1px solid $border !important;
+
+    &:hover {
+      background: $bg-soft !important;
+      color: $text-main !important;
+    }
+  }
+
+  ::ng-deep .btn-save {
+    background: linear-gradient(135deg, $primary-dark, $primary) !important;
+    border: 1px solid $primary !important;
+    color: #fff !important;
+    box-shadow: 0 4px 12px -3px rgba(20, 20, 58, 0.35);
+
+    &:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px -3px rgba(20, 20, 58, 0.45);
+      background: linear-gradient(135deg, $primary, $primary-dark) !important;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}

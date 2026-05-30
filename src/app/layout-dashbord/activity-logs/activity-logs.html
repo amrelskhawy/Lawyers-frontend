@@ -1,0 +1,168 @@
+<div class="activity-logs-page" dir="rtl">
+
+  <!-- Stats -->
+  <div class="stats-grid">
+
+    <div class="stat-card stat-users">
+      <div class="stat-icon-wrap">
+        <i class="fa-solid fa-user-shield"></i>
+      </div>
+      <div class="stat-body">
+        <span class="stat-value">{{ stats().users }}</span>
+        <span class="stat-label">{{ 'total_users' | translate }}</span>
+      </div>
+      <div class="stat-bg-icon"><i class="fa-solid fa-user-shield"></i></div>
+    </div>
+
+    <div class="stat-card stat-customers">
+      <div class="stat-icon-wrap">
+        <i class="fa-solid fa-users"></i>
+      </div>
+      <div class="stat-body">
+        <span class="stat-value">{{ stats().customers }}</span>
+        <span class="stat-label">{{ 'total_customers' | translate }}</span>
+      </div>
+      <div class="stat-bg-icon"><i class="fa-solid fa-users"></i></div>
+    </div>
+
+    <div class="stat-card stat-cases">
+      <div class="stat-icon-wrap">
+        <i class="fa-solid fa-folder-open"></i>
+      </div>
+      <div class="stat-body">
+        <span class="stat-value">{{ stats().cases }}</span>
+        <span class="stat-label">{{ 'total_cases' | translate }}</span>
+      </div>
+      <div class="stat-bg-icon"><i class="fa-solid fa-folder-open"></i></div>
+    </div>
+
+    <div class="stat-card stat-bookings">
+      <div class="stat-icon-wrap">
+        <i class="fa-solid fa-calendar-check"></i>
+      </div>
+      <div class="stat-body">
+        <span class="stat-value">{{ stats().bookings }}</span>
+        <span class="stat-label">{{ 'total_bookings' | translate }}</span>
+      </div>
+      <div class="stat-bg-icon"><i class="fa-solid fa-calendar-check"></i></div>
+    </div>
+
+  </div>
+
+  <!-- Activity log -->
+  <div class="logs-card">
+
+    <!-- Header -->
+    <div class="logs-header">
+      <div class="logs-title">
+        <div class="logs-title-icon"><i class="fa-solid fa-timeline"></i></div>
+        <div>
+          <h3>{{ 'recent_activity' | translate }}</h3>
+          <span class="logs-subtitle">{{ total() }} {{ 'activity_logs' | translate }}</span>
+        </div>
+      </div>
+
+      <!-- Filters inline -->
+      <div class="filters-row">
+        <div class="filter-wrap">
+          <i class="fa-solid fa-bolt filter-pre-icon"></i>
+          <select class="filter-select" [ngModel]="filterAction()" (ngModelChange)="filterAction.set($event)">
+            <option value="">{{ 'all_actions' | translate }}</option>
+            <option *ngFor="let a of actionOptions" [value]="a">{{ actionLabel(a) }}</option>
+          </select>
+        </div>
+        <div class="filter-wrap">
+          <i class="fa-solid fa-layer-group filter-pre-icon"></i>
+          <select class="filter-select" [ngModel]="filterResource()" (ngModelChange)="filterResource.set($event)">
+            <option value="">{{ 'all_resources' | translate }}</option>
+            <option *ngFor="let r of resourceOptions" [value]="r">{{ resourceTypeLabel(r) }}</option>
+          </select>
+        </div>
+        <button class="btn-filter" (click)="applyFilters()">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <span>{{ 'filter' | translate }}</span>
+        </button>
+        <button class="btn-clear" (click)="clearFilters()" *ngIf="filterAction() || filterResource()"
+          title="مسح الفلاتر">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- States -->
+    <div *ngIf="loading() && logs().length === 0" class="loading-state">
+      <i class="fa-solid fa-spinner fa-spin"></i>
+      <span>جارٍ التحميل...</span>
+    </div>
+    <div *ngIf="!loading() && logs().length === 0" class="empty-state">
+      <i class="fa-solid fa-inbox"></i>
+      <p>{{ 'no_activity' | translate }}</p>
+    </div>
+
+    <!-- Log list -->
+    <div class="logs-list" *ngIf="logs().length > 0">
+      <div *ngFor="let log of logs()" class="log-entry" [class.is-open]="expandedId() === log.id">
+
+        <div class="log-row" (click)="toggleExpand(log.id)">
+
+          <!-- Action badge -->
+          <span class="action-badge" [class]="'badge-' + actionClass(log.action)">
+            <i [class]="actionIcon(log.action)"></i>
+            {{ actionLabel(log.action) }}
+          </span>
+
+          <!-- Main info -->
+          <div class="log-main">
+            <div class="log-resource-line">
+              <span class="resource-type">{{ resourceTypeLabel(log.resource) }}</span>
+              <span class="resource-name" *ngIf="resourceLabel(log)">{{ resourceLabel(log) }}</span>
+            </div>
+            <div class="log-meta">
+              <span class="meta-user">
+                <span class="user-avatar">{{ log.user?.name?.charAt(0) }}</span>
+                {{ log.user?.name }}
+              </span>
+              <span class="meta-role" [class]="'role-' + log.user?.role?.toLowerCase()">{{ log.user?.role }}</span>
+              <span class="meta-ip" *ngIf="log.ipAddress">
+                <i class="fa-solid fa-location-dot"></i> {{ log.ipAddress }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Time + expand -->
+          <div class="log-end">
+            <span class="log-time">
+              <i class="fa-regular fa-clock"></i>
+              {{ formatDate(log.createdAt) }}
+            </span>
+            <span class="expand-btn" *ngIf="log.details">
+              <i class="fa-solid" [class.fa-chevron-down]="expandedId() !== log.id"
+                [class.fa-chevron-up]="expandedId() === log.id"></i>
+            </span>
+          </div>
+
+        </div>
+
+        <!-- Details -->
+        <div class="log-details" *ngIf="expandedId() === log.id && detailEntries(log.details).length > 0">
+          <div class="details-grid">
+            <div class="detail-pill" *ngFor="let e of detailEntries(log.details)">
+              <span class="pill-key">{{ e.key }}</span>
+              <span class="pill-sep">:</span>
+              <span class="pill-val">{{ e.value }}</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="load-more-row" *ngIf="hasMore">
+      <button class="btn-load-more" (click)="loadMore()" [disabled]="loading()">
+        <i class="fa-solid fa-arrow-down"></i>
+        {{ 'load_more' | translate }}
+      </button>
+    </div>
+
+  </div>
+</div>

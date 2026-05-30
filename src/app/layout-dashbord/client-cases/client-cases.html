@@ -1,22 +1,52 @@
 <ng-template #actions let-item let-onDelete="delete">
   <div class="action-btn">
-    <button [pTooltip]="'meeting_report' | translate" tooltipPosition="top" [attr.aria-label]="'edit' | translate"
+
+    <!-- Assignment badge -->
+    <span class="assignment-status-badge"
+      [class.badge-pending]="item.assignmentStatus === 'PENDING'"
+      [class.badge-accepted]="item.assignmentStatus === 'ACCEPTED'"
+      [class.badge-rejected]="item.assignmentStatus === 'REJECTED'"
+      [class.badge-unassigned]="item.assignmentStatus === 'UNASSIGNED' || !item.assignmentStatus"
+      [pTooltip]="('assignment_status_' + (item.assignmentStatus ?? 'unassigned').toLowerCase()) | translate"
+      tooltipPosition="top">
+      <i class="fa-solid fa-circle"></i>
+    </span>
+
+    <!-- Lawyer: accept / reject for PENDING assignments -->
+    <ng-container *ngIf="isLawyer && item.assignmentStatus === 'PENDING'">
+      <button class="accept-btn" [pTooltip]="'accept_assignment' | translate" tooltipPosition="top"
+        (click)="acceptAssignment(item, $event)">
+        <i class="fa-solid fa-check"></i>
+      </button>
+      <button class="reject-btn" [pTooltip]="'reject_assignment' | translate" tooltipPosition="top"
+        (click)="rejectAssignment(item, $event)">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </ng-container>
+
+    <!-- Staff + accepted lawyers: edit -->
+    <button *ngIf="!isLawyer || item.assignmentStatus === 'ACCEPTED' || item.assignmentStatus === 'PENDING'"
+      [pTooltip]="'edit' | translate" tooltipPosition="top" [attr.aria-label]="'edit' | translate"
       (click)="onEditCase(item)" class="edit-btn">
       <i class="fa-solid fa-pen-to-square"></i>
     </button>
 
-    <button [attr.aria-label]="'create_session_report' | translate" [pTooltip]="'create_session_report' | translate"
-      tooltipPosition="top" (click)="onCreateSessionReport(item)" class="session-report-btn">
-      <i class="fa-solid fa-file-lines"></i>
-    </button>
-    <button [attr.aria-label]="'field_visit_report' | translate" [pTooltip]="'field_visit_report' | translate"
-      tooltipPosition="top" (click)="onCreateFieldVisitReport(item)" class="field-visit-btn">
-      <i class="fa-solid fa-location-dot"></i>
-    </button>
-    <button [attr.aria-label]="'lawyer_fees_contract' | translate" [pTooltip]="'lawyer_fees_contract' | translate"
-      tooltipPosition="top" (click)="onCreateLawyerFeesContract(item)" class="fees-contract-btn">
-      <i class="fa-solid fa-file-signature"></i>
-    </button>
+    <!-- Reports: admin + moderator + lawyer (accepted only); hidden for receptionist -->
+    <ng-container *ngIf="canViewReports && (!isLawyer || item.assignmentStatus === 'ACCEPTED')">
+      <button [attr.aria-label]="'create_session_report' | translate" [pTooltip]="'create_session_report' | translate"
+        tooltipPosition="top" (click)="onCreateSessionReport(item)" class="session-report-btn">
+        <i class="fa-solid fa-file-lines"></i>
+      </button>
+      <button [attr.aria-label]="'field_visit_report' | translate" [pTooltip]="'field_visit_report' | translate"
+        tooltipPosition="top" (click)="onCreateFieldVisitReport(item)" class="field-visit-btn">
+        <i class="fa-solid fa-location-dot"></i>
+      </button>
+      <button [attr.aria-label]="'lawyer_fees_contract' | translate" [pTooltip]="'lawyer_fees_contract' | translate"
+        tooltipPosition="top" (click)="onCreateLawyerFeesContract(item)" class="fees-contract-btn">
+        <i class="fa-solid fa-file-signature"></i>
+      </button>
+    </ng-container>
+
     <a *ngIf="item.customer?.caseReportsFolderId"
       [href]="'https://drive.google.com/drive/folders/' + item.customer.caseReportsFolderId"
       target="_blank" rel="noopener noreferrer"
@@ -24,15 +54,16 @@
       class="drive-btn">
       <i class="fa-brands fa-google-drive"></i>
     </a>
-    <button [attr.aria-label]="'delete' | translate" (click)="onDelete(item)" class="delete-btn">
+
+    <button *ngIf="!isLawyer && !isReceptionist" [attr.aria-label]="'delete' | translate" (click)="onDelete(item)" class="delete-btn">
       <i class="fa-solid fa-trash"></i>
     </button>
   </div>
 </ng-template>
 
 <app-dashboard-crud-page endpoint="cases" deleteEndpoint="cases" [columns]="columns" [searchFields]="searchFields"
-  [actionsTemplate]="actions" [dataMapper]="dataMapper" (addNew)="visibelform.set(true)">
+  [actionsTemplate]="actions" [dataMapper]="dataMapper" [showAddButton]="!isLawyer" (addNew)="visibelform.set(true)">
 
-  <app-form-create-case [(visible)]="visibelform" (created)="onCreated($event)">
+  <app-form-create-case *ngIf="!isLawyer" [(visible)]="visibelform" (created)="onCreated($event)">
   </app-form-create-case>
 </app-dashboard-crud-page>

@@ -43,7 +43,12 @@ export class Login implements OnInit {
       this.Form().reset();
       sessionStorage.setItem('token', res.data.token);
       sessionStorage.setItem('user', JSON.stringify(res.data.user));
-      this.router.navigate(['/dashboard/content']);
+
+      if (res.data.user.role === 'LAWYER') {
+        this.router.navigate(['/dashboard/content/client-cases']);
+      } else {
+        this.router.navigate(['/dashboard/content']);
+      }
     });
   }
 

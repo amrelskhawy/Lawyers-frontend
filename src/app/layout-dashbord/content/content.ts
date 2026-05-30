@@ -6,10 +6,14 @@ import { Component, OnInit, signal } from '@angular/core';
   templateUrl: './content.html',
   styleUrl: './content.scss',
 })
-export class Content implements OnInit {
-  constructor() {}
 
-  ngOnInit(): void {}
+export class Content implements OnInit {
+
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
 
   toggel = signal<boolean>(false);
 
