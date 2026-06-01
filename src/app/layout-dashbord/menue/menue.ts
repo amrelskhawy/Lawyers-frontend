@@ -117,7 +117,7 @@ export class Menue implements OnInit {
       },
 
       // ── Reports — admin, moderator, lawyer (not receptionist) ─
-      ...(isAdmin || isModerator || isLawyer ? [{
+      ...(isAdmin || isModerator ? [{
         name: 'lawyer_fees_contracts',
         icon: 'fa-solid fa-file-signature',
         route: '/dashboard/content/lawyer-fees-contracts',
