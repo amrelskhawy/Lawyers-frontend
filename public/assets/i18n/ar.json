@@ -660,5 +660,8 @@
   "reminder_status_pending": "قيد الانتظار",
   "reminder_status_sent": "تم الإرسال",
   "reminder_status_failed": "فشل",
-  "reminder_status_cancelled": "ملغي"
+  "reminder_status_cancelled": "ملغي",
+  "session_date": "موعد الجلسة القادمة",
+  "session_date_saved": "تم حفظ موعد الجلسة",
+  "session_date_required_hint": "يجب تحديد موعد الجلسة القادمة قبل إضافة التذكيرات"
 }

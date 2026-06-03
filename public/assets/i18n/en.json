@@ -660,5 +660,8 @@
   "reminder_status_pending": "Pending",
   "reminder_status_sent": "Sent",
   "reminder_status_failed": "Failed",
-  "reminder_status_cancelled": "Cancelled"
+  "reminder_status_cancelled": "Cancelled",
+  "session_date": "Next session date",
+  "session_date_saved": "Session date saved",
+  "session_date_required_hint": "Set the next session date before adding reminders"
 }

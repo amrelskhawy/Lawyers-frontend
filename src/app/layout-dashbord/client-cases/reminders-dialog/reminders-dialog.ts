@@ -18,7 +18,9 @@ export class RemindersDialog {
   reminders = signal<IReminder[]>([]);
   types = signal<IReminderTypeOption[]>([]);
   editingId = signal<string | null>(null);
+  sessionSaved = signal<boolean>(false);
   form: FormGroup;
+  sessionForm: FormGroup;
 
   constructor(private fb: FormBuilder, private data: Data) {
     this.form = this.fb.group({
@@ -28,6 +30,12 @@ export class RemindersDialog {
       time: ['', Validators.required],
       repeat: [false],
       repeatEveryHours: [{ value: null, disabled: true }],
+    });
+
+    // Separate form for editing the case's next-session date inline.
+    this.sessionForm = this.fb.group({
+      date: ['', Validators.required],
+      time: [''],
     });
 
     this.form.get('repeat')!.valueChanges.subscribe((on: boolean) => {
@@ -47,10 +55,53 @@ export class RemindersDialog {
   // Two-way binding setter: parent passes the case to manage reminders for.
   @Input() set objCase(value: IDataCase | null) {
     this.caseItem.set(value ?? null);
+    this.sessionSaved.set(false);
+    this.prefillSessionForm(value?.sessionDate ?? null);
     if (value?.id) {
       this.loadTypes();
       this.loadReminders(value.id);
     }
+  }
+
+  private pad(n: number): string {
+    return String(n).padStart(2, '0');
+  }
+
+  private prefillSessionForm(sessionDate: string | null) {
+    if (!sessionDate) {
+      this.sessionForm.reset({ date: '', time: '' });
+      return;
+    }
+    const d = new Date(sessionDate);
+    this.sessionForm.patchValue({
+      date: `${d.getFullYear()}-${this.pad(d.getMonth() + 1)}-${this.pad(d.getDate())}`,
+      time: `${this.pad(d.getHours())}:${this.pad(d.getMinutes())}`,
+    });
+  }
+
+  get hasSessionDate(): boolean {
+    return !!this.caseItem()?.sessionDate;
+  }
+
+  /** Persist the next-session date to the case (single source of truth) and
+   *  reflect it locally so reminder validation uses it immediately. */
+  saveSessionDate() {
+    if (this.sessionForm.invalid) {
+      this.sessionForm.markAllAsTouched();
+      return;
+    }
+    const caseId = this.caseItem()?.id;
+    if (!caseId) return;
+
+    const { date, time } = this.sessionForm.value;
+    const iso = new Date(`${date}T${time || '09:00'}`).toISOString();
+
+    this.data.patch(`cases/${caseId}`, { sessionDate: iso }).subscribe(() => {
+      const c = this.caseItem();
+      if (c) this.caseItem.set({ ...c, sessionDate: iso });
+      this.prefillSessionForm(iso);
+      this.sessionSaved.set(true);
+    });
   }
 
   get selectedTypeDescription(): string {

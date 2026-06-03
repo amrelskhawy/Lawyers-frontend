@@ -20,6 +20,40 @@
 
       <div class="reminders-body">
 
+        <!-- Session date (editable, persists to the case) -->
+        <form [formGroup]="sessionForm" (ngSubmit)="saveSessionDate()" class="session-card">
+          <div class="session-title">
+            <i class="fa-regular fa-calendar-check"></i>
+            {{ 'session_date' | translate }}
+          </div>
+          <div class="session-row">
+            <div class="input-group">
+              <label>{{ 'date' | translate }}</label>
+              <div class="input-wrapper">
+                <i class="fa-regular fa-calendar input-icon"></i>
+                <input type="date" formControlName="date" />
+              </div>
+            </div>
+            <div class="input-group">
+              <label>{{ 'time' | translate }}</label>
+              <div class="input-wrapper">
+                <i class="fa-regular fa-clock input-icon"></i>
+                <input type="time" formControlName="time" />
+              </div>
+            </div>
+            <button type="submit" class="btn-session">
+              <i class="fa-solid fa-floppy-disk"></i>
+              {{ 'save' | translate }}
+            </button>
+          </div>
+          <small class="session-hint" *ngIf="!hasSessionDate">
+            <i class="fa-solid fa-triangle-exclamation"></i> {{ 'session_date_required_hint' | translate }}
+          </small>
+          <small class="session-saved" *ngIf="sessionSaved()">
+            <i class="fa-solid fa-circle-check"></i> {{ 'session_date_saved' | translate }}
+          </small>
+        </form>
+
         <!-- Existing reminders -->
         <div class="reminders-list">
           <div class="empty-state" *ngIf="reminders().length === 0">
