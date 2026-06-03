@@ -91,7 +91,6 @@ export class RemindersDialog {
 
     const v = this.form.getRawValue();
     const body: any = {
-      caseId,
       type: v.type,
       content: v.content || undefined,
       scheduledAt: this.toIso(),
@@ -102,7 +101,7 @@ export class RemindersDialog {
     const editingId = this.editingId();
     const req = editingId
       ? this.data.patch(`reminders/${editingId}`, body)
-      : this.data.post('reminders', body);
+      : this.data.post('reminders', { caseId, ...body });
 
     req.subscribe(() => {
       this.resetForm();
