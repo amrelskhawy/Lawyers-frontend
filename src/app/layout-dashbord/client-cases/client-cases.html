@@ -45,6 +45,10 @@
         tooltipPosition="top" (click)="onCreateLawyerFeesContract(item)" class="fees-contract-btn">
         <i class="fa-solid fa-file-signature"></i>
       </button>
+      <button [attr.aria-label]="'reminders_title' | translate" [pTooltip]="'reminders_title' | translate"
+        tooltipPosition="top" (click)="onManageReminders(item)" class="reminder-btn">
+        <i class="fa-solid fa-bell"></i>
+      </button>
     </ng-container>
 
     <a *ngIf="item.customer?.caseReportsFolderId"
@@ -66,4 +70,5 @@
 
   <app-form-create-case *ngIf="!isLawyer" [(visible)]="visibelform" (created)="onCreated($event)">
   </app-form-create-case>
+  <app-reminders-dialog [(visible)]="visibelReminders" [objCase]="selectedCase()"></app-reminders-dialog>
 </app-dashboard-crud-page>

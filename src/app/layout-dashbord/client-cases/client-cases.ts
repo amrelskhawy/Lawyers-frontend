@@ -23,6 +23,8 @@ export class ClientCases implements OnInit {
   columns: { key: string; value: string }[] = [];
   searchFields = ['customerName', 'caseTypeLabel', 'caseDate'];
   visibelform = signal<boolean>(false);
+  visibelReminders = signal<boolean>(false);
+  selectedCase = signal<IDataCase | null>(null);
 
   get currentUser(): any {
     const raw = sessionStorage.getItem('user');
@@ -70,6 +72,11 @@ export class ClientCases implements OnInit {
 
   onCreateLawyerFeesContract(item: IDataCase) {
     this.router.navigate(['/dashboard/content/lawyer-fees-contract/case', item.id]);
+  }
+
+  onManageReminders(item: IDataCase) {
+    this.selectedCase.set(item);
+    this.visibelReminders.set(true);
   }
 
   onCreated(newCase: IDataCase) {
