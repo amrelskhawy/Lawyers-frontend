@@ -643,5 +643,18 @@
   "filter": "تصفية",
   "case_weaknesses": "نقاط الضعف",
   "case_strengths": "نقاط القوة",
-  "case_gaps": "الثغرات"
+  "case_gaps": "الثغرات",
+  "reminders_title": "التذكيرات",
+  "next_session": "موعد الجلسة القادمة",
+  "no_reminders": "لا توجد تذكيرات",
+  "reminder_type": "نوع التذكير",
+  "reminder_content": "محتوى التذكير",
+  "repeat_reminder": "تكرار التنبيه",
+  "repeat_every_hours": "التكرار كل (ساعة)",
+  "repeat_every": "يتكرر كل",
+  "add_reminder": "إضافة تذكير جديد",
+  "reminder_type_session_details_review": "تذكير بموعد الجلسة القادمة ومراجعة التفاصيل",
+  "reminder_type_memo_review_upload": "تذكير بمراجعة ورفع المذكرات بعد اعتمادها من العميل",
+  "reminder_type_urgent_session_soon": "تذكير عاجل بقرب موعد الجلسة",
+  "reminder_type_custom": "تذكير مخصص"
 }

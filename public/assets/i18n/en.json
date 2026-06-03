@@ -643,5 +643,18 @@
   "filter": "Filter",
   "case_weaknesses": "Weaknesses",
   "case_strengths": "Strengths",
-  "case_gaps": "Gaps"
+  "case_gaps": "Gaps",
+  "reminders_title": "Reminders",
+  "next_session": "Next session",
+  "no_reminders": "No reminders",
+  "reminder_type": "Reminder type",
+  "reminder_content": "Reminder content",
+  "repeat_reminder": "Repeat alert",
+  "repeat_every_hours": "Repeat every (hours)",
+  "repeat_every": "Repeats every",
+  "add_reminder": "Add new reminder",
+  "reminder_type_session_details_review": "Reminder of the upcoming session and detail review",
+  "reminder_type_memo_review_upload": "Reminder to review and upload memos after client approval",
+  "reminder_type_urgent_session_soon": "Urgent reminder — session is near",
+  "reminder_type_custom": "Custom reminder"
 }
