@@ -656,5 +656,9 @@
   "reminder_type_session_details_review": "تذكير بموعد الجلسة القادمة ومراجعة التفاصيل",
   "reminder_type_memo_review_upload": "تذكير بمراجعة ورفع المذكرات بعد اعتمادها من العميل",
   "reminder_type_urgent_session_soon": "تذكير عاجل بقرب موعد الجلسة",
-  "reminder_type_custom": "تذكير مخصص"
+  "reminder_type_custom": "تذكير مخصص",
+  "reminder_status_pending": "قيد الانتظار",
+  "reminder_status_sent": "تم الإرسال",
+  "reminder_status_failed": "فشل",
+  "reminder_status_cancelled": "ملغي"
 }
