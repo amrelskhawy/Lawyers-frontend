@@ -1,0 +1,81 @@
+<p-dialog maskStyleClass="backdrop-blur-sm" [(visible)]="visible" (onHide)="close()" [modal]="true"
+  [baseZIndex]="10000" styleClass="modern-modal" [style]="{ width: '92vw', maxWidth: '720px' }">
+  <ng-template pTemplate="headless">
+    <div class="reminders-container">
+      <div class="form-header">
+        <div class="header-content">
+          <h3>{{ 'reminders_title' | translate }}</h3>
+          <p class="subtitle" *ngIf="sessionDate">
+            {{ 'next_session' | translate }}: {{ sessionDate }}
+          </p>
+        </div>
+        <button class="close-icon-btn" (click)="close()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <!-- Existing reminders -->
+      <div class="reminders-list">
+        <p *ngIf="reminders().length === 0" class="empty">{{ 'no_reminders' | translate }}</p>
+        <div class="reminder-row" *ngFor="let r of reminders()">
+          <div class="reminder-info">
+            <span class="reminder-type">{{ ('reminder_type_' + r.type.toLowerCase()) | translate }}</span>
+            <span class="reminder-when">{{ r.scheduledAt | date: 'short' }}</span>
+            <span class="reminder-status" [attr.data-status]="r.status">{{ r.status }}</span>
+            <span class="reminder-repeat" *ngIf="r.repeat">
+              {{ 'repeat_every' | translate }} {{ r.repeatEveryHours }}h
+            </span>
+          </div>
+          <div class="reminder-actions">
+            <button class="edit-btn" (click)="onEdit(r)"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button class="delete-btn" (click)="onDelete(r)"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add / edit form -->
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-body">
+        <div class="input-group">
+          <label>{{ 'reminder_type' | translate }}</label>
+          <select formControlName="type">
+            <option *ngFor="let t of types()" [value]="t.value">
+              {{ ('reminder_type_' + t.value.toLowerCase()) | translate }}
+            </option>
+          </select>
+          <small class="level-msg" *ngIf="selectedTypeDescription">{{ selectedTypeDescription }}</small>
+        </div>
+
+        <div class="input-row">
+          <div class="input-group">
+            <label>{{ 'date' | translate }}</label>
+            <input type="date" formControlName="date" />
+          </div>
+          <div class="input-group">
+            <label>{{ 'time' | translate }}</label>
+            <input type="time" formControlName="time" />
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label>{{ 'reminder_content' | translate }}</label>
+          <textarea formControlName="content" rows="2"></textarea>
+        </div>
+
+        <div class="input-group toggle-row">
+          <label>{{ 'repeat_reminder' | translate }}</label>
+          <p-toggleswitch formControlName="repeat"></p-toggleswitch>
+        </div>
+
+        <div class="input-group" *ngIf="form.get('repeat')!.value">
+          <label>{{ 'repeat_every_hours' | translate }}</label>
+          <input type="number" min="1" formControlName="repeatEveryHours" />
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" (click)="close()">{{ 'close' | translate }}</button>
+          <button type="submit" class="btn-primary">
+            {{ (editingId() ? 'save' : 'add_reminder') | translate }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+</p-dialog>
