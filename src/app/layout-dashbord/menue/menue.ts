@@ -38,6 +38,7 @@ export class Menue implements OnInit {
     }[]
   >([]);
   visibelform = signal<boolean>(false);
+  canManageWorkDay = signal<boolean>(false);
 
   @Input()
   set toggel(event: boolean) {
@@ -70,6 +71,8 @@ export class Menue implements OnInit {
     const isModerator = role === 'MODERATOR';
     const isReceptionist = role === 'RECEPTIONIST';
     const isLawyer = role === 'LAWYER';
+
+    this.canManageWorkDay.set(isAdmin || isModerator);
 
     this.ListMenue.set([
 
