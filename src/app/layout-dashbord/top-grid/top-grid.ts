@@ -19,6 +19,7 @@ export class TopGrid implements OnInit {
     this.processUser()
   }
 
+  @Input() showAddButton = true;
   @Output() visibelformadd = new EventEmitter<boolean>();
   @Output() search = new EventEmitter<string>();
 

@@ -1,1 +1,53 @@
 @use "../glopalstyles.scss";
+
+// ── Assignment status indicator ──────────────────────────────
+.assignment-status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  i {
+    font-size: 0.7rem;
+    line-height: 1;
+    transition: color 0.2s ease;
+  }
+
+  // Pending — awaiting the lawyer's response: amber + pulse
+  &.badge-pending i {
+    color: #f59e0b;
+    animation: assignment-pulse 1.4s ease-in-out infinite;
+  }
+
+  // Accepted — green
+  &.badge-accepted i {
+    color: #22c55e;
+  }
+
+  // Rejected — red
+  &.badge-rejected i {
+    color: #ef4444;
+  }
+
+  // Unassigned — neutral gray
+  &.badge-unassigned i {
+    color: #9ca3af;
+  }
+}
+
+@keyframes assignment-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+    filter: drop-shadow(0 0 0 rgba(245, 158, 11, 0.7));
+  }
+  50% {
+    transform: scale(1.25);
+    opacity: 0.75;
+    filter: drop-shadow(0 0 4px rgba(245, 158, 11, 0.7));
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+    filter: drop-shadow(0 0 0 rgba(245, 158, 11, 0));
+  }
+}

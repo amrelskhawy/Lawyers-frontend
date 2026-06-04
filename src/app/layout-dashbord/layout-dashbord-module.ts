@@ -34,6 +34,7 @@ import { OrganizerForm } from './organizers/form/form';
 import { SelectModule } from 'primeng/select';
 import { ClientCases } from './client-cases/client-cases';
 import { FormCreateCase } from './client-cases/form-create-case/form-create-case';
+import { RemindersDialog } from './client-cases/reminders-dialog/reminders-dialog';
 import { EditCase } from './client-cases/edit-case/edit-case';
 import { CaseReportTemplate } from './client-cases/case-report-template/case-report-template';
 import { SessionReport } from './session-report/session-report';
@@ -45,6 +46,12 @@ import { LawyerFeesContractsList } from './lawyer-fees-contracts-list/lawyer-fee
 import { LawyerFeesContract } from './lawyer-fees-contract/lawyer-fees-contract';
 import { LawyerFeesContractPreviewModule } from '../shared/lawyer-fees-contract-preview/lawyer-fees-contract-preview-module';
 import { EditorModule } from 'primeng/editor';
+import { ActivityLogs } from './activity-logs/activity-logs';
+import { Users } from './users/users';
+import { FormUser } from './users/form-user/form-user';
+import { PasswordModule } from 'primeng/password';
+import { InputTextModule } from 'primeng/inputtext';
+
 @NgModule({
   declarations: [
     Menue,
@@ -70,6 +77,7 @@ import { EditorModule } from 'primeng/editor';
     OrganizerForm,
     ClientCases,
     FormCreateCase,
+    RemindersDialog,
     EditCase,
     CaseReportTemplate,
     SessionReport,
@@ -79,6 +87,9 @@ import { EditorModule } from 'primeng/editor';
     FieldVisitReportTemplate,
     LawyerFeesContractsList,
     LawyerFeesContract,
+    ActivityLogs,
+    Users,
+    FormUser,
   ],
   imports: [
     CommonModule,
@@ -94,8 +105,10 @@ import { EditorModule } from 'primeng/editor';
     ToggleSwitchModule,
     FormsModule,
     SelectModule,
+    PasswordModule,
+    InputTextModule,
     LawyerFeesContractPreviewModule,
     EditorModule,
   ],
 })
-export class LayoutDashbordModule {}
+export class LayoutDashbordModule { }

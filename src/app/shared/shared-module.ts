@@ -23,8 +23,6 @@ import { Error } from './error/error';
 import { NoData } from './no-data/no-data';
 import { HijriDatepicker } from './hijri-datepicker/hijri-datepicker';
 import { FormsModule } from '@angular/forms';
-import { PasscodeDialog } from './passcode-dialog/passcode-dialog';
-
 
 @NgModule({
   declarations: [
@@ -42,7 +40,6 @@ import { PasscodeDialog } from './passcode-dialog/passcode-dialog';
     Error,
     NoData,
     HijriDatepicker,
-    PasscodeDialog
   ],
   imports: [
     CommonModule,
@@ -68,7 +65,6 @@ import { PasscodeDialog } from './passcode-dialog/passcode-dialog';
     Footer,
     NoData,
     HijriDatepicker,
-    PasscodeDialog
   ],
 
   providers: [

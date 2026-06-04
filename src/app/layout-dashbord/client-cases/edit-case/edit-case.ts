@@ -1,11 +1,13 @@
 import { Component, OnDestroy, OnInit, computed, signal } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
 import { Data } from '../../../core/Servies/data';
 import { CASE_TYPE_OPTIONS, IDataCase, ILawyerOption } from '../../../core/Models/case.model';
 import { TEAM_MEMBERS } from '../../../core/Models/team-members';
 import { IDataCustomer } from '../../../core/Models/customers.model';
+import { IUser } from '../../users/users';
 import { CaseReportData } from '../case-report-template/case-report-template';
 
 type SaveStatus = 'idle' | 'unsaved' | 'saving' | 'saved' | 'error';
@@ -22,6 +24,7 @@ export class EditCase implements OnInit, OnDestroy {
     private data: Data,
     private route: ActivatedRoute,
     private router: Router,
+    private translate: TranslateService,
   ) {}
 
   readonly caseTypes = CASE_TYPE_OPTIONS;
@@ -31,19 +34,60 @@ export class EditCase implements OnInit, OnDestroy {
   saveStatus = signal<SaveStatus>('idle');
   generating = signal<boolean>(false);
   sending = signal<boolean>(false);
+  assigning = signal<boolean>(false);
+  unassigning = signal<boolean>(false);
+  assignmentActioning = signal<boolean>(false);
   loadedCase = signal<IDataCase | null>(null);
 
   customers = signal<IDataCustomer[]>([]);
   lawyers = signal<ILawyerOption[]>([]);
 
   Form!: FormGroup;
+  assignForm!: FormGroup;
   private destroy$ = new Subject<void>();
   private skipNextDirty = false;
+
+  // Role helpers
+  get currentUser(): any {
+    const raw = sessionStorage.getItem('user');
+    return raw ? JSON.parse(raw) : null;
+  }
+  get role(): string { return this.currentUser?.role ?? ''; }
+  get isLawyer(): boolean { return this.role === 'LAWYER'; }
+  get isStaff(): boolean { return ['ADMIN', 'MODERATOR', 'RECEPTIONIST'].includes(this.role); }
+  get canAssign(): boolean { return ['ADMIN', 'MODERATOR', 'RECEPTIONIST'].includes(this.role); }
+
+  get assignmentStatus() { return this.loadedCase()?.assignmentStatus ?? 'UNASSIGNED'; }
+  get hasActiveAssignment(): boolean {
+    return this.assignmentStatus === 'PENDING' || this.assignmentStatus === 'ACCEPTED';
+  }
+  get assignedLawyerName(): string {
+    const c = this.loadedCase();
+    return c?.preferredLawyerName ?? c?.preferredLawyer?.name ?? '';
+  }
+  get isPendingForMe(): boolean {
+    const c = this.loadedCase();
+    return this.isLawyer && c?.assignmentStatus === 'PENDING' && c?.preferredLawyerId === this.currentUser?.id;
+  }
+  get isAcceptedByMe(): boolean {
+    const c = this.loadedCase();
+    return this.isLawyer && c?.assignmentStatus === 'ACCEPTED' && c?.preferredLawyerId === this.currentUser?.id;
+  }
+  get previewShowPage1(): boolean { return !this.isLawyer; }
+  get previewShowPage2(): boolean { return !['RECEPTIONIST'].includes(this.role); }
+
+  // RECEPTIONIST can only assign a lawyer — cannot edit case data or notes
+  get canEdit(): boolean {
+    if (this.isLawyer) return this.isAcceptedByMe;
+    if (this.role === 'RECEPTIONIST') return false;
+    return ['ADMIN', 'MODERATOR'].includes(this.role);
+  }
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id') ?? '';
     this.caseId.set(id);
     this.buildForm();
+    this.buildAssignForm();
     this.loadDropdowns();
     this.loadCase(id);
     this.wireDirtyTracking();
@@ -63,9 +107,6 @@ export class EditCase implements OnInit, OnDestroy {
       hijriDate: [null],
       agencyNumber: [''],
 
-      wantsSpecificLawyer: [false],
-      preferredLawyerId: [null],
-
       sessionReceiverId: [null],
       sessionDate: [null],
 
@@ -74,6 +115,12 @@ export class EditCase implements OnInit, OnDestroy {
       strengths: this.fb.array([] as FormControl<string>[]),
       gaps: this.fb.array([] as FormControl<string>[]),
       freeNotes: [''],
+    });
+  }
+
+  private buildAssignForm() {
+    this.assignForm = this.fb.group({
+      lawyerId: [null, Validators.required],
     });
   }
 
@@ -92,16 +139,10 @@ export class EditCase implements OnInit, OnDestroy {
     this.data.get<{ data: IDataCustomer[] }>('customers').subscribe((res) => {
       this.customers.set(res.data ?? []);
     });
-    this.data.get<{ data: ILawyerOption[] }>('cases/lawyers').subscribe((res) => {
-      const backend = res.data ?? [];
-      const teamOptions: ILawyerOption[] = TEAM_MEMBERS
-        .filter((m) => m.isLawyer)
-        .map((m) => ({
-          id: `team:${m.name_en}`,
-          name: m.name_ar,
-          email: m.role_ar,
-        }));
-      this.lawyers.set([...backend, ...teamOptions]);
+    this.data.get<{ data: IUser[] }>('public/lawyers').subscribe((res) => {
+      this.lawyers.set(
+        (res.data ?? []).map((u) => ({ id: u.id, name: u.nameAr || u.name, email: u.email })),
+      );
     });
   }
 
@@ -126,12 +167,6 @@ export class EditCase implements OnInit, OnDestroy {
           this.gaps.push(new FormControl(v, { nonNullable: true })),
         );
 
-        let preferredLawyerFormId: string | null = c.preferredLawyerId;
-        if (!preferredLawyerFormId && c.preferredLawyerName) {
-          const match = TEAM_MEMBERS.find((m) => m.name_ar === c.preferredLawyerName);
-          if (match) preferredLawyerFormId = `team:${match.name_en}`;
-        }
-
         let sessionReceiverFormId: string | null = c.sessionReceiverId;
         if (!sessionReceiverFormId && c.sessionReceiverName) {
           const match = TEAM_MEMBERS.find((m) => m.name_ar === c.sessionReceiverName);
@@ -145,13 +180,16 @@ export class EditCase implements OnInit, OnDestroy {
           caseDate: c.caseDate ? new Date(c.caseDate) : null,
           hijriDate: c.hijriDate ?? null,
           agencyNumber: c.agencyNumber ?? '',
-          wantsSpecificLawyer: c.wantsSpecificLawyer,
-          preferredLawyerId: preferredLawyerFormId,
           sessionReceiverId: sessionReceiverFormId,
           sessionDate: c.sessionDate ? new Date(c.sessionDate) : null,
           hasStructuredNotes: c.hasStructuredNotes,
           freeNotes: c.freeNotes ?? '',
         });
+
+        if (c.preferredLawyerId) {
+          this.assignForm.patchValue({ lawyerId: c.preferredLawyerId });
+        }
+
         this.loading.set(false);
         this.saveStatus.set('idle');
       },
@@ -171,7 +209,7 @@ export class EditCase implements OnInit, OnDestroy {
   }
 
   save() {
-    if (this.saveStatus() === 'saving') return;
+    if (!this.canEdit || this.saveStatus() === 'saving') return;
     this.saveStatus.set('saving');
     this.data
       .patch<{ data: IDataCase }>(`cases/${this.caseId()}`, this.toPayload(this.Form.value))
@@ -185,13 +223,6 @@ export class EditCase implements OnInit, OnDestroy {
   }
 
   private toPayload(value: any) {
-    const rawId: string | null = value.preferredLawyerId || null;
-    const isTeamMember = rawId?.startsWith('team:') ?? false;
-    const preferredLawyerId = isTeamMember ? null : rawId;
-    const preferredLawyerName = isTeamMember
-      ? (TEAM_MEMBERS.find((m) => `team:${m.name_en}` === rawId)?.name_ar ?? null)
-      : null;
-
     const rawSessionId: string | null = value.sessionReceiverId || null;
     const isSessionTeamMember = rawSessionId?.startsWith('team:') ?? false;
     const sessionReceiverId = isSessionTeamMember ? null : rawSessionId;
@@ -206,9 +237,6 @@ export class EditCase implements OnInit, OnDestroy {
       caseDate: value.caseDate
         ? (value.caseDate instanceof Date ? value.caseDate : new Date(value.caseDate)).toISOString()
         : undefined,
-      wantsSpecificLawyer: value.wantsSpecificLawyer,
-      preferredLawyerId,
-      preferredLawyerName,
       sessionReceiverId,
       sessionReceiverName,
       sessionDate: value.sessionDate
@@ -224,13 +252,78 @@ export class EditCase implements OnInit, OnDestroy {
     };
   }
 
-  // Live preview data — recomputed from form value + dropdown lookups on every change
+  assignLawyer() {
+    if (!this.canAssign || this.assigning() || this.hasActiveAssignment || this.assignForm.invalid) return;
+    const rawId: string | null = this.assignForm.value.lawyerId || null;
+    if (!rawId || rawId.startsWith('team:')) return;
+
+    this.assigning.set(true);
+    this.data
+      .patch<{ data: IDataCase }>(`cases/${this.caseId()}/assign`, { lawyerId: rawId })
+      .subscribe({
+        next: (res) => {
+          this.loadedCase.set(res.data);
+          this.assignForm.patchValue({ lawyerId: res.data.preferredLawyerId ?? null });
+          this.assigning.set(false);
+        },
+        error: () => this.assigning.set(false),
+      });
+  }
+
+  unassignLawyer() {
+    if (!this.canAssign || this.unassigning() || !this.hasActiveAssignment) return;
+    const confirmed = window.confirm(this.translate.instant('confirm_unassign_lawyer'));
+    if (!confirmed) return;
+
+    this.unassigning.set(true);
+    this.data
+      .patch<{ data: IDataCase }>(`cases/${this.caseId()}/unassign`, {})
+      .subscribe({
+        next: (res) => {
+          this.loadedCase.set(res.data);
+          this.assignForm.reset({ lawyerId: null });
+          this.unassigning.set(false);
+        },
+        error: () => this.unassigning.set(false),
+      });
+  }
+
+  acceptAssignment() {
+    if (!this.isPendingForMe || this.assignmentActioning()) return;
+    this.assignmentActioning.set(true);
+    this.data
+      .patch<{ data: IDataCase }>(`cases/${this.caseId()}/assignment/accept`, {})
+      .subscribe({
+        next: (res) => {
+          this.loadedCase.set(res.data);
+          this.assignmentActioning.set(false);
+        },
+        error: () => this.assignmentActioning.set(false),
+      });
+  }
+
+  rejectAssignment() {
+    if (!this.isPendingForMe || this.assignmentActioning()) return;
+    this.assignmentActioning.set(true);
+    this.data
+      .patch<{ data: IDataCase }>(`cases/${this.caseId()}/assignment/reject`, {})
+      .subscribe({
+        next: (res) => {
+          this.loadedCase.set(res.data);
+          this.assignmentActioning.set(false);
+          this.router.navigate(['/dashboard/content/client-cases']);
+        },
+        error: () => this.assignmentActioning.set(false),
+      });
+  }
+
+  // Live preview data
   previewData = computed<CaseReportData>(() => {
     void this.formTick();
     const v = this.Form?.value ?? {};
     const customer = this.customers().find((c) => c.id === v.customerId);
-    const preferredLawyer = this.lawyers().find((l) => l.id === v.preferredLawyerId);
     const sessionReceiver = this.lawyers().find((l) => l.id === v.sessionReceiverId);
+    const c = this.loadedCase();
     return {
       customerName: customer?.fullName ?? '',
       customerPhone: customer?.phone ?? '',
@@ -239,8 +332,8 @@ export class EditCase implements OnInit, OnDestroy {
       caseDate: v.caseDate ?? null,
       hijriDate: v.hijriDate ?? null,
       agencyNumber: v.agencyNumber ?? null,
-      wantsSpecificLawyer: v.wantsSpecificLawyer,
-      preferredLawyerName: preferredLawyer?.name ?? '',
+      wantsSpecificLawyer: c?.wantsSpecificLawyer ?? false,
+      preferredLawyerName: c?.preferredLawyerName ?? c?.preferredLawyer?.name ?? '',
       sessionReceiverName: sessionReceiver?.name ?? '',
       sessionDate: v.sessionDate ?? null,
       hasStructuredNotes: false,
@@ -251,8 +344,6 @@ export class EditCase implements OnInit, OnDestroy {
     };
   });
 
-  // A signal bumped on every form change to force re-evaluation of `previewData`,
-  // since the FormGroup itself is not a signal.
   formTick = signal<number>(0);
 
   ngAfterViewInit() {
@@ -291,5 +382,4 @@ export class EditCase implements OnInit, OnDestroy {
   back() {
     this.router.navigate(['/dashboard/content/client-cases']);
   }
-
 }
