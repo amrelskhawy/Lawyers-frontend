@@ -131,6 +131,8 @@ function buildMonthGrid(refDate: Date): {
 export class HijriDatepicker implements ControlValueAccessor {
   @Input() placeholder = '';
   @Input() showClear = false;
+  /** When true, days before today are greyed out and cannot be selected. */
+  @Input() disablePast = false;
 
   open = signal(false);
   disabled = signal(false);
@@ -206,6 +208,7 @@ export class HijriDatepicker implements ControlValueAccessor {
   }
 
   selectDay(cell: DayCell) {
+    if (this.isPast(cell)) return;
     if (!cell.inMonth) {
       // Clicked a day in a neighboring month — navigate to it
       this.buildGrid(cell.gregorian);
@@ -234,6 +237,13 @@ export class HijriDatepicker implements ControlValueAccessor {
 
   isToday(cell: DayCell): boolean {
     return cell.gregorian.toDateString() === new Date().toDateString();
+  }
+
+  isPast(cell: DayCell): boolean {
+    if (!this.disablePast) return false;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return cell.gregorian.getTime() < today.getTime();
   }
 
   /* ── Close on outside click ── */

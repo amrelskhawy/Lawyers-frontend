@@ -9,6 +9,7 @@ import { TEAM_MEMBERS } from '../../../core/Models/team-members';
 import { IDataCustomer } from '../../../core/Models/customers.model';
 import { IUser } from '../../users/users';
 import { CaseReportData } from '../case-report-template/case-report-template';
+import { canonicalToPickerHijri, pickerToCanonicalHijri } from '../../../core/utils/hijri-format';
 
 type SaveStatus = 'idle' | 'unsaved' | 'saving' | 'saved' | 'error';
 
@@ -44,6 +45,9 @@ export class EditCase implements OnInit, OnDestroy {
 
   Form!: FormGroup;
   assignForm!: FormGroup;
+  sessionForm!: FormGroup;
+  savingSession = signal<boolean>(false);
+  sessionSaved = signal<boolean>(false);
   private destroy$ = new Subject<void>();
   private skipNextDirty = false;
 
@@ -88,6 +92,7 @@ export class EditCase implements OnInit, OnDestroy {
     this.caseId.set(id);
     this.buildForm();
     this.buildAssignForm();
+    this.buildSessionForm();
     this.loadDropdowns();
     this.loadCase(id);
     this.wireDirtyTracking();
@@ -108,7 +113,6 @@ export class EditCase implements OnInit, OnDestroy {
       agencyNumber: [''],
 
       sessionReceiverId: [null],
-      sessionDate: [null],
 
       hasStructuredNotes: [false],
       weaknesses: this.fb.array([] as FormControl<string>[]),
@@ -121,6 +125,17 @@ export class EditCase implements OnInit, OnDestroy {
   private buildAssignForm() {
     this.assignForm = this.fb.group({
       lawyerId: [null, Validators.required],
+    });
+  }
+
+  // Session date is Hijri (iYYYY-iMM-iDD) + HH:mm time. Setting it (re)schedules
+  // the 3 session reminders on the backend, so it's saved via its own endpoint.
+  private buildSessionForm() {
+    // sessionHijriDate holds the picker's "DD / MM / YYYY" string; converted to
+    // the backend's "YYYY-MM-DD" on save.
+    this.sessionForm = this.fb.group({
+      sessionHijriDate: ['', Validators.required],
+      sessionTime: ['', [Validators.required, Validators.pattern(/^\d{1,2}:\d{2}$/)]],
     });
   }
 
@@ -181,9 +196,13 @@ export class EditCase implements OnInit, OnDestroy {
           hijriDate: c.hijriDate ?? null,
           agencyNumber: c.agencyNumber ?? '',
           sessionReceiverId: sessionReceiverFormId,
-          sessionDate: c.sessionDate ? new Date(c.sessionDate) : null,
           hasStructuredNotes: c.hasStructuredNotes,
           freeNotes: c.freeNotes ?? '',
+        });
+
+        this.sessionForm.patchValue({
+          sessionHijriDate: canonicalToPickerHijri(c.sessionHijriDate),
+          sessionTime: c.sessionTime ?? '',
         });
 
         if (c.preferredLawyerId) {
@@ -239,9 +258,6 @@ export class EditCase implements OnInit, OnDestroy {
         : undefined,
       sessionReceiverId,
       sessionReceiverName,
-      sessionDate: value.sessionDate
-        ? (value.sessionDate instanceof Date ? value.sessionDate : new Date(value.sessionDate)).toISOString()
-        : null,
       hasStructuredNotes: false,
       weaknesses: (value.weaknesses ?? []).filter((s: string) => s && s.trim().length),
       strengths: (value.strengths ?? []).filter((s: string) => s && s.trim().length),
@@ -288,6 +304,32 @@ export class EditCase implements OnInit, OnDestroy {
       });
   }
 
+  saveSessionDate() {
+    if (this.savingSession() || this.sessionForm.invalid) {
+      this.sessionForm.markAllAsTouched();
+      return;
+    }
+    this.savingSession.set(true);
+    this.sessionSaved.set(false);
+    this.data
+      .patch<{ data: IDataCase }>(`cases/${this.caseId()}/session`, {
+        sessionHijriDate: pickerToCanonicalHijri(this.sessionForm.value.sessionHijriDate),
+        sessionTime: this.sessionForm.value.sessionTime,
+      })
+      .subscribe({
+        next: (res) => {
+          this.loadedCase.set(res.data);
+          this.sessionForm.patchValue({
+            sessionHijriDate: canonicalToPickerHijri(res.data.sessionHijriDate),
+            sessionTime: res.data.sessionTime ?? '',
+          });
+          this.savingSession.set(false);
+          this.sessionSaved.set(true);
+        },
+        error: () => this.savingSession.set(false),
+      });
+  }
+
   acceptAssignment() {
     if (!this.isPendingForMe || this.assignmentActioning()) return;
     this.assignmentActioning.set(true);
@@ -304,9 +346,11 @@ export class EditCase implements OnInit, OnDestroy {
 
   rejectAssignment() {
     if (!this.isPendingForMe || this.assignmentActioning()) return;
+    const reason = (window.prompt(this.translate.instant('reject_reason_prompt')) ?? '').trim();
+    if (!reason) return;
     this.assignmentActioning.set(true);
     this.data
-      .patch<{ data: IDataCase }>(`cases/${this.caseId()}/assignment/reject`, {})
+      .patch<{ data: IDataCase }>(`cases/${this.caseId()}/assignment/reject`, { reason })
       .subscribe({
         next: (res) => {
           this.loadedCase.set(res.data);
@@ -335,7 +379,7 @@ export class EditCase implements OnInit, OnDestroy {
       wantsSpecificLawyer: c?.wantsSpecificLawyer ?? false,
       preferredLawyerName: c?.preferredLawyerName ?? c?.preferredLawyer?.name ?? '',
       sessionReceiverName: sessionReceiver?.name ?? '',
-      sessionDate: v.sessionDate ?? null,
+      sessionDate: c?.sessionDate ?? null,
       hasStructuredNotes: false,
       weaknesses: (v.weaknesses ?? []).filter((s: string) => !!s),
       strengths: (v.strengths ?? []).filter((s: string) => !!s),

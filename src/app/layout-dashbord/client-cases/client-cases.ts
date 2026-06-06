@@ -93,7 +93,9 @@ export class ClientCases implements OnInit {
 
   rejectAssignment(item: IDataCase, event: Event) {
     event.stopPropagation();
-    this.data.patch<{ data: IDataCase }>(`cases/${item.id}/assignment/reject`, {}).subscribe({
+    const reason = (window.prompt(this.translate.instant('reject_reason_prompt')) ?? '').trim();
+    if (!reason) return;
+    this.data.patch<{ data: IDataCase }>(`cases/${item.id}/assignment/reject`, { reason }).subscribe({
       next: () => this.crudPage?.refresh(),
     });
   }

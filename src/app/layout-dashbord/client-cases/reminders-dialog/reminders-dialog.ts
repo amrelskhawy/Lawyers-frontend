@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Data } from '../../../core/Servies/data';
 import { IDataCase } from '../../../core/Models/case.model';
 import { IReminder, IReminderTypeOption } from '../../../core/Models/reminder.model';
+import { canonicalToPickerHijri, pickerToCanonicalHijri } from '../../../core/utils/hijri-format';
 
 @Component({
   selector: 'app-reminders-dialog',
@@ -32,10 +33,12 @@ export class RemindersDialog {
       repeatEveryHours: [{ value: null, disabled: true }],
     });
 
-    // Separate form for editing the case's next-session date inline.
+    // Separate form for editing the case's next-session (Hijri) date inline.
+    // `date` holds the picker's "DD / MM / YYYY" Hijri string; saving it
+    // (re)schedules the 3 session reminders on the backend.
     this.sessionForm = this.fb.group({
       date: ['', Validators.required],
-      time: [''],
+      time: ['', [Validators.required, Validators.pattern(/^\d{1,2}:\d{2}$/)]],
     });
 
     this.form.get('repeat')!.valueChanges.subscribe((on: boolean) => {
@@ -56,26 +59,17 @@ export class RemindersDialog {
   @Input() set objCase(value: IDataCase | null) {
     this.caseItem.set(value ?? null);
     this.sessionSaved.set(false);
-    this.prefillSessionForm(value?.sessionDate ?? null);
+    this.prefillSessionForm(value);
     if (value?.id) {
       this.loadTypes();
       this.loadReminders(value.id);
     }
   }
 
-  private pad(n: number): string {
-    return String(n).padStart(2, '0');
-  }
-
-  private prefillSessionForm(sessionDate: string | null) {
-    if (!sessionDate) {
-      this.sessionForm.reset({ date: '', time: '' });
-      return;
-    }
-    const d = new Date(sessionDate);
-    this.sessionForm.patchValue({
-      date: `${d.getFullYear()}-${this.pad(d.getMonth() + 1)}-${this.pad(d.getDate())}`,
-      time: `${this.pad(d.getHours())}:${this.pad(d.getMinutes())}`,
+  private prefillSessionForm(c: IDataCase | null) {
+    this.sessionForm.reset({
+      date: canonicalToPickerHijri(c?.sessionHijriDate),
+      time: c?.sessionTime ?? '',
     });
   }
 
@@ -83,8 +77,9 @@ export class RemindersDialog {
     return !!this.caseItem()?.sessionDate;
   }
 
-  /** Persist the next-session date to the case (single source of truth) and
-   *  reflect it locally so reminder validation uses it immediately. */
+  /** Persist the next-session (Hijri) date to the case via the dedicated
+   *  endpoint — this also (re)schedules the 3 session reminders. Reflect the
+   *  result locally so reminder validation uses it immediately. */
   saveSessionDate() {
     if (this.sessionForm.invalid) {
       this.sessionForm.markAllAsTouched();
@@ -94,14 +89,17 @@ export class RemindersDialog {
     if (!caseId) return;
 
     const { date, time } = this.sessionForm.value;
-    const iso = new Date(`${date}T${time || '09:00'}`).toISOString();
-
-    this.data.patch(`cases/${caseId}`, { sessionDate: iso }).subscribe(() => {
-      const c = this.caseItem();
-      if (c) this.caseItem.set({ ...c, sessionDate: iso });
-      this.prefillSessionForm(iso);
-      this.sessionSaved.set(true);
-    });
+    this.data
+      .patch<{ data: IDataCase }>(`cases/${caseId}/session`, {
+        sessionHijriDate: pickerToCanonicalHijri(date),
+        sessionTime: time,
+      })
+      .subscribe((res) => {
+        this.caseItem.set(res.data);
+        this.prefillSessionForm(res.data);
+        this.sessionSaved.set(true);
+        this.loadReminders(caseId);
+      });
   }
 
   get selectedTypeDescription(): string {
@@ -110,8 +108,10 @@ export class RemindersDialog {
   }
 
   get sessionDate(): string {
-    const d = this.caseItem()?.sessionDate;
-    return d ? new Date(d).toLocaleString() : '';
+    const c = this.caseItem();
+    if (!c?.sessionHijriDate) return '';
+    const date = canonicalToPickerHijri(c.sessionHijriDate);
+    return c.sessionTime ? `${date} - ${c.sessionTime}` : date;
   }
 
   private loadTypes() {

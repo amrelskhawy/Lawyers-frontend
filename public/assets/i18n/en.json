@@ -444,6 +444,9 @@
     "CASE_ASSIGNMENT_REJECTED": "Case assignment rejected",
     "CASE_ASSIGN_INVALID_LAWYER": "Invalid lawyer for assignment",
     "CASE_NOT_ASSIGNED_TO_YOU": "This case is not assigned to you",
+    "CASE_SESSION_DATE_SET_SUCCESS": "Session date saved and reminders scheduled",
+    "CASE_SESSION_DATE_IN_PAST": "The session date cannot be in the past — please pick a future date",
+    "CASE_INVALID_HIJRI_DATE": "The Hijri session date is invalid",
     "CURRENT_PASSWORD_REQUIRED": "Current password is required",
     "EMAIL_REQUIRED": "Email is required",
     "INVALID_VERIFICATION_TOKEN": "Invalid verification token",
@@ -668,5 +671,12 @@
   "reminder_status_cancelled": "Cancelled",
   "session_date": "Next session date",
   "session_date_saved": "Session date saved",
-  "session_date_required_hint": "Set the next session date before adding reminders"
+  "session_date_required_hint": "Set the next session date before adding reminders",
+  "session_hijri_date": "Session date (Hijri)",
+  "session_hijri_date_hint": "Format: year-month-day (e.g. 1447-12-15)",
+  "session_time": "Session time",
+  "save_session_date": "Save session date",
+  "session_reminders_scheduled": "Session reminders scheduled",
+  "reject_reason_prompt": "Please provide a reason for rejecting the assignment:",
+  "rejection_reason": "Rejection reason"
 }

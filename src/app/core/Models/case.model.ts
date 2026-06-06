@@ -24,8 +24,13 @@ export interface IDataCase {
   preferredLawyerName: string | null;
   assignmentStatus: CaseAssignmentStatus;
   assignmentRejectedAt: string | null;
+  assignmentRejectionReason: string | null;
   sessionReceiverId: string | null;
   sessionReceiverName: string | null;
+  // Canonical session date is Hijri (sessionHijriDate + sessionTime); sessionDate
+  // is the derived Gregorian instant used by the reminder scheduler.
+  sessionHijriDate: string | null;
+  sessionTime: string | null;
   sessionDate: string | null;
 
   hasStructuredNotes: boolean;

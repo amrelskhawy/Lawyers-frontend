@@ -124,6 +124,10 @@
           <div *ngIf="assignmentStatus === 'REJECTED'" class="assignment-rejected-note">
             <i class="fa-solid fa-circle-xmark"></i>
             {{ 'assignment_rejected_note' | translate }}
+            <div *ngIf="loadedCase()?.assignmentRejectionReason" class="assignment-rejected-reason">
+              <strong>{{ 'rejection_reason' | translate }}:</strong>
+              {{ loadedCase()?.assignmentRejectionReason }}
+            </div>
           </div>
 
           <div class="assign-form-row">
@@ -202,11 +206,31 @@
               </p-select>
             </div>
 
-            <div class="input-group">
-              <label>{{ 'session_date' | translate }}</label>
-              <p-datepicker formControlName="sessionDate" [showIcon]="true" dateFormat="dd/mm/yy" [showClear]="true"
-                appendTo="body" styleClass="w-full" [disabled]="!canEdit">
-              </p-datepicker>
+          </div>
+
+          <!-- Session date (Hijri). Saving it (re)schedules the 3 session reminders. -->
+          <div class="session-date-block" [formGroup]="sessionForm">
+            <div class="row">
+              <div class="input-group">
+                <label>{{ 'session_hijri_date' | translate }}</label>
+                <app-hijri-datepicker formControlName="sessionHijriDate"
+                  [showClear]="true" [disablePast]="true"
+                  [placeholder]="'session_hijri_date' | translate"></app-hijri-datepicker>
+              </div>
+              <div class="input-group">
+                <label>{{ 'session_time' | translate }}</label>
+                <input type="time" pInputText formControlName="sessionTime" [readonly]="!canEdit" />
+              </div>
+            </div>
+            <div class="session-date-actions" *ngIf="canEdit">
+              <button type="button" class="btn-save-session" (click)="saveSessionDate()"
+                [disabled]="savingSession() || sessionForm.invalid">
+                <i class="fa-solid fa-bell"></i>
+                {{ (savingSession() ? 'saving' : 'save_session_date') | translate }}
+              </button>
+              <span *ngIf="sessionSaved()" class="session-saved-hint">
+                <i class="fa-solid fa-check"></i> {{ 'session_reminders_scheduled' | translate }}
+              </span>
             </div>
           </div>
 
