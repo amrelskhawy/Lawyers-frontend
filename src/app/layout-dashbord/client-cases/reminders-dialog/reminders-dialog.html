@@ -28,11 +28,9 @@
           </div>
           <div class="session-row">
             <div class="input-group">
-              <label>{{ 'date' | translate }}</label>
-              <div class="input-wrapper">
-                <i class="fa-regular fa-calendar input-icon"></i>
-                <input type="date" formControlName="date" />
-              </div>
+              <label>{{ 'session_hijri_date' | translate }}</label>
+              <app-hijri-datepicker formControlName="date" [disablePast]="true"
+                [placeholder]="'session_hijri_date' | translate"></app-hijri-datepicker>
             </div>
             <div class="input-group">
               <label>{{ 'time' | translate }}</label>

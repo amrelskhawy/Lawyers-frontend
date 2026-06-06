@@ -585,6 +585,7 @@ $white: #ffffff;
 .assignment-rejected-note {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 12px;
   padding: 10px 12px;
@@ -594,6 +595,59 @@ $white: #ffffff;
   color: #991b1b;
   font-size: 0.85rem;
   font-weight: 500;
+
+  .assignment-rejected-reason {
+    flex-basis: 100%;
+    margin-top: 4px;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+}
+
+.session-date-block {
+  margin-bottom: 16px;
+
+  .hint {
+    display: block;
+    margin-top: 4px;
+    color: #6b7280;
+    font-size: 0.75rem;
+  }
+
+  .session-date-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .btn-save-session {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 10px;
+    background: #1e3a5f;
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  .session-saved-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #15803d;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
 }
 
 .assign-form-row {

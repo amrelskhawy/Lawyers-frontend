@@ -444,6 +444,9 @@
     "CASE_ASSIGNMENT_REJECTED": "تم رفض تكليف القضية",
     "CASE_ASSIGN_INVALID_LAWYER": "المحامي المحدد غير صالح للتكليف",
     "CASE_NOT_ASSIGNED_TO_YOU": "هذه القضية غير مكلفة لك",
+    "CASE_SESSION_DATE_SET_SUCCESS": "تم حفظ موعد الجلسة وجدولة التذكيرات",
+    "CASE_SESSION_DATE_IN_PAST": "لا يمكن تحديد موعد جلسة في تاريخ ماضٍ، يرجى اختيار تاريخ مستقبلي",
+    "CASE_INVALID_HIJRI_DATE": "تاريخ الجلسة الهجري غير صالح",
     "CURRENT_PASSWORD_REQUIRED": "كلمة المرور الحالية مطلوبة",
     "EMAIL_REQUIRED": "البريد الإلكتروني مطلوب",
     "INVALID_VERIFICATION_TOKEN": "رمز التحقق غير صالح",
@@ -668,5 +671,12 @@
   "reminder_status_cancelled": "ملغي",
   "session_date": "موعد الجلسة القادمة",
   "session_date_saved": "تم حفظ موعد الجلسة",
-  "session_date_required_hint": "يجب تحديد موعد الجلسة القادمة قبل إضافة التذكيرات"
+  "session_date_required_hint": "يجب تحديد موعد الجلسة القادمة قبل إضافة التذكيرات",
+  "session_hijri_date": "تاريخ الجلسة (هجري)",
+  "session_hijri_date_hint": "الصيغة: سنة-شهر-يوم (مثال: 1447-12-15)",
+  "session_time": "وقت الجلسة",
+  "save_session_date": "حفظ موعد الجلسة",
+  "session_reminders_scheduled": "تم جدولة تذكيرات الجلسة",
+  "reject_reason_prompt": "يرجى ذكر سبب رفض التكليف:",
+  "rejection_reason": "سبب الرفض"
 }

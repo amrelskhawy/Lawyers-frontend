@@ -44,6 +44,8 @@
               [class.out-month]="!cell.inMonth"
               [class.selected]="isSelected(cell)"
               [class.today]="isToday(cell)"
+              [class.past]="isPast(cell)"
+              [disabled]="isPast(cell)"
               (click)="selectDay(cell)">
         {{ cell.hijriDay }}
       </button>

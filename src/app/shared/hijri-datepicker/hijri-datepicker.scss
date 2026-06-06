@@ -196,4 +196,14 @@
     color: #fff !important;
     font-weight: 600;
   }
+
+  &.past {
+    color: #cbd5e1;
+    cursor: not-allowed;
+    text-decoration: line-through;
+
+    &:hover {
+      background: none;
+    }
+  }
 }
