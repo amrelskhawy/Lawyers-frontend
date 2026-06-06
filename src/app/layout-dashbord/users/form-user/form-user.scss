@@ -21,17 +21,20 @@ $input-height: 46px;
 ::ng-deep .user-form-dialog {
   font-family: 'Cairo', sans-serif;
 
-  .p-dialog-content {
-    padding: 0 !important;
-    border-radius: 16px;
-    overflow: hidden;
-    font-family: 'Cairo', sans-serif;
-  }
-
   .p-dialog {
     border-radius: 16px;
     overflow: hidden;
+    max-height: 90vh;
     box-shadow: 0 25px 60px -15px rgba(20, 20, 58, 0.25);
+    font-family: 'Cairo', sans-serif;
+  }
+
+  // Let a tall form scroll instead of being clipped; cap to the viewport.
+  .p-dialog-content {
+    padding: 0 !important;
+    border-radius: 16px;
+    max-height: 90vh;
+    overflow-y: auto;
     font-family: 'Cairo', sans-serif;
   }
 
@@ -66,6 +69,9 @@ $input-height: 46px;
 // Header
 // ============================================
 .dialog-header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -506,10 +512,16 @@ $input-height: 46px;
 // Footer actions
 // ============================================
 .form-actions {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
   display: flex;
   justify-content: flex-end;
   gap: 0.6rem;
-  padding-top: 0.4rem;
+  padding: 0.8rem 0 0.2rem;
+  margin: 0 -0.2rem -0.2rem;
+  background: $bg-soft;
+  border-top: 1px solid $border;
 
   ::ng-deep button {
     border-radius: 10px;
