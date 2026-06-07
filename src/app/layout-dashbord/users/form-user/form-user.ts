@@ -28,6 +28,7 @@ export class FormUser implements OnChanges {
     { label: 'مشرف', value: 'MODERATOR' },
     { label: 'موظف استقبال', value: 'RECEPTIONIST' },
     { label: 'محامي', value: 'LAWYER' },
+    { label: 'مستشار قانوني', value: 'CONSULTANT' },
   ];
 
   get isEdit() { return !!this.user; }
@@ -39,6 +40,7 @@ export class FormUser implements OnChanges {
       case 'MODERATOR':    return 'fa-user-tie';
       case 'RECEPTIONIST': return 'fa-headset';
       case 'LAWYER':       return 'fa-gavel';
+      case 'CONSULTANT':   return 'fa-user-graduate';
       default:             return 'fa-user';
     }
   }

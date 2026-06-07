@@ -32,7 +32,7 @@ export const isAdminGuard: CanActivateFn = (route, state) => {
       return true;
     }
     // Safe redirect for non-admin roles to avoid loops
-    if (user.role === 'LAWYER') {
+    if (user.role === 'LAWYER' || user.role === 'CONSULTANT') {
       router.navigate(['/dashboard/content/client-cases']);
     } else {
       router.navigate(['/dashboard/content']);
@@ -59,7 +59,7 @@ export const roleGuard = (...roles: string[]): CanActivateFn => (route, state) =
   }
 
   // If role check fails, redirect to a safe default for that role to avoid loops
-  if (user.role === 'LAWYER') {
+  if (user.role === 'LAWYER' || user.role === 'CONSULTANT') {
     router.navigate(['/dashboard/content/client-cases']);
   } else {
     router.navigate(['/dashboard/content']);

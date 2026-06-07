@@ -70,7 +70,7 @@ export class Menue implements OnInit {
     const isAdmin = role === 'ADMIN';
     const isModerator = role === 'MODERATOR';
     const isReceptionist = role === 'RECEPTIONIST';
-    const isLawyer = role === 'LAWYER';
+    const isLawyer = role === 'LAWYER' || role === 'CONSULTANT';
 
     this.canManageWorkDay.set(isAdmin || isModerator);
 

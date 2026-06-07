@@ -40,6 +40,7 @@ export class Users implements OnInit {
     { label: 'مشرف', value: 'MODERATOR' },
     { label: 'موظف استقبال', value: 'RECEPTIONIST' },
     { label: 'محامي', value: 'LAWYER' },
+    { label: 'مستشار قانوني', value: 'CONSULTANT' },
   ];
   activeRoleFilter = signal<string>('');
 
@@ -60,6 +61,7 @@ export class Users implements OnInit {
     MODERATOR: 'مشرف',
     RECEPTIONIST: 'موظف استقبال',
     LAWYER: 'محامي',
+    CONSULTANT: 'مستشار قانوني',
   };
 
   ngOnInit() {

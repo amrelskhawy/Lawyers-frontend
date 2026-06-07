@@ -44,7 +44,7 @@ export class Login implements OnInit {
       sessionStorage.setItem('token', res.data.token);
       sessionStorage.setItem('user', JSON.stringify(res.data.user));
 
-      if (res.data.user.role === 'LAWYER') {
+      if (res.data.user.role === 'LAWYER' || res.data.user.role === 'CONSULTANT') {
         this.router.navigate(['/dashboard/content/client-cases']);
       } else {
         this.router.navigate(['/dashboard/content']);

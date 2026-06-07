@@ -57,7 +57,7 @@ export class EditCase implements OnInit, OnDestroy {
     return raw ? JSON.parse(raw) : null;
   }
   get role(): string { return this.currentUser?.role ?? ''; }
-  get isLawyer(): boolean { return this.role === 'LAWYER'; }
+  get isLawyer(): boolean { return this.role === 'LAWYER' || this.role === 'CONSULTANT'; }
   get isStaff(): boolean { return ['ADMIN', 'MODERATOR', 'RECEPTIONIST'].includes(this.role); }
   get canAssign(): boolean { return ['ADMIN', 'MODERATOR', 'RECEPTIONIST'].includes(this.role); }
 
