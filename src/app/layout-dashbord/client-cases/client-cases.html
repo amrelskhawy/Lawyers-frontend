@@ -41,7 +41,8 @@
         tooltipPosition="top" (click)="onCreateFieldVisitReport(item)" class="field-visit-btn">
         <i class="fa-solid fa-location-dot"></i>
       </button>
-      <button [attr.aria-label]="'lawyer_fees_contract' | translate" [pTooltip]="'lawyer_fees_contract' | translate"
+      <button *ngIf="canManageFeesContract" [attr.aria-label]="'lawyer_fees_contract' | translate"
+        [pTooltip]="'lawyer_fees_contract' | translate"
         tooltipPosition="top" (click)="onCreateLawyerFeesContract(item)" class="fees-contract-btn">
         <i class="fa-solid fa-file-signature"></i>
       </button>

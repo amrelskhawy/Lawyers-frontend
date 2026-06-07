@@ -37,6 +37,7 @@ export class ClientCases implements OnInit {
   get isReceptionist(): boolean { return this.role === 'RECEPTIONIST'; }
   get canAssign(): boolean { return ['ADMIN', 'MODERATOR', 'RECEPTIONIST'].includes(this.role); }
   get canViewReports(): boolean { return ['ADMIN', 'MODERATOR', 'LAWYER'].includes(this.role); }
+  get canManageFeesContract(): boolean { return ['ADMIN', 'MODERATOR'].includes(this.role); }
 
   dataMapper = (item: IDataCase, index: number) => ({
     ...item,
