@@ -119,10 +119,10 @@
             </div>
             <div class="log-meta">
               <span class="meta-user">
-                <span class="user-avatar">{{ log.user?.name?.charAt(0) }}</span>
-                {{ log.user?.name }}
+                <span class="user-avatar">{{ log.user.name.charAt(0) }}</span>
+                {{ log.user.name }}
               </span>
-              <span class="meta-role" [class]="'role-' + log.user?.role?.toLowerCase()">{{ log.user?.role }}</span>
+              <span class="meta-role" [class]="'role-' + log.user.role.toLowerCase()">{{ log.user.role }}</span>
               <span class="meta-ip" *ngIf="log.ipAddress">
                 <i class="fa-solid fa-location-dot"></i> {{ log.ipAddress }}
               </span>
