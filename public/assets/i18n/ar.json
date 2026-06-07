@@ -695,5 +695,8 @@
   "save_session_date": "حفظ موعد الجلسة",
   "session_reminders_scheduled": "تم جدولة تذكيرات الجلسة",
   "reject_reason_prompt": "يرجى ذكر سبب رفض التكليف:",
+  "reject_reason_placeholder": "اكتب سبب رفض التكليف هنا...",
+  "reject_reason_required": "سبب الرفض مطلوب",
+  "confirm": "تأكيد",
   "rejection_reason": "سبب الرفض"
 }

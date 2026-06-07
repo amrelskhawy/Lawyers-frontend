@@ -24,7 +24,9 @@ export class ClientCases implements OnInit {
   searchFields = ['customerName', 'caseTypeLabel', 'caseDate'];
   visibelform = signal<boolean>(false);
   visibelReminders = signal<boolean>(false);
+  visibelReject = signal<boolean>(false);
   selectedCase = signal<IDataCase | null>(null);
+  rejectTarget = signal<IDataCase | null>(null);
 
   get currentUser(): any {
     const raw = sessionStorage.getItem('user');
@@ -93,8 +95,13 @@ export class ClientCases implements OnInit {
 
   rejectAssignment(item: IDataCase, event: Event) {
     event.stopPropagation();
-    const reason = (window.prompt(this.translate.instant('reject_reason_prompt')) ?? '').trim();
-    if (!reason) return;
+    this.rejectTarget.set(item);
+    this.visibelReject.set(true);
+  }
+
+  onRejectConfirmed(reason: string) {
+    const item = this.rejectTarget();
+    if (!item || !reason) return;
     this.data.patch<{ data: IDataCase }>(`cases/${item.id}/assignment/reject`, { reason }).subscribe({
       next: () => this.crudPage?.refresh(),
     });

@@ -1,0 +1,40 @@
+<p-dialog maskStyleClass="backdrop-blur-sm" [(visible)]="visible" (onHide)="close()" [modal]="true"
+  [baseZIndex]="10000" styleClass="modern-modal" [style]="{ width: '92vw', maxWidth: '480px' }">
+  <ng-template pTemplate="headless">
+    <div class="reject-container">
+
+      <!-- Header -->
+      <div class="form-header">
+        <div class="header-content">
+          <h3><i class="fa-solid fa-circle-xmark"></i> {{ 'reject_assignment' | translate }}</h3>
+        </div>
+        <img src="/assets/Img/LOGO-GOLD.svg" alt="logo" class="header-logo" />
+        <button class="close-icon-btn" (click)="close()" [attr.aria-label]="'close' | translate">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Body -->
+      <form [formGroup]="form" (ngSubmit)="submit()" class="reject-body">
+        <div class="input-group">
+          <label>{{ 'reject_reason_prompt' | translate }}</label>
+          <textarea formControlName="reason" rows="4"
+            placeholder="{{ 'reject_reason_placeholder' | translate }}"></textarea>
+          <small class="error-msg"
+            *ngIf="form.get('reason')!.invalid && form.get('reason')!.touched">
+            <i class="fa-solid fa-triangle-exclamation"></i> {{ 'reject_reason_required' | translate }}
+          </small>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" (click)="close()">
+            {{ 'cancel' | translate }}
+          </button>
+          <button type="submit" class="btn-danger">
+            <i class="fa-solid fa-check"></i> {{ 'confirm' | translate }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+</p-dialog>

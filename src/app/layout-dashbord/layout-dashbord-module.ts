@@ -35,6 +35,7 @@ import { SelectModule } from 'primeng/select';
 import { ClientCases } from './client-cases/client-cases';
 import { FormCreateCase } from './client-cases/form-create-case/form-create-case';
 import { RemindersDialog } from './client-cases/reminders-dialog/reminders-dialog';
+import { RejectAssignmentDialog } from './client-cases/reject-assignment-dialog/reject-assignment-dialog';
 import { EditCase } from './client-cases/edit-case/edit-case';
 import { CaseReportTemplate } from './client-cases/case-report-template/case-report-template';
 import { SessionReport } from './session-report/session-report';
@@ -78,6 +79,7 @@ import { InputTextModule } from 'primeng/inputtext';
     ClientCases,
     FormCreateCase,
     RemindersDialog,
+    RejectAssignmentDialog,
     EditCase,
     CaseReportTemplate,
     SessionReport,

@@ -695,5 +695,8 @@
   "save_session_date": "Save session date",
   "session_reminders_scheduled": "Session reminders scheduled",
   "reject_reason_prompt": "Please provide a reason for rejecting the assignment:",
+  "reject_reason_placeholder": "Write the reason for rejecting the assignment...",
+  "reject_reason_required": "A rejection reason is required",
+  "confirm": "Confirm",
   "rejection_reason": "Rejection reason"
 }
