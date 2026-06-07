@@ -88,8 +88,61 @@
           </div>
         </div>
 
+        <!-- Attachments -->
+        <div class="attachments-card">
+          <div class="form-title">
+            <i class="fa-solid fa-paperclip"></i> {{ 'attachments' | translate }}
+          </div>
+
+          <label class="dropzone">
+            <input type="file" hidden (change)="onFileSelected($event)"
+              accept=".jpg,.jpeg,.png,.webp,.pdf,.docx,.xlsx,.csv,.txt" />
+            <i class="fa-solid fa-plus"></i>
+            <span>{{ selectedFile()?.name || ('attach_file' | translate) }}</span>
+          </label>
+
+          <div class="attach-actions">
+            <button type="button" class="btn-primary" (click)="uploadAttachment()"
+              [disabled]="!selectedFile() || uploading()">
+              <i class="fa-solid fa-upload"></i> {{ 'upload' | translate }}
+            </button>
+          </div>
+
+          <div class="attachment-list" *ngIf="attachments().length">
+            <div class="attachment-row" *ngFor="let a of attachments()">
+              <a [href]="a.url" target="_blank" rel="noopener" class="att-name">
+                <i class="fa-regular fa-file"></i> {{ a.fileName }}
+              </a>
+              <span class="att-sent" *ngIf="a.sentAt">
+                <i class="fa-solid fa-circle-check"></i> {{ 'sent' | translate }}
+              </span>
+              <div class="att-actions">
+                <button class="icon-btn send" (click)="sendAttachment(a)"
+                  [attr.aria-label]="'send' | translate">
+                  <i class="fa-brands fa-whatsapp"></i>
+                </button>
+                <button class="icon-btn delete" (click)="deleteAttachment(a)"
+                  [attr.aria-label]="'delete' | translate">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Close case toggle — stops all reminder actions -->
+        <div class="complete-bar" [class.is-completed]="isCompleted">
+          <div class="toggle-label">
+            <i class="fa-solid fa-circle-check"></i>
+            <span>{{ 'case_completed_label' | translate }}</span>
+          </div>
+          <p-toggleswitch [ngModel]="isCompleted" (ngModelChange)="toggleCompletion($event)"
+            [ngModelOptions]="{ standalone: true }"></p-toggleswitch>
+        </div>
+
         <!-- Add / edit form -->
-        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="reminder-form">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="reminder-form"
+          [class.is-disabled]="isCompleted">
           <div class="form-title">
             <i class="fa-solid" [ngClass]="editingId() ? 'fa-pen' : 'fa-plus'"></i>
             {{ (editingId() ? 'save' : 'add_reminder') | translate }}

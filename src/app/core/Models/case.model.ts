@@ -43,6 +43,10 @@ export interface IDataCase {
   reportUrl: string | null;
   sentToClientAt: string | null;
 
+  // Set when the case is marked "fully completed" from the reminders dialog.
+  completedAt: string | null;
+  completedById?: string | null;
+
   createdById: string;
   isDeleted: boolean;
   createdAt: string;

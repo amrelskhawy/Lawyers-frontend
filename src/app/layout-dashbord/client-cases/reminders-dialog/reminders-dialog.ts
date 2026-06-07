@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Data } from '../../../core/Servies/data';
 import { IDataCase } from '../../../core/Models/case.model';
-import { IReminder, IReminderTypeOption } from '../../../core/Models/reminder.model';
+import { IAttachment, IReminder, IReminderTypeOption } from '../../../core/Models/reminder.model';
 import { canonicalToPickerHijri, pickerToCanonicalHijri } from '../../../core/utils/hijri-format';
 
 @Component({
@@ -20,6 +20,9 @@ export class RemindersDialog {
   types = signal<IReminderTypeOption[]>([]);
   editingId = signal<string | null>(null);
   sessionSaved = signal<boolean>(false);
+  attachments = signal<IAttachment[]>([]);
+  selectedFile = signal<File | null>(null);
+  uploading = signal<boolean>(false);
   form: FormGroup;
   sessionForm: FormGroup;
 
@@ -63,6 +66,26 @@ export class RemindersDialog {
     if (value?.id) {
       this.loadTypes();
       this.loadReminders(value.id);
+      this.loadAttachments(value.id);
+    }
+    this.applyCompletionState();
+  }
+
+  /** A completed case is read-only for reminder actions. */
+  get isCompleted(): boolean {
+    return !!this.caseItem()?.completedAt;
+  }
+
+  /** Disable the reminder form while the case is completed; re-enable on reopen. */
+  private applyCompletionState() {
+    if (this.isCompleted) {
+      this.form.disable({ emitEvent: false });
+    } else {
+      this.form.enable({ emitEvent: false });
+      // `repeatEveryHours` is only enabled when `repeat` is on.
+      if (!this.form.get('repeat')!.value) {
+        this.form.get('repeatEveryHours')!.disable({ emitEvent: false });
+      }
     }
   }
 
@@ -126,6 +149,68 @@ export class RemindersDialog {
     });
   }
 
+  private loadAttachments(caseId: string) {
+    this.data.get<{ data: IAttachment[] }>(`attachments/case/${caseId}`).subscribe((res) => {
+      this.attachments.set(res.data);
+    });
+  }
+
+  // --- Attachments ---------------------------------------------------------
+
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.selectedFile.set(input.files?.[0] ?? null);
+  }
+
+  /** Upload the picked file to the customer's Drive folder. */
+  uploadAttachment() {
+    const caseId = this.caseItem()?.id;
+    const file = this.selectedFile();
+    if (!caseId || !file) return;
+
+    const formData = new FormData();
+    formData.append('file', file);
+    this.uploading.set(true);
+    this.data.post(`attachments/case/${caseId}`, formData).subscribe({
+      next: () => {
+        this.selectedFile.set(null);
+        this.uploading.set(false);
+        this.loadAttachments(caseId);
+      },
+      error: () => this.uploading.set(false),
+    });
+  }
+
+  /** Send an uploaded attachment to the client via WhatsApp. */
+  sendAttachment(a: IAttachment) {
+    const caseId = this.caseItem()?.id;
+    this.data.post(`attachments/${a.id}/send`, {}).subscribe(() => {
+      if (caseId) this.loadAttachments(caseId);
+    });
+  }
+
+  deleteAttachment(a: IAttachment) {
+    const caseId = this.caseItem()?.id;
+    this.data.delete(`attachments/${a.id}`).subscribe(() => {
+      if (caseId) this.loadAttachments(caseId);
+    });
+  }
+
+  // --- Case completion -----------------------------------------------------
+
+  /** Toggle the case's "fully completed" state (cancels pending reminders). */
+  toggleCompletion(completed: boolean) {
+    const caseId = this.caseItem()?.id;
+    if (!caseId) return;
+    this.data
+      .patch<{ data: IDataCase }>(`cases/${caseId}/completion`, { completed })
+      .subscribe((res) => {
+        this.caseItem.set(res.data);
+        this.applyCompletionState();
+        this.loadReminders(caseId);
+      });
+  }
+
   /** Combine the date + time inputs into an ISO string. */
   private toIso(): string {
     const { date, time } = this.form.value;
@@ -133,6 +218,7 @@ export class RemindersDialog {
   }
 
   onSubmit() {
+    if (this.isCompleted) return;
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;

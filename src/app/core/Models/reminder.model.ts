@@ -27,3 +27,14 @@ export interface IReminderTypeOption {
   value: ReminderType;
   description: string;
 }
+
+export interface IAttachment {
+  id: string;
+  caseId: string;
+  fileName: string;
+  mimeType: string;
+  sizeBytes: number;
+  url: string;
+  sentAt?: string | null;
+  createdAt: string;
+}

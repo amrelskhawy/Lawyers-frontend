@@ -539,3 +539,173 @@ $white: #ffffff;
 ::ng-deep .reminders-container .p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-slider {
   background: $accent-gold !important;
 }
+
+// --- Attachments ----------------------------------------------------------
+.reminders-container {
+  .attachments-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    padding: 1.1rem;
+    background: #f8fafc;
+    border: 1px solid $gray-border;
+    border-radius: 14px;
+
+    .form-title {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: $primary-navy;
+
+      i { color: $accent-gold; }
+    }
+
+    .dropzone {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      min-height: 130px;
+      padding: 1.2rem;
+      border: 2px dashed $gray-border;
+      border-radius: 14px;
+      background: $white;
+      color: $gray-text;
+      cursor: pointer;
+      transition: all 0.25s;
+
+      i { font-size: 1.6rem; color: $primary-navy; }
+
+      &:hover {
+        border-color: $accent-gold;
+        background: rgba($accent-gold, 0.05);
+      }
+    }
+
+    .attach-actions {
+      display: flex;
+      justify-content: center;
+
+      .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.6rem 1.6rem;
+        border: none;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 0.88rem;
+        color: $white;
+        cursor: pointer;
+        background: linear-gradient(135deg, $accent-gold 0%, darken($accent-gold, 15%) 100%);
+        box-shadow: 0 4px 15px rgba($accent-gold, 0.4);
+        transition: all 0.3s;
+
+        &:hover:not(:disabled) { transform: translateY(-2px); }
+        &:disabled { opacity: 0.55; cursor: not-allowed; box-shadow: none; }
+      }
+    }
+
+    .attachment-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      .attachment-row {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.55rem 0.75rem;
+        background: $white;
+        border: 1px solid $gray-border;
+        border-radius: 10px;
+
+        .att-name {
+          display: flex;
+          align-items: center;
+          gap: 0.4rem;
+          flex: 1;
+          min-width: 0;
+          font-size: 0.85rem;
+          font-weight: 600;
+          color: $primary-navy;
+          text-decoration: none;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+
+          i { color: $accent-gold; }
+          &:hover { text-decoration: underline; }
+        }
+
+        .att-sent {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.3rem;
+          font-size: 0.75rem;
+          font-weight: 600;
+          color: #16a34a;
+        }
+
+        .att-actions {
+          display: flex;
+          gap: 0.4rem;
+
+          .icon-btn {
+            width: 32px;
+            height: 32px;
+            display: grid;
+            place-items: center;
+            border: 1px solid $gray-border;
+            border-radius: 8px;
+            background: $white;
+            cursor: pointer;
+            transition: all 0.2s;
+
+            &.send { color: #25d366; }
+            &.delete { color: $error-red; }
+            &:hover { background: #f1f5f9; }
+          }
+        }
+      }
+    }
+  }
+
+  // --- Close-case toggle --------------------------------------------------
+  .complete-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.9rem 1.1rem;
+    border: 1px solid $gray-border;
+    border-radius: 14px;
+    background: #f8fafc;
+    transition: all 0.25s;
+
+    .toggle-label {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: $primary-navy;
+
+      i { color: $gray-text; }
+    }
+
+    &.is-completed {
+      border-color: #16a34a;
+      background: rgba(#16a34a, 0.08);
+
+      .toggle-label i { color: #16a34a; }
+    }
+  }
+
+  .reminder-form.is-disabled {
+    opacity: 0.55;
+    pointer-events: none;
+  }
+}
