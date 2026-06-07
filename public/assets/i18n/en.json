@@ -236,6 +236,7 @@
     "CASE_REOPENED_SUCCESS": "Case reopened",
     "REMINDER_CREATED": "Reminder added successfully",
     "REMINDER_UPDATED": "Reminder updated successfully",
+    "REMINDER_NOT_EDITABLE": "Only pending reminders can be edited",
     "REMINDER_DELETED": "Reminder deleted successfully",
     "REMINDERS_RETRIEVED": "Reminders loaded",
     "REMINDER_TYPES_RETRIEVED": "Reminder types loaded",

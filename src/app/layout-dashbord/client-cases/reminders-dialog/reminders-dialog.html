@@ -78,7 +78,8 @@
               </div>
             </div>
             <div class="reminder-actions">
-              <button class="icon-btn edit" (click)="onEdit(r)" [attr.aria-label]="'edit' | translate">
+              <button class="icon-btn edit" *ngIf="r.status === 'PENDING'" (click)="onEdit(r)"
+                [attr.aria-label]="'edit' | translate">
                 <i class="fa-solid fa-pen-to-square"></i>
               </button>
               <button class="icon-btn delete" (click)="onDelete(r)" [attr.aria-label]="'delete' | translate">

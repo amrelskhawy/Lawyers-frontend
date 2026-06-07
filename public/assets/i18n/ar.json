@@ -236,6 +236,7 @@
     "CASE_REOPENED_SUCCESS": "تم إعادة فتح القضية",
     "REMINDER_CREATED": "تم إضافة التذكير بنجاح",
     "REMINDER_UPDATED": "تم تحديث التذكير بنجاح",
+    "REMINDER_NOT_EDITABLE": "لا يمكن تعديل هذا التذكير إلا في حالة الانتظار",
     "REMINDER_DELETED": "تم حذف التذكير بنجاح",
     "REMINDERS_RETRIEVED": "تم جلب التذكيرات",
     "REMINDER_TYPES_RETRIEVED": "تم جلب أنواع التذكيرات",

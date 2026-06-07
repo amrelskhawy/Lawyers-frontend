@@ -247,6 +247,8 @@ export class RemindersDialog {
   }
 
   onEdit(r: IReminder) {
+    // Only pending reminders are editable.
+    if (r.status !== 'PENDING') return;
     this.editingId.set(r.id);
     const d = new Date(r.scheduledAt);
     const pad = (n: number) => String(n).padStart(2, '0');
