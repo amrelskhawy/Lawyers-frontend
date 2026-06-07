@@ -19,12 +19,19 @@ export interface IDataCase {
   hijriDate: string | null;
   agencyNumber: string | null;
 
+  // Lawyer slot
   wantsSpecificLawyer: boolean;
   preferredLawyerId: string | null;
   preferredLawyerName: string | null;
   assignmentStatus: CaseAssignmentStatus;
   assignmentRejectedAt: string | null;
   assignmentRejectionReason: string | null;
+  // Consultant slot (independent lifecycle)
+  consultantId: string | null;
+  consultantName: string | null;
+  consultantAssignmentStatus: CaseAssignmentStatus;
+  consultantAssignmentRejectedAt: string | null;
+  consultantAssignmentRejectionReason: string | null;
   sessionReceiverId: string | null;
   sessionReceiverName: string | null;
   // Canonical session date is Hijri (sessionHijriDate + sessionTime); sessionDate
@@ -54,14 +61,18 @@ export interface IDataCase {
 
   customer?: { id: string; fullName: string; email: string; phone: string; caseReportsFolderId?: string | null } | null;
   preferredLawyer?: { id: string; name: string } | null;
+  consultant?: { id: string; name: string } | null;
   sessionReceiver?: { id: string; name: string } | null;
   createdBy?: { id: string; name: string } | null;
 }
+
+export type AssignmentKind = 'LAWYER' | 'CONSULTANT';
 
 export interface ILawyerOption {
   id: string;
   name: string;
   email: string;
+  role?: string;
 }
 
 /**
