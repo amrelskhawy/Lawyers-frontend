@@ -627,6 +627,7 @@
   "assignment_status_pending": "Pending Acceptance",
   "assignment_status_accepted": "Accepted",
   "assignment_status_rejected": "Rejected",
+  "pending_assignments_banner": "You have {{count}} assignment(s) awaiting your acceptance or rejection",
   "case_assignment_pending": "You have been assigned to this case — do you accept?",
   "case_assignment_accepted": "You have accepted this case assignment",
   "case_not_assigned_to_you": "This case is not assigned to you",

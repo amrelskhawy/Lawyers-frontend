@@ -87,9 +87,15 @@
   </div>
 </ng-template>
 
+<!-- Always-visible cue for pending assignments (the chime can be blocked by the browser) -->
+<div *ngIf="isLawyer && pendingCount() > 0" class="pending-assignments-banner" role="status">
+  <i class="fa-solid fa-bell"></i>
+  <span>{{ 'pending_assignments_banner' | translate: { count: pendingCount() } }}</span>
+</div>
+
 <app-dashboard-crud-page endpoint="cases" deleteEndpoint="cases" [columns]="columns" [searchFields]="searchFields"
   [actionsTemplate]="actions" [columnTemplates]="columnTemplates" [dataMapper]="dataMapper" [showAddButton]="!isLawyer"
-  (addNew)="visibelform.set(true)">
+  (addNew)="visibelform.set(true)" (loaded)="onCasesLoaded($event)">
 
   <app-form-create-case *ngIf="!isLawyer" [(visible)]="visibelform" (created)="onCreated($event)">
   </app-form-create-case>

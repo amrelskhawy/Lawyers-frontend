@@ -627,6 +627,7 @@
   "assignment_status_pending": "في انتظار القبول",
   "assignment_status_accepted": "مقبول",
   "assignment_status_rejected": "مرفوض",
+  "pending_assignments_banner": "لديك {{count}} تكليف بانتظار قبولك أو رفضك",
   "case_assignment_pending": "تم تكليفك بهذه القضية — هل تقبل؟",
   "case_assignment_accepted": "لقد قبلت تكليف هذه القضية",
   "case_not_assigned_to_you": "هذه القضية غير مكلفة لك",

@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { CaseAssignmentStatus, CASE_TYPE_OPTIONS, IDataCase } from '../../core/Models/case.model';
 import { DashboardCrudPage } from '../dashboard-crud-page/dashboard-crud-page';
 import { Data } from '../../core/Servies/data';
+import { SoundService } from '../../core/Servies/sound';
 
 @Component({
   selector: 'app-client-cases',
@@ -22,7 +23,15 @@ export class ClientCases implements OnInit {
     private translate: TranslateService,
     private router: Router,
     private data: Data,
+    private sound: SoundService,
   ) {}
+
+  /** Guards the pending-assignment chime so it fires only on the first page load,
+   *  not on the silent refreshes that follow an accept/reject. */
+  private firstLoad = true;
+  /** How many cases in the current user's slot are still awaiting accept/reject.
+   *  Drives the always-visible banner (the chime can be blocked by the browser). */
+  pendingCount = signal<number>(0);
 
   columns: { key: string; value: string }[] = [];
   searchFields = ['customerName', 'caseTypeLabel', 'caseDate'];
@@ -83,6 +92,23 @@ export class ClientCases implements OnInit {
       assignedConsultantName: this.consultantCell,
       assignedLawyerName: this.lawyerCell,
     };
+  }
+
+  /**
+   * Runs after every list load/refresh. Recomputes how many cases in the current
+   * lawyer/consultant's slot are still PENDING so the banner stays accurate, and —
+   * only on the first load — plays a single chime if there is at least one.
+   */
+  onCasesLoaded(cases: IDataCase[]) {
+    const pending = this.isLawyer
+      ? cases.filter((c) => this.mySlotStatus(c) === 'PENDING').length
+      : 0;
+    this.pendingCount.set(pending);
+
+    if (this.firstLoad) {
+      this.firstLoad = false;
+      if (pending > 0) this.sound.playChime();
+    }
   }
 
   onEditCase(item: IDataCase) {

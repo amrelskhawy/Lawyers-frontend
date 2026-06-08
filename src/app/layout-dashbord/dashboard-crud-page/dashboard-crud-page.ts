@@ -29,6 +29,8 @@ export class DashboardCrudPage implements OnInit {
   @Input() showAddButton = true;
 
   @Output() addNew = new EventEmitter<void>();
+  /** Emits the freshly loaded (and mapped) rows after every load/refresh. */
+  @Output() loaded = new EventEmitter<any[]>();
 
   data = signal<any[]>([]);
   originalData: any[] = [];
@@ -63,6 +65,7 @@ export class DashboardCrudPage implements OnInit {
       this.dataStatus.set(
         formattedData.length === 0 ? 'no-data' : 'has-data',
       );
+      this.loaded.emit(formattedData);
     });
   }
 
