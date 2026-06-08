@@ -19,3 +19,35 @@
   &:hover { border-color: #6366f1; color: #6366f1; }
   &.active { background: #6366f1; color: #fff; border-color: #6366f1; }
 }
+
+/* Role cell — role label + accepted-cases badge */
+.role-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  white-space: nowrap;
+
+  .role-name {
+    font-weight: 500;
+    color: #374151;
+  }
+
+  .cases-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+    padding: .15rem .55rem;
+    border-radius: 999px;
+    font-size: .75rem;
+    font-weight: 700;
+    line-height: 1.4;
+    color: #8a6d12;
+    background: linear-gradient(135deg, #fdf6e3, #f7ecca);
+    border: 1px solid #e8d79a;
+    box-shadow: 0 1px 2px rgba(138, 109, 18, .08);
+    cursor: default;
+
+    i { font-size: .7rem; opacity: .85; }
+    .cases-count { font-variant-numeric: tabular-nums; }
+  }
+}

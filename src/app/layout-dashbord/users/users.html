@@ -10,6 +10,19 @@
   </div>
 </ng-template>
 
+<!-- Role cell: role name + accepted-cases badge (lawyers / consultants only) -->
+<ng-template #roleCell let-row>
+  <div class="role-cell" dir="rtl">
+    <span class="role-name">{{ row.roleLabel }}</span>
+    @if (row.role === 'LAWYER' || row.role === 'CONSULTANT') {
+      <span class="cases-badge" [pTooltip]="'accepted_cases_count' | translate" tooltipPosition="top">
+        <i class="fa-solid fa-folder-open"></i>
+        <span class="cases-count">{{ row.acceptedCasesCount ?? 0 }}</span>
+      </span>
+    }
+  </div>
+</ng-template>
+
 <!-- Role filter tabs -->
 <div class="role-tabs" dir="rtl">
   <button *ngFor="let r of roleOptions"
@@ -26,6 +39,7 @@
   bulkDeleteEndpoint="admin/users/many"
   [selectable]="true"
   [columns]="columns"
+  [columnTemplates]="{ roleLabel: roleCell }"
   [searchFields]="searchFields"
   [dataMapper]="dataMapper"
   [actionsTemplate]="actions"

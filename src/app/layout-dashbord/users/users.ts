@@ -55,10 +55,6 @@ export class Users implements OnInit {
     index: index + 1,
     displayName: item.nameAr || item.name,
     roleLabel: this.roleLabelMap[item.role] ?? item.role,
-    acceptedCasesLabel:
-      item.role === 'LAWYER' || item.role === 'CONSULTANT'
-        ? (item.acceptedCasesCount ?? 0)
-        : '-',
   });
 
   readonly roleLabelMap: Record<string, string> = {
@@ -77,7 +73,6 @@ export class Users implements OnInit {
       { key: this.translate.instant('email'), value: 'email' },
       { key: this.translate.instant('phone'), value: 'phone' },
       { key: this.translate.instant('role'), value: 'roleLabel' },
-      { key: this.translate.instant('accepted_cases_count'), value: 'acceptedCasesLabel' },
     ];
   }
 

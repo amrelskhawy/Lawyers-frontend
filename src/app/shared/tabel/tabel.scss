@@ -1,8 +1,26 @@
+// border-collapse: collapse makes Chrome ignore z-index on sticky <th>,
+// so the scrolling body cells bleed over the header. Force separate borders.
+::ng-deep .p-datatable-table {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+
+::ng-deep .p-datatable-thead {
+  position: relative;
+  z-index: 10;
+}
+
 th {
   background: linear-gradient(180deg, #b5a863 0%, #8b7a3a 100%) !important;
   color: var(--white-color) !important;
   position: sticky !important;
   top: 0;
+  z-index: 10 !important;
+}
+
+::ng-deep .p-datatable-tbody > tr > td {
+  position: relative;
+  z-index: 1;
 }
 
 ::ng-deep .p-paginator-page.p-paginator-page-selected {
@@ -21,13 +39,13 @@ th {
 }
 
 .admin-badge {
-   text-align: center;
+  text-align: center;
   background-color: var(--color-mint-light);
-    color: var(--color-forest-dark);
-    font-weight: bold;
-    padding: 5px 10px;
-    border-radius: 4px;
-    border: 1px solid rgba(21, 87, 36, 0.2);
+  color: var(--color-forest-dark);
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: 1px solid rgba(21, 87, 36, 0.2);
 }
 
 .moderator-badge {
