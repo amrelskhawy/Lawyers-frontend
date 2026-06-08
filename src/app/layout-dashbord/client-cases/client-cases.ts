@@ -34,7 +34,13 @@ export class ClientCases implements OnInit {
   pendingCount = signal<number>(0);
 
   columns: { key: string; value: string }[] = [];
-  searchFields = ['customerName', 'caseTypeLabel', 'caseDate'];
+  searchFields = [
+    'customerName',
+    'assignedConsultantName',
+    'assignedLawyerName',
+    'caseTypeLabel',
+    'caseDate',
+  ];
   visibelform = signal<boolean>(false);
   visibelReminders = signal<boolean>(false);
   visibelReject = signal<boolean>(false);
