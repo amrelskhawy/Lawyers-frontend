@@ -1,8 +1,24 @@
-<ng-template #actions let-item let-onDelete="delete">
-  <div class="action-btn">
+<!-- Consultant column cell: name + the consultant slot's own status badge -->
+<ng-template #consultantCell let-item>
+  <div class="assignee-cell">
+    <span class="assignee-name">{{ item.assignedConsultantName || '—' }}</span>
+    <span *ngIf="item.assignedConsultantName" class="assignment-status-badge"
+      [class.badge-pending]="item.consultantAssignmentStatus === 'PENDING'"
+      [class.badge-accepted]="item.consultantAssignmentStatus === 'ACCEPTED'"
+      [class.badge-rejected]="item.consultantAssignmentStatus === 'REJECTED'"
+      [class.badge-unassigned]="item.consultantAssignmentStatus === 'UNASSIGNED' || !item.consultantAssignmentStatus"
+      [pTooltip]="('assignment_status_' + (item.consultantAssignmentStatus ?? 'unassigned').toLowerCase()) | translate"
+      tooltipPosition="top">
+      <i class="fa-solid fa-circle"></i>
+    </span>
+  </div>
+</ng-template>
 
-    <!-- Assignment badge -->
-    <span class="assignment-status-badge"
+<!-- Lawyer column cell: name + the lawyer slot's own status badge -->
+<ng-template #lawyerCell let-item>
+  <div class="assignee-cell">
+    <span class="assignee-name">{{ item.assignedLawyerName || '—' }}</span>
+    <span *ngIf="item.assignedLawyerName" class="assignment-status-badge"
       [class.badge-pending]="item.assignmentStatus === 'PENDING'"
       [class.badge-accepted]="item.assignmentStatus === 'ACCEPTED'"
       [class.badge-rejected]="item.assignmentStatus === 'REJECTED'"
@@ -11,9 +27,14 @@
       tooltipPosition="top">
       <i class="fa-solid fa-circle"></i>
     </span>
+  </div>
+</ng-template>
 
-    <!-- Lawyer: accept / reject for PENDING assignments -->
-    <ng-container *ngIf="isLawyer && item.assignmentStatus === 'PENDING'">
+<ng-template #actions let-item let-onDelete="delete">
+  <div class="action-btn">
+
+    <!-- Assignee (lawyer/consultant): accept / reject their OWN pending assignment -->
+    <ng-container *ngIf="isLawyer && mySlotStatus(item) === 'PENDING'">
       <button class="accept-btn" [pTooltip]="'accept_assignment' | translate" tooltipPosition="top"
         (click)="acceptAssignment(item, $event)">
         <i class="fa-solid fa-check"></i>
@@ -24,15 +45,15 @@
       </button>
     </ng-container>
 
-    <!-- Staff + accepted lawyers: edit -->
-    <button *ngIf="!isLawyer || item.assignmentStatus === 'ACCEPTED' || item.assignmentStatus === 'PENDING'"
+    <!-- Staff + assignees with an active (pending/accepted) own slot: edit -->
+    <button *ngIf="!isLawyer || mySlotStatus(item) === 'ACCEPTED' || mySlotStatus(item) === 'PENDING'"
       [pTooltip]="'edit' | translate" tooltipPosition="top" [attr.aria-label]="'edit' | translate"
       (click)="onEditCase(item)" class="edit-btn">
       <i class="fa-solid fa-pen-to-square"></i>
     </button>
 
-    <!-- Reports: admin + moderator + lawyer (accepted only); hidden for receptionist -->
-    <ng-container *ngIf="canViewReports && (!isLawyer || item.assignmentStatus === 'ACCEPTED')">
+    <!-- Reports: admin + moderator + assignee (own slot accepted only); hidden for receptionist -->
+    <ng-container *ngIf="canViewReports && (!isLawyer || mySlotStatus(item) === 'ACCEPTED')">
       <button [attr.aria-label]="'create_session_report' | translate" [pTooltip]="'create_session_report' | translate"
         tooltipPosition="top" (click)="onCreateSessionReport(item)" class="session-report-btn">
         <i class="fa-solid fa-file-lines"></i>
@@ -67,7 +88,8 @@
 </ng-template>
 
 <app-dashboard-crud-page endpoint="cases" deleteEndpoint="cases" [columns]="columns" [searchFields]="searchFields"
-  [actionsTemplate]="actions" [dataMapper]="dataMapper" [showAddButton]="!isLawyer" (addNew)="visibelform.set(true)">
+  [actionsTemplate]="actions" [columnTemplates]="columnTemplates" [dataMapper]="dataMapper" [showAddButton]="!isLawyer"
+  (addNew)="visibelform.set(true)">
 
   <app-form-create-case *ngIf="!isLawyer" [(visible)]="visibelform" (created)="onCreated($event)">
   </app-form-create-case>

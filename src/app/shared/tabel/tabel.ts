@@ -16,6 +16,9 @@ export class Tabel<T extends object> {
 
   @Input() bodytabel: any[] = [];
   @Input() selectable = false;
+  // Optional per-column custom cell renderers, keyed by column `value`.
+  // Columns without an entry fall back to plain-text `formatCell`.
+  @Input() columnTemplates: { [columnValue: string]: TemplateRef<any> } = {};
   @Output() selectionChange = new EventEmitter<T[]>();
 
   @Input()

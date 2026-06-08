@@ -25,6 +25,7 @@ export class DashboardCrudPage implements OnInit {
   @Input() page: string = '';
   @Input() dataMapper?: (item: any, index: number) => any;
   @Input() actionsTemplate!: TemplateRef<any>;
+  @Input() columnTemplates: { [columnValue: string]: TemplateRef<any> } = {};
   @Input() showAddButton = true;
 
   @Output() addNew = new EventEmitter<void>();

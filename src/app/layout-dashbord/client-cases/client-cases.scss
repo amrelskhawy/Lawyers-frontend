@@ -1,5 +1,17 @@
 @use "../glopalstyles.scss";
 
+// ── Assignee cell (name + own status badge) ──────────────────
+.assignee-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+
+  .assignee-name {
+    font-size: 0.9rem;
+  }
+}
+
 // ── Assignment status indicator ──────────────────────────────
 .assignment-status-badge {
   display: inline-flex;

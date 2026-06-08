@@ -40,7 +40,11 @@
         </td>
         <ng-container *ngFor="let col of bodytabel">
           <td [ngClass]="getCellClass(col, row)">
-            {{ formatCell(col.value, row[col.value]) }}
+            <ng-container *ngIf="columnTemplates[col.value]; else plainCell">
+              <ng-container
+                *ngTemplateOutlet="columnTemplates[col.value]; context: { $implicit: row, col: col }"></ng-container>
+            </ng-container>
+            <ng-template #plainCell>{{ formatCell(col.value, row[col.value]) }}</ng-template>
           </td>
         </ng-container>
 

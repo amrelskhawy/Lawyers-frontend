@@ -1,7 +1,7 @@
-import { Component, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { CASE_TYPE_OPTIONS, IDataCase } from '../../core/Models/case.model';
+import { CaseAssignmentStatus, CASE_TYPE_OPTIONS, IDataCase } from '../../core/Models/case.model';
 import { DashboardCrudPage } from '../dashboard-crud-page/dashboard-crud-page';
 import { Data } from '../../core/Servies/data';
 
@@ -13,6 +13,10 @@ import { Data } from '../../core/Servies/data';
 })
 export class ClientCases implements OnInit {
   @ViewChild(DashboardCrudPage) crudPage!: DashboardCrudPage;
+  @ViewChild('consultantCell', { static: true }) consultantCell!: TemplateRef<any>;
+  @ViewChild('lawyerCell', { static: true }) lawyerCell!: TemplateRef<any>;
+
+  columnTemplates: { [columnValue: string]: TemplateRef<any> } = {};
 
   constructor(
     private translate: TranslateService,
@@ -33,8 +37,22 @@ export class ClientCases implements OnInit {
     return raw ? JSON.parse(raw) : null;
   }
   get role(): string { return this.currentUser?.role ?? ''; }
+  // "isLawyer" historically means "an assignee role" (lawyer OR consultant) — kept for
+  // shared gating (add button, delete, reports). Slot-specific logic uses mySlotStatus().
   get isLawyer(): boolean { return this.role === 'LAWYER' || this.role === 'CONSULTANT'; }
+  get isConsultantRole(): boolean { return this.role === 'CONSULTANT'; }
   get isReceptionist(): boolean { return this.role === 'RECEPTIONIST'; }
+
+  /**
+   * The assignment status of the slot the current user owns:
+   * a CONSULTANT acts on the consultant slot, a LAWYER on the lawyer slot.
+   * Staff roles own no slot, so this returns null for them.
+   */
+  mySlotStatus(item: IDataCase): CaseAssignmentStatus | null {
+    if (this.role === 'CONSULTANT') return item.consultantAssignmentStatus ?? 'UNASSIGNED';
+    if (this.role === 'LAWYER') return item.assignmentStatus ?? 'UNASSIGNED';
+    return null;
+  }
   get canAssign(): boolean { return ['ADMIN', 'MODERATOR', 'RECEPTIONIST'].includes(this.role); }
   get canViewReports(): boolean { return ['ADMIN', 'MODERATOR', 'LAWYER', 'CONSULTANT'].includes(this.role); }
   get canManageFeesContract(): boolean { return ['ADMIN', 'MODERATOR'].includes(this.role); }
@@ -47,6 +65,7 @@ export class ClientCases implements OnInit {
       CASE_TYPE_OPTIONS.find((o) => o.value === item.caseType)?.label ?? item.caseType,
     caseDateFormatted: item.caseDate ? new Date(item.caseDate).toLocaleDateString() : '',
     assignedLawyerName: item.preferredLawyerName ?? item.preferredLawyer?.name ?? '',
+    assignedConsultantName: item.consultantName ?? item.consultant?.name ?? '',
   });
 
   ngOnInit() {
@@ -55,10 +74,15 @@ export class ClientCases implements OnInit {
       { key: this.translate.instant('case_customer'), value: 'customerName' },
       { key: this.translate.instant('case_type'), value: 'caseTypeLabel' },
       { key: this.translate.instant('case_date'), value: 'caseDateFormatted' },
+      { key: this.translate.instant('assigned_consultant'), value: 'assignedConsultantName' },
       { key: this.translate.instant('assigned_lawyer'), value: 'assignedLawyerName' },
-      { key: this.translate.instant('assignment_status'), value: 'assignmentStatus' },
       { key: this.translate.instant('created_by'), value: 'createdBy.name' },
     ];
+    // Render the consultant/lawyer columns as "name + own-status badge" cells.
+    this.columnTemplates = {
+      assignedConsultantName: this.consultantCell,
+      assignedLawyerName: this.lawyerCell,
+    };
   }
 
   onEditCase(item: IDataCase) {
