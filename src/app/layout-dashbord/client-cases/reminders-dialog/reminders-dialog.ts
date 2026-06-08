@@ -23,6 +23,10 @@ export class RemindersDialog {
   attachments = signal<IAttachment[]>([]);
   selectedFile = signal<File | null>(null);
   uploading = signal<boolean>(false);
+  // Id of the attachment whose WhatsApp message input is open, plus its text.
+  sendingId = signal<string | null>(null);
+  sendMessage = signal<string>('');
+  sendInFlight = signal<boolean>(false);
   form: FormGroup;
   sessionForm: FormGroup;
 
@@ -181,12 +185,32 @@ export class RemindersDialog {
     });
   }
 
-  /** Send an uploaded attachment to the client via WhatsApp. */
+  /** Open the inline WhatsApp message input for an attachment. */
+  openSend(a: IAttachment) {
+    this.sendingId.set(a.id);
+    this.sendMessage.set('');
+  }
+
+  /** Close the inline message input without sending. */
+  cancelSend() {
+    this.sendingId.set(null);
+    this.sendMessage.set('');
+  }
+
+  /** Send an uploaded attachment to the client via WhatsApp with a message. */
   sendAttachment(a: IAttachment) {
     const caseId = this.caseItem()?.id;
-    this.data.post(`attachments/${a.id}/send`, {}).subscribe(() => {
-      if (caseId) this.loadAttachments(caseId);
-    });
+    this.sendInFlight.set(true);
+    this.data
+      .post(`attachments/${a.id}/send`, { message: this.sendMessage().trim() })
+      .subscribe({
+        next: () => {
+          this.sendInFlight.set(false);
+          this.cancelSend();
+          if (caseId) this.loadAttachments(caseId);
+        },
+        error: () => this.sendInFlight.set(false),
+      });
   }
 
   deleteAttachment(a: IAttachment) {
