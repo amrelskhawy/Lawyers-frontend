@@ -132,7 +132,7 @@
 
               <!-- Inline WhatsApp message input -->
               <div class="send-row" *ngIf="sendingId() === a.id">
-                <textarea rows="2" [ngModel]="sendMessage()"
+                <textarea rows="9" [ngModel]="sendMessage()"
                   (ngModelChange)="sendMessage.set($event)"
                   [ngModelOptions]="{ standalone: true }"
                   placeholder="{{ 'whatsapp_message_placeholder' | translate }}"></textarea>

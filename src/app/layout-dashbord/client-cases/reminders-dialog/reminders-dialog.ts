@@ -185,10 +185,27 @@ export class RemindersDialog {
     });
   }
 
+  /** Default WhatsApp message prefilled when sending an attachment.
+   *  The textarea stays editable so the user can adjust it before sending. */
+  private defaultSendMessage(): string {
+    const name = this.caseItem()?.customer?.fullName ?? '';
+    return `السلام عليكم ورحمة الله وبركاته
+الأستاذ/ة ${name}
+
+تهديكم شركة سعد البقمي للمحاماة والاستشارات القانونية أطيب التحايا.
+
+ونفيدكم بأنه تم الانتهاء من إعداد المذكرة الخاصة بكم، ونأمل التكرم بمراجعتها واعتمادها قبل التقديم الرسمي.
+
+كما نرجو تزويدنا بأي ملاحظات أو تعديلات -إن وجدت- خلال أقرب وقت ممكن قبل إرفاقها في النظام.
+
+شاكرين لكم ثقتكم،
+مع خالص التحية والتقدير.`;
+  }
+
   /** Open the inline WhatsApp message input for an attachment. */
   openSend(a: IAttachment) {
     this.sendingId.set(a.id);
-    this.sendMessage.set('');
+    this.sendMessage.set(this.defaultSendMessage());
   }
 
   /** Close the inline message input without sending. */
