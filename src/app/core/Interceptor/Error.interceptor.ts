@@ -10,13 +10,15 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Core } from '../Servies/core';
 import { TranslateService } from '@ngx-translate/core';
+import { Auth } from '../Servies/auth';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
   constructor(
     private core: Core,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private auth: Auth
   ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -28,6 +30,12 @@ export class ErrorInterceptor implements HttpInterceptor {
           apiMessage = this.translate.instant(`API_MESSAGES.${mainCode}`);
         }
         this.core._Error.next(apiMessage);
+
+        // Session expired or token invalid — force a logout, but not for a
+        // failed login attempt (the user is already on the login page).
+        if (error.status === 401 && sessionStorage.getItem('token')) {
+          this.auth.forceLogout();
+        }
         return throwError(() => error);
       })
     );
