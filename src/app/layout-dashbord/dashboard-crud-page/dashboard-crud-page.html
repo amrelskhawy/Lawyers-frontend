@@ -19,4 +19,17 @@
       <ng-container *ngTemplateOutlet="actionsTemplate; context: {$implicit: item, delete: deleteHandler}"></ng-container>
     </ng-template>
   </app-tabel>
+
+  @if (total() > 0) {
+    <p-paginator
+      class="crud-paginator"
+      [first]="(pageIndex() - 1) * rows()"
+      [rows]="rows()"
+      [totalRecords]="total()"
+      [rowsPerPageOptions]="rowsPerPageOptions"
+      [showCurrentPageReport]="true"
+      currentPageReportTemplate="{first} - {last} / {totalRecords}"
+      (onPageChange)="onPageChange($event)"
+    ></p-paginator>
+  }
 </div>

@@ -1,9 +1,7 @@
 @if (exsistData() == 'has-data') {
   <p-table
     [value]="tableData"
-    [paginator]="true"
-    [rowsPerPageOptions]="[5, 10, 20, 50]"
-    [rows]="20"
+    [paginator]="false"
     stripedRows
     [tableStyle]="{ 'min-width': '50rem' }"
     [sortOrder]="-1"

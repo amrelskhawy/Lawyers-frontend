@@ -52,6 +52,7 @@ import { Users } from './users/users';
 import { FormUser } from './users/form-user/form-user';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
+import { PaginatorModule } from 'primeng/paginator';
 import { CasesCalendar } from './cases-calendar/cases-calendar';
 
 @NgModule({
@@ -113,6 +114,7 @@ import { CasesCalendar } from './cases-calendar/cases-calendar';
     InputTextModule,
     LawyerFeesContractPreviewModule,
     EditorModule,
+    PaginatorModule,
   ],
 })
 export class LayoutDashbordModule { }

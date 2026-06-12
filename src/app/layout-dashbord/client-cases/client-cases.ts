@@ -7,7 +7,7 @@ import {
   CASE_TYPE_OPTIONS,
   IDataCase,
 } from '../../core/Models/case.model';
-import { DashboardCrudPage } from '../dashboard-crud-page/dashboard-crud-page';
+import { DashboardCrudPage, PageMeta } from '../dashboard-crud-page/dashboard-crud-page';
 import { Data } from '../../core/Servies/data';
 import { SoundService } from '../../core/Servies/sound';
 
@@ -127,25 +127,21 @@ export class ClientCases implements OnInit {
   }
 
   /**
-   * Runs after every list load/refresh. Recomputes how many cases in the current
-   * lawyer/consultant's slot are still PENDING so the banner stays accurate, and —
-   * only on the first load — plays a single chime if there is at least one.
+   * Runs after every list load/refresh. The summary cards and pending banner are
+   * computed server-side over the whole (filtered) set — not just the current page —
+   * and delivered in the pagination `meta`. On the first load we chime once if the
+   * current user still has pending assignments.
    */
-  onCasesLoaded(cases: IDataCase[]) {
+  onCasesMeta(meta: PageMeta | null) {
+    if (!meta) return;
+
+    const dc: Record<string, number> = meta['degreeCounts'] ?? {};
     this.degreeCounts.set([
-      ...CASE_DEGREE_OPTIONS.map((o) => ({
-        ...o,
-        count: cases.filter((c) => c.caseDegree === o.value).length,
-      })),
-      {
-        ...ClientCases.UNASSIGNED_DEGREE,
-        count: cases.filter((c) => !c.caseDegree).length,
-      },
+      ...CASE_DEGREE_OPTIONS.map((o) => ({ ...o, count: dc[o.value] ?? 0 })),
+      { ...ClientCases.UNASSIGNED_DEGREE, count: dc['UNASSIGNED'] ?? 0 },
     ]);
 
-    const pending = this.isLawyer
-      ? cases.filter((c) => this.mySlotStatus(c) === 'PENDING').length
-      : 0;
+    const pending: number = meta['pendingCount'] ?? 0;
     this.pendingCount.set(pending);
 
     if (this.firstLoad) {

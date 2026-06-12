@@ -54,7 +54,8 @@ export class TopGrid implements OnInit {
     this.visibelformadd.emit(true);
   }
 
-  onSearch(event: any) {
-    this.search.emit(event.target.value);
+  /** Emits only on an explicit search (icon click or Enter), not on each keystroke. */
+  onSearch(value: string) {
+    this.search.emit(value ?? '');
   }
 }

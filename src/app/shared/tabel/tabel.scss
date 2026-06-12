@@ -21,6 +21,14 @@ th {
 ::ng-deep .p-datatable-tbody > tr > td {
   position: relative;
   z-index: 1;
+  // Compact rows so a full page fits the viewport without scrolling.
+  padding-top: 0.45rem !important;
+  padding-bottom: 0.45rem !important;
+}
+
+::ng-deep .p-datatable-thead > tr > th {
+  padding-top: 0.55rem !important;
+  padding-bottom: 0.55rem !important;
 }
 
 ::ng-deep .p-paginator-page.p-paginator-page-selected {
