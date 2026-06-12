@@ -19,6 +19,16 @@
         <i class="fa-solid fa-folder-open"></i>
         <span class="cases-count">{{ row.acceptedCasesCount ?? 0 }}</span>
       </span>
+      <!-- Per-degree breakdown (الدرجات) — only non-zero degrees are shown -->
+      @for (b of row.degreeBadges; track b.key) {
+        <span class="degree-count-badge"
+          [style.color]="b.color"
+          [style.border-color]="b.color"
+          [style.background]="b.color + '1f'"
+          [pTooltip]="b.label" tooltipPosition="top">
+          {{ b.count }}
+        </span>
+      }
     }
   </div>
 </ng-template>

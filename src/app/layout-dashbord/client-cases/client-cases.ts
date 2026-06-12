@@ -1,7 +1,12 @@
 import { Component, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { CaseAssignmentStatus, CASE_TYPE_OPTIONS, IDataCase } from '../../core/Models/case.model';
+import {
+  CaseAssignmentStatus,
+  CASE_DEGREE_OPTIONS,
+  CASE_TYPE_OPTIONS,
+  IDataCase,
+} from '../../core/Models/case.model';
 import { DashboardCrudPage } from '../dashboard-crud-page/dashboard-crud-page';
 import { Data } from '../../core/Servies/data';
 import { SoundService } from '../../core/Servies/sound';
@@ -16,6 +21,7 @@ export class ClientCases implements OnInit {
   @ViewChild(DashboardCrudPage) crudPage!: DashboardCrudPage;
   @ViewChild('consultantCell', { static: true }) consultantCell!: TemplateRef<any>;
   @ViewChild('lawyerCell', { static: true }) lawyerCell!: TemplateRef<any>;
+  @ViewChild('degreeCell', { static: true }) degreeCell!: TemplateRef<any>;
 
   columnTemplates: { [columnValue: string]: TemplateRef<any> } = {};
 
@@ -33,12 +39,26 @@ export class ClientCases implements OnInit {
    *  Drives the always-visible banner (the chime can be blocked by the browser). */
   pendingCount = signal<number>(0);
 
+  /** Neutral "card" for cases that have no degree set yet. */
+  private static readonly UNASSIGNED_DEGREE = {
+    label: 'غير محدد',
+    color: '#64748b',
+    colorLight: '#94a3b8',
+  };
+
+  /** Per-degree case counts for the summary cards above the table (+ unassigned). */
+  degreeCounts = signal<{ label: string; color: string; colorLight: string; count: number }[]>([
+    ...CASE_DEGREE_OPTIONS.map((o) => ({ ...o, count: 0 })),
+    { ...ClientCases.UNASSIGNED_DEGREE, count: 0 },
+  ]);
+
   columns: { key: string; value: string }[] = [];
   searchFields = [
     'customerName',
     'assignedConsultantName',
     'assignedLawyerName',
     'caseTypeLabel',
+    'caseDegreeLabel',
     'caseDate',
   ];
   visibelform = signal<boolean>(false);
@@ -78,6 +98,10 @@ export class ClientCases implements OnInit {
     customerName: item.customer?.fullName ?? '',
     caseTypeLabel:
       CASE_TYPE_OPTIONS.find((o) => o.value === item.caseType)?.label ?? item.caseType,
+    caseDegreeLabel:
+      CASE_DEGREE_OPTIONS.find((o) => o.value === item.caseDegree)?.label ?? '',
+    caseDegreeColor:
+      CASE_DEGREE_OPTIONS.find((o) => o.value === item.caseDegree)?.color ?? '',
     caseDateFormatted: item.caseDate ? new Date(item.caseDate).toLocaleDateString() : '',
     assignedLawyerName: item.preferredLawyerName ?? item.preferredLawyer?.name ?? '',
     assignedConsultantName: item.consultantName ?? item.consultant?.name ?? '',
@@ -88,6 +112,7 @@ export class ClientCases implements OnInit {
       { key: '#', value: 'index' },
       { key: this.translate.instant('case_customer'), value: 'customerName' },
       { key: this.translate.instant('case_type'), value: 'caseTypeLabel' },
+      { key: this.translate.instant('case_degree'), value: 'caseDegreeLabel' },
       { key: this.translate.instant('case_date'), value: 'caseDateFormatted' },
       { key: this.translate.instant('assigned_consultant'), value: 'assignedConsultantName' },
       { key: this.translate.instant('assigned_lawyer'), value: 'assignedLawyerName' },
@@ -97,6 +122,7 @@ export class ClientCases implements OnInit {
     this.columnTemplates = {
       assignedConsultantName: this.consultantCell,
       assignedLawyerName: this.lawyerCell,
+      caseDegreeLabel: this.degreeCell,
     };
   }
 
@@ -106,6 +132,17 @@ export class ClientCases implements OnInit {
    * only on the first load — plays a single chime if there is at least one.
    */
   onCasesLoaded(cases: IDataCase[]) {
+    this.degreeCounts.set([
+      ...CASE_DEGREE_OPTIONS.map((o) => ({
+        ...o,
+        count: cases.filter((c) => c.caseDegree === o.value).length,
+      })),
+      {
+        ...ClientCases.UNASSIGNED_DEGREE,
+        count: cases.filter((c) => !c.caseDegree).length,
+      },
+    ]);
+
     const pending = this.isLawyer
       ? cases.filter((c) => this.mySlotStatus(c) === 'PENDING').length
       : 0;
@@ -136,6 +173,11 @@ export class ClientCases implements OnInit {
   onManageReminders(item: IDataCase) {
     this.selectedCase.set(item);
     this.visibelReminders.set(true);
+  }
+
+  /** The reminders dialog changed the case (e.g. degree saved) — refresh the table. */
+  onCaseUpdated() {
+    this.crudPage?.refresh();
   }
 
   onCreated(newCase: IDataCase) {

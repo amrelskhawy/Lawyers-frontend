@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Data } from '../../../core/Servies/data';
-import { IDataCase } from '../../../core/Models/case.model';
+import { CASE_DEGREE_OPTIONS, CaseDegree, IDataCase } from '../../../core/Models/case.model';
 import { IAttachment, IReminder, IReminderTypeOption } from '../../../core/Models/reminder.model';
 import { canonicalToPickerHijri, pickerToCanonicalHijri } from '../../../core/utils/hijri-format';
 
@@ -14,6 +14,8 @@ import { canonicalToPickerHijri, pickerToCanonicalHijri } from '../../../core/ut
 export class RemindersDialog {
   @Input() visible = false;
   @Output() visibleChange = new EventEmitter<boolean>();
+  /** Emitted when the case itself changes (e.g. degree saved) so the parent table can refresh. */
+  @Output() caseUpdated = new EventEmitter<IDataCase>();
 
   caseItem = signal<IDataCase | null>(null);
   reminders = signal<IReminder[]>([]);
@@ -27,6 +29,11 @@ export class RemindersDialog {
   sendingId = signal<string | null>(null);
   sendMessage = signal<string>('');
   sendInFlight = signal<boolean>(false);
+  // Litigation degree (الدرجة) — fixed color per degree, shown in the cases table.
+  degreeOptions = CASE_DEGREE_OPTIONS;
+  selectedDegree = signal<CaseDegree | ''>('');
+  degreeSaving = signal<boolean>(false);
+  degreeSaved = signal<boolean>(false);
   form: FormGroup;
   sessionForm: FormGroup;
 
@@ -66,6 +73,8 @@ export class RemindersDialog {
   @Input() set objCase(value: IDataCase | null) {
     this.caseItem.set(value ?? null);
     this.sessionSaved.set(false);
+    this.selectedDegree.set(value?.caseDegree ?? '');
+    this.degreeSaved.set(false);
     this.prefillSessionForm(value);
     if (value?.id) {
       this.loadTypes();
@@ -127,6 +136,34 @@ export class RemindersDialog {
         this.sessionSaved.set(true);
         this.loadReminders(caseId);
       });
+  }
+
+  get selectedDegreeColor(): string {
+    const d = this.selectedDegree();
+    return this.degreeOptions.find((o) => o.value === d)?.color ?? '#cbd5e1';
+  }
+
+  onDegreeChange(value: CaseDegree | '') {
+    this.selectedDegree.set(value);
+    this.degreeSaved.set(false);
+  }
+
+  /** Persist the litigation degree to the case and notify the parent table. */
+  saveDegree() {
+    const caseId = this.caseItem()?.id;
+    const caseDegree = this.selectedDegree();
+    if (!caseId || !caseDegree) return;
+
+    this.degreeSaving.set(true);
+    this.data.patch<{ data: IDataCase }>(`cases/${caseId}/degree`, { caseDegree }).subscribe({
+      next: (res) => {
+        this.caseItem.set(res.data);
+        this.degreeSaving.set(false);
+        this.degreeSaved.set(true);
+        this.caseUpdated.emit(res.data);
+      },
+      error: () => this.degreeSaving.set(false),
+    });
   }
 
   get selectedTypeDescription(): string {

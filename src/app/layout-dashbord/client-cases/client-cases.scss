@@ -34,6 +34,89 @@
   }
 }
 
+// ── Per-degree summary cards above the table ─────────────────
+// Same look as the dashboard stat cards (activity-logs); the gradient
+// background comes inline per degree color.
+.degree-summary-cards {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 16px;
+
+  @media (max-width: 1200px) { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 900px) { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 500px) { grid-template-columns: 1fr; }
+
+  .degree-stat-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+    padding: 1.5rem 1.75rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+    color: #fff;
+
+    .stat-icon-wrap {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.22);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      i { font-size: 1.4rem; }
+    }
+
+    .stat-body {
+      display: flex;
+      flex-direction: column;
+      z-index: 1;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      opacity: 0.85;
+      margin-top: 0.3rem;
+    }
+
+    .stat-bg-icon {
+      position: absolute;
+      left: -10px;
+      bottom: -10px;
+
+      i { font-size: 6rem; opacity: 0.08; color: #fff; }
+    }
+  }
+}
+
+// ── Case degree badge (الدرجة) — color comes inline per degree ──
+.degree-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border: 1px solid;
+  border-radius: 50px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  white-space: nowrap;
+
+  i {
+    font-size: 0.55rem;
+    line-height: 1;
+  }
+}
+
 // ── Assignment status indicator ──────────────────────────────
 .assignment-status-badge {
   display: inline-flex;

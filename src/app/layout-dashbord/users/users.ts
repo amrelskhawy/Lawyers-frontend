@@ -1,6 +1,7 @@
 import { Component, OnInit, signal, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { DashboardCrudPage } from '../dashboard-crud-page/dashboard-crud-page';
+import { CASE_DEGREE_OPTIONS } from '../../core/Models/case.model';
 
 export interface IUser {
   id: string;
@@ -15,6 +16,8 @@ export interface IUser {
   isVerified: boolean;
   createdAt: string;
   acceptedCasesCount?: number;
+  /** Accepted cases broken down by litigation degree (UNASSIGNED = no degree set). */
+  acceptedCasesByDegree?: Record<string, number>;
 }
 
 @Component({
@@ -55,7 +58,20 @@ export class Users implements OnInit {
     index: index + 1,
     displayName: item.nameAr || item.name,
     roleLabel: this.roleLabelMap[item.role] ?? item.role,
+    degreeBadges: this.buildDegreeBadges(item.acceptedCasesByDegree),
   });
+
+  /** Colored per-degree count badges shown next to the total; zero counts are hidden. */
+  private buildDegreeBadges(byDegree?: Record<string, number>) {
+    if (!byDegree) return [];
+    const entries = [
+      ...CASE_DEGREE_OPTIONS.map((o) => ({ key: o.value as string, label: o.label, color: o.color })),
+      { key: 'UNASSIGNED', label: 'غير محدد', color: '#64748b' },
+    ];
+    return entries
+      .map((e) => ({ ...e, count: byDegree[e.key] ?? 0 }))
+      .filter((e) => e.count > 0);
+  }
 
   readonly roleLabelMap: Record<string, string> = {
     ADMIN: 'مدير',

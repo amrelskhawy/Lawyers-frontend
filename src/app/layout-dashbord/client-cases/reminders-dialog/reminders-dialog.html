@@ -150,6 +150,31 @@
           </div>
         </div>
 
+        <!-- Case degree (الدرجة) — colored litigation-degree tag, shown in the cases table -->
+        <div class="degree-card">
+          <div class="form-title">
+            <i class="fa-solid fa-scale-balanced"></i> {{ 'case_degree' | translate }}
+          </div>
+          <div class="degree-row">
+            <div class="select-wrapper">
+              <span class="degree-dot" [style.background]="selectedDegreeColor"></span>
+              <select [ngModel]="selectedDegree()" (ngModelChange)="onDegreeChange($event)"
+                [ngModelOptions]="{ standalone: true }">
+                <option value="" disabled>{{ 'case_degree_placeholder' | translate }}</option>
+                <option *ngFor="let d of degreeOptions" [value]="d.value">{{ d.label }}</option>
+              </select>
+              <i class="fa-solid fa-chevron-down chevron"></i>
+            </div>
+            <button type="button" class="btn-primary" (click)="saveDegree()"
+              [disabled]="!selectedDegree() || degreeSaving()">
+              <i class="fa-solid fa-floppy-disk"></i> {{ 'save' | translate }}
+            </button>
+          </div>
+          <small class="session-saved" *ngIf="degreeSaved()">
+            <i class="fa-solid fa-circle-check"></i> {{ 'case_degree_saved' | translate }}
+          </small>
+        </div>
+
         <!-- Close case toggle — stops all reminder actions -->
         <div class="complete-bar" [class.is-completed]="isCompleted">
           <div class="toggle-label">

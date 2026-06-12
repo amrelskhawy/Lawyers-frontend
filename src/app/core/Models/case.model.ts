@@ -10,11 +10,15 @@ export type CaseType =
   | 'PERSONAL_STATUS'
   | 'OTHER';
 
+/** Litigation degree (درجة التقاضي) — each degree has a fixed display color. */
+export type CaseDegree = 'FIRST_INSTANCE' | 'APPEAL' | 'CASSATION' | 'PETITION';
+
 export interface IDataCase {
   id: string;
   customerId: string;
   caseType: CaseType;
   otherCaseType: string | null;
+  caseDegree: CaseDegree | null;
   caseDate: string;
   hijriDate: string | null;
   agencyNumber: string | null;
@@ -88,6 +92,23 @@ export const CASE_TYPE_OPTIONS: { value: CaseType; label: string }[] = [
   { value: 'GENERAL', label: 'عامة' },
   { value: 'PERSONAL_STATUS', label: 'أحوال شخصية' },
   { value: 'OTHER', label: 'أخرى' },
+];
+
+/**
+ * Litigation degrees (الدرجات) with their fixed colors:
+ * الابتدائية = أخضر، الاستئناف = أصفر، النقض = أزرق، الالتماس = برتقالي.
+ * `colorLight` is the gradient end used by the dashboard stat cards.
+ */
+export const CASE_DEGREE_OPTIONS: {
+  value: CaseDegree;
+  label: string;
+  color: string;
+  colorLight: string;
+}[] = [
+  { value: 'FIRST_INSTANCE', label: 'الابتدائية', color: '#16a34a', colorLight: '#4ade80' },
+  { value: 'APPEAL', label: 'الاستئناف', color: '#eab308', colorLight: '#facc15' },
+  { value: 'CASSATION', label: 'النقض', color: '#2563eb', colorLight: '#60a5fa' },
+  { value: 'PETITION', label: 'الالتماس', color: '#f97316', colorLight: '#fb923c' },
 ];
 
 export const REPORT_REQUIREMENTS: string[] = [
