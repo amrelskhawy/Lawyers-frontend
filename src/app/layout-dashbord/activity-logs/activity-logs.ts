@@ -1,5 +1,6 @@
 import { Component, OnInit, signal, computed } from '@angular/core';
 import { Data } from '../../core/Servies/data';
+import { CASE_DEGREE_OPTIONS, IDataCase } from '../../core/Models/case.model';
 
 interface ActivityLog {
   id: string;
@@ -30,6 +31,8 @@ export class ActivityLogs implements OnInit {
 
   logs = signal<ActivityLog[]>([]);
   stats = signal<Stats>({ bookings: 0, cases: 0, customers: 0, users: 0 });
+  /** Per-degree case counts shown under the total inside the cases stat card. */
+  caseDegreeCounts = signal<{ label: string; color: string; count: number }[]>([]);
   loading = signal<boolean>(true);
   total = signal<number>(0);
   page = signal<number>(1);
@@ -86,6 +89,20 @@ export class ActivityLogs implements OnInit {
         customers: cu?.data?.length ?? 0,
         users: u?.data?.length ?? 0,
       });
+
+      const cases: IDataCase[] = c?.data ?? [];
+      this.caseDegreeCounts.set([
+        ...CASE_DEGREE_OPTIONS.map((o) => ({
+          label: o.label,
+          color: o.color,
+          count: cases.filter((x) => x.caseDegree === o.value).length,
+        })),
+        {
+          label: 'غير محدد',
+          color: '#64748b',
+          count: cases.filter((x) => !x.caseDegree).length,
+        },
+      ]);
     });
   }
 

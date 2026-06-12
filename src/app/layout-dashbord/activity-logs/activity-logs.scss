@@ -59,6 +59,34 @@ $shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
     i { font-size: 6rem; opacity: .08; color: #fff; }
   }
 
+  // Per-degree counts under the cases total — white wrapper so the colored
+  // chips stand out against the card's gradient
+  .degree-mini-counts {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-self: flex-start;
+    gap: .35rem;
+    margin-top: .55rem;
+    padding: .3rem .45rem;
+    background: #fff;
+    border-radius: 999px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .08);
+
+    .mini-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 1.45rem;
+      padding: .1rem .4rem;
+      border-radius: 999px;
+      font-size: .72rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      color: #fff;
+      cursor: default;
+    }
+  }
+
   &.stat-users    { background: linear-gradient(135deg, #6366f1, #818cf8); }
   &.stat-customers{ background: linear-gradient(135deg, #10b981, #34d399); }
   &.stat-cases    { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
