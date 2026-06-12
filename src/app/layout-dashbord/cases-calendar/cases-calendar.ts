@@ -87,9 +87,22 @@ export class CasesCalendar implements OnInit {
   }
 
   // ── Data loading ─────────────────────────────────────────────────────────
+  /** Loading flag for the month fetch (drives a spinner/empty-state if needed). */
+  loading = signal<boolean>(false);
+
+  /** Fetch only the cases whose session falls in the displayed Hijri month. */
   private loadCases(): void {
-    this.data.get<{ data: IDataCase[] }>('cases').subscribe((res) => {
-      this.allCases.set(res?.data ?? []);
+    const month = `${this.viewYear()}-${String(this.viewMonth()).padStart(2, '0')}`;
+    this.loading.set(true);
+    this.data.get<{ data: IDataCase[] }>('cases', { month }).subscribe({
+      next: (res) => {
+        this.allCases.set(res?.data ?? []);
+        this.loading.set(false);
+      },
+      error: () => {
+        this.allCases.set([]);
+        this.loading.set(false);
+      },
     });
   }
 
@@ -111,11 +124,6 @@ export class CasesCalendar implements OnInit {
   /** Cases bucketed by canonical Hijri session date. */
   private buckets = computed(() =>
     this.hijri.bucketBySession(this.filteredCases(), (c) => c.sessionHijriDate),
-  );
-
-  /** Count of (filtered) cases with no session date — surfaced as a note. */
-  unscheduledCount = computed(
-    () => this.filteredCases().filter((c) => !c.sessionHijriDate).length,
   );
 
   /** The 6×7 grid for the displayed month. */
@@ -155,22 +163,27 @@ export class CasesCalendar implements OnInit {
   }
 
   // ── Navigation ───────────────────────────────────────────────────────────
+  // Each navigation refetches that month's cases (server-side pagination).
   prevMonth(): void {
     const { iYear, iMonth } = this.hijri.addMonths(this.viewYear(), this.viewMonth(), -1);
     this.viewYear.set(iYear);
     this.viewMonth.set(iMonth);
+    this.loadCases();
   }
 
   nextMonth(): void {
     const { iYear, iMonth } = this.hijri.addMonths(this.viewYear(), this.viewMonth(), 1);
     this.viewYear.set(iYear);
     this.viewMonth.set(iMonth);
+    this.loadCases();
   }
 
   goToday(): void {
     const today = this.hijri.todayParts();
+    if (today.iYear === this.viewYear() && today.iMonth === this.viewMonth()) return;
     this.viewYear.set(today.iYear);
     this.viewMonth.set(today.iMonth);
+    this.loadCases();
   }
 
   onLawyerFilterChange(): void {

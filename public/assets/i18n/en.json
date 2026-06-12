@@ -502,7 +502,6 @@
   "assigned_to": "Assigned to",
   "view_details": "View details",
   "not_set": "Not set",
-  "cases_without_session": "cases without a session date",
   "case_customer": "Customer",
   "case_type": "Case Type",
   "other_case_type": "Case Type (Other)",
