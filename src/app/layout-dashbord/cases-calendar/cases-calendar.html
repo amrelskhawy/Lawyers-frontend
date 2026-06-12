@@ -1,0 +1,115 @@
+<div class="cases-calendar" dir="rtl">
+  <!-- ── Toolbar ─────────────────────────────────────────────────────── -->
+  <div class="cal-toolbar">
+    <div class="cal-nav">
+      <button type="button" class="nav-btn" (click)="prevMonth()" [attr.aria-label]="'prev_month' | translate">
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+      <h2 class="cal-title">{{ monthLabel() }}</h2>
+      <button type="button" class="nav-btn" (click)="nextMonth()" [attr.aria-label]="'next_month' | translate">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      <button type="button" class="today-btn" (click)="goToday()">{{ 'today' | translate }}</button>
+    </div>
+
+    <!-- Lawyer filter — admin / moderator only -->
+    <div class="cal-filter" *ngIf="canFilterByLawyer">
+      <p-select
+        [options]="lawyerOptions()"
+        optionLabel="name"
+        optionValue="id"
+        [ngModel]="selectedLawyerId()"
+        (ngModelChange)="selectedLawyerId.set($event)"
+        [showClear]="true"
+        [filter]="true"
+        filterBy="name"
+        [placeholder]="'all_lawyers' | translate"
+        appendTo="body"
+      ></p-select>
+    </div>
+  </div>
+
+  <!-- ── Legend (degree colors) ──────────────────────────────────────── -->
+  <div class="cal-legend">
+    <span class="legend-item" *ngFor="let d of degreeOptions">
+      <span class="legend-dot" [style.background]="d.color"></span>{{ d.label }}
+    </span>
+  </div>
+
+  <!-- ── Grid ────────────────────────────────────────────────────────── -->
+  <div class="cal-grid">
+    <div class="cal-weekday" *ngFor="let w of weekdays">{{ w }}</div>
+
+    <ng-container *ngFor="let week of weeks()">
+      <div
+        class="cal-day"
+        *ngFor="let cell of week"
+        [class.out-month]="!cell.inMonth"
+        [class.is-today]="cell.isToday"
+      >
+        <span class="day-number">{{ cell.day }}</span>
+
+        <div class="day-cases">
+          <ng-container *ngFor="let item of casesForDay(cell.hijri); let i = index">
+            <button
+              *ngIf="i < maxChips"
+              type="button"
+              class="case-chip"
+              [style.background]="item.color"
+              (click)="openCase(item)"
+              [pTooltip]="item.customerName + ' • ' + item.time"
+              tooltipPosition="top"
+            >
+              <span class="chip-time">{{ item.time }}</span>
+              <span class="chip-name">{{ item.customerName }}</span>
+            </button>
+          </ng-container>
+
+          <span class="more-cases" *ngIf="casesForDay(cell.hijri).length > maxChips">
+            +{{ casesForDay(cell.hijri).length - maxChips }} {{ 'more' | translate }}
+          </span>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <!-- ── Unscheduled note ────────────────────────────────────────────── -->
+  <p class="cal-unscheduled" *ngIf="unscheduledCount() > 0">
+    <i class="fa-solid fa-circle-info"></i>
+    {{ unscheduledCount() }} {{ 'cases_without_session' | translate }}
+  </p>
+</div>
+
+<!-- ── Case dialog (centered) ─────────────────────────────────────────── -->
+<p-dialog
+  [visible]="showCaseDialog()"
+  (visibleChange)="showCaseDialog.set($event)"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [dismissableMask]="true"
+  [style]="{ width: '24rem' }"
+  styleClass="case-dialog"
+>
+  <ng-template pTemplate="header">
+    <span class="pop-title" dir="rtl">{{ selectedCase()?.customerName }}</span>
+  </ng-template>
+
+  <div class="case-popover" dir="rtl" *ngIf="selectedCase() as sel">
+    <ul class="pop-meta">
+      <li>
+        <span class="pop-degree-dot" [style.background]="sel.color"></span>
+        <span class="pop-label">{{ 'case_degree' | translate }}:</span>
+        {{ sel.degreeLabel || ('not_set' | translate) }}
+      </li>
+      <li><span class="pop-label">{{ 'case_type' | translate }}:</span> {{ sel.caseTypeLabel }}</li>
+      <li><span class="pop-label">{{ 'session_time' | translate }}:</span> {{ sel.time || '—' }}</li>
+      <li *ngIf="sel.assigneeName">
+        <span class="pop-label">{{ 'assigned_to' | translate }}:</span> {{ sel.assigneeName }}
+      </li>
+    </ul>
+    <button type="button" class="pop-details-btn" (click)="viewDetails()">
+      {{ 'view_details' | translate }}
+    </button>
+  </div>
+</p-dialog>

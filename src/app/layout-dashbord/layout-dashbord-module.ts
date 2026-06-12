@@ -52,6 +52,7 @@ import { Users } from './users/users';
 import { FormUser } from './users/form-user/form-user';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
+import { CasesCalendar } from './cases-calendar/cases-calendar';
 
 @NgModule({
   declarations: [
@@ -92,6 +93,7 @@ import { InputTextModule } from 'primeng/inputtext';
     ActivityLogs,
     Users,
     FormUser,
+    CasesCalendar,
   ],
   imports: [
     CommonModule,

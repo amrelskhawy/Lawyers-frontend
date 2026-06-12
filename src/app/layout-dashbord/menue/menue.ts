@@ -119,6 +119,13 @@ export class Menue implements OnInit {
         route: '/dashboard/content/client-cases',
       },
 
+      // ── Cases calendar — admin, moderator, lawyer/consultant ─
+      ...(isAdmin || isModerator || isLawyer ? [{
+        name: 'cases_calendar',
+        icon: 'fa-solid fa-calendar-days',
+        route: '/dashboard/content/cases-calendar',
+      }] : []),
+
       // ── Reports — admin, moderator, lawyer (not receptionist) ─
       ...(isAdmin || isModerator ? [{
         name: 'lawyer_fees_contracts',

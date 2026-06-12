@@ -15,6 +15,7 @@ import { FieldVisitReport } from './field-visit-report/field-visit-report';
 import { LawyerFeesContractsList } from './lawyer-fees-contracts-list/lawyer-fees-contracts-list';
 import { LawyerFeesContract } from './lawyer-fees-contract/lawyer-fees-contract';
 import { ActivityLogs } from './activity-logs/activity-logs';
+import { CasesCalendar } from './cases-calendar/cases-calendar';
 
 const routes: Routes = [
   {
@@ -74,6 +75,14 @@ const routes: Routes = [
         path: 'client-cases/:id/edit',
         component: EditCase,
         canActivate: [roleGuard('ADMIN', 'MODERATOR', 'RECEPTIONIST', 'LAWYER', 'CONSULTANT')],
+      },
+
+      // ── Cases calendar (Hijri) — admin, moderator, lawyer, consultant ────
+      // Receptionist excluded. Lawyers/consultants see only their own (server-side).
+      {
+        path: 'cases-calendar',
+        component: CasesCalendar,
+        canActivate: [roleGuard('ADMIN', 'MODERATOR', 'LAWYER', 'CONSULTANT')],
       },
 
       // ── Admin + Moderator + Lawyer: reports ──────────────────────────────
