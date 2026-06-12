@@ -1,6 +1,6 @@
 import { Component, OnInit, signal, computed } from '@angular/core';
 import { Data } from '../../core/Servies/data';
-import { CASE_DEGREE_OPTIONS, IDataCase } from '../../core/Models/case.model';
+import { CASE_DEGREE_OPTIONS, CASE_TYPE_OPTIONS, IDataCase } from '../../core/Models/case.model';
 
 interface ActivityLog {
   id: string;
@@ -129,11 +129,60 @@ export class ActivityLogs implements OnInit {
     return this.logs().length < this.total();
   }
 
+  /** Arabic labels for the detail-pill keys logged by the backend. */
+  private readonly detailKeyLabels: Record<string, string> = {
+    customer: 'العميل',
+    caseType: 'نوع القضية',
+    caseDegree: 'درجة القضية',
+    assignmentStatus: 'حالة التعيين',
+    lawyer: 'المحامي',
+    service: 'الخدمة',
+    status: 'الحالة',
+    amount: 'المبلغ',
+    name: 'الاسم',
+    phone: 'الجوال',
+    email: 'البريد الإلكتروني',
+    role: 'الدور',
+    case: 'القضية',
+    notes: 'ملاحظات',
+    count: 'العدد',
+  };
+
+  /** Arabic labels for the role badge + enum values appearing in detail pills. */
+  readonly roleLabels: Record<string, string> = {
+    ADMIN: 'مدير',
+    MODERATOR: 'مشرف',
+    RECEPTIONIST: 'موظف استقبال',
+    LAWYER: 'محامي',
+    CONSULTANT: 'مستشار قانوني',
+  };
+
+  private readonly detailValueLabels: Record<string, string> = {
+    // Assignment / booking / reminder statuses
+    UNASSIGNED: 'غير معين',
+    PENDING: 'قيد الانتظار',
+    ACCEPTED: 'مقبول',
+    REJECTED: 'مرفوض',
+    CONFIRMED: 'مؤكد',
+    COMPLETED: 'مكتمل',
+    CANCELLED: 'ملغي',
+    SENT: 'تم الإرسال',
+    FAILED: 'فشل',
+    // Case types + litigation degrees (from the shared option lists)
+    ...Object.fromEntries(CASE_TYPE_OPTIONS.map((o) => [o.value, o.label])),
+    ...Object.fromEntries(CASE_DEGREE_OPTIONS.map((o) => [o.value, o.label])),
+    // Roles
+    ...this.roleLabels,
+  };
+
   detailEntries(details: Record<string, any> | null): { key: string; value: string }[] {
     if (!details) return [];
     return Object.entries(details)
       .filter(([, v]) => v !== null && v !== undefined && v !== '')
-      .map(([k, v]) => ({ key: k, value: String(v) }));
+      .map(([k, v]) => ({
+        key: this.detailKeyLabels[k] ?? k,
+        value: this.detailValueLabels[String(v)] ?? String(v),
+      }));
   }
 
   resourceLabel(log: ActivityLog): string {
@@ -160,6 +209,15 @@ export class ActivityLogs implements OnInit {
       CANCEL: 'إلغاء',
       GENERATE_PDF: 'توليد PDF',
       SEND_TO_CLIENT: 'إرسال للعميل',
+      UNASSIGN: 'إلغاء التعيين',
+      SET_SESSION_DATE: 'تحديد موعد الجلسة',
+      SET_COMPLETION: 'إنهاء القضية',
+      SET_CASE_DEGREE: 'تحديد درجة القضية',
+      DELETE_MANY: 'حذف متعدد',
+      TOGGLE_STATUS: 'تغيير الحالة',
+      SEND: 'إرسال',
+      CREATE_SIGNING_LINK: 'إنشاء رابط التوقيع',
+      SEND_SIGNING_LINK: 'إرسال رابط التوقيع',
     };
     return map[action] ?? action;
   }
@@ -173,6 +231,12 @@ export class ActivityLogs implements OnInit {
       SessionReport: 'تقرير جلسة',
       FieldVisitReport: 'تقرير زيارة',
       LawyerFeesContract: 'عقد أتعاب',
+      CaseAttachment: 'مرفق قضية',
+      Reminder: 'تذكير',
+      Holiday: 'إجازة',
+      Organizer: 'منظم',
+      Service: 'خدمة',
+      WorkingDay: 'يوم عمل',
     };
     return map[resource] ?? resource;
   }
