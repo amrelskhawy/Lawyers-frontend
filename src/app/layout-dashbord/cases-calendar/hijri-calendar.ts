@@ -1,6 +1,16 @@
 import { Injectable } from '@angular/core';
 import moment from 'moment-hijri';
 
+/** The four calendar zoom levels. */
+export type CalendarView = 'day' | 'week' | 'month' | 'year';
+
+/** A Hijri date as separate parts (month is 1-12). */
+export interface HijriParts {
+  iYear: number;
+  iMonth: number;
+  iDay: number;
+}
+
 /** A single day cell in the Hijri month grid. */
 export interface HijriDayCell {
   /** Hijri day-of-month, 1-30. */
@@ -52,9 +62,104 @@ function canonical(iYear: number, iMonth1: number, iDay: number): string {
 @Injectable({ providedIn: 'root' })
 export class HijriCalendar {
   /** Current Hijri year/month (month 1-12) for "today". */
-  todayParts(): { iYear: number; iMonth: number; iDay: number } {
+  todayParts(): HijriParts {
     const m = moment();
     return { iYear: m.iYear(), iMonth: m.iMonth() + 1, iDay: m.iDate() };
+  }
+
+  /** Canonical "iYYYY-iMM-iDD" for a parts triple (month 1-12). */
+  canonical(p: HijriParts): string {
+    return canonical(p.iYear, p.iMonth, p.iDay);
+  }
+
+  /** Parse a canonical "iYYYY-iMM-iDD" back into parts (month 1-12). */
+  private parts(hijri: string): HijriParts {
+    const m = moment(hijri, 'iYYYY-iMM-iDD');
+    return { iYear: m.iYear(), iMonth: m.iMonth() + 1, iDay: m.iDate() };
+  }
+
+  /** Shift a date by whole days, normalizing across month/year boundaries. */
+  addDays(p: HijriParts, delta: number): HijriParts {
+    const m = moment(this.canonical(p), 'iYYYY-iMM-iDD').add(delta, 'days');
+    return { iYear: m.iYear(), iMonth: m.iMonth() + 1, iDay: m.iDate() };
+  }
+
+  /** Shift by whole Hijri years (clamping the day to the new month's length). */
+  addYears(p: HijriParts, delta: number): HijriParts {
+    const { iYear, iMonth } = this.addMonths(p.iYear, p.iMonth, delta * 12);
+    return { iYear, iMonth, iDay: p.iDay };
+  }
+
+  /** The Sunday that starts the week containing the given date. */
+  weekStart(p: HijriParts): HijriParts {
+    const m = moment(this.canonical(p), 'iYYYY-iMM-iDD');
+    return this.addDays(p, -m.day()); // day(): 0 = Sunday
+  }
+
+  /** The 7 day cells (Sunday→Saturday) for the week containing the date. */
+  buildWeek(p: HijriParts): HijriDayCell[] {
+    const start = this.weekStart(p);
+    const today = this.todayParts();
+    const todayHijri = this.canonical(today);
+    const cells: HijriDayCell[] = [];
+    let cur = start;
+    for (let i = 0; i < 7; i++) {
+      const hijri = this.canonical(cur);
+      cells.push({ day: cur.iDay, hijri, inMonth: true, isToday: hijri === todayHijri });
+      cur = this.addDays(cur, 1);
+    }
+    return cells;
+  }
+
+  /** Long Arabic label for a single day, e.g. "الجمعة 15 ذو الحجة 1447". */
+  dayLabel(p: HijriParts): string {
+    const weekday = WEEKDAY_NAMES_AR[moment(this.canonical(p), 'iYYYY-iMM-iDD').day()];
+    return `${weekday} ${p.iDay} ${HIJRI_MONTH_NAMES_AR[p.iMonth - 1]} ${p.iYear}`;
+  }
+
+  /** Label for a week, e.g. "1 - 7 ذو الحجة 1447" (spans month names when needed). */
+  weekLabel(p: HijriParts): string {
+    const start = this.weekStart(p);
+    const end = this.addDays(start, 6);
+    const startMonth = HIJRI_MONTH_NAMES_AR[start.iMonth - 1];
+    const endMonth = HIJRI_MONTH_NAMES_AR[end.iMonth - 1];
+    if (start.iMonth === end.iMonth && start.iYear === end.iYear) {
+      return `${start.iDay} - ${end.iDay} ${startMonth} ${start.iYear}`;
+    }
+    return `${start.iDay} ${startMonth} - ${end.iDay} ${endMonth} ${end.iYear}`;
+  }
+
+  /** The 12 months of a Hijri year as {iMonth, name} (month 1-12). */
+  monthsOfYear(iYear: number): { iYear: number; iMonth: number; name: string }[] {
+    return HIJRI_MONTH_NAMES_AR.map((name, i) => ({ iYear, iMonth: i + 1, name }));
+  }
+
+  /**
+   * Canonical Hijri range `[from, to)` to fetch for a given view + anchor date.
+   * `to` is exclusive. Day = 1 day, week = 7, month = whole month, year = whole year.
+   */
+  rangeFor(view: CalendarView, p: HijriParts): { from: string; to: string } {
+    switch (view) {
+      case 'day':
+        return { from: this.canonical(p), to: this.canonical(this.addDays(p, 1)) };
+      case 'week': {
+        const start = this.weekStart(p);
+        return { from: this.canonical(start), to: this.canonical(this.addDays(start, 7)) };
+      }
+      case 'year':
+        return {
+          from: canonical(p.iYear, 1, 1),
+          to: canonical(p.iYear + 1, 1, 1),
+        };
+      case 'month':
+      default: {
+        const next = this.addMonths(p.iYear, p.iMonth, 1);
+        return {
+          from: canonical(p.iYear, p.iMonth, 1),
+          to: canonical(next.iYear, next.iMonth, 1),
+        };
+      }
+    }
   }
 
   /** Arabic header label, e.g. "ذو الحجة 1447". Month is 1-12. */

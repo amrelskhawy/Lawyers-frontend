@@ -2,14 +2,27 @@
   <!-- ── Toolbar ─────────────────────────────────────────────────────── -->
   <div class="cal-toolbar">
     <div class="cal-nav">
-      <button type="button" class="nav-btn" (click)="prevMonth()" [attr.aria-label]="'prev_month' | translate">
+      <button type="button" class="nav-btn" (click)="prev()" [attr.aria-label]="'prev_month' | translate">
         <i class="fa-solid fa-chevron-right"></i>
       </button>
-      <h2 class="cal-title">{{ monthLabel() }}</h2>
-      <button type="button" class="nav-btn" (click)="nextMonth()" [attr.aria-label]="'next_month' | translate">
+      <h2 class="cal-title">{{ title() }}</h2>
+      <button type="button" class="nav-btn" (click)="next()" [attr.aria-label]="'next_month' | translate">
         <i class="fa-solid fa-chevron-left"></i>
       </button>
       <button type="button" class="today-btn" (click)="goToday()">{{ 'today' | translate }}</button>
+    </div>
+
+    <!-- View switcher -->
+    <div class="cal-views">
+      <button
+        *ngFor="let v of views"
+        type="button"
+        class="view-btn"
+        [class.active]="view() === v"
+        (click)="setView(v)"
+      >
+        {{ 'view_' + v | translate }}
+      </button>
     </div>
 
     <!-- Lawyer filter — admin / moderator only -->
@@ -29,17 +42,16 @@
     </div>
   </div>
 
-  <!-- ── Legend (degree colors) ──────────────────────────────────────── -->
+  <!-- ── Legend ──────────────────────────────────────────────────────── -->
   <div class="cal-legend">
     <span class="legend-item" *ngFor="let d of degreeOptions">
       <span class="legend-dot" [style.background]="d.color"></span>{{ d.label }}
     </span>
   </div>
 
-  <!-- ── Grid ────────────────────────────────────────────────────────── -->
-  <div class="cal-grid">
+  <!-- ── MONTH ───────────────────────────────────────────────────────── -->
+  <div class="cal-grid" *ngIf="view() === 'month'">
     <div class="cal-weekday" *ngFor="let w of weekdays">{{ w }}</div>
-
     <ng-container *ngFor="let week of weeks()">
       <div
         class="cal-day"
@@ -47,8 +59,7 @@
         [class.out-month]="!cell.inMonth"
         [class.is-today]="cell.isToday"
       >
-        <span class="day-number">{{ cell.day }}</span>
-
+        <span class="day-number" (click)="openDay(cell.hijri)">{{ cell.day }}</span>
         <div class="day-cases">
           <ng-container *ngFor="let item of casesForDay(cell.hijri); let i = index">
             <button
@@ -56,7 +67,7 @@
               type="button"
               class="case-chip"
               [style.background]="item.color"
-              (click)="openCase(item)"
+              (click)="openCase(item, $event)"
               [pTooltip]="item.customerName + ' • ' + item.time"
               tooltipPosition="top"
             >
@@ -64,8 +75,8 @@
               <span class="chip-name">{{ item.customerName }}</span>
             </button>
           </ng-container>
-
-          <span class="more-cases" *ngIf="casesForDay(cell.hijri).length > maxChips">
+          <span class="more-cases" *ngIf="casesForDay(cell.hijri).length > maxChips"
+            (click)="openDay(cell.hijri)">
             +{{ casesForDay(cell.hijri).length - maxChips }} {{ 'more' | translate }}
           </span>
         </div>
@@ -73,6 +84,74 @@
     </ng-container>
   </div>
 
+  <!-- ── WEEK ────────────────────────────────────────────────────────── -->
+  <div class="cal-week" *ngIf="view() === 'week'">
+    <div class="week-col" *ngFor="let cell of weekCells(); let idx = index" [class.is-today]="cell.isToday">
+      <div class="week-col-head" (click)="openDay(cell.hijri)">
+        <span class="wk-weekday">{{ weekdays[idx] }}</span>
+        <span class="wk-day">{{ cell.day }}</span>
+      </div>
+      <div class="week-col-body">
+        <button
+          *ngFor="let item of casesForDay(cell.hijri)"
+          type="button"
+          class="case-chip"
+          [style.background]="item.color"
+          (click)="openCase(item, $event)"
+        >
+          <span class="chip-time">{{ item.time }}</span>
+          <span class="chip-name">{{ item.customerName }}</span>
+        </button>
+        <span class="week-empty" *ngIf="casesForDay(cell.hijri).length === 0">—</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── DAY (agenda) ────────────────────────────────────────────────── -->
+  <div class="cal-day-view" *ngIf="view() === 'day'">
+    <ng-container *ngIf="dayCases().length > 0; else noDay">
+      <button
+        *ngFor="let item of dayCases()"
+        type="button"
+        class="agenda-row"
+        (click)="openCase(item, $event)"
+      >
+        <span class="agenda-time">{{ item.time || '—' }}</span>
+        <span class="agenda-degree-dot" [style.background]="item.color"></span>
+        <span class="agenda-main">
+          <span class="agenda-name">{{ item.customerName }}</span>
+          <span class="agenda-sub">{{ item.caseTypeLabel }}<ng-container *ngIf="item.assigneeName"> • {{ item.assigneeName }}</ng-container></span>
+        </span>
+        <i class="fa-solid fa-chevron-left agenda-chevron"></i>
+      </button>
+    </ng-container>
+    <ng-template #noDay>
+      <p class="cal-empty"><i class="fa-solid fa-calendar-day"></i> {{ 'no_sessions' | translate }}</p>
+    </ng-template>
+  </div>
+
+  <!-- ── YEAR ────────────────────────────────────────────────────────── -->
+  <div class="cal-year" *ngIf="view() === 'year'">
+    <div class="year-month" *ngFor="let m of yearMonths()">
+      <div class="ym-head" (click)="openMonth(m)">
+        <span class="ym-name">{{ m.name }}</span>
+        <span class="ym-count" *ngIf="m.count > 0">{{ m.count }}</span>
+      </div>
+      <div class="ym-grid">
+        <div class="ym-weekday" *ngFor="let w of weekdays">{{ w.charAt(0) }}</div>
+        <ng-container *ngFor="let week of m.weeks">
+          <span
+            class="ym-cell"
+            *ngFor="let cell of week"
+            [class.out-month]="!cell.inMonth"
+            [class.is-today]="cell.isToday"
+            [class.has-cases]="cell.inMonth && hasCases(cell.hijri)"
+            (click)="cell.inMonth && hasCases(cell.hijri) ? openDay(cell.hijri) : null"
+          >{{ cell.day }}</span>
+        </ng-container>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- ── Case dialog (centered) ─────────────────────────────────────────── -->

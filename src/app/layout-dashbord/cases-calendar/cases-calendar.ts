@@ -8,7 +8,13 @@ import {
   ILawyerOption,
 } from '../../core/Models/case.model';
 import { Data } from '../../core/Servies/data';
-import { HijriCalendar, HijriDayCell, WEEKDAY_NAMES_AR } from './hijri-calendar';
+import {
+  CalendarView,
+  HijriCalendar,
+  HijriDayCell,
+  HijriParts,
+  WEEKDAY_NAMES_AR,
+} from './hijri-calendar';
 
 /** A case as it sits inside a calendar day cell, pre-decorated for display. */
 interface CalendarCase {
@@ -23,8 +29,17 @@ interface CalendarCase {
   color: string;
 }
 
+/** One month tile in the year overview. */
+interface YearMonth {
+  iYear: number;
+  iMonth: number;
+  name: string;
+  weeks: HijriDayCell[][];
+  count: number;
+}
+
 const NEUTRAL_DEGREE_COLOR = '#64748b';
-/** Max chips rendered inline in a day cell before collapsing into "+N more". */
+/** Max chips rendered inline in a month-grid day cell before collapsing into "+N more". */
 const MAX_CHIPS_PER_DAY = 3;
 
 @Component({
@@ -38,6 +53,7 @@ export class CasesCalendar implements OnInit {
   readonly maxChips = MAX_CHIPS_PER_DAY;
   /** Degree colors shown in the legend. */
   readonly degreeOptions = CASE_DEGREE_OPTIONS;
+  readonly views: CalendarView[] = ['day', 'week', 'month', 'year'];
 
   // ── Current user / role ──────────────────────────────────────────────────
   private get currentUser(): { role: string } | null {
@@ -47,30 +63,24 @@ export class CasesCalendar implements OnInit {
   get role(): string {
     return this.currentUser?.role ?? '';
   }
-  /** LAWYER/CONSULTANT see only their own cases (server-enforced) — no lawyer filter. */
-  get isAssigneeRole(): boolean {
-    return this.role === 'LAWYER' || this.role === 'CONSULTANT';
-  }
   get canFilterByLawyer(): boolean {
     return this.role === 'ADMIN' || this.role === 'MODERATOR';
   }
 
   // ── State ────────────────────────────────────────────────────────────────
-  /** All cases returned for this user (already role-scoped by the backend). */
+  /** All cases returned for the current range (already role-scoped by the backend). */
   private allCases = signal<IDataCase[]>([]);
-  /** Lawyer/consultant options for the admin filter. */
   lawyerOptions = signal<ILawyerOption[]>([]);
-  /** Selected lawyer id for the filter ('' = all). */
   selectedLawyerId = signal<string>('');
 
-  /** Currently displayed Hijri year + month (1-12). */
-  viewYear = signal<number>(0);
-  viewMonth = signal<number>(0);
+  /** Active zoom level. */
+  view = signal<CalendarView>('month');
+  /** The Hijri date the current view is centred on. */
+  anchor = signal<HijriParts>({ iYear: 0, iMonth: 0, iDay: 0 });
 
-  /** The case shown in the dialog. */
   selectedCase = signal<CalendarCase | null>(null);
-  /** Whether the centered case dialog is open. */
   showCaseDialog = signal<boolean>(false);
+  loading = signal<boolean>(false);
 
   constructor(
     private data: Data,
@@ -79,22 +89,17 @@ export class CasesCalendar implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const today = this.hijri.todayParts();
-    this.viewYear.set(today.iYear);
-    this.viewMonth.set(today.iMonth);
+    this.anchor.set(this.hijri.todayParts());
     this.loadCases();
     if (this.canFilterByLawyer) this.loadLawyers();
   }
 
   // ── Data loading ─────────────────────────────────────────────────────────
-  /** Loading flag for the month fetch (drives a spinner/empty-state if needed). */
-  loading = signal<boolean>(false);
-
-  /** Fetch only the cases whose session falls in the displayed Hijri month. */
+  /** Fetch the cases whose session falls in the current view's Hijri range. */
   private loadCases(): void {
-    const month = `${this.viewYear()}-${String(this.viewMonth()).padStart(2, '0')}`;
+    const { from, to } = this.hijri.rangeFor(this.view(), this.anchor());
     this.loading.set(true);
-    this.data.get<{ data: IDataCase[] }>('cases', { month }).subscribe({
+    this.data.get<{ data: IDataCase[] }>('cases', { from, to }).subscribe({
       next: (res) => {
         this.allCases.set(res?.data ?? []);
         this.loading.set(false);
@@ -112,13 +117,11 @@ export class CasesCalendar implements OnInit {
     });
   }
 
-  // ── Derived: cases after the lawyer filter ───────────────────────────────
+  // ── Derived data ─────────────────────────────────────────────────────────
   private filteredCases = computed<IDataCase[]>(() => {
     const id = this.selectedLawyerId();
     if (!id) return this.allCases();
-    return this.allCases().filter(
-      (c) => c.preferredLawyerId === id || c.consultantId === id,
-    );
+    return this.allCases().filter((c) => c.preferredLawyerId === id || c.consultantId === id);
   });
 
   /** Cases bucketed by canonical Hijri session date. */
@@ -126,21 +129,64 @@ export class CasesCalendar implements OnInit {
     this.hijri.bucketBySession(this.filteredCases(), (c) => c.sessionHijriDate),
   );
 
-  /** The 6×7 grid for the displayed month. */
-  weeks = computed<HijriDayCell[][]>(() =>
-    this.viewYear() && this.viewMonth()
-      ? this.hijri.buildMonthGrid(this.viewYear(), this.viewMonth())
-      : [],
-  );
+  /** Month-grid (6×7) for the month view. */
+  weeks = computed<HijriDayCell[][]>(() => {
+    const a = this.anchor();
+    return a.iYear ? this.hijri.buildMonthGrid(a.iYear, a.iMonth) : [];
+  });
 
-  /** Header label, e.g. "ذو الحجة 1447". */
-  monthLabel = computed(() =>
-    this.viewYear() && this.viewMonth()
-      ? this.hijri.monthLabel(this.viewYear(), this.viewMonth())
-      : '',
-  );
+  /** Week strip (7 cells) for the week view. */
+  weekCells = computed<HijriDayCell[]>(() => {
+    const a = this.anchor();
+    return a.iYear ? this.hijri.buildWeek(a) : [];
+  });
 
-  /** Decorated cases for a given day cell (Hijri key). */
+  /** Sessions on the anchored day (day view). */
+  dayCases = computed<CalendarCase[]>(() => {
+    const a = this.anchor();
+    return a.iYear ? this.casesForDay(this.hijri.canonical(a)) : [];
+  });
+
+  /** 12 month tiles for the year view, each with its grid + case count. */
+  yearMonths = computed<YearMonth[]>(() => {
+    const a = this.anchor();
+    if (!a.iYear) return [];
+    const counts = new Map<number, number>();
+    for (const c of this.filteredCases()) {
+      const key = this.hijri.normalizeSessionHijri(c.sessionHijriDate);
+      if (!key) continue;
+      const m = Number(key.slice(5, 7));
+      counts.set(m, (counts.get(m) ?? 0) + 1);
+    }
+    return this.hijri.monthsOfYear(a.iYear).map((mo) => ({
+      ...mo,
+      weeks: this.hijri.buildMonthGrid(mo.iYear, mo.iMonth),
+      count: counts.get(mo.iMonth) ?? 0,
+    }));
+  });
+
+  /** Header label for the active view. */
+  title = computed<string>(() => {
+    const a = this.anchor();
+    if (!a.iYear) return '';
+    switch (this.view()) {
+      case 'day':
+        return this.hijri.dayLabel(a);
+      case 'week':
+        return this.hijri.weekLabel(a);
+      case 'year':
+        return `${a.iYear}`;
+      default:
+        return this.hijri.monthLabel(a.iYear, a.iMonth);
+    }
+  });
+
+  /** True when a (year-grid) day cell carries at least one session. */
+  hasCases(hijri: string): boolean {
+    return (this.buckets().get(hijri)?.length ?? 0) > 0;
+  }
+
+  /** Decorated, time-sorted cases for a day key. */
   casesForDay(hijri: string): CalendarCase[] {
     const raw = this.buckets().get(hijri) ?? [];
     return raw.map((c) => this.decorate(c)).sort((a, b) => a.time.localeCompare(b.time));
@@ -162,36 +208,65 @@ export class CasesCalendar implements OnInit {
     };
   }
 
-  // ── Navigation ───────────────────────────────────────────────────────────
-  // Each navigation refetches that month's cases (server-side pagination).
-  prevMonth(): void {
-    const { iYear, iMonth } = this.hijri.addMonths(this.viewYear(), this.viewMonth(), -1);
-    this.viewYear.set(iYear);
-    this.viewMonth.set(iMonth);
+  // ── View + navigation ────────────────────────────────────────────────────
+  setView(v: CalendarView): void {
+    if (this.view() === v) return;
+    this.view.set(v);
     this.loadCases();
   }
 
-  nextMonth(): void {
-    const { iYear, iMonth } = this.hijri.addMonths(this.viewYear(), this.viewMonth(), 1);
-    this.viewYear.set(iYear);
-    this.viewMonth.set(iMonth);
+  /** Step backward/forward by one unit of the active view. */
+  private step(delta: number): void {
+    const a = this.anchor();
+    switch (this.view()) {
+      case 'day':
+        this.anchor.set(this.hijri.addDays(a, delta));
+        break;
+      case 'week':
+        this.anchor.set(this.hijri.addDays(a, delta * 7));
+        break;
+      case 'year':
+        this.anchor.set(this.hijri.addYears(a, delta));
+        break;
+      default: {
+        const { iYear, iMonth } = this.hijri.addMonths(a.iYear, a.iMonth, delta);
+        this.anchor.set({ iYear, iMonth, iDay: 1 });
+      }
+    }
     this.loadCases();
+  }
+
+  prev(): void {
+    this.step(-1);
+  }
+  next(): void {
+    this.step(1);
   }
 
   goToday(): void {
-    const today = this.hijri.todayParts();
-    if (today.iYear === this.viewYear() && today.iMonth === this.viewMonth()) return;
-    this.viewYear.set(today.iYear);
-    this.viewMonth.set(today.iMonth);
+    this.anchor.set(this.hijri.todayParts());
     this.loadCases();
   }
 
-  onLawyerFilterChange(): void {
-    // computed() reacts automatically; nothing to do beyond the signal set in template.
+  /** Drill from the year overview into a month. */
+  openMonth(m: YearMonth): void {
+    this.anchor.set({ iYear: m.iYear, iMonth: m.iMonth, iDay: 1 });
+    this.view.set('month');
+    this.loadCases();
+  }
+
+  /** Drill into a single day (from month/week/year grids). */
+  openDay(hijri: string): void {
+    const m = hijri.match(/^(\d{3,4})-(\d{1,2})-(\d{1,2})$/);
+    if (!m) return;
+    this.anchor.set({ iYear: +m[1], iMonth: +m[2], iDay: +m[3] });
+    this.view.set('day');
+    this.loadCases();
   }
 
   // ── Dialog ───────────────────────────────────────────────────────────────
-  openCase(item: CalendarCase): void {
+  openCase(item: CalendarCase, event?: Event): void {
+    event?.stopPropagation();
     this.selectedCase.set(item);
     this.showCaseDialog.set(true);
   }

@@ -100,6 +100,73 @@ describe('HijriCalendar', () => {
     });
   });
 
+  describe('addDays / addYears', () => {
+    it('rolls a day across the month/year boundary', () => {
+      // Dhul-Hijjah 1447 has 29 days, so day 29 + 1 = Muharram 1448.
+      expect(svc.addDays({ iYear: 1447, iMonth: 12, iDay: 29 }, 1)).toEqual({
+        iYear: 1448,
+        iMonth: 1,
+        iDay: 1,
+      });
+    });
+
+    it('steps a day backward', () => {
+      expect(svc.addDays({ iYear: 1448, iMonth: 1, iDay: 1 }, -1)).toEqual({
+        iYear: 1447,
+        iMonth: 12,
+        iDay: 29,
+      });
+    });
+
+    it('adds whole years keeping month/day', () => {
+      expect(svc.addYears({ iYear: 1447, iMonth: 6, iDay: 15 }, 1)).toEqual({
+        iYear: 1448,
+        iMonth: 6,
+        iDay: 15,
+      });
+    });
+  });
+
+  describe('weekStart / buildWeek', () => {
+    const anchor = { iYear: 1447, iMonth: 12, iDay: 15 };
+
+    it('weekStart lands on a Sunday', () => {
+      const start = svc.weekStart(anchor);
+      expect(moment(svc.canonical(start), 'iYYYY-iMM-iDD').day()).toBe(0);
+    });
+
+    it('buildWeek returns 7 contiguous days starting Sunday and containing the anchor', () => {
+      const cells = svc.buildWeek(anchor);
+      expect(cells.length).toBe(7);
+      expect(moment(cells[0].hijri, 'iYYYY-iMM-iDD').day()).toBe(0);
+      const last = moment(cells[6].hijri, 'iYYYY-iMM-iDD');
+      expect(last.diff(moment(cells[0].hijri, 'iYYYY-iMM-iDD'), 'days')).toBe(6);
+      expect(cells.some((c) => c.hijri === '1447-12-15')).toBeTrue();
+    });
+  });
+
+  describe('rangeFor', () => {
+    const anchor = { iYear: 1447, iMonth: 12, iDay: 15 };
+
+    it('day spans exactly one day', () => {
+      expect(svc.rangeFor('day', anchor)).toEqual({ from: '1447-12-15', to: '1447-12-16' });
+    });
+
+    it('week spans Sunday to the next Sunday (7 days)', () => {
+      const r = svc.rangeFor('week', anchor);
+      expect(moment(r.from, 'iYYYY-iMM-iDD').day()).toBe(0);
+      expect(moment(r.to, 'iYYYY-iMM-iDD').diff(moment(r.from, 'iYYYY-iMM-iDD'), 'days')).toBe(7);
+    });
+
+    it('month spans the whole Hijri month', () => {
+      expect(svc.rangeFor('month', anchor)).toEqual({ from: '1447-12-01', to: '1448-01-01' });
+    });
+
+    it('year spans the whole Hijri year', () => {
+      expect(svc.rangeFor('year', anchor)).toEqual({ from: '1447-01-01', to: '1448-01-01' });
+    });
+  });
+
   describe('bucketBySession', () => {
     it('groups items by canonical session date and skips null dates', () => {
       const items = [
