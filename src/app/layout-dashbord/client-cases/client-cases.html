@@ -104,10 +104,43 @@
   <span>{{ 'pending_assignments_banner' | translate: { count: pendingCount() } }}</span>
 </div>
 
-<!-- Per-degree summary cards (الدرجات) — counts refresh on every table load -->
+<!-- User filter (arrived from the Users page) — degree filtering is cleared from the card itself -->
+<div *ngIf="casesFilter()['lawyerId']" class="user-filter-banner" role="status" dir="rtl">
+  <span class="lead-icon"><i class="fa-solid fa-filter"></i></span>
+  <span class="filter-text">
+    <ng-container *ngIf="filterAssigneeName()">
+      <span class="filter-label">{{ 'filtered_by_user' | translate }}</span>
+      <strong class="filter-pill">{{ filterAssigneeName() }}</strong>
+    </ng-container>
+    <ng-container *ngIf="filterDegreeLabel()">
+      <span class="filter-label">{{ 'case_degree' | translate }}</span>
+      <strong class="filter-pill">{{ filterDegreeLabel() }}</strong>
+    </ng-container>
+  </span>
+  <button type="button" class="clear-filter-btn" (click)="clearUserFilter()">
+    <i class="fa-solid fa-xmark"></i>
+    {{ 'clear_filter' | translate }}
+  </button>
+</div>
+
+<!-- Per-degree summary cards (الدرجات) — click to filter the table by that degree,
+     click the active card again to clear it. Counts refresh on every table load. -->
 <div class="degree-summary-cards">
   <div class="degree-stat-card" *ngFor="let d of degreeCounts()"
-    [style.background]="'linear-gradient(135deg, ' + d.color + ', ' + d.colorLight + ')'">
+    role="button" tabindex="0"
+    [class.active]="isDegreeActive(d.value)"
+    [class.dimmed]="casesFilter()['caseDegree'] && !isDegreeActive(d.value)"
+    [pTooltip]="(isDegreeActive(d.value) ? 'clear_filter' : 'filter_by_this_degree') | translate"
+    tooltipPosition="top"
+    [style.background]="'linear-gradient(135deg, ' + d.color + ', ' + d.colorLight + ')'"
+    (click)="toggleDegreeFilter(d.value)"
+    (keydown.enter)="toggleDegreeFilter(d.value)" (keydown.space)="toggleDegreeFilter(d.value)">
+    <!-- Remove-filter control, only on the active card -->
+    <button *ngIf="isDegreeActive(d.value)" type="button" class="card-clear-btn"
+      [pTooltip]="'clear_filter' | translate" tooltipPosition="top"
+      (click)="$event.stopPropagation(); toggleDegreeFilter(d.value)">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
     <div class="stat-icon-wrap">
       <i class="fa-solid fa-scale-balanced"></i>
     </div>
@@ -121,6 +154,7 @@
 
 <app-dashboard-crud-page endpoint="cases" deleteEndpoint="cases" [columns]="columns" [searchFields]="searchFields"
   [actionsTemplate]="actions" [columnTemplates]="columnTemplates" [dataMapper]="dataMapper" [showAddButton]="!isLawyer"
+  [extraParams]="casesFilter()"
   (addNew)="visibelform.set(true)" (metaLoaded)="onCasesMeta($event)">
 
   <app-form-create-case *ngIf="!isLawyer" [(visible)]="visibelform" (created)="onCreated($event)">

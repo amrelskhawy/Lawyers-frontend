@@ -1,5 +1,5 @@
 import { Component, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import {
   CaseAssignmentStatus,
@@ -28,9 +28,17 @@ export class ClientCases implements OnInit {
   constructor(
     private translate: TranslateService,
     private router: Router,
+    private route: ActivatedRoute,
     private data: Data,
     private sound: SoundService,
   ) {}
+
+  /** Server-side filters merged into every cases request (e.g. ?lawyerId=… from the Users page). */
+  casesFilter = signal<{ [key: string]: any }>({});
+  /** Display name of the user whose cases we're filtered to (drives the "filtered by" banner). */
+  filterAssigneeName = signal<string>('');
+  /** Degree label when the filter also narrows to a single litigation degree. */
+  filterDegreeLabel = signal<string>('');
 
   /** Guards the pending-assignment chime so it fires only on the first page load,
    *  not on the silent refreshes that follow an accept/reject. */
@@ -41,13 +49,16 @@ export class ClientCases implements OnInit {
 
   /** Neutral "card" for cases that have no degree set yet. */
   private static readonly UNASSIGNED_DEGREE = {
+    value: 'UNASSIGNED',
     label: 'غير محدد',
     color: '#64748b',
     colorLight: '#94a3b8',
   };
 
   /** Per-degree case counts for the summary cards above the table (+ unassigned). */
-  degreeCounts = signal<{ label: string; color: string; colorLight: string; count: number }[]>([
+  degreeCounts = signal<
+    { value: string; label: string; color: string; colorLight: string; count: number }[]
+  >([
     ...CASE_DEGREE_OPTIONS.map((o) => ({ ...o, count: 0 })),
     { ...ClientCases.UNASSIGNED_DEGREE, count: 0 },
   ]);
@@ -108,6 +119,22 @@ export class ClientCases implements OnInit {
   });
 
   ngOnInit() {
+    // Pick up a user filter handed over from the Users page (?lawyerId=…). Read
+    // synchronously here (parent ngOnInit runs before the crud-page child's first
+    // fetch) so the very first load is already scoped to that user.
+    const lawyerId = this.route.snapshot.queryParamMap.get('lawyerId');
+    if (lawyerId) {
+      const filter: { [key: string]: any } = { lawyerId };
+      // Optional degree scope, e.g. when a per-degree badge was clicked.
+      const caseDegree = this.route.snapshot.queryParamMap.get('caseDegree');
+      if (caseDegree) {
+        filter['caseDegree'] = caseDegree;
+        this.filterDegreeLabel.set(this.degreeLabelFor(caseDegree));
+      }
+      this.casesFilter.set(filter);
+      this.filterAssigneeName.set(this.route.snapshot.queryParamMap.get('assigneeName') ?? '');
+    }
+
     this.columns = [
       { key: '#', value: 'index' },
       { key: this.translate.instant('case_customer'), value: 'customerName' },
@@ -148,6 +175,42 @@ export class ClientCases implements OnInit {
       this.firstLoad = false;
       if (pending > 0) this.sound.playChime();
     }
+  }
+
+  private degreeLabelFor(value: string): string {
+    if (value === ClientCases.UNASSIGNED_DEGREE.value) return ClientCases.UNASSIGNED_DEGREE.label;
+    return CASE_DEGREE_OPTIONS.find((o) => o.value === value)?.label ?? '';
+  }
+
+  /**
+   * Clicking a degree summary card filters the table to that litigation degree.
+   * Clicking the already-active card toggles the degree filter back off. Any
+   * user (lawyerId) filter already in effect is preserved.
+   */
+  toggleDegreeFilter(value: string) {
+    const next = { ...this.casesFilter() };
+    if (next['caseDegree'] === value) {
+      delete next['caseDegree'];
+      this.filterDegreeLabel.set('');
+    } else {
+      next['caseDegree'] = value;
+      this.filterDegreeLabel.set(this.degreeLabelFor(value));
+    }
+    this.casesFilter.set(next);
+  }
+
+  /** Whether a given degree card is the one currently filtering the table. */
+  isDegreeActive(value: string): boolean {
+    return this.casesFilter()['caseDegree'] === value;
+  }
+
+  /** Drop all active filters (user + degree) and reload the full cases list. */
+  clearUserFilter() {
+    this.casesFilter.set({});
+    this.filterAssigneeName.set('');
+    this.filterDegreeLabel.set('');
+    // Strip the query params from the URL so a refresh/back doesn't re-apply the filter.
+    this.router.navigate([], { relativeTo: this.route, queryParams: {} });
   }
 
   onEditCase(item: IDataCase) {
