@@ -3,7 +3,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Data } from '../../../core/Servies/data';
 import { CASE_DEGREE_OPTIONS, CaseDegree, IDataCase } from '../../../core/Models/case.model';
 import { IAttachment, IReminder, IReminderTypeOption } from '../../../core/Models/reminder.model';
-import { canonicalToPickerHijri, pickerToCanonicalHijri } from '../../../core/utils/hijri-format';
+import {
+  canonicalToPickerHijri,
+  gregorianToPickerHijri,
+  pickerToCanonicalHijri,
+} from '../../../core/utils/hijri-format';
+import { format12h } from '../../../core/utils/time-format';
 
 @Component({
   selector: 'app-reminders-dialog',
@@ -175,7 +180,7 @@ export class RemindersDialog {
     const c = this.caseItem();
     if (!c?.sessionHijriDate) return '';
     const date = canonicalToPickerHijri(c.sessionHijriDate);
-    return c.sessionTime ? `${date} - ${c.sessionTime}` : date;
+    return c.sessionTime ? `${date} - ${format12h(c.sessionTime)}` : date;
   }
 
   private loadTypes() {
@@ -289,12 +294,6 @@ export class RemindersDialog {
       });
   }
 
-  /** Combine the date + time inputs into an ISO string. */
-  private toIso(): string {
-    const { date, time } = this.form.value;
-    return new Date(`${date}T${time}`).toISOString();
-  }
-
   onSubmit() {
     if (this.isCompleted) return;
     if (this.form.invalid) {
@@ -305,10 +304,13 @@ export class RemindersDialog {
     if (!caseId) return;
 
     const v = this.form.getRawValue();
+    // `v.date` is the Hijri picker's "DD / MM / YYYY"; the backend converts the
+    // canonical Hijri date + time into the Gregorian `scheduledAt` it fires off.
     const body: any = {
       type: v.type,
       content: v.content || undefined,
-      scheduledAt: this.toIso(),
+      hijriDate: pickerToCanonicalHijri(v.date),
+      time: v.time,
       repeat: v.repeat,
       repeatEveryHours: v.repeat ? Number(v.repeatEveryHours) : undefined,
     };
@@ -333,7 +335,7 @@ export class RemindersDialog {
     this.form.patchValue({
       type: r.type,
       content: r.content ?? '',
-      date: `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`,
+      date: gregorianToPickerHijri(d),
       time: `${pad(d.getHours())}:${pad(d.getMinutes())}`,
       repeat: r.repeat,
       repeatEveryHours: r.repeatEveryHours ?? null,

@@ -212,10 +212,8 @@
           <div class="input-row">
             <div class="input-group">
               <label>{{ 'date' | translate }}</label>
-              <div class="input-wrapper">
-                <i class="fa-regular fa-calendar input-icon"></i>
-                <input type="date" formControlName="date" />
-              </div>
+              <app-hijri-datepicker formControlName="date" [disablePast]="true"
+                [placeholder]="'date' | translate"></app-hijri-datepicker>
             </div>
             <div class="input-group">
               <label>{{ 'time' | translate }}</label>

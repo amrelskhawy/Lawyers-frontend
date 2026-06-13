@@ -8,6 +8,7 @@ import {
   ILawyerOption,
 } from '../../core/Models/case.model';
 import { Data } from '../../core/Servies/data';
+import { format12h } from '../../core/utils/time-format';
 import {
   CalendarView,
   HijriCalendar,
@@ -184,6 +185,11 @@ export class CasesCalendar implements OnInit {
   /** True when a (year-grid) day cell carries at least one session. */
   hasCases(hijri: string): boolean {
     return (this.buckets().get(hijri)?.length ?? 0) > 0;
+  }
+
+  /** 24h "HH:mm" → 12h "h:mm AM/PM" for display. */
+  fmtTime(time: string | null | undefined): string {
+    return format12h(time);
   }
 
   /** Decorated, time-sorted cases for a day key. */

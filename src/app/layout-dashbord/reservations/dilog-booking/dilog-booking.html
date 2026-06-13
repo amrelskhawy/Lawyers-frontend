@@ -82,8 +82,8 @@
               <div class="info-text">
                 <span class="info-label">{{ 'time' | translate }}</span>
                 <div class="info-time">
-                  <span class="info-value" dir="ltr">{{ dataobj().startTime }} Am</span> :
-                  <span class="info-value" dir="ltr">{{ dataobj().endTime }} Pm</span>
+                  <span class="info-value" dir="ltr">{{ dataobj().startTime | time12 }}</span> :
+                  <span class="info-value" dir="ltr">{{ dataobj().endTime | time12 }}</span>
                 </div>
               </div>
             </div>

@@ -68,10 +68,10 @@
               class="case-chip"
               [style.background]="item.color"
               (click)="openCase(item, $event)"
-              [pTooltip]="item.customerName + ' • ' + item.time"
+              [pTooltip]="item.customerName + ' • ' + fmtTime(item.time)"
               tooltipPosition="top"
             >
-              <span class="chip-time">{{ item.time }}</span>
+              <span class="chip-time">{{ item.time | time12 }}</span>
               <span class="chip-name">{{ item.customerName }}</span>
             </button>
           </ng-container>
@@ -99,7 +99,7 @@
           [style.background]="item.color"
           (click)="openCase(item, $event)"
         >
-          <span class="chip-time">{{ item.time }}</span>
+          <span class="chip-time">{{ item.time | time12 }}</span>
           <span class="chip-name">{{ item.customerName }}</span>
         </button>
         <span class="week-empty" *ngIf="casesForDay(cell.hijri).length === 0">—</span>
@@ -116,7 +116,7 @@
         class="agenda-row"
         (click)="openCase(item, $event)"
       >
-        <span class="agenda-time">{{ item.time || '—' }}</span>
+        <span class="agenda-time">{{ (item.time | time12) || '—' }}</span>
         <span class="agenda-degree-dot" [style.background]="item.color"></span>
         <span class="agenda-main">
           <span class="agenda-name">{{ item.customerName }}</span>
@@ -177,7 +177,7 @@
         {{ sel.degreeLabel || ('not_set' | translate) }}
       </li>
       <li><span class="pop-label">{{ 'case_type' | translate }}:</span> {{ sel.caseTypeLabel }}</li>
-      <li><span class="pop-label">{{ 'session_time' | translate }}:</span> {{ sel.time || '—' }}</li>
+      <li><span class="pop-label">{{ 'session_time' | translate }}:</span> {{ (sel.time | time12) || '—' }}</li>
       <li *ngIf="sel.assigneeName">
         <span class="pop-label">{{ 'assigned_to' | translate }}:</span> {{ sel.assigneeName }}
       </li>

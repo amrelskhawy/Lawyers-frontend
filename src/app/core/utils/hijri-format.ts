@@ -21,3 +21,23 @@ export function canonicalToPickerHijri(value: string | null | undefined): string
   const [, year, month, day] = m;
   return `${day.padStart(2, '0')} / ${month.padStart(2, '0')} / ${year}`;
 }
+
+const HIJRI_FMT = new Intl.DateTimeFormat('en-u-ca-islamic-umalqura', {
+  day: 'numeric',
+  month: 'numeric',
+  year: 'numeric',
+});
+
+/**
+ * Gregorian instant → the picker's "DD / MM / YYYY" Hijri string. Used when
+ * editing a reminder whose `scheduledAt` comes back from the backend as a
+ * Gregorian `Date`, so the Hijri datepicker can show the right day.
+ */
+export function gregorianToPickerHijri(value: Date | string | null | undefined): string {
+  if (!value) return '';
+  const d = value instanceof Date ? value : new Date(value);
+  if (Number.isNaN(d.getTime())) return '';
+  const parts = HIJRI_FMT.formatToParts(d);
+  const get = (t: string) => parts.find((p) => p.type === t)?.value ?? '';
+  return `${get('day').padStart(2, '0')} / ${get('month').padStart(2, '0')} / ${get('year')}`;
+}

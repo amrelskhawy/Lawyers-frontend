@@ -40,7 +40,7 @@
 
     <div class="card">
       <p>🕐 {{"time"|translate}}</p>
-      <p>{{ bookingService.bookingForm().value?.startTime }}</p>
+      <p>{{ bookingService.bookingForm().value?.startTime | time12 }}</p>
     </div>
   </div>
 
