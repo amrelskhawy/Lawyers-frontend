@@ -49,6 +49,20 @@
 
     i { font-size: .7rem; opacity: .85; }
     .cases-count { font-variant-numeric: tabular-nums; }
+
+    &.clickable {
+      cursor: pointer;
+      transition: transform .12s ease, box-shadow .12s ease;
+
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 6px rgba(138, 109, 18, .22);
+      }
+      &:focus-visible {
+        outline: 2px solid #c8a33a;
+        outline-offset: 2px;
+      }
+    }
   }
 
   // Per-degree case counts — text/border/background tinted per degree color (inline)
@@ -65,5 +79,13 @@
     line-height: 1.4;
     font-variant-numeric: tabular-nums;
     cursor: default;
+
+    &.clickable {
+      cursor: pointer;
+      transition: transform .12s ease, filter .12s ease;
+
+      &:hover { transform: translateY(-1px); filter: brightness(.95); }
+      &:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+    }
   }
 }

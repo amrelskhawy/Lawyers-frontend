@@ -91,6 +91,7 @@ export class ActivityLogs implements OnInit {
       });
 
       const cases: IDataCase[] = c?.data ?? [];
+      // Show every litigation degree (incl. zero-count ones) so the breakdown is complete.
       this.caseDegreeCounts.set([
         ...CASE_DEGREE_OPTIONS.map((o) => ({
           label: o.label,

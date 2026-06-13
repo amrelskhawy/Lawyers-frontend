@@ -1,4 +1,5 @@
 import { Component, OnInit, signal, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { DashboardCrudPage } from '../dashboard-crud-page/dashboard-crud-page';
 import { CASE_DEGREE_OPTIONS } from '../../core/Models/case.model';
@@ -29,7 +30,10 @@ export interface IUser {
 export class Users implements OnInit {
   @ViewChild(DashboardCrudPage) crudPage!: DashboardCrudPage;
 
-  constructor(private translate: TranslateService) {}
+  constructor(
+    private translate: TranslateService,
+    private router: Router,
+  ) {}
 
   columns: { key: string; value: string }[] = [];
   searchFields = ['name', 'nameAr', 'nameEn', 'email', 'phone', 'role'];
@@ -110,5 +114,21 @@ export class Users implements OnInit {
   setRoleFilter(role: string) {
     this.activeRoleFilter.set(role);
     setTimeout(() => this.crudPage?.refresh(), 0);
+  }
+
+  /**
+   * Open the cases page filtered to the cases assigned to this user. The backend
+   * `lawyerId` filter matches either the lawyer (preferredLawyerId) or consultant
+   * (consultantId) slot, so a single param covers both LAWYER and CONSULTANT rows.
+   * Pass a `degree` (e.g. from a per-degree badge) to also scope to that litigation
+   * degree — "UNASSIGNED" is understood by the backend as "no degree set".
+   */
+  goToUserCases(row: IUser, degree?: string) {
+    const queryParams: { [key: string]: any } = {
+      lawyerId: row.id,
+      assigneeName: row.nameAr || row.name,
+    };
+    if (degree) queryParams['caseDegree'] = degree;
+    this.router.navigate(['/dashboard/content/client-cases'], { queryParams });
   }
 }
