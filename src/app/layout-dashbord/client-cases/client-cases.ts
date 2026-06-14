@@ -1,12 +1,8 @@
 import { Component, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  CaseAssignmentStatus,
-  CASE_DEGREE_OPTIONS,
-  CASE_TYPE_OPTIONS,
-  IDataCase,
-} from '../../core/Models/case.model';
+import { CaseAssignmentStatus, CASE_DEGREE_OPTIONS, CASE_TYPE_OPTIONS, IDataCase } from '../../core/Models/case.model';
+import { canonicalToPickerHijri, gregorianToPickerHijri } from '../../core/utils/hijri-format';
 import { DashboardCrudPage, PageMeta } from '../dashboard-crud-page/dashboard-crud-page';
 import { Data } from '../../core/Servies/data';
 import { SoundService } from '../../core/Servies/sound';
@@ -71,6 +67,7 @@ export class ClientCases implements OnInit {
     'caseTypeLabel',
     'caseDegreeLabel',
     'caseDate',
+    'nextSessionDateFormatted',
   ];
   visibelform = signal<boolean>(false);
   visibelReminders = signal<boolean>(false);
@@ -114,9 +111,16 @@ export class ClientCases implements OnInit {
     caseDegreeColor:
       CASE_DEGREE_OPTIONS.find((o) => o.value === item.caseDegree)?.color ?? '',
     caseDateFormatted: item.caseDate ? new Date(item.caseDate).toLocaleDateString() : '',
+    nextSessionDateFormatted: this.formatNextSessionDate(item),
     assignedLawyerName: item.preferredLawyerName ?? item.preferredLawyer?.name ?? '',
     assignedConsultantName: item.consultantName ?? item.consultant?.name ?? '',
   });
+
+  private formatNextSessionDate(item: IDataCase): string {
+    if (item.sessionHijriDate) return canonicalToPickerHijri(item.sessionHijriDate);
+    if (item.sessionDate) return gregorianToPickerHijri(item.sessionDate);
+    return '';
+  }
 
   ngOnInit() {
     // Pick up a user filter handed over from the Users page (?lawyerId=…). Read
@@ -141,6 +145,7 @@ export class ClientCases implements OnInit {
       { key: this.translate.instant('case_type'), value: 'caseTypeLabel' },
       { key: this.translate.instant('case_degree'), value: 'caseDegreeLabel' },
       { key: this.translate.instant('case_date'), value: 'caseDateFormatted' },
+      { key: this.translate.instant('next_session_date'), value: 'nextSessionDateFormatted' },
       { key: this.translate.instant('assigned_consultant'), value: 'assignedConsultantName' },
       { key: this.translate.instant('assigned_lawyer'), value: 'assignedLawyerName' },
       { key: this.translate.instant('created_by'), value: 'createdBy.name' },

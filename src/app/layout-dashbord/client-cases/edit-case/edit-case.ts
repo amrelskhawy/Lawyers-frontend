@@ -9,7 +9,7 @@ import { TEAM_MEMBERS } from '../../../core/Models/team-members';
 import { IDataCustomer } from '../../../core/Models/customers.model';
 import { IUser } from '../../users/users';
 import { CaseReportData } from '../case-report-template/case-report-template';
-import { canonicalToPickerHijri, pickerToCanonicalHijri } from '../../../core/utils/hijri-format';
+import { canonicalToPickerHijri, gregorianToPickerHijri, pickerToCanonicalHijri } from '../../../core/utils/hijri-format';
 
 type SaveStatus = 'idle' | 'unsaved' | 'saving' | 'saved' | 'error';
 
@@ -49,9 +49,6 @@ export class EditCase implements OnInit, OnDestroy {
 
   Form!: FormGroup;
   assignForm!: FormGroup;
-  sessionForm!: FormGroup;
-  savingSession = signal<boolean>(false);
-  sessionSaved = signal<boolean>(false);
   private destroy$ = new Subject<void>();
   private skipNextDirty = false;
 
@@ -113,7 +110,6 @@ export class EditCase implements OnInit, OnDestroy {
     this.caseId.set(id);
     this.buildForm();
     this.buildAssignForm();
-    this.buildSessionForm();
     this.loadDropdowns();
     this.loadCase(id);
     this.wireDirtyTracking();
@@ -134,6 +130,8 @@ export class EditCase implements OnInit, OnDestroy {
       agencyNumber: [''],
 
       sessionReceiverId: [null],
+      // Court session after the client meeting — saved via /cases/:id/session on main save.
+      sessionHijriDate: [''],
 
       hasStructuredNotes: [false],
       weaknesses: this.fb.array([] as FormControl<string>[]),
@@ -147,17 +145,6 @@ export class EditCase implements OnInit, OnDestroy {
     this.assignForm = this.fb.group({
       lawyerId: [null],
       consultantId: [null],
-    });
-  }
-
-  // Session date is Hijri (iYYYY-iMM-iDD) + HH:mm time. Setting it (re)schedules
-  // the 3 session reminders on the backend, so it's saved via its own endpoint.
-  private buildSessionForm() {
-    // sessionHijriDate holds the picker's "DD / MM / YYYY" string; converted to
-    // the backend's "YYYY-MM-DD" on save.
-    this.sessionForm = this.fb.group({
-      sessionHijriDate: ['', Validators.required],
-      sessionTime: ['', [Validators.required, Validators.pattern(/^\d{1,2}:\d{2}$/)]],
     });
   }
 
@@ -218,19 +205,18 @@ export class EditCase implements OnInit, OnDestroy {
           hijriDate: c.hijriDate ?? null,
           agencyNumber: c.agencyNumber ?? '',
           sessionReceiverId: sessionReceiverFormId,
+          sessionHijriDate: this.resolveSessionHijriDate(c),
           hasStructuredNotes: c.hasStructuredNotes,
           freeNotes: c.freeNotes ?? '',
         });
 
-        this.sessionForm.patchValue({
-          sessionHijriDate: canonicalToPickerHijri(c.sessionHijriDate),
-          sessionTime: c.sessionTime ?? '',
-        });
+        this.syncSessionFieldAccess();
 
         this.syncAssignForm(c);
 
         this.loading.set(false);
         this.saveStatus.set('idle');
+        this.formTick.update((n) => n + 1);
       },
       error: () => this.loading.set(false),
     });
@@ -250,13 +236,48 @@ export class EditCase implements OnInit, OnDestroy {
   save() {
     if (!this.canEdit || this.saveStatus() === 'saving') return;
     this.saveStatus.set('saving');
+    const raw = this.Form.getRawValue();
+    const sessionPicker = (raw.sessionHijriDate ?? '').trim();
+    const sessionChanged = this.hasSessionDateChanged();
+
     this.data
-      .patch<{ data: IDataCase }>(`cases/${this.caseId()}`, this.toPayload(this.Form.value))
+      .patch<{ data: IDataCase }>(`cases/${this.caseId()}`, this.toPayload(raw))
       .subscribe({
         next: (res) => {
-          this.loadedCase.set(res.data);
-          this.saveStatus.set('saved');
+          if (sessionPicker && sessionChanged) {
+            this.persistSessionDate(res.data, sessionPicker);
+          } else {
+            this.finishSave(res.data);
+          }
         },
+        error: () => this.saveStatus.set('error'),
+      });
+  }
+
+  private finishSave(c: IDataCase) {
+    this.loadedCase.set(c);
+    this.skipNextDirty = true;
+    this.patchSessionFields(c);
+    this.saveStatus.set('saved');
+    this.formTick.update((n) => n + 1);
+  }
+
+  private hasSessionDateChanged(): boolean {
+    const c = this.loadedCase();
+    if (!c) return false;
+    const picker = (this.Form.getRawValue().sessionHijriDate ?? '').trim();
+    return picker !== this.resolveSessionHijriDate(c).trim();
+  }
+
+  /** Backend still needs a time — keep the stored one or default to 09:00. */
+  private persistSessionDate(afterCase: IDataCase, sessionPicker: string) {
+    this.data
+      .patch<{ data: IDataCase }>(`cases/${this.caseId()}/session`, {
+        sessionHijriDate: pickerToCanonicalHijri(sessionPicker),
+        sessionTime: afterCase.sessionTime ?? '09:00',
+      })
+      .subscribe({
+        next: (res) => this.finishSave(res.data),
         error: () => this.saveStatus.set('error'),
       });
   }
@@ -337,30 +358,27 @@ export class EditCase implements OnInit, OnDestroy {
       });
   }
 
-  saveSessionDate() {
-    if (this.savingSession() || this.sessionForm.invalid) {
-      this.sessionForm.markAllAsTouched();
-      return;
+  /** Hijri picker value for the court session — backfill from stored Gregorian if needed. */
+  private resolveSessionHijriDate(c: IDataCase): string {
+    if (c.sessionHijriDate) return canonicalToPickerHijri(c.sessionHijriDate);
+    if (c.sessionDate) return gregorianToPickerHijri(c.sessionDate);
+    return '';
+  }
+
+  private syncSessionFieldAccess() {
+    const sessionDate = this.Form.get('sessionHijriDate');
+    if (!sessionDate) return;
+    if (this.canEdit) {
+      sessionDate.enable({ emitEvent: false });
+    } else {
+      sessionDate.disable({ emitEvent: false });
     }
-    this.savingSession.set(true);
-    this.sessionSaved.set(false);
-    this.data
-      .patch<{ data: IDataCase }>(`cases/${this.caseId()}/session`, {
-        sessionHijriDate: pickerToCanonicalHijri(this.sessionForm.value.sessionHijriDate),
-        sessionTime: this.sessionForm.value.sessionTime,
-      })
-      .subscribe({
-        next: (res) => {
-          this.loadedCase.set(res.data);
-          this.sessionForm.patchValue({
-            sessionHijriDate: canonicalToPickerHijri(res.data.sessionHijriDate),
-            sessionTime: res.data.sessionTime ?? '',
-          });
-          this.savingSession.set(false);
-          this.sessionSaved.set(true);
-        },
-        error: () => this.savingSession.set(false),
-      });
+  }
+
+  private patchSessionFields(c: IDataCase) {
+    this.Form.patchValue({
+      sessionHijriDate: this.resolveSessionHijriDate(c),
+    }, { emitEvent: false });
   }
 
   acceptAssignment() {
@@ -371,6 +389,7 @@ export class EditCase implements OnInit, OnDestroy {
       .subscribe({
         next: (res) => {
           this.loadedCase.set(res.data);
+          this.syncSessionFieldAccess();
           this.assignmentActioning.set(false);
         },
         error: () => this.assignmentActioning.set(false),
@@ -394,12 +413,19 @@ export class EditCase implements OnInit, OnDestroy {
       });
   }
 
+  private resolveSessionReceiverName(rawId: string | null | undefined): string {
+    if (!rawId) return '';
+    if (rawId.startsWith('team:')) {
+      return TEAM_MEMBERS.find((m) => `team:${m.name_en}` === rawId)?.name_ar ?? '';
+    }
+    return this.lawyers().find((l) => l.id === rawId)?.name ?? '';
+  }
+
   // Live preview data
   previewData = computed<CaseReportData>(() => {
     void this.formTick();
-    const v = this.Form?.value ?? {};
+    const v = this.Form?.getRawValue() ?? {};
     const customer = this.customers().find((c) => c.id === v.customerId);
-    const sessionReceiver = this.lawyers().find((l) => l.id === v.sessionReceiverId);
     const c = this.loadedCase();
     return {
       customerName: customer?.fullName ?? '',
@@ -411,8 +437,8 @@ export class EditCase implements OnInit, OnDestroy {
       agencyNumber: v.agencyNumber ?? null,
       wantsSpecificLawyer: c?.wantsSpecificLawyer ?? false,
       preferredLawyerName: c?.preferredLawyerName ?? c?.preferredLawyer?.name ?? '',
-      sessionReceiverName: sessionReceiver?.name ?? '',
-      sessionDate: c?.sessionDate ?? null,
+      sessionReceiverName: this.resolveSessionReceiverName(v.sessionReceiverId),
+      sessionHijriDate: v.sessionHijriDate ?? '',
       hasStructuredNotes: false,
       weaknesses: (v.weaknesses ?? []).filter((s: string) => !!s),
       strengths: (v.strengths ?? []).filter((s: string) => !!s),

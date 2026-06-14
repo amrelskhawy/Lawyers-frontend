@@ -29,7 +29,8 @@ export interface CaseReportData {
   preferredLawyerName?: string | null;
 
   sessionReceiverName?: string | null;
-  sessionDate?: string | Date | null;
+  /** Hijri session date in picker format "DD / MM / YYYY" (same as reminders). */
+  sessionHijriDate?: string | null;
 
   hasStructuredNotes?: boolean | null;
   weaknesses?: string[] | null;
@@ -92,7 +93,7 @@ export class CaseReportTemplate implements AfterViewInit, OnDestroy {
 
   formattedCaseDate = computed(() => this.formatDate(this.data().caseDate));
   formattedHijriDate = computed(() => this.data().hijriDate ?? '');
-  formattedSessionDate = computed(() => this.formatDate(this.data().sessionDate));
+  formattedSessionDate = computed(() => (this.data().sessionHijriDate ?? '').trim());
 
   isChecked(t: CaseType): boolean {
     return this.data().caseType === t;
