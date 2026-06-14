@@ -42,6 +42,32 @@ export class RemindersDialog {
   form: FormGroup;
   sessionForm: FormGroup;
 
+  get currentUser(): { id: string; role: string } | null {
+    const raw = sessionStorage.getItem('user');
+    return raw ? JSON.parse(raw) : null;
+  }
+
+  get role(): string {
+    return this.currentUser?.role ?? '';
+  }
+
+  get isStaff(): boolean {
+    return ['ADMIN', 'MODERATOR'].includes(this.role);
+  }
+
+  get isCaseHandler(): boolean {
+    return this.role === 'LAWYER' || this.role === 'CONSULTANT';
+  }
+
+  /** Lawyers/consultants may only edit or delete reminders they created manually. */
+  canManageReminder(r: IReminder): boolean {
+    if (this.isStaff) return true;
+    if (this.isCaseHandler) {
+      return !r.autoScheduled && r.createdById === this.currentUser?.id;
+    }
+    return false;
+  }
+
   constructor(private fb: FormBuilder, private data: Data) {
     this.form = this.fb.group({
       type: ['SESSION_DETAILS_REVIEW', Validators.required],

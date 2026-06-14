@@ -19,6 +19,8 @@ export interface IReminder {
   lastSentAt?: string | null;
   sentCount: number;
   failureReason?: string | null;
+  autoScheduled?: boolean;
+  createdById?: string;
   createdAt: string;
   updatedAt: string;
 }
