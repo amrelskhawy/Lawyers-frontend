@@ -1,5 +1,5 @@
-<p-dialog maskStyleClass="backdrop-blur-sm" [(visible)]="visible" (onHide)="close()" [modal]="true"
-  [baseZIndex]="10000" styleClass="modern-modal" [style]="{ width: '92vw', maxWidth: '640px' }">
+<p-dialog maskStyleClass="backdrop-blur-sm" [(visible)]="visible" (onHide)="close()" [modal]="true" [baseZIndex]="10000"
+  styleClass="modern-modal" [style]="{ width: '92vw', maxWidth: '640px' }">
   <ng-template pTemplate="headless">
     <div class="reminders-container">
 
@@ -29,17 +29,17 @@
           <div class="session-row">
             <div class="input-group">
               <label>{{ 'session_hijri_date' | translate }}</label>
-              <app-hijri-datepicker formControlName="date" [disablePast]="true"
+              <app-hijri-datepicker formControlName="date" [disabled]="role === 'CONSULTANT'" [disablePast]="true"
                 [placeholder]="'session_hijri_date' | translate"></app-hijri-datepicker>
             </div>
             <div class="input-group">
               <label>{{ 'time' | translate }}</label>
               <div class="input-wrapper">
                 <i class="fa-regular fa-clock input-icon"></i>
-                <input type="time" formControlName="time" />
+                <input [disabled]="role === 'CONSULTANT'" type="time" formControlName="time" />
               </div>
             </div>
-            <button type="submit" class="btn-session">
+            <button disabled="role === 'CONSULTANT'" type="submit" class="btn-session">
               <i class="fa-solid fa-floppy-disk"></i>
               {{ 'save' | translate }}
             </button>
@@ -119,8 +119,7 @@
                   <i class="fa-solid fa-circle-check"></i> {{ 'sent' | translate }}
                 </span>
                 <div class="att-actions">
-                  <button class="icon-btn send" (click)="openSend(a)"
-                    [attr.aria-label]="'send' | translate">
+                  <button class="icon-btn send" (click)="openSend(a)" [attr.aria-label]="'send' | translate">
                     <i class="fa-brands fa-whatsapp"></i>
                   </button>
                   <button class="icon-btn delete" (click)="deleteAttachment(a)"
@@ -132,16 +131,14 @@
 
               <!-- Inline WhatsApp message input -->
               <div class="send-row" *ngIf="sendingId() === a.id">
-                <textarea rows="9" [ngModel]="sendMessage()"
-                  (ngModelChange)="sendMessage.set($event)"
+                <textarea rows="9" [ngModel]="sendMessage()" (ngModelChange)="sendMessage.set($event)"
                   [ngModelOptions]="{ standalone: true }"
                   placeholder="{{ 'whatsapp_message_placeholder' | translate }}"></textarea>
                 <div class="send-actions">
                   <button type="button" class="btn-secondary" (click)="cancelSend()">
                     {{ 'close' | translate }}
                   </button>
-                  <button type="button" class="btn-primary" (click)="sendAttachment(a)"
-                    [disabled]="sendInFlight()">
+                  <button type="button" class="btn-primary" (click)="sendAttachment(a)" [disabled]="sendInFlight()">
                     <i class="fa-brands fa-whatsapp"></i> {{ 'send' | translate }}
                   </button>
                 </div>
@@ -186,8 +183,7 @@
         </div>
 
         <!-- Add / edit form -->
-        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="reminder-form"
-          [class.is-disabled]="isCompleted">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="reminder-form" [class.is-disabled]="isCompleted">
           <div class="form-title">
             <i class="fa-solid" [ngClass]="editingId() ? 'fa-pen' : 'fa-plus'"></i>
             {{ (editingId() ? 'save' : 'add_reminder') | translate }}
@@ -226,8 +222,7 @@
 
           <div class="input-group">
             <label>{{ 'reminder_content' | translate }}</label>
-            <textarea formControlName="content" rows="2"
-              placeholder="{{ 'reminder_content' | translate }}"></textarea>
+            <textarea formControlName="content" rows="2" placeholder="{{ 'reminder_content' | translate }}"></textarea>
           </div>
 
           <div class="toggle-row">

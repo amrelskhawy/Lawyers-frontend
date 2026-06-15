@@ -44,7 +44,9 @@ $white: #ffffff;
         align-items: center;
         gap: 0.4rem;
 
-        i { color: $accent-gold; }
+        i {
+          color: $accent-gold;
+        }
       }
     }
 
@@ -111,7 +113,9 @@ $white: #ffffff;
       font-weight: 700;
       color: $primary-navy;
 
-      i { color: $accent-gold; }
+      i {
+        color: $accent-gold;
+      }
     }
 
     .session-row {
@@ -127,7 +131,11 @@ $white: #ffffff;
         flex-direction: column;
         gap: 0.4rem;
 
-        label { font-size: 0.82rem; font-weight: 600; color: $primary-navy; }
+        label {
+          font-size: 0.82rem;
+          font-weight: 600;
+          color: $primary-navy;
+        }
 
         .input-wrapper {
           position: relative;
@@ -142,7 +150,10 @@ $white: #ffffff;
             pointer-events: none;
           }
 
-          :host-context([dir="rtl"]) & .input-icon { left: auto; right: 0.9rem; }
+          :host-context([dir="rtl"]) & .input-icon {
+            left: auto;
+            right: 0.9rem;
+          }
 
           input {
             width: 100%;
@@ -180,7 +191,15 @@ $white: #ffffff;
         transition: all 0.25s;
         white-space: nowrap;
 
-        &:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba($primary-navy, 0.3); }
+        &:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba($primary-navy, 0.3);
+        }
+
+        &:disabled {
+          opacity: .2;
+          cursor: not-allowed;
+        }
       }
     }
 
@@ -198,14 +217,20 @@ $white: #ffffff;
       color: #b45309;
       background: #fffbeb;
       border: 1px solid #fde68a;
-      i { color: #f59e0b; }
+
+      i {
+        color: #f59e0b;
+      }
     }
 
     .session-saved {
       color: #15803d;
       background: #f0fdf4;
       border: 1px solid #bbf7d0;
-      i { color: #22c55e; }
+
+      i {
+        color: #22c55e;
+      }
     }
   }
 
@@ -226,8 +251,14 @@ $white: #ffffff;
       border: 1px dashed $gray-border;
       border-radius: 14px;
 
-      i { font-size: 1.8rem; color: #cbd5e1; }
-      span { font-size: 0.9rem; }
+      i {
+        font-size: 1.8rem;
+        color: #cbd5e1;
+      }
+
+      span {
+        font-size: 0.9rem;
+      }
     }
 
     .reminder-card {
@@ -279,7 +310,10 @@ $white: #ffffff;
           font-size: 0.78rem;
           color: $gray-text;
 
-          i { color: $accent-gold; font-size: 0.72rem; }
+          i {
+            color: $accent-gold;
+            font-size: 0.72rem;
+          }
         }
 
         .repeat-badge {
@@ -289,7 +323,9 @@ $white: #ffffff;
           border-radius: 50px;
           font-weight: 600;
 
-          i { color: inherit; }
+          i {
+            color: inherit;
+          }
         }
       }
 
@@ -311,8 +347,23 @@ $white: #ffffff;
           font-size: 0.82rem;
           transition: all 0.2s;
 
-          &.edit { color: $primary-navy; &:hover { background: rgba($primary-navy, 0.06); border-color: $primary-navy; } }
-          &.delete { color: $error-red; &:hover { background: rgba($error-red, 0.08); border-color: $error-red; } }
+          &.edit {
+            color: $primary-navy;
+
+            &:hover {
+              background: rgba($primary-navy, 0.06);
+              border-color: $primary-navy;
+            }
+          }
+
+          &.delete {
+            color: $error-red;
+
+            &:hover {
+              background: rgba($error-red, 0.08);
+              border-color: $error-red;
+            }
+          }
         }
       }
     }
@@ -329,12 +380,29 @@ $white: #ffffff;
     border-radius: 50px;
     text-transform: capitalize;
 
-    i { font-size: 0.45rem; }
+    i {
+      font-size: 0.45rem;
+    }
 
-    &[data-status='PENDING'] { background: #fef3c7; color: #b45309; }
-    &[data-status='SENT'] { background: #dcfce7; color: #15803d; }
-    &[data-status='FAILED'] { background: #fee2e2; color: #b91c1c; }
-    &[data-status='CANCELLED'] { background: #e2e8f0; color: #475569; }
+    &[data-status='PENDING'] {
+      background: #fef3c7;
+      color: #b45309;
+    }
+
+    &[data-status='SENT'] {
+      background: #dcfce7;
+      color: #15803d;
+    }
+
+    &[data-status='FAILED'] {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
+
+    &[data-status='CANCELLED'] {
+      background: #e2e8f0;
+      color: #475569;
+    }
   }
 
   // ---------- Add / edit form ----------
@@ -357,14 +425,18 @@ $white: #ffffff;
       padding-bottom: 0.85rem;
       border-bottom: 1px solid $gray-border;
 
-      i { color: $accent-gold; }
+      i {
+        color: $accent-gold;
+      }
     }
 
     .input-row {
       display: flex;
       gap: 1rem;
 
-      .input-group { flex: 1; }
+      .input-group {
+        flex: 1;
+      }
     }
 
     .input-group {
@@ -418,7 +490,9 @@ $white: #ffffff;
           background-color: $white;
         }
 
-        &::placeholder { color: #cbd5e1; }
+        &::placeholder {
+          color: #cbd5e1;
+        }
       }
 
       textarea {
@@ -459,7 +533,10 @@ $white: #ffffff;
         border-radius: 8px;
         padding: 0.45rem 0.7rem;
 
-        i { color: #0ea5e9; flex-shrink: 0; }
+        i {
+          color: #0ea5e9;
+          flex-shrink: 0;
+        }
       }
     }
 
@@ -480,7 +557,9 @@ $white: #ffffff;
         font-weight: 600;
         color: $primary-navy;
 
-        i { color: $accent-gold; }
+        i {
+          color: $accent-gold;
+        }
       }
     }
 
@@ -506,7 +585,9 @@ $white: #ffffff;
           border: 1px solid $primary-navy;
           color: $primary-navy;
 
-          &:hover { background: rgba($primary-navy, 0.05); }
+          &:hover {
+            background: rgba($primary-navy, 0.05);
+          }
         }
 
         &.btn-primary {
@@ -559,7 +640,9 @@ $white: #ffffff;
       font-size: 0.95rem;
       color: $primary-navy;
 
-      i { color: $accent-gold; }
+      i {
+        color: $accent-gold;
+      }
     }
 
     .dropzone {
@@ -577,7 +660,10 @@ $white: #ffffff;
       cursor: pointer;
       transition: all 0.25s;
 
-      i { font-size: 1.6rem; color: $primary-navy; }
+      i {
+        font-size: 1.6rem;
+        color: $primary-navy;
+      }
 
       &:hover {
         border-color: $accent-gold;
@@ -604,8 +690,15 @@ $white: #ffffff;
         box-shadow: 0 4px 15px rgba($accent-gold, 0.4);
         transition: all 0.3s;
 
-        &:hover:not(:disabled) { transform: translateY(-2px); }
-        &:disabled { opacity: 0.55; cursor: not-allowed; box-shadow: none; }
+        &:hover:not(:disabled) {
+          transform: translateY(-2px);
+        }
+
+        &:disabled {
+          opacity: 0.55;
+          cursor: not-allowed;
+          box-shadow: none;
+        }
       }
     }
 
@@ -666,7 +759,10 @@ $white: #ffffff;
             border: 1px solid $gray-border;
             background: $white;
             color: $gray-text;
-            &:hover { background: #f1f5f9; }
+
+            &:hover {
+              background: #f1f5f9;
+            }
           }
 
           .btn-primary {
@@ -674,8 +770,16 @@ $white: #ffffff;
             color: $white;
             background: linear-gradient(135deg, #25d366 0%, #128c3e 100%);
             box-shadow: 0 4px 12px rgba(#25d366, 0.35);
-            &:hover:not(:disabled) { transform: translateY(-2px); }
-            &:disabled { opacity: 0.55; cursor: not-allowed; box-shadow: none; }
+
+            &:hover:not(:disabled) {
+              transform: translateY(-2px);
+            }
+
+            &:disabled {
+              opacity: 0.55;
+              cursor: not-allowed;
+              box-shadow: none;
+            }
           }
         }
       }
@@ -703,8 +807,13 @@ $white: #ffffff;
           text-overflow: ellipsis;
           white-space: nowrap;
 
-          i { color: $accent-gold; }
-          &:hover { text-decoration: underline; }
+          i {
+            color: $accent-gold;
+          }
+
+          &:hover {
+            text-decoration: underline;
+          }
         }
 
         .att-sent {
@@ -731,9 +840,17 @@ $white: #ffffff;
             cursor: pointer;
             transition: all 0.2s;
 
-            &.send { color: #25d366; }
-            &.delete { color: $error-red; }
-            &:hover { background: #f1f5f9; }
+            &.send {
+              color: #25d366;
+            }
+
+            &.delete {
+              color: $error-red;
+            }
+
+            &:hover {
+              background: #f1f5f9;
+            }
           }
         }
       }
@@ -759,14 +876,18 @@ $white: #ffffff;
       font-weight: 700;
       color: $primary-navy;
 
-      i { color: $gray-text; }
+      i {
+        color: $gray-text;
+      }
     }
 
     &.is-completed {
       border-color: #16a34a;
       background: rgba(#16a34a, 0.08);
 
-      .toggle-label i { color: #16a34a; }
+      .toggle-label i {
+        color: #16a34a;
+      }
     }
   }
 
@@ -795,7 +916,9 @@ $white: #ffffff;
       font-size: 0.95rem;
       color: $primary-navy;
 
-      i { color: $accent-gold; }
+      i {
+        color: $accent-gold;
+      }
     }
 
     .degree-row {
@@ -821,7 +944,10 @@ $white: #ffffff;
           transition: background 0.25s;
         }
 
-        :host-context([dir="rtl"]) & .degree-dot { left: auto; right: 0.9rem; }
+        :host-context([dir="rtl"]) & .degree-dot {
+          left: auto;
+          right: 0.9rem;
+        }
 
         select {
           width: 100%;
@@ -852,7 +978,10 @@ $white: #ffffff;
           font-size: 0.75rem;
           pointer-events: none;
 
-          :host-context([dir="rtl"]) & { right: auto; left: 0.9rem; }
+          :host-context([dir="rtl"]) & {
+            right: auto;
+            left: 0.9rem;
+          }
         }
       }
 
@@ -872,8 +1001,15 @@ $white: #ffffff;
         transition: all 0.3s;
         white-space: nowrap;
 
-        &:hover:not(:disabled) { transform: translateY(-2px); }
-        &:disabled { opacity: 0.55; cursor: not-allowed; box-shadow: none; }
+        &:hover:not(:disabled) {
+          transform: translateY(-2px);
+        }
+
+        &:disabled {
+          opacity: 0.55;
+          cursor: not-allowed;
+          box-shadow: none;
+        }
       }
     }
 
@@ -888,7 +1024,9 @@ $white: #ffffff;
       background: #f0fdf4;
       border: 1px solid #bbf7d0;
 
-      i { color: #22c55e; }
+      i {
+        color: #22c55e;
+      }
     }
   }
 }
