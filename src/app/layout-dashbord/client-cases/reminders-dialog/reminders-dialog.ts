@@ -68,6 +68,10 @@ export class RemindersDialog {
     return false;
   }
 
+  get isConsultant(): boolean {
+    return this.role === 'CONSULTANT';
+  }
+
   constructor(private fb: FormBuilder, private data: Data) {
     this.form = this.fb.group({
       type: ['SESSION_DETAILS_REVIEW', Validators.required],
@@ -76,6 +80,8 @@ export class RemindersDialog {
       time: ['', Validators.required],
       repeat: [false],
       repeatEveryHours: [{ value: null, disabled: true }],
+
+      
     });
 
     // Separate form for editing the case's next-session (Hijri) date inline.
