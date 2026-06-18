@@ -358,10 +358,14 @@ export class EditCase implements OnInit, OnDestroy {
       });
   }
 
-  /** Hijri picker value for the court session — backfill from stored Gregorian if needed. */
+  /**
+   * Hijri picker value for the meeting date. Uses the stored value if set,
+   * otherwise defaults to the record creation date (editable, not forced).
+   * Intentionally NOT derived from the user-entered case date.
+   */
   private resolveSessionHijriDate(c: IDataCase): string {
     if (c.sessionHijriDate) return canonicalToPickerHijri(c.sessionHijriDate);
-    if (c.sessionDate) return gregorianToPickerHijri(c.sessionDate);
+    if (c.createdAt) return gregorianToPickerHijri(c.createdAt);
     return '';
   }
 

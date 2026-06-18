@@ -1,5 +1,4 @@
 <div class="edit-case-page" dir="rtl">
-
   <!-- ============ ACTION BAR ============ -->
   <div class="action-bar">
     <div class="left">
@@ -8,8 +7,14 @@
       </button>
       <h2>{{ 'edit_case' | translate }}</h2>
 
-      <span *ngIf="canEdit" class="save-pill" [class.unsaved]="saveStatus() === 'unsaved'" [class.saving]="saveStatus() === 'saving'"
-        [class.saved]="saveStatus() === 'saved'" [class.error]="saveStatus() === 'error'">
+      <span
+        *ngIf="canEdit"
+        class="save-pill"
+        [class.unsaved]="saveStatus() === 'unsaved'"
+        [class.saving]="saveStatus() === 'saving'"
+        [class.saved]="saveStatus() === 'saved'"
+        [class.error]="saveStatus() === 'error'"
+      >
         <ng-container [ngSwitch]="saveStatus()">
           <ng-container *ngSwitchCase="'unsaved'">
             <i class="fa-solid fa-circle-dot"></i> {{ 'unsaved_changes' | translate }}
@@ -28,14 +33,21 @@
     </div>
 
     <div class="right" *ngIf="canEdit">
-      <button class="btn-save" (click)="save()"
-        [disabled]="saveStatus() === 'saving' || saveStatus() === 'idle' || saveStatus() === 'saved'">
+      <button
+        class="btn-save"
+        (click)="save()"
+        [disabled]="saveStatus() === 'saving' || saveStatus() === 'idle' || saveStatus() === 'saved'"
+      >
         <i class="fa-solid fa-floppy-disk"></i>
         {{ 'save' | translate }}
       </button>
-      <button class="btn-secondary" (click)="generatePdf()"
+      <button
+        class="btn-secondary"
+        (click)="generatePdf()"
         [disabled]="generating() || saveStatus() === 'unsaved' || saveStatus() === 'saving'"
-        [pTooltip]="saveStatus() === 'unsaved' ? ('save_first' | translate) : ''" tooltipPosition="bottom">
+        [pTooltip]="saveStatus() === 'unsaved' ? ('save_first' | translate) : ''"
+        tooltipPosition="bottom"
+      >
         <i class="fa-solid fa-file-pdf"></i>
         {{ (generating() ? 'generating' : 'generate_pdf') | translate }}
       </button>
@@ -43,11 +55,13 @@
   </div>
 
   <!-- ============ ASSIGNMENT BANNER (LAWYER / CONSULTANT) ============ -->
-  <div *ngIf="isLawyer && !loading()" class="assignment-banner"
+  <div
+    *ngIf="isLawyer && !loading()"
+    class="assignment-banner"
     [class.pending]="myAssignmentStatus === 'PENDING'"
     [class.accepted]="myAssignmentStatus === 'ACCEPTED'"
-    [class.rejected]="myAssignmentStatus === 'REJECTED'">
-
+    [class.rejected]="myAssignmentStatus === 'REJECTED'"
+  >
     <ng-container [ngSwitch]="myAssignmentStatus">
       <ng-container *ngSwitchCase="'PENDING'">
         <div class="banner-content">
@@ -55,10 +69,18 @@
           <span>{{ 'case_assignment_pending' | translate }}</span>
         </div>
         <div class="banner-actions">
-          <button class="btn-accept" (click)="acceptAssignment()" [disabled]="assignmentActioning()">
+          <button
+            class="btn-accept"
+            (click)="acceptAssignment()"
+            [disabled]="assignmentActioning()"
+          >
             <i class="fa-solid fa-check"></i> {{ 'accept_assignment' | translate }}
           </button>
-          <button class="btn-reject" (click)="rejectAssignment()" [disabled]="assignmentActioning()">
+          <button
+            class="btn-reject"
+            (click)="rejectAssignment()"
+            [disabled]="assignmentActioning()"
+          >
             <i class="fa-solid fa-xmark"></i> {{ 'reject_assignment' | translate }}
           </button>
         </div>
@@ -82,20 +104,20 @@
 
   <!-- ============ 2-COLUMN GRID ============ -->
   <div class="grid" *ngIf="!loading(); else loadingTpl">
-
     <!-- LEFT: form -->
     <section class="card form-card">
-
       <!-- ASSIGN SECTIONS (staff only) -->
       <div *ngIf="canAssign" class="assign-section" [formGroup]="assignForm">
-
         <!-- ===== LAWYER SLOT ===== -->
         <h3 class="section-title">{{ 'assign_lawyer' | translate }}</h3>
 
         <!-- Active lawyer: locked card -->
-        <div *ngIf="hasActiveLawyer" class="assigned-lawyer-card"
+        <div
+          *ngIf="hasActiveLawyer"
+          class="assigned-lawyer-card"
           [class.is-pending]="lawyerStatus === 'PENDING'"
-          [class.is-accepted]="lawyerStatus === 'ACCEPTED'">
+          [class.is-accepted]="lawyerStatus === 'ACCEPTED'"
+        >
           <div class="assigned-lawyer-main">
             <div class="lawyer-avatar" aria-hidden="true">
               <i class="fa-solid fa-user-tie"></i>
@@ -103,9 +125,11 @@
             <div class="lawyer-details">
               <span class="lawyer-label">{{ 'assigned_lawyer' | translate }}</span>
               <span class="lawyer-name">{{ assignedLawyerName }}</span>
-              <span class="status-badge"
+              <span
+                class="status-badge"
                 [class.status-pending]="lawyerStatus === 'PENDING'"
-                [class.status-accepted]="lawyerStatus === 'ACCEPTED'">
+                [class.status-accepted]="lawyerStatus === 'ACCEPTED'"
+              >
                 <i class="fa-solid fa-circle"></i>
                 {{ ('assignment_status_' + lawyerStatus.toLowerCase()) | translate }}
               </span>
@@ -115,7 +139,12 @@
             <i class="fa-solid fa-lock"></i>
             {{ 'assignment_locked_hint' | translate }}
           </p>
-          <button type="button" class="btn-unassign" (click)="unassign('LAWYER')" [disabled]="unassigning()">
+          <button
+            type="button"
+            class="btn-unassign"
+            (click)="unassign('LAWYER')"
+            [disabled]="unassigning()"
+          >
             <i class="fa-solid fa-user-minus"></i>
             {{ (unassigning() ? 'unassigning' : 'unassign_lawyer') | translate }}
           </button>
@@ -135,13 +164,24 @@
           <div class="assign-form-row">
             <div class="input-group assign-select">
               <label>{{ 'select_lawyer' | translate }}</label>
-              <p-select formControlName="lawyerId" [options]="lawyerOptions()" optionLabel="name" optionValue="id"
-                [filter]="true" filterBy="name,email" [placeholder]="'select_lawyer' | translate"
-                styleClass="w-full">
+              <p-select
+                formControlName="lawyerId"
+                [options]="lawyerOptions()"
+                optionLabel="name"
+                optionValue="id"
+                [filter]="true"
+                filterBy="name,email"
+                [placeholder]="'select_lawyer' | translate"
+                styleClass="w-full"
+              >
               </p-select>
             </div>
-            <button type="button" class="btn-assign" (click)="assign('LAWYER')"
-              [disabled]="assigning() || !assignForm.value.lawyerId">
+            <button
+              type="button"
+              class="btn-assign"
+              (click)="assign('LAWYER')"
+              [disabled]="assigning() || !assignForm.value.lawyerId"
+            >
               <i class="fa-solid fa-user-plus"></i>
               {{ (assigning() ? 'assigning' : 'assign') | translate }}
             </button>
@@ -152,9 +192,12 @@
         <h3 class="section-title">{{ 'assign_consultant' | translate }}</h3>
 
         <!-- Active consultant: locked card -->
-        <div *ngIf="hasActiveConsultant" class="assigned-lawyer-card"
+        <div
+          *ngIf="hasActiveConsultant"
+          class="assigned-lawyer-card"
           [class.is-pending]="consultantStatus === 'PENDING'"
-          [class.is-accepted]="consultantStatus === 'ACCEPTED'">
+          [class.is-accepted]="consultantStatus === 'ACCEPTED'"
+        >
           <div class="assigned-lawyer-main">
             <div class="lawyer-avatar" aria-hidden="true">
               <i class="fa-solid fa-user-graduate"></i>
@@ -162,9 +205,11 @@
             <div class="lawyer-details">
               <span class="lawyer-label">{{ 'assigned_consultant' | translate }}</span>
               <span class="lawyer-name">{{ assignedConsultantName }}</span>
-              <span class="status-badge"
+              <span
+                class="status-badge"
                 [class.status-pending]="consultantStatus === 'PENDING'"
-                [class.status-accepted]="consultantStatus === 'ACCEPTED'">
+                [class.status-accepted]="consultantStatus === 'ACCEPTED'"
+              >
                 <i class="fa-solid fa-circle"></i>
                 {{ ('assignment_status_' + consultantStatus.toLowerCase()) | translate }}
               </span>
@@ -174,7 +219,12 @@
             <i class="fa-solid fa-lock"></i>
             {{ 'assignment_locked_hint' | translate }}
           </p>
-          <button type="button" class="btn-unassign" (click)="unassign('CONSULTANT')" [disabled]="unassigning()">
+          <button
+            type="button"
+            class="btn-unassign"
+            (click)="unassign('CONSULTANT')"
+            [disabled]="unassigning()"
+          >
             <i class="fa-solid fa-user-minus"></i>
             {{ (unassigning() ? 'unassigning' : 'unassign_consultant') | translate }}
           </button>
@@ -185,7 +235,10 @@
           <div *ngIf="consultantStatus === 'REJECTED'" class="assignment-rejected-note">
             <i class="fa-solid fa-circle-xmark"></i>
             {{ 'assignment_rejected_note' | translate }}
-            <div *ngIf="loadedCase()?.consultantAssignmentRejectionReason" class="assignment-rejected-reason">
+            <div
+              *ngIf="loadedCase()?.consultantAssignmentRejectionReason"
+              class="assignment-rejected-reason"
+            >
               <strong>{{ 'rejection_reason' | translate }}:</strong>
               {{ loadedCase()?.consultantAssignmentRejectionReason }}
             </div>
@@ -194,13 +247,24 @@
           <div class="assign-form-row">
             <div class="input-group assign-select">
               <label>{{ 'select_consultant' | translate }}</label>
-              <p-select formControlName="consultantId" [options]="consultantOptions()" optionLabel="name" optionValue="id"
-                [filter]="true" filterBy="name,email" [placeholder]="'select_consultant' | translate"
-                styleClass="w-full">
+              <p-select
+                formControlName="consultantId"
+                [options]="consultantOptions()"
+                optionLabel="name"
+                optionValue="id"
+                [filter]="true"
+                filterBy="name,email"
+                [placeholder]="'select_consultant' | translate"
+                styleClass="w-full"
+              >
               </p-select>
             </div>
-            <button type="button" class="btn-assign" (click)="assign('CONSULTANT')"
-              [disabled]="assigning() || !assignForm.value.consultantId">
+            <button
+              type="button"
+              class="btn-assign"
+              (click)="assign('CONSULTANT')"
+              [disabled]="assigning() || !assignForm.value.consultantId"
+            >
               <i class="fa-solid fa-user-plus"></i>
               {{ (assigning() ? 'assigning' : 'assign') | translate }}
             </button>
@@ -210,22 +274,35 @@
 
       <!-- MAIN FORM (editable if canEdit, read-only otherwise) -->
       <form [formGroup]="Form" class="form-body" [class.readonly]="!canEdit">
-
         <h3 class="section-title">{{ 'client_intake' | translate }}</h3>
 
         <div class="row">
           <div class="input-group">
             <label>{{ 'case_customer' | translate }}</label>
-            <p-select formControlName="customerId" [options]="customers()" optionLabel="fullName" optionValue="id"
-              [filter]="true" filterBy="fullName,phone,email" [placeholder]="'select_customer' | translate"
-              styleClass="w-full" [disabled]="!canEdit">
+            <p-select
+              formControlName="customerId"
+              [options]="customers()"
+              optionLabel="fullName"
+              optionValue="id"
+              [filter]="true"
+              filterBy="fullName,phone,email"
+              [placeholder]="'select_customer' | translate"
+              styleClass="w-full"
+              [disabled]="!canEdit"
+            >
             </p-select>
           </div>
 
           <div class="input-group">
             <label>{{ 'case_type' | translate }}</label>
-            <p-select formControlName="caseType" [options]="caseTypes" optionLabel="label" optionValue="value"
-              styleClass="w-full" [disabled]="!canEdit">
+            <p-select
+              formControlName="caseType"
+              [options]="caseTypes"
+              optionLabel="label"
+              optionValue="value"
+              styleClass="w-full"
+              [disabled]="!canEdit"
+            >
             </p-select>
           </div>
         </div>
@@ -233,16 +310,27 @@
         <div class="row" *ngIf="Form.value.caseType === 'OTHER'">
           <div class="input-group">
             <label>{{ 'other_case_type' | translate }}</label>
-            <input type="text" pInputText formControlName="otherCaseType"
-              [placeholder]="'other_case_type_placeholder' | translate" [readonly]="!canEdit" />
+            <input
+              type="text"
+              pInputText
+              formControlName="otherCaseType"
+              [placeholder]="'other_case_type_placeholder' | translate"
+              [readonly]="!canEdit"
+            />
           </div>
         </div>
 
         <div class="row">
           <div class="input-group">
             <label>{{ 'case_date' | translate }}</label>
-            <p-datepicker formControlName="caseDate" [showIcon]="true" dateFormat="dd/mm/yy" appendTo="body"
-              styleClass="w-full" [disabled]="!canEdit">
+            <p-datepicker
+              formControlName="caseDate"
+              [showIcon]="true"
+              dateFormat="dd/mm/yy"
+              appendTo="body"
+              styleClass="w-full"
+              [disabled]="!canEdit"
+            >
             </p-datepicker>
           </div>
         </div>
@@ -250,8 +338,13 @@
         <div class="row">
           <div class="input-group">
             <label>{{ 'agency_number' | translate }}</label>
-            <input type="text" pInputText formControlName="agencyNumber"
-              [placeholder]="'agency_number_placeholder' | translate" [readonly]="!canEdit" />
+            <input
+              type="text"
+              pInputText
+              formControlName="agencyNumber"
+              [placeholder]="'agency_number_placeholder' | translate"
+              [readonly]="!canEdit"
+            />
           </div>
         </div>
 
@@ -261,27 +354,41 @@
           <div class="row">
             <div class="input-group">
               <label>{{ 'session_receiver' | translate }}</label>
-              <p-select formControlName="sessionReceiverId" [options]="lawyers()" optionLabel="name" optionValue="id"
-                [filter]="true" filterBy="name,email" [placeholder]="'select_lawyer' | translate" [showClear]="true"
-                styleClass="w-full" [disabled]="!canEdit">
+              <p-select
+                formControlName="sessionReceiverId"
+                [options]="lawyers()"
+                optionLabel="name"
+                optionValue="id"
+                [filter]="true"
+                filterBy="name,email"
+                [placeholder]="'select_lawyer' | translate"
+                [showClear]="true"
+                styleClass="w-full"
+                [disabled]="!canEdit"
+              >
               </p-select>
             </div>
-
           </div>
 
           <h3 class="section-title">{{ 'next_session_date' | translate }}</h3>
           <div class="input-group">
-            <label>{{ 'session_hijri_date' | translate }}</label>
-            <app-hijri-datepicker formControlName="sessionHijriDate"
-              [showClear]="true" [disablePast]="true"
-              [placeholder]="'session_hijri_date' | translate"></app-hijri-datepicker>
+            <label>{{ 'meeting_hijri_date' | translate }}</label>
+            <app-hijri-datepicker
+              formControlName="sessionHijriDate"
+              [showClear]="true"
+              [disablePast]="true"
+              [placeholder]="'meeting_hijri_date' | translate"
+            ></app-hijri-datepicker>
           </div>
 
           <div class="input-group">
             <label>{{ 'free_notes' | translate }}</label>
-            <textarea formControlName="freeNotes" rows="12"
+            <textarea
+              formControlName="freeNotes"
+              rows="12"
               [placeholder]="'free_notes_placeholder' | translate"
-              [readonly]="!canEdit"></textarea>
+              [readonly]="!canEdit"
+            ></textarea>
           </div>
         </ng-container>
 
@@ -320,7 +427,6 @@
             <i class="fa-solid fa-plus"></i> {{ 'add_line' | translate }}
           </button>
         </ng-container>
-
       </form>
     </section>
 
@@ -328,10 +434,13 @@
     <aside class="preview-card">
       <div class="preview-sticky">
         <h3 class="preview-title">{{ 'live_preview' | translate }}</h3>
-        <app-case-report-template [value]="previewData()" [showPage1]="previewShowPage1" [showPage2]="previewShowPage2"></app-case-report-template>
+        <app-case-report-template
+          [value]="previewData()"
+          [showPage1]="previewShowPage1"
+          [showPage2]="previewShowPage2"
+        ></app-case-report-template>
       </div>
     </aside>
-
   </div>
 
   <ng-template #loadingTpl>

@@ -719,6 +719,7 @@
   "session_date_required_hint": "يجب تحديد موعد الجلسة القادمة قبل إضافة التذكيرات",
   "session_hijri_date": "تاريخ الجلسة (هجري)",
   "session_hijri_date_hint": "الصيغة: سنة-شهر-يوم (مثال: 1447-12-15)",
+  "meeting_hijri_date": "تاريخ الاجتماع",
   "session_time": "وقت الجلسة",
   "save_session_date": "حفظ موعد الجلسة",
   "session_reminders_scheduled": "تم جدولة تذكيرات الجلسة",
