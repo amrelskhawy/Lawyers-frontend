@@ -129,7 +129,7 @@
                 <span class="user-avatar">{{ log.user.name.charAt(0) }}</span>
                 {{ log.user.name }}
               </span>
-              <span class="meta-role" [class]="'role-' + log.user.role.toLowerCase()">{{ roleLabels[log.user.role] ?? log.user.role }}</span>
+              <span class="meta-role" [class]="'role-' + log.user.role.toLowerCase()">{{ roleLabels[log.user.role] }}</span>
               <span class="meta-ip" *ngIf="log.ipAddress">
                 <i class="fa-solid fa-location-dot"></i> {{ log.ipAddress }}
               </span>
