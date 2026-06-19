@@ -7,7 +7,7 @@
 
 ::ng-deep .p-datatable-thead {
   position: relative;
-  z-index: 10;
+  z-index: 10 !important;
 }
 
 th {
