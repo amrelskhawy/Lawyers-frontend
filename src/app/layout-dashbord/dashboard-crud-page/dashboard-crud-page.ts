@@ -33,7 +33,7 @@ export class DashboardCrudPage implements OnInit, OnChanges {
   @Input() endpoint!: string;
   @Input() deleteEndpoint!: string;
   @Input() bulkDeleteEndpoint?: string;
-  @Input() columns!: { key: string; value: string }[];
+  @Input() columns!: { key: string; value: string; frozen?: boolean }[];
   @Input() searchFields!: string[];
   @Input() selectable = false;
   @Input() page: string = '';

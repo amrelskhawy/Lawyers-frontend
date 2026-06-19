@@ -16,17 +16,19 @@ th {
   position: sticky !important;
   top: 0;
   z-index: 10 !important;
+
 }
 
-::ng-deep .p-datatable-tbody > tr > td {
+::ng-deep .p-datatable-tbody>tr>td {
   position: relative;
   z-index: 1;
   // Compact rows so a full page fits the viewport without scrolling.
   padding-top: 0.45rem !important;
   padding-bottom: 0.45rem !important;
+
 }
 
-::ng-deep .p-datatable-thead > tr > th {
+::ng-deep .p-datatable-thead>tr>th {
   padding-top: 0.55rem !important;
   padding-bottom: 0.55rem !important;
 }
@@ -44,6 +46,27 @@ th {
   display: flex;
   gap: 2px;
   white-space: nowrap;
+}
+
+/* Frozen (sticky) column — pure CSS, no PrimeNG directive needed */
+::ng-deep th.col-frozen {
+  position: sticky !important;
+  right: 0 !important;
+  z-index: 20 !important;
+  background: linear-gradient(180deg, #b5a863 0%, #8b7a3a 100%) !important;
+  border-inline-end: 2px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+::ng-deep td.col-frozen {
+  position: sticky !important;
+  right: 0 !important;
+  z-index: 3 !important;
+  background: #f9fafb !important;
+  border-inline-end: 2px solid #e5e7eb !important;
+}
+
+::ng-deep tr:nth-child(even) td.col-frozen {
+  background: #fff !important;
 }
 
 .admin-badge {

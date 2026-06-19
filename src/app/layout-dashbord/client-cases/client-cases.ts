@@ -59,7 +59,7 @@ export class ClientCases implements OnInit {
     { ...ClientCases.UNASSIGNED_DEGREE, count: 0 },
   ]);
 
-  columns: { key: string; value: string }[] = [];
+  columns: { key: string; value: string; frozen?: boolean }[] = [];
   searchFields = [
     'customerName',
     'assignedConsultantName',
@@ -141,7 +141,7 @@ export class ClientCases implements OnInit {
 
     this.columns = [
       { key: '#', value: 'index' },
-      { key: this.translate.instant('case_customer'), value: 'customerName' },
+      { key: this.translate.instant('case_customer'), value: 'customerName', frozen: true },
       { key: this.translate.instant('case_type'), value: 'caseTypeLabel' },
       { key: this.translate.instant('case_degree'), value: 'caseDegreeLabel' },
       { key: this.translate.instant('case_date'), value: 'caseDateFormatted' },
