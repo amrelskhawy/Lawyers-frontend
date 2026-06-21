@@ -736,6 +736,8 @@
 
   "memo_needs_memo_question": "Does the case require a memo to be written?",
   "memo_type_label": "Memo type",
+  "case_degree_other_placeholder": "Describe the degree",
+  "closed_cases": "Closed Cases",
   "memo_deadline_label": "Last memo deadline",
   "memo_sent_success": "Memo request sent to consultant successfully",
 

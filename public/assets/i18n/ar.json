@@ -736,6 +736,8 @@
 
   "memo_needs_memo_question": "هل تحتاج القضية إلى كتابة مذكرة",
   "memo_type_label": "نوع المذكرة",
+  "case_degree_other_placeholder": "اكتب نوع الدرجة",
+  "closed_cases": "القضايا المغلقة",
   "memo_deadline_label": "اخر موعد لإرفاق المذكرة",
   "memo_send_to_consultant": "إرسال للمستشار المكلف",
   "memo_sent_success": "تم إرسال الطلب للمستشار بنجاح",

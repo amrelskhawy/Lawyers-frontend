@@ -11,7 +11,7 @@ export type CaseType =
   | 'OTHER';
 
 /** Litigation degree (درجة التقاضي) — each degree has a fixed display color. */
-export type CaseDegree = 'FIRST_INSTANCE' | 'APPEAL' | 'CASSATION' | 'PETITION';
+export type CaseDegree = 'FIRST_INSTANCE' | 'APPEAL' | 'CASSATION' | 'PETITION' | 'OTHER';
 
 export interface IDataCase {
   id: string;
@@ -19,6 +19,7 @@ export interface IDataCase {
   caseType: CaseType;
   otherCaseType: string | null;
   caseDegree: CaseDegree | null;
+  otherDegreeText: string | null;
   caseDate: string;
   hijriDate: string | null;
   agencyNumber: string | null;
@@ -114,6 +115,7 @@ export const CASE_DEGREE_OPTIONS: {
   { value: 'APPEAL', label: 'الاستئناف', color: '#eab308', colorLight: '#facc15' },
   { value: 'CASSATION', label: 'النقض', color: '#2563eb', colorLight: '#60a5fa' },
   { value: 'PETITION', label: 'الالتماس', color: '#f97316', colorLight: '#fb923c' },
+  { value: 'OTHER', label: 'أخرى', color: '#8b5cf6', colorLight: '#a78bfa' },
 ];
 
 export const REPORT_REQUIREMENTS: string[] = [

@@ -59,6 +59,9 @@ export class ClientCases implements OnInit {
     { ...ClientCases.UNASSIGNED_DEGREE, count: 0 },
   ]);
 
+  /** Count of cases marked fully completed (completedAt IS NOT NULL). */
+  closedCount = signal<number>(0);
+
   columns: { key: string; value: string; frozen?: boolean }[] = [];
   searchFields = [
     'customerName',
@@ -106,8 +109,9 @@ export class ClientCases implements OnInit {
     customerName: item.customer?.fullName ?? '',
     caseTypeLabel:
       CASE_TYPE_OPTIONS.find((o) => o.value === item.caseType)?.label ?? item.caseType,
-    caseDegreeLabel:
-      CASE_DEGREE_OPTIONS.find((o) => o.value === item.caseDegree)?.label ?? '',
+    caseDegreeLabel: item.caseDegree === 'OTHER' && item.otherDegreeText
+      ? item.otherDegreeText
+      : (CASE_DEGREE_OPTIONS.find((o) => o.value === item.caseDegree)?.label ?? ''),
     caseDegreeColor:
       CASE_DEGREE_OPTIONS.find((o) => o.value === item.caseDegree)?.color ?? '',
     caseDateFormatted: item.caseDate ? new Date(item.caseDate).toLocaleDateString() : '',
@@ -172,6 +176,7 @@ export class ClientCases implements OnInit {
       ...CASE_DEGREE_OPTIONS.map((o) => ({ ...o, count: dc[o.value] ?? 0 })),
       { ...ClientCases.UNASSIGNED_DEGREE, count: dc['UNASSIGNED'] ?? 0 },
     ]);
+    this.closedCount.set(meta['closedCount'] ?? 0);
 
     const pending: number = meta['pendingCount'] ?? 0;
     this.pendingCount.set(pending);
@@ -200,6 +205,8 @@ export class ClientCases implements OnInit {
     } else {
       next['caseDegree'] = value;
       this.filterDegreeLabel.set(this.degreeLabelFor(value));
+      // Clear closed filter when switching to a degree filter.
+      delete next['onlyClosed'];
     }
     this.casesFilter.set(next);
   }
@@ -209,11 +216,30 @@ export class ClientCases implements OnInit {
     return this.casesFilter()['caseDegree'] === value;
   }
 
+  /** Toggle filter to show only closed (completed) cases. */
+  toggleClosedFilter() {
+    const next = { ...this.casesFilter() };
+    if (next['onlyClosed']) {
+      delete next['onlyClosed'];
+    } else {
+      next['onlyClosed'] = 'true';
+      // Clear degree filter when switching to closed view.
+      delete next['caseDegree'];
+      this.filterDegreeLabel.set('');
+    }
+    this.casesFilter.set(next);
+  }
+
+  get isClosedFilterActive(): boolean {
+    return !!this.casesFilter()['onlyClosed'];
+  }
+
   /** Drop all active filters (user + degree) and reload the full cases list. */
   clearUserFilter() {
     this.casesFilter.set({});
     this.filterAssigneeName.set('');
     this.filterDegreeLabel.set('');
+    // (onlyClosed is inside casesFilter, cleared by the reset above)
     // Strip the query params from the URL so a refresh/back doesn't re-apply the filter.
     this.router.navigate([], { relativeTo: this.route, queryParams: {} });
   }

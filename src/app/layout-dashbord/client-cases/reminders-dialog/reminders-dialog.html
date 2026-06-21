@@ -110,8 +110,14 @@
                 </select>
                 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
               </div>
+              <div class="rd-input-wrap rd-select-grow" *ngIf="selectedDegree() === 'OTHER'">
+                <i class="fa-solid fa-pen" aria-hidden="true"></i>
+                <input type="text" [ngModel]="otherDegreeText()" (ngModelChange)="otherDegreeText.set($event)"
+                  [ngModelOptions]="{ standalone: true }"
+                  [placeholder]="'case_degree_other_placeholder' | translate" />
+              </div>
               <button type="button" class="rd-btn rd-btn-primary rd-btn-sm" (click)="saveDegree()"
-                [disabled]="!selectedDegree() || degreeSaving()">
+                [disabled]="!selectedDegree() || (selectedDegree() === 'OTHER' && !otherDegreeText().trim()) || degreeSaving()">
                 <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
                 {{ 'save' | translate }}
               </button>

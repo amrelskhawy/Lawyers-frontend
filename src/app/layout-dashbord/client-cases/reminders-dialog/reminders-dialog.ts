@@ -41,6 +41,7 @@ export class RemindersDialog {
   // Litigation degree (الدرجة) — fixed color per degree, shown in the cases table.
   degreeOptions = CASE_DEGREE_OPTIONS;
   selectedDegree = signal<CaseDegree | ''>('');
+  otherDegreeText = signal<string>('');
   degreeSaving = signal<boolean>(false);
   degreeSaved = signal<boolean>(false);
   // Memo-request section (LAWYER / ADMIN / MODERATOR send to assigned consultant).
@@ -127,6 +128,7 @@ export class RemindersDialog {
     this.caseItem.set(value ?? null);
     this.sessionSaved.set(false);
     this.selectedDegree.set(value?.caseDegree ?? '');
+    this.otherDegreeText.set(value?.otherDegreeText ?? '');
     this.degreeSaved.set(false);
     this.prefillSessionForm(value);
     // Initialise memo section from the case's persisted state.
@@ -209,6 +211,7 @@ export class RemindersDialog {
   onDegreeChange(value: CaseDegree | '') {
     this.selectedDegree.set(value);
     this.degreeSaved.set(false);
+    if (value !== 'OTHER') this.otherDegreeText.set('');
   }
 
   /** Persist the litigation degree to the case and notify the parent table. */
@@ -217,8 +220,10 @@ export class RemindersDialog {
     const caseDegree = this.selectedDegree();
     if (!caseId || !caseDegree) return;
 
+    const body: any = { caseDegree };
+    if (caseDegree === 'OTHER') body.otherDegreeText = this.otherDegreeText();
     this.degreeSaving.set(true);
-    this.data.patch<{ data: IDataCase }>(`cases/${caseId}/degree`, { caseDegree }).subscribe({
+    this.data.patch<{ data: IDataCase }>(`cases/${caseId}/degree`, body).subscribe({
       next: (res) => {
         this.caseItem.set(res.data);
         this.degreeSaving.set(false);

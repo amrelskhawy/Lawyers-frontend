@@ -150,6 +150,31 @@
     </div>
     <div class="stat-bg-icon"><i class="fa-solid fa-scale-balanced"></i></div>
   </div>
+
+  <!-- Closed cases card -->
+  <div class="degree-stat-card"
+    role="button" tabindex="0"
+    [class.active]="isClosedFilterActive"
+    [class.dimmed]="casesFilter()['caseDegree'] && !isClosedFilterActive"
+    style="background: linear-gradient(135deg, #0f766e, #2dd4bf);"
+    [pTooltip]="(isClosedFilterActive ? 'clear_filter' : 'filter_by_this_degree') | translate"
+    tooltipPosition="top"
+    (click)="toggleClosedFilter()"
+    (keydown.enter)="toggleClosedFilter()" (keydown.space)="toggleClosedFilter()">
+    <button *ngIf="isClosedFilterActive" type="button" class="card-clear-btn"
+      [pTooltip]="'clear_filter' | translate" tooltipPosition="top"
+      (click)="$event.stopPropagation(); toggleClosedFilter()">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <div class="stat-icon-wrap">
+      <i class="fa-solid fa-circle-check"></i>
+    </div>
+    <div class="stat-body">
+      <span class="stat-value">{{ closedCount() }}</span>
+      <span class="stat-label">{{ 'closed_cases' | translate }}</span>
+    </div>
+    <div class="stat-bg-icon"><i class="fa-solid fa-circle-check"></i></div>
+  </div>
 </div>
 
 <app-dashboard-crud-page endpoint="cases" deleteEndpoint="cases" [columns]="columns" [searchFields]="searchFields"
