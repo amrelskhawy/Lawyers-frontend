@@ -22,6 +22,10 @@ export class RemindersDialog {
   /** Emitted when the case itself changes (e.g. degree saved) so the parent table can refresh. */
   @Output() caseUpdated = new EventEmitter<IDataCase>();
 
+  activeTab = signal<'session' | 'reminders' | 'docs'>('session');
+  isExpanded = signal<boolean>(false);
+  showAddForm = signal<boolean>(false);
+
   caseItem = signal<IDataCase | null>(null);
   reminders = signal<IReminder[]>([]);
   types = signal<IReminderTypeOption[]>([]);
@@ -374,6 +378,7 @@ export class RemindersDialog {
 
     req.subscribe(() => {
       this.resetForm();
+      this.showAddForm.set(false);
       this.loadReminders(caseId);
     });
   }
@@ -437,8 +442,40 @@ export class RemindersDialog {
     });
   }
 
+  setActiveTab(tab: 'session' | 'reminders' | 'docs') {
+    this.activeTab.set(tab);
+  }
+
+  toggleExpand() {
+    const expanding = !this.isExpanded();
+    this.isExpanded.set(expanding);
+    if (expanding && this.activeTab() === 'session') {
+      this.activeTab.set('reminders');
+    }
+  }
+
+  toggleAddForm() {
+    const next = !this.showAddForm();
+    this.showAddForm.set(next);
+    if (!next) this.resetForm();
+  }
+
+  cancelAdd() {
+    this.showAddForm.set(false);
+    this.resetForm();
+  }
+
+  editAndOpen(r: IReminder) {
+    this.onEdit(r);
+    this.showAddForm.set(true);
+    this.activeTab.set('reminders');
+  }
+
   close() {
     this.resetForm();
+    this.showAddForm.set(false);
+    this.isExpanded.set(false);
+    this.activeTab.set('session');
     this.visible = false;
     this.visibleChange.emit(false);
   }
