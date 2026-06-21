@@ -288,6 +288,15 @@
               </div>
               <div class="rd-memo-fields" *ngIf="needsMemo()">
                 <div class="rd-field">
+                  <label>{{ 'memo_type_label' | translate }}</label>
+                  <div class="rd-input-wrap">
+                    <i class="fa-solid fa-tag" aria-hidden="true"></i>
+                    <input type="text" [ngModel]="memoType()" (ngModelChange)="memoType.set($event)"
+                      [ngModelOptions]="{ standalone: true }"
+                      [placeholder]="'memo_type_label' | translate" />
+                  </div>
+                </div>
+                <div class="rd-field">
                   <label>{{ 'memo_deadline_label' | translate }}</label>
                   <div class="rd-input-wrap">
                     <i class="fa-regular fa-calendar" aria-hidden="true"></i>

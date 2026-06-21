@@ -735,6 +735,7 @@
   "rejection_reason": "سبب الرفض",
 
   "memo_needs_memo_question": "هل تحتاج القضية إلى كتابة مذكرة",
+  "memo_type_label": "نوع المذكرة",
   "memo_deadline_label": "اخر موعد لإرفاق المذكرة",
   "memo_send_to_consultant": "إرسال للمستشار المكلف",
   "memo_sent_success": "تم إرسال الطلب للمستشار بنجاح",

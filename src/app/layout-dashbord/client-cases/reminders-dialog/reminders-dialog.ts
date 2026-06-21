@@ -46,6 +46,7 @@ export class RemindersDialog {
   // Memo-request section (LAWYER / ADMIN / MODERATOR send to assigned consultant).
   needsMemo = signal<boolean>(false);
   memoDeadline = signal<string>('');
+  memoType = signal<string>('');
   memoSending = signal<boolean>(false);
   memoSent = signal<boolean>(false);
   memoError = signal<string>('');
@@ -135,6 +136,7 @@ export class RemindersDialog {
         ? new Date(value.memoDeadline).toISOString().substring(0, 10)
         : '',
     );
+    this.memoType.set(value?.memoType ?? '');
     this.memoSent.set(false);
     this.memoError.set('');
     if (value?.id) {
@@ -417,7 +419,10 @@ export class RemindersDialog {
     this.needsMemo.set(value);
     this.memoSent.set(false);
     this.memoError.set('');
-    if (!value) this.memoDeadline.set('');
+    if (!value) {
+      this.memoDeadline.set('');
+      this.memoType.set('');
+    }
   }
 
   sendMemoReminder() {
@@ -429,7 +434,7 @@ export class RemindersDialog {
     this.memoSent.set(false);
     this.memoError.set('');
 
-    this.data.post<{ data: any }>('reminders/memo-request', { caseId, memoDeadline: deadline }).subscribe({
+    this.data.post<{ data: any }>('reminders/memo-request', { caseId, memoDeadline: deadline, memoType: this.memoType() || undefined }).subscribe({
       next: () => {
         this.memoSending.set(false);
         this.memoSent.set(true);

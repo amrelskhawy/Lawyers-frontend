@@ -18,6 +18,7 @@ interface CalendarMemo {
   clientName: string;
   courtName: string;
   consultantName: string;
+  memoType: string;
   deadlineFormatted: string;
   /** Hijri canonical key "iYYYY-iMM-iDD" derived from the Gregorian memoDeadline. */
   hijriKey: string;
@@ -110,6 +111,7 @@ export class ConsultantReminders implements OnInit {
       clientName: r.case?.customer?.fullName ?? '—',
       courtName: report?.courtName ?? '—',
       consultantName: r.case?.consultant?.nameAr ?? r.case?.consultant?.name ?? '—',
+      memoType: r.case?.memoType ?? '—',
       deadlineFormatted: this.formatDeadline(r.memoDeadline ?? r.case?.memoDeadline),
       hijriKey: this.toHijriKey(r.memoDeadline ?? r.case?.memoDeadline) ?? '',
       color: STATUS_COLORS[r.status] ?? '#64748b',

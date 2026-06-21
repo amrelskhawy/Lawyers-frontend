@@ -34,6 +34,7 @@ export interface IConsultantReminder extends IReminder {
     agencyNumber: string | null;
     needsMemo: boolean;
     memoDeadline: string | null;
+    memoType: string | null;
     customer?: { fullName: string } | null;
     consultant?: { name: string; nameAr?: string | null } | null;
     sessionReports?: { caseNumber?: string | null; courtName?: string | null }[];

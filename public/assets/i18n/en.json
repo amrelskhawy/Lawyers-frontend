@@ -735,6 +735,7 @@
   "rejection_reason": "Rejection reason",
 
   "memo_needs_memo_question": "Does the case require a memo to be written?",
+  "memo_type_label": "Memo type",
   "memo_deadline_label": "Last memo deadline",
   "memo_sent_success": "Memo request sent to consultant successfully",
 
