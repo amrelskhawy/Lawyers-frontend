@@ -335,6 +335,10 @@
     "AM": "AM",
     "PM": "PM",
     "CASE_NOT_FOUND": "Case not found",
+    "MEMO_NO_CONSULTANT_ASSIGNED": "No consultant is assigned to this case",
+    "MEMO_CONSULTANT_NOT_ACCEPTED": "The consultant has not accepted the assignment yet",
+    "MEMO_REMINDER_SENT": "Memo request sent to consultant",
+    "CONSULTANT_REMINDERS_RETRIEVED": "Consultant reminders retrieved",
     "CASE_CREATED_SUCCESS": "Case created successfully",
     "CASE_UPDATED_SUCCESS": "Case updated",
     "CASE_DELETED_SUCCESS": "Case deleted",
@@ -511,6 +515,7 @@
   "view_month": "Month",
   "view_year": "Year",
   "no_sessions": "No sessions on this day",
+  "no_memo_reminders": "No memo requests on this day",
   "case_customer": "Customer",
   "case_type": "Case Type",
   "other_case_type": "Case Type (Other)",
@@ -727,5 +732,26 @@
   "reject_reason_placeholder": "Write the reason for rejecting the assignment...",
   "reject_reason_required": "A rejection reason is required",
   "confirm": "Confirm",
-  "rejection_reason": "Rejection reason"
+  "rejection_reason": "Rejection reason",
+
+  "memo_needs_memo_question": "Does the case require a memo to be written?",
+  "yes": "Yes",
+  "no": "No",
+  "memo_deadline_label": "Memo attachment deadline",
+  "memo_send_to_consultant": "Send to assigned consultant",
+  "memo_sent_success": "Memo request sent to consultant successfully",
+
+  "consultant_reminders_title": "Consultant Reminders",
+  "consultant_reminders": "Consultant Reminders",
+  "consultant_reminders_empty": "No memo requests yet",
+  "consultant_name": "Consultant",
+  "case_number": "Case No.",
+  "client_name": "Client Name",
+  "court": "Court",
+  "reminder_status_label": "Status",
+  "sent_by": "Sent By",
+  "sent_at": "Sent At",
+  "open_case": "Open Case",
+
+  "reminder_type_memo_request": "Memo request for assigned consultant"
 }

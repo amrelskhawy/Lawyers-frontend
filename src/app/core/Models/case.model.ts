@@ -58,6 +58,10 @@ export interface IDataCase {
   completedAt: string | null;
   completedById?: string | null;
 
+  // Whether a consultant memo has been requested for this case.
+  needsMemo?: boolean;
+  memoDeadline?: string | null;
+
   createdById: string;
   isDeleted: boolean;
   createdAt: string;

@@ -39,6 +39,12 @@ export class RemindersDialog {
   selectedDegree = signal<CaseDegree | ''>('');
   degreeSaving = signal<boolean>(false);
   degreeSaved = signal<boolean>(false);
+  // Memo-request section (LAWYER / ADMIN / MODERATOR send to assigned consultant).
+  needsMemo = signal<boolean>(false);
+  memoDeadline = signal<string>('');
+  memoSending = signal<boolean>(false);
+  memoSent = signal<boolean>(false);
+  memoError = signal<string>('');
   form: FormGroup;
   sessionForm: FormGroup;
 
@@ -70,6 +76,11 @@ export class RemindersDialog {
 
   get isConsultant(): boolean {
     return this.role === 'CONSULTANT';
+  }
+
+  /** Only LAWYER, ADMIN, MODERATOR can trigger memo requests (consultant is the recipient). */
+  get canSendMemoRequest(): boolean {
+    return ['ADMIN', 'MODERATOR', 'LAWYER'].includes(this.role);
   }
 
   constructor(private fb: FormBuilder, private data: Data) {
@@ -113,6 +124,15 @@ export class RemindersDialog {
     this.selectedDegree.set(value?.caseDegree ?? '');
     this.degreeSaved.set(false);
     this.prefillSessionForm(value);
+    // Initialise memo section from the case's persisted state.
+    this.needsMemo.set(value?.needsMemo ?? false);
+    this.memoDeadline.set(
+      value?.memoDeadline
+        ? new Date(value.memoDeadline).toISOString().substring(0, 10)
+        : '',
+    );
+    this.memoSent.set(false);
+    this.memoError.set('');
     if (value?.id) {
       this.loadTypes();
       this.loadReminders(value.id);
@@ -384,6 +404,37 @@ export class RemindersDialog {
   private resetForm() {
     this.editingId.set(null);
     this.form.reset({ type: 'SESSION_DETAILS_REVIEW', content: '', date: '', time: '', repeat: false });
+  }
+
+  // --- Memo request ---------------------------------------------------------
+
+  onNeedsMemoChange(value: boolean) {
+    this.needsMemo.set(value);
+    this.memoSent.set(false);
+    this.memoError.set('');
+    if (!value) this.memoDeadline.set('');
+  }
+
+  sendMemoReminder() {
+    const caseId = this.caseItem()?.id;
+    const deadline = this.memoDeadline();
+    if (!caseId || !deadline) return;
+
+    this.memoSending.set(true);
+    this.memoSent.set(false);
+    this.memoError.set('');
+
+    this.data.post<{ data: any }>('reminders/memo-request', { caseId, memoDeadline: deadline }).subscribe({
+      next: () => {
+        this.memoSending.set(false);
+        this.memoSent.set(true);
+        this.loadReminders(caseId);
+      },
+      error: (err: any) => {
+        this.memoSending.set(false);
+        this.memoError.set(err?.error?.message ?? 'error');
+      },
+    });
   }
 
   close() {

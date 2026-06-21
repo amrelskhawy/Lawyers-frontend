@@ -335,6 +335,10 @@
     "AM": "صباحاً",
     "PM": "مساءً",
     "CASE_NOT_FOUND": "القضية غير موجودة",
+    "MEMO_NO_CONSULTANT_ASSIGNED": "لا يوجد مستشار مكلف بهذه القضية",
+    "MEMO_CONSULTANT_NOT_ACCEPTED": "المستشار لم يقبل التكليف بعد",
+    "MEMO_REMINDER_SENT": "تم إرسال طلب المذكرة للمستشار",
+    "CONSULTANT_REMINDERS_RETRIEVED": "تم جلب تذكيرات المستشارين",
     "CASE_CREATED_SUCCESS": "تم إنشاء القضية بنجاح",
     "CASE_UPDATED_SUCCESS": "تم تحديث القضية",
     "CASE_DELETED_SUCCESS": "تم حذف القضية",
@@ -511,6 +515,7 @@
   "view_month": "شهر",
   "view_year": "سنة",
   "no_sessions": "لا توجد جلسات في هذا اليوم",
+  "no_memo_reminders": "لا توجد طلبات مذكرات في هذا اليوم",
   "case_customer": "العميل",
   "case_type": "نوع القضية",
   "other_case_type": "نوع القضية (أخرى)",
@@ -727,5 +732,26 @@
   "reject_reason_placeholder": "اكتب سبب رفض التكليف هنا...",
   "reject_reason_required": "سبب الرفض مطلوب",
   "confirm": "تأكيد",
-  "rejection_reason": "سبب الرفض"
+  "rejection_reason": "سبب الرفض",
+
+  "memo_needs_memo_question": "هل تحتاج القضية إلى كتابة مذكرة",
+  "yes": "نعم",
+  "no": "لا",
+  "memo_deadline_label": "تاريخ إرفاق المذكرة",
+  "memo_send_to_consultant": "إرسال للمستشار المكلف",
+  "memo_sent_success": "تم إرسال الطلب للمستشار بنجاح",
+
+  "consultant_reminders_title": "تذكيرات المستشارين",
+  "consultant_reminders": "تذكيرات المستشارين",
+  "consultant_reminders_empty": "لا توجد طلبات مذكرات حتى الآن",
+  "consultant_name": "المستشار",
+  "case_number": "رقم القضية",
+  "client_name": "اسم العميل",
+  "court": "المحكمة",
+  "reminder_status_label": "الحالة",
+  "sent_by": "أرسله",
+  "sent_at": "تاريخ الإرسال",
+  "open_case": "فتح القضية",
+
+  "reminder_type_memo_request": "طلب إعداد مذكرة للمستشار"
 }

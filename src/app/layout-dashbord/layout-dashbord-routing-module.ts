@@ -16,6 +16,7 @@ import { LawyerFeesContractsList } from './lawyer-fees-contracts-list/lawyer-fee
 import { LawyerFeesContract } from './lawyer-fees-contract/lawyer-fees-contract';
 import { ActivityLogs } from './activity-logs/activity-logs';
 import { CasesCalendar } from './cases-calendar/cases-calendar';
+import { ConsultantReminders } from './consultant-reminders/consultant-reminders';
 
 const routes: Routes = [
   {
@@ -83,6 +84,13 @@ const routes: Routes = [
         path: 'cases-calendar',
         component: CasesCalendar,
         canActivate: [roleGuard('ADMIN', 'MODERATOR', 'LAWYER', 'CONSULTANT')],
+      },
+
+      // ── Consultant reminders — memo requests sent to consultants ─────────
+      {
+        path: 'consultant-reminders',
+        component: ConsultantReminders,
+        canActivate: [roleGuard('ADMIN', 'MODERATOR', 'CONSULTANT')],
       },
 
       // ── Admin + Moderator + Lawyer: reports ──────────────────────────────

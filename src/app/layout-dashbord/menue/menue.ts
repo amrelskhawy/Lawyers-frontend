@@ -126,6 +126,13 @@ export class Menue implements OnInit {
         route: '/dashboard/content/cases-calendar',
       }] : []),
 
+      // ── Consultant reminders — admin, moderator, consultant ─
+      ...(isAdmin || isModerator || role === 'CONSULTANT' ? [{
+        name: 'consultant_reminders',
+        icon: 'fa-solid fa-file-pen',
+        route: '/dashboard/content/consultant-reminders',
+      }] : []),
+
       // ── Reports — admin, moderator, lawyer (not receptionist) ─
       ...(isAdmin || isModerator ? [{
         name: 'lawyer_fees_contracts',

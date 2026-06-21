@@ -52,6 +52,50 @@
           </small>
         </form>
 
+        <!-- Memo-request section (LAWYER / ADMIN / MODERATOR only) -->
+        <div class="memo-card" *ngIf="canSendMemoRequest">
+          <div class="form-title">
+            <i class="fa-solid fa-file-pen"></i>
+            {{ 'memo_needs_memo_question' | translate }}
+          </div>
+
+          <div class="memo-toggle-row">
+            <button type="button" class="memo-btn yes" [class.active]="needsMemo()" (click)="onNeedsMemoChange(true)">
+              {{ 'yes' | translate }}
+            </button>
+            <button type="button" class="memo-btn no" [class.active]="!needsMemo()" (click)="onNeedsMemoChange(false)">
+              {{ 'no' | translate }}
+            </button>
+          </div>
+
+          <div class="memo-fields" *ngIf="needsMemo()">
+            <div class="input-group">
+              <label>{{ 'memo_deadline_label' | translate }}</label>
+              <div class="input-wrapper">
+                <i class="fa-regular fa-calendar input-icon"></i>
+                <input type="date" [ngModel]="memoDeadline()" (ngModelChange)="memoDeadline.set($event)"
+                  [ngModelOptions]="{ standalone: true }" />
+              </div>
+            </div>
+
+            <button type="button" class="btn-send-memo" (click)="sendMemoReminder()"
+              [disabled]="!memoDeadline() || memoSending()">
+              <i class="fa-brands fa-whatsapp"></i>
+              {{ 'memo_send_to_consultant' | translate }}
+            </button>
+
+            <small class="memo-success" *ngIf="memoSent()">
+              <i class="fa-solid fa-circle-check"></i>
+              {{ 'memo_sent_success' | translate }}
+            </small>
+
+            <small class="memo-error" *ngIf="memoError()">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+              {{ ('API_MESSAGES.' + memoError()) | translate }}
+            </small>
+          </div>
+        </div>
+
         <!-- Existing reminders -->
         <div class="reminders-list">
           <div class="empty-state" *ngIf="reminders().length === 0">
