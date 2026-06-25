@@ -41,3 +41,34 @@ export function gregorianToPickerHijri(value: Date | string | null | undefined):
   const get = (t: string) => parts.find((p) => p.type === t)?.value ?? '';
   return `${get('day').padStart(2, '0')} / ${get('month').padStart(2, '0')} / ${get('year')}`;
 }
+
+/**
+ * The picker's "DD / MM / YYYY" Hijri string → Gregorian "YYYY-MM-DD".
+ * Uses a linear search anchored near the approximate Gregorian equivalent
+ * so the backend receives the date format it expects (YYYY-MM-DD).
+ */
+export function pickerHijriToGregorian(value: string | null | undefined): string {
+  if (!value) return '';
+  const m = value.match(/^(\d{1,2})\s*\/\s*(\d{1,2})\s*\/\s*(\d{3,4})$/);
+  if (!m) return '';
+  const hDay = parseInt(m[1], 10);
+  const hMonth = parseInt(m[2], 10);
+  const hYear = parseInt(m[3], 10);
+  // Approximate Gregorian start: Hijri year × (354.367/365.25) + 621.5, minus 60-day buffer
+  const approxYear = Math.round((hYear - 1) * (354.367 / 365.25) + 622);
+  const start = new Date(approxYear, 0, 1);
+  start.setDate(start.getDate() - 60);
+  for (let i = 0; i < 450; i++) {
+    const d = new Date(start);
+    d.setDate(d.getDate() + i);
+    const parts = HIJRI_FMT.formatToParts(d);
+    const get = (t: string) => parseInt(parts.find((p) => p.type === t)?.value ?? '0', 10);
+    if (get('day') === hDay && get('month') === hMonth && get('year') === hYear) {
+      const y = d.getFullYear();
+      const mo = String(d.getMonth() + 1).padStart(2, '0');
+      const da = String(d.getDate()).padStart(2, '0');
+      return `${y}-${mo}-${da}`;
+    }
+  }
+  return '';
+}

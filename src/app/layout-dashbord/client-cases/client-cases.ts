@@ -27,7 +27,7 @@ export class ClientCases implements OnInit {
     private route: ActivatedRoute,
     private data: Data,
     private sound: SoundService,
-  ) {}
+  ) { }
 
   /** Server-side filters merged into every cases request (e.g. ?lawyerId=… from the Users page). */
   casesFilter = signal<{ [key: string]: any }>({});
@@ -71,6 +71,7 @@ export class ClientCases implements OnInit {
     'caseDegreeLabel',
     'caseDate',
     'nextSessionDateFormatted',
+    'otherCaseType'
   ];
   visibelform = signal<boolean>(false);
   visibelReminders = signal<boolean>(false);
@@ -147,6 +148,7 @@ export class ClientCases implements OnInit {
       { key: '#', value: 'index' },
       { key: this.translate.instant('case_customer'), value: 'customerName', frozen: true },
       { key: this.translate.instant('case_type'), value: 'caseTypeLabel' },
+      { key: this.translate.instant('other_case_type'), value: 'otherCaseType' },
       { key: this.translate.instant('case_degree'), value: 'caseDegreeLabel' },
       { key: this.translate.instant('case_date'), value: 'caseDateFormatted' },
       { key: this.translate.instant('next_session_date'), value: 'nextSessionDateFormatted' },

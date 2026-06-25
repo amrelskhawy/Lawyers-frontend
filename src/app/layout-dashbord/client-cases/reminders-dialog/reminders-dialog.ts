@@ -6,6 +6,7 @@ import { IAttachment, IReminder, IReminderTypeOption } from '../../../core/Model
 import {
   canonicalToPickerHijri,
   gregorianToPickerHijri,
+  pickerHijriToGregorian,
   pickerToCanonicalHijri,
 } from '../../../core/utils/hijri-format';
 import { format12h } from '../../../core/utils/time-format';
@@ -134,9 +135,7 @@ export class RemindersDialog {
     // Initialise memo section from the case's persisted state.
     this.needsMemo.set(value?.needsMemo ?? false);
     this.memoDeadline.set(
-      value?.memoDeadline
-        ? new Date(value.memoDeadline).toISOString().substring(0, 10)
-        : '',
+      value?.memoDeadline ? gregorianToPickerHijri(value.memoDeadline) : '',
     );
     this.memoType.set(value?.memoType ?? '');
     this.memoSent.set(false);
@@ -432,7 +431,7 @@ export class RemindersDialog {
 
   sendMemoReminder() {
     const caseId = this.caseItem()?.id;
-    const deadline = this.memoDeadline();
+    const deadline = pickerHijriToGregorian(this.memoDeadline());
     if (!caseId || !deadline) return;
 
     this.memoSending.set(true);

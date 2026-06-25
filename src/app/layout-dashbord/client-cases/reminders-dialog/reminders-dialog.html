@@ -304,11 +304,9 @@
                 </div>
                 <div class="rd-field">
                   <label>{{ 'memo_deadline_label' | translate }}</label>
-                  <div class="rd-input-wrap">
-                    <i class="fa-regular fa-calendar" aria-hidden="true"></i>
-                    <input type="date" [ngModel]="memoDeadline()" (ngModelChange)="memoDeadline.set($event)"
-                      [ngModelOptions]="{ standalone: true }" />
-                  </div>
+                  <app-hijri-datepicker [ngModel]="memoDeadline()" (ngModelChange)="memoDeadline.set($event)"
+                    [ngModelOptions]="{ standalone: true }"
+                    [placeholder]="'memo_deadline_label' | translate"></app-hijri-datepicker>
                 </div>
                 <button type="button" class="rd-btn rd-btn-whatsapp" (click)="sendMemoReminder()"
                   [disabled]="!memoDeadline() || memoSending()">
