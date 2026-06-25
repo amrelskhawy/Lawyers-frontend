@@ -1,6 +1,7 @@
 import { Component, OnInit, signal, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { DashboardCrudPage } from '../dashboard-crud-page/dashboard-crud-page';
+import { IColumn } from '../types/shared';
 
 @Component({
   selector: 'app-holidays',
@@ -11,16 +12,16 @@ import { DashboardCrudPage } from '../dashboard-crud-page/dashboard-crud-page';
 export class Holidays implements OnInit {
   @ViewChild(DashboardCrudPage) crudPage!: DashboardCrudPage;
 
-  constructor(private translate: TranslateService) {}
+  constructor(private translate: TranslateService) { }
 
-  columns: { key: string; value: string }[] = [];
+  columns: IColumn[] = [];
   searchFields = ['date', 'endTime', 'startTime', 'name'];
   visibelform = signal<boolean>(false);
 
   ngOnInit() {
     this.columns = [
       { key: '#', value: 'index' },
-      { key: this.translate.instant('name'), value: 'name' },
+      { key: this.translate.instant('name'), value: 'name', frozen: true },
       { key: this.translate.instant('date'), value: 'date' },
       { key: this.translate.instant('startTime'), value: 'startTime' },
       { key: this.translate.instant('endTime'), value: 'endTime' },

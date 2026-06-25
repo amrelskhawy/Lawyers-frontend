@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { DashboardCrudPage } from '../dashboard-crud-page/dashboard-crud-page';
 import { CASE_DEGREE_OPTIONS } from '../../core/Models/case.model';
+import { IColumn } from '../types/shared';
 
 export interface IUser {
   id: string;
@@ -33,9 +34,9 @@ export class Users implements OnInit {
   constructor(
     private translate: TranslateService,
     private router: Router,
-  ) {}
+  ) { }
 
-  columns: { key: string; value: string }[] = [];
+  columns: IColumn[] = [];
   searchFields = ['name', 'nameAr', 'nameEn', 'email', 'phone', 'role'];
   private _visibleForm = signal<boolean>(false);
   get visibleForm() { return this._visibleForm(); }
@@ -88,7 +89,7 @@ export class Users implements OnInit {
   ngOnInit() {
     this.columns = [
       { key: '#', value: 'index' },
-      { key: this.translate.instant('user_name_ar'), value: 'displayName' },
+      { key: this.translate.instant('user_name_ar'), value: 'displayName', frozen: true },
       { key: this.translate.instant('user_name_en'), value: 'nameEn' },
       { key: this.translate.instant('email'), value: 'email' },
       { key: this.translate.instant('phone'), value: 'phone' },

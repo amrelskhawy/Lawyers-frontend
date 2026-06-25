@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { DashboardCrudPage } from '../dashboard-crud-page/dashboard-crud-page';
 import { IDataSessionReport } from '../../core/Models/session-report.model';
+import { IColumn } from '../types/shared';
 
 @Component({
   selector: 'app-session-reports-list',
@@ -17,11 +18,11 @@ export class SessionReportsList implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private translate: TranslateService,
-  ) {}
+  ) { }
 
   caseId = signal<string>('');
   endpoint = signal<string>('');
-  columns: { key: string; value: string }[] = [];
+  columns: IColumn[] = [];
   searchFields = ['reportNumber', 'courtName', 'caseNumber', 'sessionDateFormatted'];
 
   dataMapper = (item: IDataSessionReport, index: number) => ({

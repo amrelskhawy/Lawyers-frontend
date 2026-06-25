@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { DashboardCrudPage } from '../dashboard-crud-page/dashboard-crud-page';
 import { ILawyerFeesContract } from '../../core/Models/lawyer-fees-contract.model';
+import { IColumn } from '../types/shared';
 
 @Component({
   selector: 'app-lawyer-fees-contracts-list',
@@ -13,10 +14,10 @@ import { ILawyerFeesContract } from '../../core/Models/lawyer-fees-contract.mode
 export class LawyerFeesContractsList implements OnInit {
   @ViewChild(DashboardCrudPage) crudPage!: DashboardCrudPage;
 
-  constructor(private router: Router, private translate: TranslateService) {}
+  constructor(private router: Router, private translate: TranslateService) { }
 
   endpoint = signal<string>('lawyer-fees-contracts');
-  columns: { key: string; value: string }[] = [];
+  columns: IColumn[] = [];
   searchFields = ['contractNumber', 'clientName', 'clientIdNumber'];
 
   dataMapper = (item: ILawyerFeesContract, index: number) => ({
@@ -30,8 +31,8 @@ export class LawyerFeesContractsList implements OnInit {
     statusLabel: item.secondPartySignedAt
       ? this.translate.instant('signed')
       : item.sentToClientAt
-      ? this.translate.instant('sent')
-      : this.translate.instant('draft'),
+        ? this.translate.instant('sent')
+        : this.translate.instant('draft'),
     createdAtFormatted: item.createdAt ? this.formatDate(item.createdAt) : '',
   });
 
@@ -47,7 +48,7 @@ export class LawyerFeesContractsList implements OnInit {
     this.columns = [
       { key: '#', value: 'index' },
       { key: this.translate.instant('contract_number'), value: 'contractNumberDisplay' },
-      { key: this.translate.instant('client_name'), value: 'clientNameDisplay' },
+      { key: this.translate.instant('client_name'), value: 'clientNameDisplay', frozen: true },
       { key: this.translate.instant('contract_date'), value: 'contractDateFormatted' },
       { key: this.translate.instant('total_fees'), value: 'totalFeesFormatted' },
       { key: this.translate.instant('status'), value: 'statusLabel' },

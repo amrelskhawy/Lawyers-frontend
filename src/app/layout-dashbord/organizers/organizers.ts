@@ -1,6 +1,7 @@
 import { Component, OnInit, signal, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { DashboardCrudPage } from '../dashboard-crud-page/dashboard-crud-page';
+import { IColumn } from '../types/shared';
 
 @Component({
   selector: 'app-organizers',
@@ -11,16 +12,16 @@ import { DashboardCrudPage } from '../dashboard-crud-page/dashboard-crud-page';
 export class Organizers implements OnInit {
   @ViewChild(DashboardCrudPage) crudPage!: DashboardCrudPage;
 
-  constructor(private translate: TranslateService) {}
+  constructor(private translate: TranslateService) { }
 
-  columns: { key: string; value: string }[] = [];
+  columns: IColumn[] = [];
   searchFields = ['userName', 'userEmail', 'userRole', 'isActiveLabel'];
   visibelform = signal<boolean>(false);
 
   ngOnInit() {
     this.columns = [
       { key: '#', value: 'index' },
-      { key: this.translate.instant('name'), value: 'userName' },
+      { key: this.translate.instant('name'), value: 'userName', frozen: true },
       { key: this.translate.instant('email'), value: 'userEmail' },
       { key: this.translate.instant('role'), value: 'userRole' },
       { key: this.translate.instant('status'), value: 'isActiveLabel' },

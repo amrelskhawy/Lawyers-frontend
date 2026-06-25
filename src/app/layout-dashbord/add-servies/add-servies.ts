@@ -2,6 +2,7 @@ import { Component, OnInit, signal, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { IDataServies } from '../../core/Models/servies.model';
 import { DashboardCrudPage } from '../dashboard-crud-page/dashboard-crud-page';
+import { IColumn } from '../types/shared';
 
 @Component({
   selector: 'app-add-servies',
@@ -12,9 +13,9 @@ import { DashboardCrudPage } from '../dashboard-crud-page/dashboard-crud-page';
 export class AddServies implements OnInit {
   @ViewChild(DashboardCrudPage) crudPage!: DashboardCrudPage;
 
-  constructor(private translate: TranslateService) {}
+  constructor(private translate: TranslateService) { }
 
-  columns: { key: string; value: string }[] = [];
+  columns: IColumn[] = [];
   searchFields = [
     'name_ar',
     'name_en',
@@ -36,7 +37,7 @@ export class AddServies implements OnInit {
   ngOnInit() {
     this.columns = [
       { key: '#', value: 'index' },
-      { key: this.translate.instant('name_ar'), value: 'name_ar' },
+      { key: this.translate.instant('name_ar'), value: 'name_ar', frozen: true },
       { key: this.translate.instant('name_en'), value: 'name_en' },
       { key: this.translate.instant('description_ar'), value: 'description_ar' },
       { key: this.translate.instant('description_en'), value: 'description_en' },

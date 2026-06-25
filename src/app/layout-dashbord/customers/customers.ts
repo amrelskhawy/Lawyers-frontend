@@ -2,6 +2,7 @@ import { Component, OnInit, signal, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { IDataCustomer } from '../../core/Models/customers.model';
 import { DashboardCrudPage } from '../dashboard-crud-page/dashboard-crud-page';
+import { IColumn } from '../types/shared';
 
 @Component({
   selector: 'app-customers',
@@ -12,9 +13,9 @@ import { DashboardCrudPage } from '../dashboard-crud-page/dashboard-crud-page';
 export class Customers implements OnInit {
   @ViewChild(DashboardCrudPage) crudPage!: DashboardCrudPage;
 
-  constructor(private translate: TranslateService) {}
+  constructor(private translate: TranslateService) { }
 
-  columns: { key: string; value: string }[] = [];
+  columns: IColumn[] = [];
   searchFields = ['fullName', 'email', 'phone', 'location'];
   objdata = signal<IDataCustomer | null>(null);
   visibelform = signal<boolean>(false);
@@ -23,7 +24,7 @@ export class Customers implements OnInit {
   ngOnInit() {
     this.columns = [
       { key: '#', value: 'index' },
-      { key: this.translate.instant('full_name'), value: 'fullName' },
+      { key: this.translate.instant('full_name'), value: 'fullName', frozen: true },
       { key: this.translate.instant('email'), value: 'email' },
       { key: this.translate.instant('phone'), value: 'phone' },
       { key: this.translate.instant('location'), value: 'location' },

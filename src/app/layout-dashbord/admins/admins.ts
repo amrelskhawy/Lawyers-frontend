@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { DashboardCrudPage } from '../dashboard-crud-page/dashboard-crud-page';
+import { IColumn } from '../types/shared';
 
 @Component({
   selector: 'app-admins',
@@ -11,9 +12,9 @@ import { DashboardCrudPage } from '../dashboard-crud-page/dashboard-crud-page';
 export class Admins implements OnInit {
   @ViewChild(DashboardCrudPage) crudPage!: DashboardCrudPage;
 
-  constructor(private translate: TranslateService) {}
+  constructor(private translate: TranslateService) { }
 
-  columns: { key: string; value: string }[] = [];
+  columns: IColumn[] = [];
   searchFields = ['name', 'email', 'role', 'created_At', 'updated_At'];
 
   ngOnInit() {
