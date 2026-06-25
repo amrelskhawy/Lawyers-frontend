@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import moment from 'moment-hijri';
 import { Data } from '../../core/Servies/data';
 import { IConsultantReminder } from '../../core/Models/reminder.model';
+import { ILawyerOption } from '../../core/Models/case.model';
 import {
   CalendarView,
   HijriCalendar,
@@ -54,11 +55,22 @@ export class ConsultantReminders implements OnInit {
   readonly views: CalendarView[] = ['day', 'week', 'month', 'year'];
 
   private allReminders = signal<IConsultantReminder[]>([]);
+  consultantOptions = signal<ILawyerOption[]>([]);
+  selectedConsultantId = signal<string>('');
   view = signal<CalendarView>('month');
   anchor = signal<HijriParts>({ iYear: 0, iMonth: 0, iDay: 0 });
   loading = signal<boolean>(false);
   selectedMemo = signal<CalendarMemo | null>(null);
   showDialog = signal<boolean>(false);
+
+  private get currentUser(): { role: string } | null {
+    const raw = sessionStorage.getItem('user');
+    return raw ? JSON.parse(raw) : null;
+  }
+  get canFilterByConsultant(): boolean {
+    const role = this.currentUser?.role ?? '';
+    return role === 'ADMIN' || role === 'MODERATOR';
+  }
 
   constructor(
     private data: Data,
@@ -69,6 +81,7 @@ export class ConsultantReminders implements OnInit {
   ngOnInit(): void {
     this.anchor.set(this.hijri.todayParts());
     this.load();
+    if (this.canFilterByConsultant) this.loadConsultants();
   }
 
   load(): void {
@@ -82,6 +95,12 @@ export class ConsultantReminders implements OnInit {
         this.allReminders.set([]);
         this.loading.set(false);
       },
+    });
+  }
+
+  private loadConsultants(): void {
+    this.data.get<{ data: ILawyerOption[] }>('cases/lawyers').subscribe((res) => {
+      this.consultantOptions.set((res?.data ?? []).filter((u) => u.role === 'CONSULTANT'));
     });
   }
 
@@ -119,9 +138,15 @@ export class ConsultantReminders implements OnInit {
   }
 
   // ── Bucketing ─────────────────────────────────────────────────────────────
+  private filteredReminders = computed<IConsultantReminder[]>(() => {
+    const id = this.selectedConsultantId();
+    if (!id) return this.allReminders();
+    return this.allReminders().filter((r) => r.case?.consultantId === id);
+  });
+
   private buckets = computed(() =>
     this.hijri.bucketBySession(
-      this.allReminders(),
+      this.filteredReminders(),
       (r) => this.toHijriKey(r.memoDeadline ?? r.case?.memoDeadline),
     ),
   );
@@ -154,7 +179,7 @@ export class ConsultantReminders implements OnInit {
     const a = this.anchor();
     if (!a.iYear) return [];
     const counts = new Map<number, number>();
-    for (const r of this.allReminders()) {
+    for (const r of this.filteredReminders()) {
       const key = this.toHijriKey(r.memoDeadline ?? r.case?.memoDeadline);
       if (!key) continue;
       const mo = Number(key.slice(5, 7));

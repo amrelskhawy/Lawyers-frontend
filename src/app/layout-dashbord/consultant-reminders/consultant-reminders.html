@@ -23,6 +23,22 @@
         {{ 'view_' + v | translate }}
       </button>
     </div>
+
+    <!-- Consultant filter — admin / moderator only -->
+    <div class="cal-filter" *ngIf="canFilterByConsultant">
+      <p-select
+        [options]="consultantOptions()"
+        optionLabel="name"
+        optionValue="id"
+        [ngModel]="selectedConsultantId()"
+        (ngModelChange)="selectedConsultantId.set($event)"
+        [showClear]="true"
+        [filter]="true"
+        filterBy="name"
+        [placeholder]="'all_consultants' | translate"
+        appendTo="body"
+      ></p-select>
+    </div>
   </div>
 
   <!-- ── Legend ─────────────────────────────────────────────────────── -->
