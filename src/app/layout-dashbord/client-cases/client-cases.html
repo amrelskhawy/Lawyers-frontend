@@ -117,6 +117,10 @@
       <strong class="filter-pill">{{ filterDegreeLabel() }}</strong>
     </ng-container>
   </span>
+  <button type="button" class="back-filter-btn" (click)="goBackToUsers()">
+    <i class="fa-solid fa-arrow-right-long"></i>
+    {{ 'back' | translate }}
+  </button>
   <button type="button" class="clear-filter-btn" (click)="clearUserFilter()">
     <i class="fa-solid fa-xmark"></i>
     {{ 'clear_filter' | translate }}

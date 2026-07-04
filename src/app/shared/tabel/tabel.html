@@ -29,7 +29,7 @@
         <p-tableCheckbox [value]="row" />
       </td>
       <ng-container *ngFor="let col of bodytabel">
-        <td [ngClass]="getCellClass(col, row)" [class.col-frozen]="col.frozen">
+        <td [ngClass]="getCellClass(col, row)" [class.col-frozen]="col.frozen" [attr.data-col]="col.value">
           <ng-container *ngIf="columnTemplates[col.value]; else plainCell">
             <ng-container
               *ngTemplateOutlet="columnTemplates[col.value]; context: { $implicit: row, col: col }"></ng-container>

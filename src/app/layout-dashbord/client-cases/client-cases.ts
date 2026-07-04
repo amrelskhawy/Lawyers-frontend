@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { CaseAssignmentStatus, CASE_DEGREE_OPTIONS, CASE_TYPE_OPTIONS, IDataCase } from '../../core/Models/case.model';
 import { canonicalToPickerHijri, gregorianToPickerHijri } from '../../core/utils/hijri-format';
+import { format12h } from '../../core/utils/time-format';
 import { DashboardCrudPage, PageMeta } from '../dashboard-crud-page/dashboard-crud-page';
 import { Data } from '../../core/Servies/data';
 import { SoundService } from '../../core/Servies/sound';
@@ -115,16 +116,20 @@ export class ClientCases implements OnInit {
       : (CASE_DEGREE_OPTIONS.find((o) => o.value === item.caseDegree)?.label ?? ''),
     caseDegreeColor:
       CASE_DEGREE_OPTIONS.find((o) => o.value === item.caseDegree)?.color ?? '',
-    caseDateFormatted: item.caseDate ? new Date(item.caseDate).toLocaleDateString() : '',
     nextSessionDateFormatted: this.formatNextSessionDate(item),
     assignedLawyerName: item.preferredLawyerName ?? item.preferredLawyer?.name ?? '',
     assignedConsultantName: item.consultantName ?? item.consultant?.name ?? '',
   });
 
+  /** "1448 / 01 / 09 - 9:00 AM" — Hijri session date plus the 12h session time. */
   private formatNextSessionDate(item: IDataCase): string {
-    if (item.sessionHijriDate) return canonicalToPickerHijri(item.sessionHijriDate);
-    if (item.sessionDate) return gregorianToPickerHijri(item.sessionDate);
-    return '';
+    const date = item.sessionHijriDate
+      ? canonicalToPickerHijri(item.sessionHijriDate)
+      : item.sessionDate
+        ? gregorianToPickerHijri(item.sessionDate)
+        : '';
+    if (!date) return '';
+    return item.sessionTime ? `${date} - ${format12h(item.sessionTime)}` : date;
   }
 
   ngOnInit() {
@@ -140,6 +145,10 @@ export class ClientCases implements OnInit {
         filter['caseDegree'] = caseDegree;
         this.filterDegreeLabel.set(this.degreeLabelFor(caseDegree));
       }
+      // Optional closed-only scope, e.g. when the Users page "closed cases" badge was clicked.
+      if (this.route.snapshot.queryParamMap.get('onlyClosed') === 'true') {
+        filter['onlyClosed'] = 'true';
+      }
       this.casesFilter.set(filter);
       this.filterAssigneeName.set(this.route.snapshot.queryParamMap.get('assigneeName') ?? '');
     }
@@ -150,8 +159,9 @@ export class ClientCases implements OnInit {
       { key: this.translate.instant('case_type'), value: 'caseTypeLabel' },
       { key: this.translate.instant('other_case_type'), value: 'otherCaseType' },
       { key: this.translate.instant('case_degree'), value: 'caseDegreeLabel' },
-      { key: this.translate.instant('case_date'), value: 'caseDateFormatted' },
-      { key: this.translate.instant('next_session_date'), value: 'nextSessionDateFormatted' },
+      // Single "next session date + time" column (Hijri), replacing the former
+      // Gregorian meeting-date + standalone Hijri session-date columns.
+      { key: this.translate.instant('next_session'), value: 'nextSessionDateFormatted' },
       { key: this.translate.instant('assigned_consultant'), value: 'assignedConsultantName' },
       { key: this.translate.instant('assigned_lawyer'), value: 'assignedLawyerName' },
       { key: this.translate.instant('created_by'), value: 'createdBy.name' },
@@ -234,6 +244,12 @@ export class ClientCases implements OnInit {
 
   get isClosedFilterActive(): boolean {
     return !!this.casesFilter()['onlyClosed'];
+  }
+
+  /** Return to the Users page we were filtered from (the banner only shows when
+   *  we arrived there via a user badge). */
+  goBackToUsers() {
+    this.router.navigate(['/dashboard/content/users']);
   }
 
   /** Drop all active filters (user + degree) and reload the full cases list. */

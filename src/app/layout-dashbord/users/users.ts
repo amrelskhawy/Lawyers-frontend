@@ -20,6 +20,8 @@ export interface IUser {
   acceptedCasesCount?: number;
   /** Accepted cases broken down by litigation degree (UNASSIGNED = no degree set). */
   acceptedCasesByDegree?: Record<string, number>;
+  /** Accepted cases that are now closed (completed). */
+  closedCasesCount?: number;
 }
 
 @Component({
@@ -131,5 +133,16 @@ export class Users implements OnInit {
     };
     if (degree) queryParams['caseDegree'] = degree;
     this.router.navigate(['/dashboard/content/client-cases'], { queryParams });
+  }
+
+  /** Open the cases page filtered to this user's closed (completed) cases. */
+  goToUserClosedCases(row: IUser) {
+    this.router.navigate(['/dashboard/content/client-cases'], {
+      queryParams: {
+        lawyerId: row.id,
+        assigneeName: row.nameAr || row.name,
+        onlyClosed: 'true',
+      },
+    });
   }
 }

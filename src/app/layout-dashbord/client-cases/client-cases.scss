@@ -75,24 +75,41 @@
     }
   }
 
+  // Back + clear controls share the pill look; the back button carries the
+  // auto margin so the pair is pushed to the banner's trailing edge.
+  .back-filter-btn,
   .clear-filter-btn {
-    margin-inline-start: auto;
     display: inline-flex;
     align-items: center;
     gap: 6px;
     padding: 7px 14px;
     border-radius: 999px;
     border: none;
-    background: rgba(99, 102, 241, 0.1);
-    color: #4338ca;
     font-size: 0.8rem;
     font-weight: 700;
     cursor: pointer;
     transition: background 0.14s ease, transform 0.14s ease;
 
-    &:hover { background: rgba(99, 102, 241, 0.2); transform: translateY(-1px); }
     &:active { transform: translateY(0); }
     i { font-size: 0.75rem; }
+  }
+
+  // Solid primary pill — the main "go back" action.
+  .back-filter-btn {
+    margin-inline-start: auto;
+    background: linear-gradient(135deg, #3b82f6, #6366f1);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+
+    &:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4); }
+  }
+
+  // Soft secondary pill — clears the filter but stays on the page.
+  .clear-filter-btn {
+    background: rgba(99, 102, 241, 0.1);
+    color: #4338ca;
+
+    &:hover { background: rgba(99, 102, 241, 0.2); transform: translateY(-1px); }
   }
 }
 

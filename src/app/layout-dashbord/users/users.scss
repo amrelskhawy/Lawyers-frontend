@@ -20,6 +20,16 @@
   &.active { background: #6366f1; color: #fff; border-color: #6366f1; }
 }
 
+/* The shared table clips every cell at max-width:200px with an ellipsis. The role
+   column holds the role name + a variable number of case-count badges, so that cap
+   truncated the badges. Let this one column size to its content on a single line. */
+:host ::ng-deep td[data-col="roleLabel"] {
+  max-width: none !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  white-space: nowrap !important;
+}
+
 /* Role cell — role label + accepted-cases badge */
 .role-cell {
   display: inline-flex;
@@ -60,6 +70,40 @@
       }
       &:focus-visible {
         outline: 2px solid #c8a33a;
+        outline-offset: 2px;
+      }
+    }
+  }
+
+  // Closed (completed) cases — teal, matching the cases page "closed cases" card.
+  .closed-cases-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+    padding: .15rem .55rem;
+    border-radius: 999px;
+    font-size: .75rem;
+    font-weight: 700;
+    line-height: 1.4;
+    color: #0f766e;
+    background: linear-gradient(135deg, #e6fbf7, #ccf5ec);
+    border: 1px solid #99e6d8;
+    box-shadow: 0 1px 2px rgba(15, 118, 110, .08);
+    cursor: default;
+
+    i { font-size: .7rem; opacity: .85; }
+    .cases-count { font-variant-numeric: tabular-nums; }
+
+    &.clickable {
+      cursor: pointer;
+      transition: transform .12s ease, box-shadow .12s ease;
+
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 6px rgba(15, 118, 110, .22);
+      }
+      &:focus-visible {
+        outline: 2px solid #0f766e;
         outline-offset: 2px;
       }
     }
