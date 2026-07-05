@@ -1,0 +1,101 @@
+@use "../glopalstyles.scss";
+
+// ── Info banner ──────────────────────────────────────────────
+.unscheduled-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #fff7ed 0%, #fef2f2 100%);
+  border: 1px solid #fed7aa;
+  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.1);
+  color: #92400e;
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  .lead-icon {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f59e0b, #f97316);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.35);
+
+    i { font-size: 0.85rem; }
+  }
+}
+
+// ── Assignee cell (name + own status badge) ──────────────────
+.assignee-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+
+  .assignee-name {
+    font-size: 0.9rem;
+  }
+}
+
+// ── Case degree badge (الدرجة) — color comes inline per degree ──
+.degree-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border: 1px solid;
+  border-radius: 50px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  white-space: nowrap;
+
+  i {
+    font-size: 0.55rem;
+    line-height: 1;
+  }
+}
+
+// ── Assignment status indicator ──────────────────────────────
+.assignment-status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  i {
+    font-size: 0.7rem;
+    line-height: 1;
+    transition: color 0.2s ease;
+  }
+
+  &.badge-pending i {
+    color: #f59e0b;
+    animation: assignment-pulse 1.4s ease-in-out infinite;
+  }
+  &.badge-accepted i { color: #22c55e; }
+  &.badge-rejected i { color: #ef4444; }
+  &.badge-unassigned i { color: #9ca3af; }
+}
+
+@keyframes assignment-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+    filter: drop-shadow(0 0 0 rgba(245, 158, 11, 0.7));
+  }
+  50% {
+    transform: scale(1.25);
+    opacity: 0.75;
+    filter: drop-shadow(0 0 4px rgba(245, 158, 11, 0.7));
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+    filter: drop-shadow(0 0 0 rgba(245, 158, 11, 0));
+  }
+}

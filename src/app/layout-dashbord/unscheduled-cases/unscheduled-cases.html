@@ -1,0 +1,72 @@
+<!-- Case degree cell: colored litigation-degree badge (الدرجة) -->
+<ng-template #degreeCell let-item>
+  <span *ngIf="item.caseDegreeLabel" class="degree-badge"
+    [style.color]="item.caseDegreeColor"
+    [style.border-color]="item.caseDegreeColor"
+    [style.background]="item.caseDegreeColor + '1f'">
+    <i class="fa-solid fa-circle"></i> {{ item.caseDegreeLabel }}
+  </span>
+  <span *ngIf="!item.caseDegreeLabel">—</span>
+</ng-template>
+
+<!-- Consultant column cell: name + the consultant slot's own status badge -->
+<ng-template #consultantCell let-item>
+  <div class="assignee-cell">
+    <span class="assignee-name">{{ item.assignedConsultantName || '—' }}</span>
+    <span *ngIf="item.assignedConsultantName" class="assignment-status-badge"
+      [class.badge-pending]="item.consultantAssignmentStatus === 'PENDING'"
+      [class.badge-accepted]="item.consultantAssignmentStatus === 'ACCEPTED'"
+      [class.badge-rejected]="item.consultantAssignmentStatus === 'REJECTED'"
+      [class.badge-unassigned]="item.consultantAssignmentStatus === 'UNASSIGNED' || !item.consultantAssignmentStatus"
+      [pTooltip]="('assignment_status_' + (item.consultantAssignmentStatus ?? 'unassigned').toLowerCase()) | translate"
+      tooltipPosition="top">
+      <i class="fa-solid fa-circle"></i>
+    </span>
+  </div>
+</ng-template>
+
+<!-- Lawyer column cell: name + the lawyer slot's own status badge -->
+<ng-template #lawyerCell let-item>
+  <div class="assignee-cell">
+    <span class="assignee-name">{{ item.assignedLawyerName || '—' }}</span>
+    <span *ngIf="item.assignedLawyerName" class="assignment-status-badge"
+      [class.badge-pending]="item.assignmentStatus === 'PENDING'"
+      [class.badge-accepted]="item.assignmentStatus === 'ACCEPTED'"
+      [class.badge-rejected]="item.assignmentStatus === 'REJECTED'"
+      [class.badge-unassigned]="item.assignmentStatus === 'UNASSIGNED' || !item.assignmentStatus"
+      [pTooltip]="('assignment_status_' + (item.assignmentStatus ?? 'unassigned').toLowerCase()) | translate"
+      tooltipPosition="top">
+      <i class="fa-solid fa-circle"></i>
+    </span>
+  </div>
+</ng-template>
+
+<ng-template #actions let-item let-onDelete="delete">
+  <div class="action-btn">
+    <button [pTooltip]="'edit' | translate" tooltipPosition="top" [attr.aria-label]="'edit' | translate"
+      (click)="onEditCase(item)" class="edit-btn">
+      <i class="fa-solid fa-pen-to-square"></i>
+    </button>
+    <button [attr.aria-label]="'reminders_title' | translate" [pTooltip]="'reminders_title' | translate"
+      tooltipPosition="top" (click)="onManageReminders(item)" class="reminder-btn">
+      <i class="fa-solid fa-bell"></i>
+    </button>
+    <button [attr.aria-label]="'delete' | translate" (click)="onDelete(item)" class="delete-btn">
+      <i class="fa-solid fa-trash"></i>
+    </button>
+  </div>
+</ng-template>
+
+<!-- Info banner: what this page lists -->
+<div class="unscheduled-banner" role="status" dir="rtl">
+  <span class="lead-icon"><i class="fa-solid fa-calendar-xmark"></i></span>
+  <span>{{ 'unscheduled_cases_hint' | translate }}</span>
+</div>
+
+<app-dashboard-crud-page endpoint="cases/unscheduled" deleteEndpoint="cases" [columns]="columns"
+  [searchFields]="searchFields" [actionsTemplate]="actions" [columnTemplates]="columnTemplates"
+  [dataMapper]="dataMapper" [showAddButton]="false">
+
+  <app-reminders-dialog [(visible)]="visibelReminders" [objCase]="selectedCase()"
+    (caseUpdated)="onCaseUpdated()"></app-reminders-dialog>
+</app-dashboard-crud-page>

@@ -285,8 +285,8 @@
     "SERVICE_NOT_FOUND": "الخدمة غير موجودة",
     "INVALID_TIME_RANGE": "يجب أن يكون وقت الانتهاء بعد وقت البدء",
     "TIME_IN_PAST": "لا يمكن الحجز في وقت مضى",
-    "DAY_FULLY_BLOCKED": "هذا اليوم مغلق تماماً بسبب عطلة",
-    "SERVICE_CLOSED": "الخدمة مغلقة في أيام {0}",
+    "DAY_FULLY_BLOCKED": "هذا اليوم منتهي تماماً بسبب عطلة",
+    "SERVICE_CLOSED": "الخدمة منتهية في أيام {0}",
     "TIME_OUTSIDE_WORKING_HOURS": "يجب أن يكون موعد الحجز بين {0} و {1}",
     "SLOT_BLOCKED": "هذا الوقت محجوز بسبب عطلة أو إغلاق خاص",
     "BOOKING_NOT_FOUND": "الحجز غير موجود",
@@ -302,7 +302,7 @@
     "HOLIDAY_DELETED_SUCCESS": "تم حذف العطلة بنجاح",
     "DATE_AND_NAME_REQUIRED": "التاريخ والاسم مطلوبان",
     "FROM_AND_TO_DATES_REQUIRED": "تاريخي البداية والنهاية مطلوبان",
-    "HOLIDAY_FULL_DAY_EXISTS": "هذا اليوم مغلق بالكامل بالفعل بسبب عطلة",
+    "HOLIDAY_FULL_DAY_EXISTS": "هذا اليوم منتهي بالكامل بالفعل بسبب عطلة",
     "HOLIDAY_OVERLAP": "هذا الوقت يتعارض مع عطلة موجودة مسبقاً",
     "HOLIDAY_NOT_FOUND": "العطلة غير موجودة",
     "HOLIDAY_DETAILS_MISSING": "التاريخ والاسم مطلوبان",
@@ -501,6 +501,8 @@
     "CASE_NOT_ASSIGNED": "لا يوجد محامٍ مكلف على هذه القضية"
   },
   "client_cases": "قضايا العملاء",
+  "unscheduled_cases": "القضايا غير المجدولة",
+  "unscheduled_cases_hint": "القضايا التي لم يُحدَّد لها موعد جلسة بعد.",
   "cases_calendar": "تقويم القضايا",
   "all_lawyers": "كل المحامين",
   "today": "اليوم",
@@ -733,11 +735,10 @@
   "reject_reason_required": "سبب الرفض مطلوب",
   "confirm": "تأكيد",
   "rejection_reason": "سبب الرفض",
-
   "memo_needs_memo_question": "هل تحتاج القضية إلى كتابة مذكرة",
   "memo_type_label": "نوع المذكرة",
   "case_degree_other_placeholder": "اكتب نوع الدرجة",
-  "closed_cases": "القضايا المغلقة",
+  "closed_cases": "القضايا المنتهية",
   "memo_deadline_label": "اخر موعد لإرفاق المذكرة",
   "memo_send_to_consultant": "إرسال للمستشار المكلف",
   "memo_sent_success": "تم إرسال الطلب للمستشار بنجاح",
@@ -750,6 +751,5 @@
   "sent_by": "أرسله",
   "sent_at": "تاريخ الإرسال",
   "open_case": "فتح القضية",
-
   "reminder_type_memo_request": "طلب إعداد مذكرة للمستشار"
 }

@@ -17,6 +17,7 @@ import { LawyerFeesContract } from './lawyer-fees-contract/lawyer-fees-contract'
 import { ActivityLogs } from './activity-logs/activity-logs';
 import { CasesCalendar } from './cases-calendar/cases-calendar';
 import { ConsultantReminders } from './consultant-reminders/consultant-reminders';
+import { UnscheduledCases } from './unscheduled-cases/unscheduled-cases';
 
 const routes: Routes = [
   {
@@ -76,6 +77,13 @@ const routes: Routes = [
         path: 'client-cases/:id/edit',
         component: EditCase,
         canActivate: [roleGuard('ADMIN', 'MODERATOR', 'RECEPTIONIST', 'LAWYER', 'CONSULTANT')],
+      },
+
+      // ── Unscheduled cases (no session date set) — admin + moderator only ──
+      {
+        path: 'unscheduled-cases',
+        component: UnscheduledCases,
+        canActivate: [roleGuard('ADMIN', 'MODERATOR')],
       },
 
       // ── Cases calendar (Hijri) — admin, moderator, lawyer, consultant ────

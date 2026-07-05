@@ -501,6 +501,8 @@
     "CASE_NOT_ASSIGNED": "No lawyer is assigned to this case"
   },
   "client_cases": "Client Cases",
+  "unscheduled_cases": "Unscheduled Cases",
+  "unscheduled_cases_hint": "Cases that have no session date set yet.",
   "cases_calendar": "Cases Calendar",
   "all_lawyers": "All lawyers",
   "today": "Today",

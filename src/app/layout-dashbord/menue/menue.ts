@@ -119,6 +119,13 @@ export class Menue implements OnInit {
         route: '/dashboard/content/client-cases',
       },
 
+      // ── Unscheduled cases (no session date) — admin + moderator ─
+      ...(isAdmin || isModerator ? [{
+        name: 'unscheduled_cases',
+        icon: 'fa-solid fa-calendar-xmark',
+        route: '/dashboard/content/unscheduled-cases',
+      }] : []),
+
       // ── Cases calendar — admin, moderator, lawyer/consultant ─
       ...(isAdmin || isModerator || isLawyer ? [{
         name: 'cases_calendar',

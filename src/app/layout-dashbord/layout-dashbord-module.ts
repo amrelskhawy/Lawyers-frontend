@@ -55,6 +55,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule } from 'primeng/paginator';
 import { CasesCalendar } from './cases-calendar/cases-calendar';
 import { ConsultantReminders } from './consultant-reminders/consultant-reminders';
+import { UnscheduledCases } from './unscheduled-cases/unscheduled-cases';
 
 @NgModule({
   declarations: [
@@ -97,6 +98,7 @@ import { ConsultantReminders } from './consultant-reminders/consultant-reminders
     FormUser,
     CasesCalendar,
     ConsultantReminders,
+    UnscheduledCases,
   ],
   imports: [
     CommonModule,
