@@ -1,5 +1,6 @@
-import { NgModule, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
+import { isDevMode, NgModule, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import Aura from '@primeuix/themes/aura';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { AppRoutingModule } from './app-routing-module';
@@ -49,6 +50,13 @@ export function createTranslateLoader(http: HttpClient): TranslateLoader {
       },
     }),
     GoogleTagManagerModule.forRoot({ id: environment.gtmId }),
+    // PWA: register the generated service worker in production builds only.
+    // `registerWhenStable` defers registration until the app is idle so it
+    // never competes with initial rendering.
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
   ],
   providers: [
     provideZonelessChangeDetection(),

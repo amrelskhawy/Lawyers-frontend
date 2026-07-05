@@ -1,0 +1,12 @@
+<div class="pwa-update-banner" *ngIf="updateAvailable()" role="status" dir="rtl">
+  <span class="pwa-icon"><i class="fa-solid fa-arrows-rotate"></i></span>
+  <span class="pwa-text">{{ 'pwa_update_available' | translate }}</span>
+  <button type="button" class="pwa-reload-btn" (click)="reload()" [disabled]="reloading()">
+    <i class="fa-solid" [ngClass]="reloading() ? 'fa-arrows-rotate fa-spin' : 'fa-check'"></i>
+    {{ (reloading() ? 'pwa_update_reloading' : 'pwa_update_reload') | translate }}
+  </button>
+  <button type="button" class="pwa-dismiss-btn" (click)="dismiss()"
+    [attr.aria-label]="'close' | translate" [disabled]="reloading()">
+    <i class="fa-solid fa-xmark"></i>
+  </button>
+</div>

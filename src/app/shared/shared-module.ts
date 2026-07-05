@@ -24,6 +24,7 @@ import { NoData } from './no-data/no-data';
 import { HijriDatepicker } from './hijri-datepicker/hijri-datepicker';
 import { Time12Pipe } from './time12-pipe';
 import { FormsModule } from '@angular/forms';
+import { PwaUpdate } from './pwa-update/pwa-update';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { FormsModule } from '@angular/forms';
     NoData,
     HijriDatepicker,
     Time12Pipe,
+    PwaUpdate,
   ],
   imports: [
     CommonModule,
@@ -68,6 +70,7 @@ import { FormsModule } from '@angular/forms';
     NoData,
     HijriDatepicker,
     Time12Pipe,
+    PwaUpdate,
   ],
 
   providers: [
