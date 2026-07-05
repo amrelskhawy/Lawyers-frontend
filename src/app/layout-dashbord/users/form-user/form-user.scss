@@ -562,3 +562,95 @@ $input-height: 46px;
     }
   }
 }
+// ============================================
+// Profile image upload — top avatar
+// ============================================
+.avatar-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+
+  .avatar-ring {
+    position: relative;
+    width: 116px;
+    height: 116px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, $primary, $primary-dark);
+    border: 3px solid $accent-soft;
+    box-shadow: 0 6px 20px rgba(20, 20, 58, 0.18);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+
+    // Uploaded image fills the whole circle.
+    img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    // Placeholder glyph (no image yet) — centered on the navy background.
+    > i {
+      font-size: 2.6rem;
+      color: $accent-soft;
+    }
+
+    // Camera badge, bottom-inline corner
+    .avatar-cam {
+      position: absolute;
+      bottom: 4px;
+      inset-inline-end: 4px;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: $accent;
+      color: $primary;
+      border: 2px solid #fff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+
+      i { font-size: 0.9rem; }
+    }
+
+    &:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(20, 20, 58, 0.28); border-color: $accent; }
+    &:focus-visible { outline: 3px solid $accent; outline-offset: 3px; }
+
+    // Uploading: dim + darken so the spinner badge reads as busy
+    &.busy { cursor: default; }
+    &.busy img { filter: brightness(0.6); }
+    &.busy .avatar-cam { background: $primary; color: #fff; }
+  }
+
+  .avatar-remove {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    border: 1px solid $danger;
+    border-radius: 999px;
+    background: $danger-soft;
+    color: $danger;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.12s ease;
+
+    &:hover { background: #fde3e3; }
+  }
+
+  .avatar-hint {
+    font-size: 0.75rem;
+    color: $text-muted;
+    text-align: center;
+  }
+}

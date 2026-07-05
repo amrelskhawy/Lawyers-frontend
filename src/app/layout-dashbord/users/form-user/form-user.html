@@ -33,6 +33,33 @@
 
   <form [formGroup]="form" (ngSubmit)="submit()" class="user-form">
 
+    <!-- Profile image — prominent avatar at the top, before the names -->
+    <div class="avatar-upload">
+      <input #fileInput type="file" accept="image/*" hidden (change)="onFileSelected($event)" />
+      <div class="avatar-ring" [class.busy]="uploadingImage()" role="button" tabindex="0"
+           aria-label="رفع صورة شخصية"
+           (click)="!uploadingImage() && fileInput.click()"
+           (keydown.enter)="!uploadingImage() && fileInput.click()">
+        <img *ngIf="form.get('picture')?.value as pic; else avatarPlaceholder"
+             [src]="pic" (error)="onImgError($event)" alt="" />
+        <ng-template #avatarPlaceholder>
+          <i class="fa-solid fa-user"></i>
+        </ng-template>
+        <span class="avatar-cam">
+          <i class="fa-solid" [ngClass]="uploadingImage() ? 'fa-spinner fa-spin' : 'fa-camera'"></i>
+        </span>
+      </div>
+
+      <button type="button" class="avatar-remove"
+              *ngIf="form.get('picture')?.value && !uploadingImage()" (click)="removeImage()">
+        <i class="fa-solid fa-trash"></i> حذف الصورة
+      </button>
+      <small class="avatar-hint" *ngIf="!form.get('picture')?.value && !uploadingImage()">
+        اضغط لرفع صورة — PNG أو JPG حتى 5 ميجابايت
+      </small>
+      <small class="err" *ngIf="imageError()">{{ imageError() }}</small>
+    </div>
+
     <!-- Section: Identity -->
     <div class="form-section">
       <div class="section-title">
@@ -146,10 +173,6 @@
         </div>
       </div>
 
-      <div class="field full">
-        <label for="picture">رابط الصورة الشخصية</label>
-        <input pInputText id="picture" formControlName="picture" dir="ltr" class="field-input" />
-      </div>
     </div>
 
     <!-- Error -->

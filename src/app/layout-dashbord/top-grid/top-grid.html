@@ -18,6 +18,8 @@
       </h4>
       <p>{{ userData().email }}</p>
     </div>
-    <img height="40" width="40" src="/assets/Img/2a.webp" alt="hero-section-img" />
+    <img height="40" width="40" class="account-avatar"
+         [src]="userData().picture || '/assets/Img/2a.webp'"
+         (error)="onAvatarError($event)" alt="" />
   </div>
 </div>

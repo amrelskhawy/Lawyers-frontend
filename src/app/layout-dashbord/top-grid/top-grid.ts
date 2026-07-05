@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
+import { Component, EventEmitter, Input, Output, signal, Signal } from '@angular/core';
 import { Auth } from './../../core/Servies/auth';
 
 @Component({
@@ -7,23 +7,17 @@ import { Auth } from './../../core/Servies/auth';
   templateUrl: './top-grid.html',
   styleUrl: './top-grid.scss',
 })
-export class TopGrid implements OnInit {
-  constructor(private auth: Auth) {}
+export class TopGrid {
+  /** Reactive signed-in user — updates live when /me refreshes it. */
+  userData: Signal<any>;
 
-  ngOnInit(): void {
-    // const user = this.auth.getDecodedToken();
-    // if (user) {
-    //   this.userData.set(this.processUser(user));
-    // }
-
-    this.processUser()
+  constructor(private auth: Auth) {
+    this.userData = this.auth.currentUser;
   }
 
   @Input() showAddButton = true;
   @Output() visibelformadd = new EventEmitter<boolean>();
   @Output() search = new EventEmitter<string>();
-
-  userData = signal<any>(null);
 
   pages = signal<string>('');
   @Input()
@@ -31,22 +25,13 @@ export class TopGrid implements OnInit {
     this.pages.set(value);
   }
 
-  processUser() {
-    // let name = user.name || user.username;
-    // if (!name && user.email) {
-    //   name = user.email.split('@')[0];
-    // }
-    // return {
-    //   ...user,
-    //   displayName: name,
-    //   isDerivedName: !user.name && !user.username,
-    // };
+  private static readonly FALLBACK_AVATAR = '/assets/Img/2a.webp';
 
- let get_usre = sessionStorage.getItem('user');
-    let parseUser: any = null;
-    if (get_usre) {
-      parseUser = JSON.parse(get_usre);
-      this.userData.set(parseUser)
+  /** If the user's profile picture fails to load, fall back to the default. */
+  onAvatarError(event: Event) {
+    const img = event.target as HTMLImageElement;
+    if (!img.src.endsWith(TopGrid.FALLBACK_AVATAR)) {
+      img.src = TopGrid.FALLBACK_AVATAR;
     }
   }
 

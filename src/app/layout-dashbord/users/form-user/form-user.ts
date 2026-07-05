@@ -19,6 +19,10 @@ export class FormUser implements OnChanges {
   form!: FormGroup;
   saving = signal<boolean>(false);
   error = signal<string>('');
+  uploadingImage = signal<boolean>(false);
+  imageError = signal<string>('');
+
+  private static readonly MAX_IMAGE_BYTES = 5 * 1024 * 1024; // 5 MB
 
   countries = COUNTRIES;
   selectedCountry: Country = COUNTRIES[0];
@@ -47,6 +51,48 @@ export class FormUser implements OnChanges {
 
   onImgError(event: Event) {
     (event.target as HTMLImageElement).style.display = 'none';
+  }
+
+  /** Pick a file → upload to Drive immediately → store the returned URL on the
+   *  `picture` control (persisted when the form is saved). */
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (!file) return;
+
+    this.imageError.set('');
+    if (!file.type.startsWith('image/')) {
+      this.imageError.set('يُسمح بملفات الصور فقط');
+      input.value = '';
+      return;
+    }
+    if (file.size > FormUser.MAX_IMAGE_BYTES) {
+      this.imageError.set('حجم الصورة يتجاوز 5 ميجابايت');
+      input.value = '';
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    this.uploadingImage.set(true);
+    this.data.post<{ data: { url: string } }>('admin/users/upload-image', formData).subscribe({
+      next: (res) => {
+        this.uploadingImage.set(false);
+        this.form.get('picture')?.setValue(res?.data?.url ?? '');
+        input.value = '';
+      },
+      error: (err) => {
+        this.uploadingImage.set(false);
+        this.imageError.set(err?.error?.message ?? 'تعذّر رفع الصورة، حاول مرة أخرى');
+        input.value = '';
+      },
+    });
+  }
+
+  removeImage() {
+    this.form.get('picture')?.setValue('');
+    this.imageError.set('');
   }
 
   constructor(private fb: FormBuilder, private data: Data) {
