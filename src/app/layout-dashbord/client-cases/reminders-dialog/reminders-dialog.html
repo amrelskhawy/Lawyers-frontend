@@ -332,17 +332,31 @@
               </div>
 
               <label class="rd-dropzone">
-                <input type="file" hidden (change)="onFileSelected($event)"
+                <input type="file" hidden multiple (change)="onFileSelected($event)"
                   accept=".jpg,.jpeg,.png,.webp,.pdf,.docx,.xlsx,.csv,.txt" />
                 <i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i>
-                <span class="rd-drop-name">{{ selectedFile()?.name || ('attach_file' | translate) }}</span>
+                <span class="rd-drop-name">{{ 'attach_file' | translate }}</span>
                 <span class="rd-drop-types">jpg، pdf، docx، xlsx، csv</span>
               </label>
 
+              <div class="rd-picked-list" *ngIf="selectedFiles().length">
+                <div class="rd-picked-item" *ngFor="let f of selectedFiles(); let i = index">
+                  <span class="rd-picked-name">
+                    <i class="fa-regular fa-file" aria-hidden="true"></i>
+                    {{ f.name }}
+                  </span>
+                  <button type="button" class="rd-action-btn rd-btn-delete" (click)="removeSelectedFile(i)"
+                    [disabled]="uploading()" [attr.aria-label]="'delete' | translate">
+                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </div>
+
               <button type="button" class="rd-btn rd-btn-primary rd-btn-sm rd-upload-btn"
-                (click)="uploadAttachment()" [disabled]="!selectedFile() || uploading()">
+                (click)="uploadAttachment()" [disabled]="!selectedFiles().length || uploading()">
                 <i class="fa-solid fa-upload" aria-hidden="true"></i>
                 {{ 'upload' | translate }}
+                <span *ngIf="selectedFiles().length > 1">({{ selectedFiles().length }})</span>
               </button>
 
               <div class="rd-att-list" *ngIf="attachments().length">

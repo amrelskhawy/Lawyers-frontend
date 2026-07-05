@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { forkJoin } from 'rxjs';
 import { Data } from '../../../core/Servies/data';
 import { CASE_DEGREE_OPTIONS, CaseDegree, IDataCase } from '../../../core/Models/case.model';
 import { IAttachment, IReminder, IReminderTypeOption } from '../../../core/Models/reminder.model';
@@ -33,7 +34,7 @@ export class RemindersDialog {
   editingId = signal<string | null>(null);
   sessionSaved = signal<boolean>(false);
   attachments = signal<IAttachment[]>([]);
-  selectedFile = signal<File | null>(null);
+  selectedFiles = signal<File[]>([]);
   uploading = signal<boolean>(false);
   // Id of the attachment whose WhatsApp message input is open, plus its text.
   sendingId = signal<string | null>(null);
@@ -99,7 +100,7 @@ export class RemindersDialog {
       repeat: [false],
       repeatEveryHours: [{ value: null, disabled: true }],
 
-      
+
     });
 
     // Separate form for editing the case's next-session (Hijri) date inline.
@@ -267,21 +268,32 @@ export class RemindersDialog {
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
-    this.selectedFile.set(input.files?.[0] ?? null);
+    this.selectedFiles.set(input.files ? Array.from(input.files) : []);
+    // Reset so re-selecting the same file(s) still triggers (change).
+    input.value = '';
   }
 
-  /** Upload the picked file to the customer's Drive folder. */
+  removeSelectedFile(index: number) {
+    this.selectedFiles.update((files) => files.filter((_, i) => i !== index));
+  }
+
+  /** Upload each picked file to the customer's Drive folder. */
   uploadAttachment() {
     const caseId = this.caseItem()?.id;
-    const file = this.selectedFile();
-    if (!caseId || !file) return;
+    const files = this.selectedFiles();
+    if (!caseId || !files.length) return;
 
-    const formData = new FormData();
-    formData.append('file', file);
+    const uploads = files.map((file) => {
+      const formData = new FormData();
+      formData.append('file', file);
+      return this.data.post(`attachments/case/${caseId}`, formData);
+    });
+
     this.uploading.set(true);
-    this.data.post(`attachments/case/${caseId}`, formData).subscribe({
+    // TODO: make multi uploads by backend
+    forkJoin(uploads).subscribe({
       next: () => {
-        this.selectedFile.set(null);
+        this.selectedFiles.set([]);
         this.uploading.set(false);
         this.loadAttachments(caseId);
       },
