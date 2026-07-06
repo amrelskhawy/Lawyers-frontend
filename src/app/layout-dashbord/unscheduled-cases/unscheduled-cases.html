@@ -51,7 +51,7 @@
       tooltipPosition="top" (click)="onManageReminders(item)" class="reminder-btn">
       <i class="fa-solid fa-bell"></i>
     </button>
-    <button [attr.aria-label]="'delete' | translate" (click)="onDelete(item)" class="delete-btn">
+    <button *ngIf="!isLawyer" [attr.aria-label]="'delete' | translate" (click)="onDelete(item)" class="delete-btn">
       <i class="fa-solid fa-trash"></i>
     </button>
   </div>

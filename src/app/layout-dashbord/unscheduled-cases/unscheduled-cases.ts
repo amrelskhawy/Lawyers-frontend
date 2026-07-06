@@ -7,11 +7,12 @@ import { DashboardCrudPage } from '../dashboard-crud-page/dashboard-crud-page';
 
 /**
  * Unscheduled cases — cases that have no session date/time set yet
- * (`sessionDate` is null on the backend). Backed by GET /cases/unscheduled,
- * restricted to ADMIN + MODERATOR, so staff can find them and schedule a session.
+ * (`sessionDate` is null on the backend). Backed by GET /cases/unscheduled.
+ * ADMIN/MODERATOR see all; LAWYER/CONSULTANT see only their own (server-side).
  *
  * A trimmed sibling of {@link ClientCases}: no degree cards, closed filter or
  * pending banner — just the list plus edit / schedule / delete actions.
+ * Delete is hidden for lawyers/consultants (DELETE /cases is admin/moderator-only).
  */
 @Component({
   selector: 'app-unscheduled-cases',
@@ -45,6 +46,13 @@ export class UnscheduledCases implements OnInit {
 
   visibelReminders = signal<boolean>(false);
   selectedCase = signal<IDataCase | null>(null);
+
+  /** LAWYER/CONSULTANT: no delete action (DELETE /cases is admin/moderator-only). */
+  get isLawyer(): boolean {
+    const raw = sessionStorage.getItem('user');
+    const role = raw ? JSON.parse(raw).role : '';
+    return role === 'LAWYER' || role === 'CONSULTANT';
+  }
 
   dataMapper = (item: IDataCase, index: number) => ({
     ...item,

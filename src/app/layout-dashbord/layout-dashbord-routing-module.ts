@@ -79,11 +79,12 @@ const routes: Routes = [
         canActivate: [roleGuard('ADMIN', 'MODERATOR', 'RECEPTIONIST', 'LAWYER', 'CONSULTANT')],
       },
 
-      // ── Unscheduled cases (no session date set) — admin + moderator only ──
+      // ── Unscheduled cases (no session date set) — admin, moderator, lawyer, consultant ──
+      // Receptionist excluded. Lawyers/consultants see only their own (server-side).
       {
         path: 'unscheduled-cases',
         component: UnscheduledCases,
-        canActivate: [roleGuard('ADMIN', 'MODERATOR')],
+        canActivate: [roleGuard('ADMIN', 'MODERATOR', 'LAWYER', 'CONSULTANT')],
       },
 
       // ── Cases calendar (Hijri) — admin, moderator, lawyer, consultant ────
