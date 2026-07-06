@@ -25,6 +25,7 @@ import { HijriDatepicker } from './hijri-datepicker/hijri-datepicker';
 import { Time12Pipe } from './time12-pipe';
 import { FormsModule } from '@angular/forms';
 import { PwaUpdate } from './pwa-update/pwa-update';
+import { PwaInstall } from './pwa-install/pwa-install';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { PwaUpdate } from './pwa-update/pwa-update';
     HijriDatepicker,
     Time12Pipe,
     PwaUpdate,
+    PwaInstall,
   ],
   imports: [
     CommonModule,
@@ -71,6 +73,7 @@ import { PwaUpdate } from './pwa-update/pwa-update';
     HijriDatepicker,
     Time12Pipe,
     PwaUpdate,
+    PwaInstall,
   ],
 
   providers: [
