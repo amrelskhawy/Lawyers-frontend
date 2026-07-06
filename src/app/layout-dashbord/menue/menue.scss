@@ -194,6 +194,21 @@
     }
   }
 
+  .install-btn {
+    background-color: var(--accent-gold);
+    color: var(--white-color) !important;
+
+    &:hover:not(:disabled) {
+      filter: brightness(1.08);
+      box-shadow: 0 4px 12px rgba(181, 168, 99, 0.3);
+    }
+
+    &:disabled {
+      opacity: 0.7;
+      cursor: default;
+    }
+  }
+
   .info-card {
     margin-top: 0.5rem;
     padding: 1.25rem;

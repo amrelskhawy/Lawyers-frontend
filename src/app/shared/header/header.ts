@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { PwaInstallService } from '../pwa-install/pwa-install.service';
 
 @Component({
   selector: 'app-header',
@@ -9,6 +10,9 @@ import { Router } from '@angular/router';
 })
 export class Header {
   @Output() EventRoute = new EventEmitter<string>();
+
+  /** Backs the always-available "install app" button in the header. */
+  readonly pwa = inject(PwaInstallService);
 
   constructor(private router: Router) {}
 

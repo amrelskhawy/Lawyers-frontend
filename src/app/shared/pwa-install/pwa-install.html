@@ -1,24 +1,24 @@
 <!-- Android / desktop Chromium: native install available -->
-<div class="pwa-install-banner" *ngIf="canInstall()" role="dialog" dir="rtl"
+<div class="pwa-install-banner" *ngIf="pwa.bannerVisible() && pwa.canInstall()" role="dialog" dir="rtl"
   [attr.aria-label]="'pwa_install_title' | translate">
   <span class="pwa-icon"><i class="fa-solid fa-mobile-screen-button"></i></span>
   <div class="pwa-body">
     <span class="pwa-title">{{ 'pwa_install_title' | translate }}</span>
     <span class="pwa-text">{{ 'pwa_install_text' | translate }}</span>
   </div>
-  <button type="button" class="pwa-install-btn" (click)="install()" [disabled]="installing()">
-    <i class="fa-solid" [ngClass]="installing() ? 'fa-spinner fa-spin' : 'fa-download'"></i>
+  <button type="button" class="pwa-install-btn" (click)="pwa.install()" [disabled]="pwa.installing()">
+    <i class="fa-solid" [ngClass]="pwa.installing() ? 'fa-spinner fa-spin' : 'fa-download'"></i>
     {{ 'pwa_install_button' | translate }}
   </button>
-  <button type="button" class="pwa-dismiss-btn" (click)="dismiss()"
-    [attr.aria-label]="'close' | translate" [disabled]="installing()">
+  <button type="button" class="pwa-dismiss-btn" (click)="pwa.dismissBanner()"
+    [attr.aria-label]="'close' | translate" [disabled]="pwa.installing()">
     <i class="fa-solid fa-xmark"></i>
   </button>
 </div>
 
 <!-- iOS / iPadOS Safari: manual add-to-home-screen instructions -->
-<div class="pwa-install-banner pwa-ios" *ngIf="showIosHint()" role="dialog" dir="rtl"
-  [attr.aria-label]="'pwa_install_title' | translate">
+<div class="pwa-install-banner pwa-ios" *ngIf="pwa.bannerVisible() && pwa.isIosSafari() && !pwa.canInstall()"
+  role="dialog" dir="rtl" [attr.aria-label]="'pwa_install_title' | translate">
   <span class="pwa-icon"><i class="fa-solid fa-mobile-screen-button"></i></span>
   <div class="pwa-body">
     <span class="pwa-title">{{ 'pwa_install_title' | translate }}</span>
@@ -30,7 +30,7 @@
       {{ 'pwa_install_ios_3' | translate }}
     </span>
   </div>
-  <button type="button" class="pwa-dismiss-btn" (click)="dismiss()"
+  <button type="button" class="pwa-dismiss-btn" (click)="pwa.dismissBanner()"
     [attr.aria-label]="'close' | translate">
     <i class="fa-solid fa-xmark"></i>
   </button>

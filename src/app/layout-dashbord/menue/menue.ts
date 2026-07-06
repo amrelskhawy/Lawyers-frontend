@@ -2,12 +2,14 @@ import {
   Component,
   EventEmitter,
   HostListener,
+  inject,
   Input,
   OnInit,
   Output,
   signal,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { PwaInstallService } from '../../shared/pwa-install/pwa-install.service';
 
 @Component({
   selector: 'app-menue',
@@ -22,8 +24,18 @@ export class Menue implements OnInit {
 
   constructor(private router: Router) { }
 
+  /** Backs the "install app" button in the sidebar footer. */
+  readonly pwa = inject(PwaInstallService);
+
   openWorkDay() {
     this.visibelform.set(true);
+  }
+
+  /** Install from the sidebar; collapses the menu on mobile so any iOS
+   *  instruction banner isn't hidden behind the drawer. */
+  onInstall() {
+    this.onCloselMenue();
+    this.pwa.install();
   }
 
   @Output() toggelMenue = new EventEmitter<boolean>();

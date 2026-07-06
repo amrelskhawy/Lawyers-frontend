@@ -35,6 +35,14 @@
     </button>
     }
 
+    @if (pwa.installable()) {
+    <button [attr.aria-label]="'pwa_install_title' | translate" class="action-btn install-btn"
+      (click)="onInstall()" [disabled]="pwa.installing()">
+      <i class="fa-solid" [ngClass]="pwa.installing() ? 'fa-spinner fa-spin' : 'fa-download'"></i>
+      <span *ngIf="widthScreen() || !statusMenue()">{{ 'pwa_install_title' | translate }}</span>
+    </button>
+    }
+
     <button [attr.aria-label]="'logout' | translate" class="action-btn logout-btn" (click)="onLogout()">
       <i class="fa-solid fa-arrow-right-from-bracket"></i>
       <span *ngIf="widthScreen() || !statusMenue()">{{ 'logout' | translate }}</span>

@@ -57,6 +57,11 @@
               <i class="fa-solid fa-business-time"></i>
               <span>{{ 'Book_with_us' | translate }}</span>
             </li>
+
+            <li *ngIf="pwa.installable()" class="nav-item nav-item-install" (click)="onInstall()">
+              <i class="fa-solid fa-download"></i>
+              <span>{{ 'pwa_install_title' | translate }}</span>
+            </li>
           </ul>
         </div>
 
