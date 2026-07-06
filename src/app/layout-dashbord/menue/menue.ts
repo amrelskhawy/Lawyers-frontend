@@ -19,6 +19,10 @@ import { PwaInstallService } from '../../shared/pwa-install/pwa-install.service'
 })
 export class Menue implements OnInit {
   ngOnInit(): void {
+    // Seed the mobile flag from the current viewport. Without this it stays
+    // `false` until a resize event fires, so a fresh mobile load renders the
+    // open drawer as a squeezed icon-only rail with no labels.
+    this.widthScreen.set(window.innerWidth < 768);
     this.GetDataMenue();
   }
 
