@@ -756,17 +756,15 @@
   "reject_reason_required": "A rejection reason is required",
   "confirm": "Confirm",
   "rejection_reason": "Rejection reason",
-
   "memo_needs_memo_question": "Does the case require a memo to be written?",
   "memo_type_label": "Memo type",
   "case_degree_other_placeholder": "Describe the degree",
   "closed_cases": "Closed Cases",
-  "case_state": "Is Closed",
+  "case_state": "Case State",
   "case_state_closed": "Closed",
-  "case_state_open": "Open",
+  "case_state_open": "Active",
   "memo_deadline_label": "Last memo deadline",
   "memo_sent_success": "Memo request sent to consultant successfully",
-
   "consultant_reminders_title": "Consultant Reminders",
   "consultant_reminders": "Consultant Reminders",
   "consultant_reminders_empty": "No memo requests yet",
@@ -776,6 +774,5 @@
   "sent_by": "Sent By",
   "sent_at": "Sent At",
   "open_case": "Open Case",
-
   "reminder_type_memo_request": "Memo request for assigned consultant"
 }
