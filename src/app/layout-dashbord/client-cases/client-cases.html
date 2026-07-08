@@ -41,6 +41,16 @@
   </div>
 </ng-template>
 
+<!-- Closed/open state cell: green "closed" badge when completedAt is set, else grey "open". -->
+<ng-template #closedCell let-item>
+  <span class="assignment-status-badge case-state-badge"
+    [class.badge-accepted]="item.isClosed"
+    [class.badge-unassigned]="!item.isClosed">
+    <i class="fa-solid" [class.fa-circle-check]="item.isClosed" [class.fa-circle]="!item.isClosed"></i>
+    {{ (item.isClosed ? 'case_state_closed' : 'case_state_open') | translate }}
+  </span>
+</ng-template>
+
 <ng-template #actions let-item let-onDelete="delete">
   <div class="action-btn">
 

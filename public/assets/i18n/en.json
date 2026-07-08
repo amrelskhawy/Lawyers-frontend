@@ -761,6 +761,9 @@
   "memo_type_label": "Memo type",
   "case_degree_other_placeholder": "Describe the degree",
   "closed_cases": "Closed Cases",
+  "case_state": "Is Closed",
+  "case_state_closed": "Closed",
+  "case_state_open": "Open",
   "memo_deadline_label": "Last memo deadline",
   "memo_sent_success": "Memo request sent to consultant successfully",
 

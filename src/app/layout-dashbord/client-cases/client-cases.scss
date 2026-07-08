@@ -293,6 +293,26 @@
   }
 }
 
+// Closed/open state pill in the "Is Closed" column: icon + label with a soft tint.
+.case-state-badge {
+  gap: 0.35rem;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+
+  &.badge-accepted {
+    color: #15803d;
+    background: rgba(34, 197, 94, 0.12);
+  }
+
+  &.badge-unassigned {
+    color: #6b7280;
+    background: rgba(156, 163, 175, 0.15);
+  }
+}
+
 @keyframes assignment-pulse {
   0% {
     transform: scale(1);

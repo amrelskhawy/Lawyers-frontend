@@ -63,9 +63,38 @@
   <span>{{ 'unscheduled_cases_hint' | translate }}</span>
 </div>
 
+<!-- Per-degree summary cards (الدرجات) — click to filter the unscheduled list by
+     that degree, click the active card again to clear it. Counts refresh on load. -->
+<div class="degree-summary-cards">
+  <div class="degree-stat-card" *ngFor="let d of degreeCounts()"
+    role="button" tabindex="0"
+    [class.active]="isDegreeActive(d.value)"
+    [class.dimmed]="casesFilter()['caseDegree'] && !isDegreeActive(d.value)"
+    [pTooltip]="(isDegreeActive(d.value) ? 'clear_filter' : 'filter_by_this_degree') | translate"
+    tooltipPosition="top"
+    [style.background]="'linear-gradient(135deg, ' + d.color + ', ' + d.colorLight + ')'"
+    (click)="toggleDegreeFilter(d.value)"
+    (keydown.enter)="toggleDegreeFilter(d.value)" (keydown.space)="toggleDegreeFilter(d.value)">
+    <button *ngIf="isDegreeActive(d.value)" type="button" class="card-clear-btn"
+      [pTooltip]="'clear_filter' | translate" tooltipPosition="top"
+      (click)="$event.stopPropagation(); toggleDegreeFilter(d.value)">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <div class="stat-icon-wrap">
+      <i class="fa-solid fa-scale-balanced"></i>
+    </div>
+    <div class="stat-body">
+      <span class="stat-value">{{ d.count }}</span>
+      <span class="stat-label">{{ d.label }}</span>
+    </div>
+    <div class="stat-bg-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+  </div>
+</div>
+
 <app-dashboard-crud-page endpoint="cases/unscheduled" deleteEndpoint="cases" [columns]="columns"
   [searchFields]="searchFields" [actionsTemplate]="actions" [columnTemplates]="columnTemplates"
-  [dataMapper]="dataMapper" [showAddButton]="false">
+  [dataMapper]="dataMapper" [showAddButton]="false"
+  [extraParams]="casesFilter()" (metaLoaded)="onCasesMeta($event)">
 
   <app-reminders-dialog [(visible)]="visibelReminders" [objCase]="selectedCase()"
     (caseUpdated)="onCaseUpdated()"></app-reminders-dialog>

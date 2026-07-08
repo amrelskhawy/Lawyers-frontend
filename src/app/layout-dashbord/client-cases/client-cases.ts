@@ -19,6 +19,7 @@ export class ClientCases implements OnInit {
   @ViewChild('consultantCell', { static: true }) consultantCell!: TemplateRef<any>;
   @ViewChild('lawyerCell', { static: true }) lawyerCell!: TemplateRef<any>;
   @ViewChild('degreeCell', { static: true }) degreeCell!: TemplateRef<any>;
+  @ViewChild('closedCell', { static: true }) closedCell!: TemplateRef<any>;
 
   columnTemplates: { [columnValue: string]: TemplateRef<any> } = {};
 
@@ -119,6 +120,8 @@ export class ClientCases implements OnInit {
     nextSessionDateFormatted: this.formatNextSessionDate(item),
     assignedLawyerName: item.preferredLawyerName ?? item.preferredLawyer?.name ?? '',
     assignedConsultantName: item.consultantName ?? item.consultant?.name ?? '',
+    // A case is "closed" once it's marked fully completed (completedAt set).
+    isClosed: !!item.completedAt,
   });
 
   /** "1448 / 01 / 09 - 9:00 AM" — Hijri session date plus the 12h session time. */
@@ -164,6 +167,7 @@ export class ClientCases implements OnInit {
       { key: this.translate.instant('next_session'), value: 'nextSessionDateFormatted' },
       { key: this.translate.instant('assigned_consultant'), value: 'assignedConsultantName' },
       { key: this.translate.instant('assigned_lawyer'), value: 'assignedLawyerName' },
+      { key: this.translate.instant('case_state'), value: 'isClosed' },
       { key: this.translate.instant('created_by'), value: 'createdBy.name' },
     ];
     // Render the consultant/lawyer columns as "name + own-status badge" cells.
@@ -171,6 +175,7 @@ export class ClientCases implements OnInit {
       assignedConsultantName: this.consultantCell,
       assignedLawyerName: this.lawyerCell,
       caseDegreeLabel: this.degreeCell,
+      isClosed: this.closedCell,
     };
   }
 

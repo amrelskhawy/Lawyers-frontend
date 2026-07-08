@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { CASE_DEGREE_OPTIONS, CASE_TYPE_OPTIONS, IDataCase } from '../../core/Models/case.model';
 import { gregorianToPickerHijri } from '../../core/utils/hijri-format';
-import { DashboardCrudPage } from '../dashboard-crud-page/dashboard-crud-page';
+import { DashboardCrudPage, PageMeta } from '../dashboard-crud-page/dashboard-crud-page';
 
 /**
  * Unscheduled cases — cases that have no session date/time set yet
@@ -46,6 +46,25 @@ export class UnscheduledCases implements OnInit {
 
   visibelReminders = signal<boolean>(false);
   selectedCase = signal<IDataCase | null>(null);
+
+  /** Server-side filters merged into every unscheduled-cases request (e.g. ?caseDegree=…). */
+  casesFilter = signal<{ [key: string]: any }>({});
+
+  /** Neutral "card" for cases that have no degree set yet. */
+  private static readonly UNASSIGNED_DEGREE = {
+    value: 'UNASSIGNED',
+    label: 'غير محدد',
+    color: '#64748b',
+    colorLight: '#94a3b8',
+  };
+
+  /** Per-degree counts for the summary/filter cards above the table (+ unassigned). */
+  degreeCounts = signal<
+    { value: string; label: string; color: string; colorLight: string; count: number }[]
+  >([
+    ...CASE_DEGREE_OPTIONS.map((o) => ({ ...o, count: 0 })),
+    { ...UnscheduledCases.UNASSIGNED_DEGREE, count: 0 },
+  ]);
 
   /** LAWYER/CONSULTANT: no delete action (DELETE /cases is admin/moderator-only). */
   get isLawyer(): boolean {
@@ -104,5 +123,34 @@ export class UnscheduledCases implements OnInit {
    *  the unscheduled list once it has a session date. */
   onCaseUpdated() {
     this.crudPage?.refresh();
+  }
+
+  /** Refresh the per-degree card counts after every list load. */
+  onCasesMeta(meta: PageMeta | null) {
+    if (!meta) return;
+    const dc: Record<string, number> = meta['degreeCounts'] ?? {};
+    this.degreeCounts.set([
+      ...CASE_DEGREE_OPTIONS.map((o) => ({ ...o, count: dc[o.value] ?? 0 })),
+      { ...UnscheduledCases.UNASSIGNED_DEGREE, count: dc['UNASSIGNED'] ?? 0 },
+    ]);
+  }
+
+  /**
+   * Clicking a degree card filters the table to that litigation degree; clicking
+   * the already-active card toggles the filter back off.
+   */
+  toggleDegreeFilter(value: string) {
+    const next = { ...this.casesFilter() };
+    if (next['caseDegree'] === value) {
+      delete next['caseDegree'];
+    } else {
+      next['caseDegree'] = value;
+    }
+    this.casesFilter.set(next);
+  }
+
+  /** Whether a given degree card is the one currently filtering the table. */
+  isDegreeActive(value: string): boolean {
+    return this.casesFilter()['caseDegree'] === value;
   }
 }
