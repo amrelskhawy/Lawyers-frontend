@@ -11,6 +11,8 @@ export class Translation implements OnInit {
   currentLang: string = 'en';
 
   constructor(private translate: TranslateService) {
+    // setDefaultLang (deprecated) is intentional — setFallbackLang triggers an
+    // eager HttpClient load that causes an NG0200 cycle with HTTP interceptors.
     this.translate.setDefaultLang('en');
   }
 

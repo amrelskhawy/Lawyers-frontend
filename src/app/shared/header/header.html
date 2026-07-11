@@ -1,43 +1,48 @@
 <section class="section-header">
   <div class="content-header container">
     <div class="logo-wrapper">
-      <img src="assets/Img/LOGO-GOLD.svg" alt="Logo" class="logo-header" />
+      <img src="assets/Img/LOGO-GOLD.svg" alt="{{ 'BRAND_NAME' | translate }}" class="logo-header" />
     </div>
 
-    <div class="header-links">
+    <nav class="header-links" [attr.aria-label]="'NAV_HOME' | translate">
       <ul>
-        <li [routerLink]="['/']" (click)="onClickListActive('Home')">
-          <a>{{ 'NAV_HOME' | translate }}</a>
+        <li>
+          <a class="nav-link" [routerLink]="['/']" (click)="onClickListActive('Home')">
+            {{ 'NAV_HOME' | translate }}
+          </a>
         </li>
-        <li (click)="onClickListActive('About')">
-          <a>{{ 'NAV_ABOUT' | translate }}</a>
+        <li>
+          <button class="nav-link" type="button" (click)="onClickListActive('About')">
+            {{ 'NAV_ABOUT' | translate }}
+          </button>
         </li>
-        <!-- <li (click)="onClickListActive('HowWork')">
-          <a>{{ 'NAV_HOW_IT_WORKS' | translate }}</a>
-        </li> -->
-        <li (click)="onClickListActive('Services')">
-          <a>{{ 'NAV_SERVICES' | translate }}</a>
+        <li>
+          <button class="nav-link" type="button" (click)="onClickListActive('Services')">
+            {{ 'NAV_SERVICES' | translate }}
+          </button>
         </li>
-
-        <li (click)="onClickListActive('teamWork')">
-          <a>{{ 'teamWork' | translate }}</a>
+        <li>
+          <button class="nav-link" type="button" (click)="onClickListActive('teamWork')">
+            {{ 'teamWork' | translate }}
+          </button>
         </li>
-
-        <li [routerLink]="['/booking']">
-          <a>{{ 'Book_with_us' | translate }}</a>
+        <li>
+          <a class="nav-link" [routerLink]="['/booking']">
+            {{ 'Book_with_us' | translate }}
+          </a>
         </li>
       </ul>
-    </div>
+    </nav>
 
     <div class="btn-header-div">
       <button *ngIf="pwa.installable()" type="button" class="btn-header-install"
         (click)="pwa.install()" [disabled]="pwa.installing()"
         [attr.aria-label]="'pwa_install_title' | translate">
-        <i class="fa-solid" [ngClass]="pwa.installing() ? 'fa-spinner fa-spin' : 'fa-download'"></i>
+        <i class="fa-solid" [ngClass]="pwa.installing() ? 'fa-spinner fa-spin' : 'fa-download'" aria-hidden="true"></i>
         <span>{{ 'pwa_install_button' | translate }}</span>
       </button>
 
-      <button [routerLink]="['/auth/login']" class="btn-header">
+      <button type="button" [routerLink]="['/auth/login']" class="btn-header">
         {{ 'LOGIN' | translate }}
       </button>
 

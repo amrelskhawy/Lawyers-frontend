@@ -1,6 +1,6 @@
 import { Data } from './../../../core/Servies/data';
 import { Router } from '@angular/router';
-import { Component, input, signal, computed, effect, ChangeDetectionStrategy } from '@angular/core';
+import { Component, input, signal, computed, effect, ChangeDetectionStrategy, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-slider-serves',
@@ -9,7 +9,7 @@ import { Component, input, signal, computed, effect, ChangeDetectionStrategy } f
   styleUrl: './slider-serves.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SliderServes {
+export class SliderServes implements OnInit {
   serviceType = input<'all' | 'normal' | 'installment'>('all');
 
   constructor(private Data: Data, private router: Router) {
@@ -74,19 +74,6 @@ export class SliderServes {
         numScroll: 1,
       },
     ];
-  }
-
-  getSeverity(status: string) {
-    switch (status) {
-      case 'INSTOCK':
-        return 'success';
-      case 'LOWSTOCK':
-        return 'warn';
-      case 'OUTOFSTOCK':
-        return 'danger';
-      default:
-        return 'info';
-    }
   }
 
   showData(item: any) {

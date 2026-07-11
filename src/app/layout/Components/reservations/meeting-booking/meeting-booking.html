@@ -25,8 +25,10 @@
     </div>
     @if (timeSlots().length > 0) {
     <div class="Times-container">
-      @for (slot of timeSlots(); track $index) {
-      <div (click)="PathTime(slot)" class="Time-slot" [ngClass]="{
+      @for (slot of timeSlots(); track slot.startTime) {
+      <button type="button" (click)="PathTime(slot)" [disabled]="!slot.available"
+        [attr.aria-pressed]="slot.startTime == selectedTime()"
+        class="Time-slot" [ngClass]="{
                 'selected-time': slot.startTime == selectedTime(),
                 'slot-unavailable': !slot.available
               }">
@@ -36,7 +38,7 @@
         <span class="slot-status">
           {{ slot.available ? ('AVAILABLE' | translate) : ('BOOKED' | translate) }}
         </span>
-      </div>
+      </button>
       }
       <div class="wrapper-error">
         <small class="error-message"

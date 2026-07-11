@@ -1,13 +1,10 @@
 @use '../../../../styles' as *;
 @use '../../Anmitions.scss' as *;
 
-
 .team-section {
-  padding: 50px 0;
-  background-color: #fcfcfc;
+  padding-block: var(--section-y);
   position: relative;
   overflow: hidden;
-  direction: rtl !important;
 
   /* --- Premium Background Layer --- */
   .bg-decoration {
@@ -19,9 +16,9 @@
     .pattern-mesh {
       position: absolute;
       inset: 0;
-      background-image: radial-gradient(var(--accent-gold) 0.8px, transparent 0.8px);
+      background-image: radial-gradient(var(--gold-500) 0.8px, transparent 0.8px);
       background-size: 32px 32px;
-      opacity: 0.08;
+      opacity: 0.06;
     }
 
     .glow {
@@ -30,19 +27,19 @@
       height: 50vw;
       border-radius: 50%;
       filter: blur(120px);
-      opacity: 0.1;
+      opacity: 0.14;
     }
 
     .glow-gold {
       top: -10%;
-      right: -5%;
-      background: var(--accent-gold);
+      inset-inline-end: -5%;
+      background: var(--gold-500);
     }
 
     .glow-navy {
       bottom: -10%;
-      left: -5%;
-      background: var(--primary-navy);
+      inset-inline-start: -5%;
+      background: var(--obsidian-700);
     }
   }
 
@@ -50,132 +47,116 @@
     position: relative;
     z-index: 5;
   }
+}
 
-  .section-header {
-    text-align: center;
-    margin-bottom: 70px;
+/* --- Two-column shell: heading + carousel --- */
+.team-layout {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.85fr) 1.6fr;
+  gap: var(--space-8);
+  align-items: center;
+}
 
-    @include section-header();
+.team-intro {
+  .section-title {
+    margin-bottom: var(--space-4);
 
-    .section-title {
-      margin-bottom: 20px;
-
-      h2 {
-        color: var(--accent-gold);
-        font-weight: bold;
-        font-size: 1rem;
-        text-transform: uppercase;
-      }
+    h2 {
+      color: var(--gold-300);
+      font-weight: var(--fw-bold);
+      font-size: var(--fs-body);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
+  }
 
-    .main-title {
-      font-size: 46px;
-      color: var(--primary-navy);
-      font-weight: 800;
-      margin-bottom: 20px;
-    }
+  .main-title {
+    font-family: var(--font-display);
+    font-size: var(--fs-h1);
+    font-weight: var(--fw-extrabold);
+    line-height: var(--lh-heading);
+    margin-bottom: var(--space-5);
+    background: var(--gradient-gold-text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
 
-    .section-subtitle {
-      color: var(--secondary-color);
-      max-width: 600px;
-      margin: 0 auto;
-      font-size: 18px;
-      line-height: 1.6;
-      opacity: 0.85;
-    }
+  .section-subtitle {
+    color: var(--color-on-dark-muted);
+    max-width: 420px;
+    font-size: var(--fs-lg);
+    line-height: var(--lh-body);
+    margin: 0;
   }
 }
 
-/* --- Seamless Infinite Slider --- */
-.team-flex-container {
-  // padding: 60px 0 100px;
-  width: 100%;
-  overflow: hidden;
+/* --- Coverflow carousel --- */
+.team-carousel {
   position: relative;
-  mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
-  -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
-
-  .members-flex {
-    display: flex;
-    width: max-content;
-    gap: 30px;
-    padding-left: 30px; // Padding on the left balances the gaps for an RTL +50% loop
-    animation: teamScroll 25s linear infinite; // Increased duration for smoother scroll
-    will-change: transform;
-    backface-visibility: hidden;
-
-    &:hover {
-      animation-play-state: paused;
-    }
-  }
+  min-width: 0;
 }
 
-.member-card-wrapper {
-  // flex: 0 0 350px;
-  flex: 0 0 300px;
-  // height: 580px;
-  height: 400px;
-  transition: all 0.9s cubic-bezier(0.2, 1, 0.2, 1);
-  cursor: pointer;
-
-  filter: grayscale(0.8);
-
-  &:hover {
-    // flex: 0 0 680px;
-    flex: 0 0 300px;
-    z-index: 50;
-    filter: grayscale(0);
-
-    .member-details {
-      opacity: 1;
-      transform: translate(-50%, -40px);
-    }
-
-    .image-overlay {
-      opacity: 1;
-    }
-
-    .member-card {
-      border-radius: 40px;
-    }
-  }
-
-  &.no-image {
-    .member-details {
-      opacity: 1;
-      transform: translate(-50%, -40px);
-    }
-
-    .image-overlay {
-      opacity: 1;
-    }
-  }
+.carousel-viewport {
+  position: relative;
+  height: 500px;
+  overflow: hidden;
+  direction: ltr; /* geometry stays LTR in both languages; text runs still shape RTL */
 }
 
 .member-card {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: 175px; // Ultra-pill
-  overflow: hidden;
-  transition: all 0.8s cubic-bezier(0.2, 1, 0.2, 1);
-  background: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.04);
-  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.06);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 224px; /* pairs with SLOT (width + gap) in team-work.ts */
+  box-sizing: border-box;
+  cursor: pointer;
+  background: var(--navy-surface);
+  border: 1px solid var(--navy-border);
+  border-radius: var(--radius-lg);
+  padding: 14px 14px 18px;
+  transform-origin: center;
+  /* transform / opacity / visibility / z-index are set inline via cardStyle() */
+  transition:
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.55s ease,
+    border-color 0.4s ease,
+    box-shadow 0.4s ease;
+
+  &:focus-visible {
+    outline: none;
+  }
+
+  &.is-active {
+    border-color: rgba(var(--gold-rgb), 0.7);
+    box-shadow:
+      0 0 0 1px rgba(var(--gold-rgb), 0.35),
+      var(--glow-gold),
+      0 26px 55px rgba(0, 0, 0, 0.6);
+
+    .member-name {
+      color: #fff;
+    }
+    .member-position {
+      color: var(--gold-300);
+    }
+  }
 }
 
-.member-image-box {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+.card-photo {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--obsidian-800), var(--obsidian-700));
+  border: 1px solid var(--navy-border);
 
   .member-photo {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 10%;
-    transition: transform 1.5s ease;
+    object-position: center 12%;
+    display: block;
   }
 
   .member-photo-placeholder {
@@ -184,144 +165,121 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, var(--primary-navy), #2c3e6b);
 
     .placeholder-icon {
-      width: 80px;
-      height: 80px;
-      color: rgba(255, 255, 255, 0.6);
+      width: 64px;
+      height: 64px;
+      color: rgba(255, 255, 255, 0.5);
     }
-  }
-
-  .image-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, transparent 65%);
-    opacity: 0;
-    transition: opacity 0.6s ease;
   }
 }
 
-.member-details {
-  position: absolute;
-  bottom: 40px;
-  left: 50%;
-  transform: translate(-50%, 20px);
+.card-info {
   text-align: center;
-  color: white;
-  z-index: 20;
-  opacity: 0;
-  width: 90%;
-  transition: all 0.6s cubic-bezier(0.25, 1, 0.3, 1) 0.1s;
+  padding-top: var(--space-4);
+  /* reserve a consistent height so 1-line and 2-line names keep every card aligned */
+  min-height: 72px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 6px;
 
   .member-name {
-    font-size: 32px;
-    font-weight: 800;
-    margin-bottom: 8px;
-    color: white;
-    text-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--fs-body);
+    font-weight: var(--fw-bold);
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.3;
+    /* clamp to 2 lines so long names never blow out the card height */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .member-position {
     display: block;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--accent-gold);
+    font-size: var(--fs-caption);
+    font-weight: var(--fw-semibold);
+    letter-spacing: 0.04em;
     text-transform: uppercase;
+    color: var(--color-on-dark-muted);
   }
 }
 
-/* --- Scrolling Animation --- */
-@keyframes teamScroll {
-  0% {
-    transform: translateX(0);
+/* --- Prev / next controls --- */
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 6;
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--navy-border);
+  color: var(--gold-300);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease-out);
+
+  &.prev {
+    left: -8px;
+  }
+  &.next {
+    right: -8px;
   }
 
-  100% {
-    transform: translateX(50%);
-    /* Positive moves to the right, creating seamless RTL scroll */
+  &:hover:not(:disabled) {
+    background: var(--gradient-gold);
+    color: var(--obsidian-900);
+    border-color: transparent;
+    transform: translateY(-50%) scale(1.08);
+    box-shadow: var(--shadow-gold);
+  }
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
   }
 }
 
-/* --- Responsive Adaptations --- */
-// @media (max-width: 992px) {
-//   .member-card-wrapper {
-//     // flex: 0 0 280px;
-//     // height: 450px;
-//      flex: 0 0 100px !important;
-//     height: 100px !important;
-//   }
-//   .member-card-wrapper:hover {
-//     flex: 0 0 420px;
-//   }
-//   .member-name {
-//     font-size: 24px;
-//   }
+/* --- Responsive --- */
+@media (max-width: 991px) {
+  .team-layout {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    text-align: center;
+  }
 
-// }
-
-// @media (max-width: 600px) {
-//   .member-card-wrapper {
-//     flex: 0 0 240px;
-//     height: 400px;
-//   }
-//   .member-card-wrapper:hover {
-//     flex: 0 0 300px;
-//   }
-// }
-
-
-
-@media (max-width:767px) {
-  .section-header {
+  .team-intro {
     .main-title {
-      font-size: 25px !important;
+      font-size: var(--fs-h2);
+    }
+    .section-subtitle {
+      max-width: 560px;
+      margin-inline: auto;
     }
   }
+}
 
-  .team-flex-container {
-    mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
+@media (max-width: 767px) {
+  .team-intro .main-title {
+    font-size: 25px;
+  }
 
-    .members-flex {
-      gap: 15px;
-      padding-left: 15px;
+  .nav-btn {
+    width: 40px;
+    height: 40px;
+
+    &.prev {
+      left: -4px;
     }
-  }
-
-  .member-card-wrapper {
-    flex: 0 0 180px !important;
-    height: 250px !important;
-
-    &:hover {
-      flex: 0 0 180px !important;
-
-      .member-details {
-        transform: translate(-50%, -20px);
-      }
-
-      .member-card {
-        border-radius: 90px;
-      }
+    &.next {
+      right: -4px;
     }
-  }
-
-  .member-card {
-    border-radius: 90px;
-  }
-
-  .member-name {
-    font-size: 18px !important;
-
-  }
-
-  .member-position {
-    font-size: 10px !important;
-    margin-top: -5px !important;
-  }
-
-  .member-details {
-    bottom: 5px;
-    width: 95%;
   }
 }

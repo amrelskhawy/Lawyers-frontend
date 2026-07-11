@@ -2,34 +2,30 @@
   <section class="about-section">
     <div class="img-about-container">
       <div pAnimateOnScroll enterClass="my-enter-right" leaveClass="my-leave-animation" class="img-left">
-        <img height="300" width="200" src="/assets/Img/2a.webp" alt="About Image" class="img-1" />
+        <img height="300" width="200" src="/assets/Img/2a.webp" alt="{{ 'NAV_ABOUT' | translate }}" class="img-1" />
       </div>
 
       <div pAnimateOnScroll enterClass="my-enter-animation" leaveClass="my-leave-animation" class="img-right">
-        <img height="220" width="180" src="/assets/Img/2.webp" alt="hero-section-img" class="img-2" />
-
+        <img height="220" width="180" src="/assets/Img/2.webp" alt="{{ 'NAV_ABOUT' | translate }}" class="img-2" />
       </div>
-
-
     </div>
 
-    <div class="about-text-container"
-      style="display: flex; justify-content: center ; flex-direction: column; align-items: center;">
-      <div style="margin: 0 auto; width: fit-content;" class="section-title">
-        <h2 pAnimateOnScroll enterClass="my-enter-zoom" leaveClass="my-leave-animation">{{"NAV_ABOUT"|translate}}</h2>
+    <div class="about-text-container">
+      <div class="section-title">
+        <h2 pAnimateOnScroll enterClass="my-enter-zoom" leaveClass="my-leave-animation">{{ "NAV_ABOUT" | translate }}</h2>
       </div>
 
-      <p style="margin-top: 20px; text-align: justify;" pAnimateOnScroll enterClass="my-enter-animation"
-        leaveClass="my-leave-animation" class="animation-duration-1000">
+      <p class="about-lead animation-duration-1000" pAnimateOnScroll enterClass="my-enter-animation"
+        leaveClass="my-leave-animation">
         {{ 'EXPERIENCE_YEARS' | translate }}
       </p>
       <ul>
         <li>
-          <i class="fa-solid fa-check"></i>
+          <i class="fa-solid fa-check" aria-hidden="true"></i>
           {{ 'METHODOLOGY_TEAM' | translate }}
         </li>
         <li>
-          <i class="fa-solid fa-check"></i>
+          <i class="fa-solid fa-check" aria-hidden="true"></i>
           {{ 'STRATEGIC_SUCCESS' | translate }}
         </li>
       </ul>

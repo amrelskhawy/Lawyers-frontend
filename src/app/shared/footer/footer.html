@@ -1,4 +1,5 @@
 <section class="section-footer">
+  <div class="footer-shell">
   <div class="container Content-footer">
 
     <div class="footer-info">
@@ -41,8 +42,9 @@
       </div>
 
       <div class="scroll-top-container">
-        <button class="scroll-top-btn" (click)="scrollToTop()" title="Scroll to Top">
-          <i class="fa-solid fa-arrow-up"></i>
+        <button type="button" class="scroll-top-btn" (click)="scrollToTop()"
+          [attr.aria-label]="'SCROLL_TO_TOP' | translate" title="Scroll to Top">
+          <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
         </button>
       </div>
     </div>
@@ -72,21 +74,29 @@
         {{ 'QUICK_LINKS' | translate }}
       </h3>
       <ul>
-        <li (click)="onClickListActive('Home')">
-          <i class="fa-solid fa-chevron-left"></i>
-          <a>{{ 'NAV_HOME' | translate }}</a>
+        <li>
+          <button type="button" class="footer-nav" (click)="onClickListActive('Home')">
+            <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+            <span>{{ 'NAV_HOME' | translate }}</span>
+          </button>
         </li>
-        <li (click)="onClickListActive('About')">
-          <i class="fa-solid fa-chevron-left"></i>
-          <a>{{ 'NAV_ABOUT' | translate }}</a>
+        <li>
+          <button type="button" class="footer-nav" (click)="onClickListActive('About')">
+            <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+            <span>{{ 'NAV_ABOUT' | translate }}</span>
+          </button>
         </li>
-        <li (click)="onClickListActive('HowWork')">
-          <i class="fa-solid fa-chevron-left"></i>
-          <a>{{ 'NAV_HOW_IT_WORKS' | translate }}</a>
+        <li>
+          <button type="button" class="footer-nav" (click)="onClickListActive('HowWork')">
+            <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+            <span>{{ 'NAV_HOW_IT_WORKS' | translate }}</span>
+          </button>
         </li>
-        <li (click)="onClickListActive('Services')">
-          <i class="fa-solid fa-chevron-left"></i>
-          <a>{{ 'NAV_SERVICES' | translate }}</a>
+        <li>
+          <button type="button" class="footer-nav" (click)="onClickListActive('Services')">
+            <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+            <span>{{ 'NAV_SERVICES' | translate }}</span>
+          </button>
         </li>
       </ul>
     </div>
@@ -116,5 +126,6 @@
   <div class="endDesc">
     <p class="copyright-rights">{{ 'COPYRIGHT_RIGHTS' | translate }}</p>
     <p class="copyright-company">&copy; {{ currentYear }} {{ 'COPYRIGHT_COMPANY' | translate }}</p>
+  </div>
   </div>
 </section>

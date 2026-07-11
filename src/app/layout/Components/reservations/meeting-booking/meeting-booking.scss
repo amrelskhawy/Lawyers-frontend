@@ -1,73 +1,72 @@
-
 .wrapper-date {
   background-color: transparent;
 }
 
 .header-date {
   display: flex;
-  gap: 15px;
+  gap: var(--space-4);
   align-items: center;
-  padding: 0 0 25px 0;
-  border-bottom: 2px solid rgba(0, 0, 0, 0.05);
-  margin-bottom: 25px;
+  padding: 0 0 var(--space-5) 0;
+  border-bottom: 1px solid var(--color-border-light);
+  margin-bottom: var(--space-5);
 
   i {
-    background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
-    border: 1px solid var(--storm-slate);
-    color: var(--storm-slate);
+    display: grid;
+    place-items: center;
+    background: rgba(var(--gold-rgb), 0.12);
+    border: 1px solid rgba(var(--gold-rgb), 0.3);
+    color: var(--gold-600);
     height: 50px;
     width: 50px;
-    line-height: 50px;
-    text-align: center;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     font-size: 1.2rem;
-    box-shadow: 0 4px 10px rgba(74, 85, 108, 0.15);
   }
 
   h3 {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: var(--primary-navy);
+    font-family: var(--font-display);
+    font-size: var(--fs-h3);
+    font-weight: var(--fw-bold);
+    color: var(--ink-900);
     margin: 0;
   }
 
   p {
-    font-size: 0.9rem;
-    color: var(--secondary-color);
-    margin: 5px 0 0 0;
+    font-size: var(--fs-sm);
+    color: var(--ink-600);
+    margin: var(--space-1) 0 0 0;
   }
 }
 
 .datepicker {
   text-align: center;
-  margin: 20px 0;
+  margin: var(--space-5) 0;
 
   ::ng-deep {
     .p-datepicker {
-      border: 1.5px solid var(--Platinum) !important;
-      border-radius: 16px !important;
-      padding: 15px !important;
-      background: var(--white-color) !important;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03) !important;
+      border: 1px solid var(--color-border-light) !important;
+      border-radius: var(--radius-md) !important;
+      padding: var(--space-4) !important;
+      background: var(--color-surface-light) !important;
+      box-shadow: var(--shadow-sm) !important;
     }
 
     .p-datepicker-header {
       background: transparent !important;
       border: none !important;
-      padding-bottom: 15px !important;
+      padding-bottom: var(--space-4) !important;
       display: flex !important;
       flex-direction: row-reverse !important;
     }
 
     .p-datepicker-title {
-      font-weight: 700 !important;
-      color: var(--primary-navy) !important;
+      font-weight: var(--fw-bold) !important;
+      color: var(--ink-900) !important;
     }
 
     .p-datepicker table th {
-      color: var(--Cloudy-Sky) !important;
-      font-weight: 600 !important;
-      font-size: 0.85rem !important;
+      color: var(--ink-400) !important;
+      font-weight: var(--fw-semibold) !important;
+      font-size: var(--fs-sm) !important;
     }
 
     .p-datepicker td > span {
@@ -75,18 +74,18 @@
       height: 38px !important;
       border-radius: 10px !important;
       transition: all 0.2s ease !important;
-      font-weight: 500 !important;
+      font-weight: var(--fw-medium) !important;
     }
 
     .p-datepicker-day:not(.p-disabled):not(.p-datepicker-day-selected):hover {
-      background: var(--silver-frost) !important;
-      color: var(--primary-navy) !important;
+      background: var(--cream-100) !important;
+      color: var(--ink-900) !important;
     }
 
     .p-datepicker-day-selected {
-      background: var(--accent-gold) !important;
-      color: var(--white-color) !important;
-      box-shadow: 0 4px 12px rgba(147, 133, 63, 0.3) !important;
+      background: var(--gradient-gold) !important;
+      color: var(--obsidian-900) !important;
+      box-shadow: var(--shadow-gold) !important;
     }
   }
 }
@@ -94,14 +93,13 @@
 .Times-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content:center;
-  gap: 12px;
-  margin-top: 25px;
-  padding: 5px;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+  padding: var(--space-1);
   max-height: 177px;
   overflow-y: auto;
 
-  /* Modern Scrollbar */
   &::-webkit-scrollbar {
     width: 6px;
   }
@@ -109,78 +107,83 @@
     background: transparent;
   }
   &::-webkit-scrollbar-thumb {
-    background: var(--Platinum);
-    border-radius: 10px;
+    background: var(--cream-200);
+    border-radius: var(--radius-pill);
   }
 }
 
 .Time-slot {
-  background: var(--white-color);
-  border: 1.5px solid var(--Platinum);
-  padding: 10px 15px;
-  border-radius: 12px;
-  font-weight: 600;
+  background: var(--color-surface-light);
+  border: 1.5px solid var(--color-border-light);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  font-weight: var(--fw-semibold);
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-  color: var(--primary-navy);
+  transition: all var(--dur-fast) var(--ease-out);
+  color: var(--ink-900);
   display: flex;
   flex-direction: column;
   align-items: center;
   min-width: 120px;
 
   .slot-time {
-    font-size: 0.95rem;
-    font-weight: 700;
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-bold);
   }
 
   .slot-status {
-    font-size: 0.7rem;
+    font-size: var(--fs-caption);
     text-transform: uppercase;
-    opacity: 0.7;
-    margin-top: 4px;
+    color: var(--ink-600);
+    margin-top: var(--space-1);
   }
 
-  &:hover:not(.slot-unavailable) {
-    border-color: var(--accent-gold);
-    background: var(--silver-frost);
+  &:hover:not(.slot-unavailable):not(:disabled) {
+    border-color: var(--gold-500);
+    background: var(--cream-100);
     transform: translateY(-2px);
   }
 
   &.selected-time {
-    background: var(--accent-gold);
-    border-color: var(--accent-gold);
-    color: var(--white-color);
-    box-shadow: 0 4px 15px rgba(147, 133, 63, 0.3);
+    background: var(--gradient-gold);
+    border-color: transparent;
+    color: var(--obsidian-900);
+    box-shadow: var(--shadow-gold);
 
     .slot-status {
-      opacity: 1;
+      color: var(--obsidian-800);
     }
   }
 
-  &.slot-unavailable {
-    opacity: 0.4;
+  &.slot-unavailable,
+  &:disabled {
     cursor: not-allowed;
-    background: #f1f3f5;
+    background: var(--cream-100);
     border-style: dashed;
-    color: #adb5bd;
+    border-color: var(--cream-200);
+    color: var(--ink-400);
+
+    .slot-status {
+      color: var(--ink-400);
+    }
   }
 }
 
 .next-btn {
-  background: var(--primary-navy);
-  color: var(--white-color);
-  border-radius: 50px;
-  padding: 12px 40px;
-  font-weight: 600;
-  font-size: 1rem;
-  margin-top: 30px;
-  float: left;
-  transition: all 0.3s ease;
-  box-shadow: 0 8px 20px rgba(20, 20, 58, 0.2);
+  background: var(--gradient-gold);
+  color: var(--obsidian-900);
+  border-radius: var(--radius-pill);
+  padding: var(--space-3) var(--space-8);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-body);
+  margin-top: var(--space-6);
+  float: inline-end;
+  transition: transform var(--dur-fast) ease, box-shadow var(--dur-fast) ease;
+  box-shadow: var(--shadow-gold);
 
   &:hover {
-    box-shadow: 0 12px 30px rgba(20, 20, 58, 0.3);
+    box-shadow: var(--glow-gold), var(--shadow-gold);
     transform: translateY(-2px);
-    opacity: 0.95;
+    opacity: 1;
   }
 }

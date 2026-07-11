@@ -1,25 +1,34 @@
-<section class="overlay">
+<section class="hero">
+  <div class="hero__glow" aria-hidden="true"></div>
+  <div class="hero__rays" aria-hidden="true"></div>
+
   <div class="hero-section container">
     <div class="title-hero-section">
-      <h2 pAnimateOnScroll enterClass="my-enter-top" leaveClass="my-leave-animation">
-        {{"EXCEPTIONAL_SERVICE"|translate}}
-      </h2>
-      <h6 pAnimateOnScroll enterClass="my-enter-right" leaveClass="my-leave-animation">
-        {{"LEGAL_CONSULTANCY_DESC"|translate}}
-      </h6>
-
-      <h6 pAnimateOnScroll enterClass="my-enter-right" leaveClass="my-leave-animation">
-        {{"PROFESSIONAL_REPRESENTATION"|translate}}
-      </h6>
+      <span class="hero-eyebrow" pAnimateOnScroll enterClass="my-enter-right" leaveClass="my-leave-animation">
+        {{ "BRAND_NAME" | translate }}
+      </span>
+      <h1 class="hero-heading" pAnimateOnScroll enterClass="my-enter-top" leaveClass="my-leave-animation">
+        {{ "EXCEPTIONAL_SERVICE" | translate }}
+      </h1>
+      <p class="hero-lead" pAnimateOnScroll enterClass="my-enter-right" leaveClass="my-leave-animation">
+        {{ "LEGAL_CONSULTANCY_DESC" | translate }}
+      </p>
+      <p class="hero-sub" pAnimateOnScroll enterClass="my-enter-right" leaveClass="my-leave-animation">
+        {{ "PROFESSIONAL_REPRESENTATION" | translate }}
+      </p>
       <a href="https://wa.me/966535041555" target="_blank" rel="noopener noreferrer" pAnimateOnScroll
         enterClass="my-enter-zoom" leaveClass="my-leave-animation" class="btn-hero-section">
-        {{"CONTACT_US_NOW"|translate}}
+        {{ "CONTACT_US_NOW" | translate }}
+        <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
       </a>
     </div>
 
     <div class="img-hero-section" pAnimateOnScroll enterClass="my-enter-top" leaveClass="my-leave-animation">
       <div class="imges">
-        <img fetchpriority="high" src="/assets/Img/1.webp" alt="hero-section-img" />
+        <img fetchpriority="high"
+          src="/assets/Img/hero-scale.png"
+          width="346" height="358"
+          alt="{{ 'EXCEPTIONAL_SERVICE' | translate }}" />
       </div>
     </div>
   </div>

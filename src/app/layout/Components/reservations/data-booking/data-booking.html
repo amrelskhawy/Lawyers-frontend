@@ -9,7 +9,7 @@
   <form [formGroup]="bookingService.bookingForm()">
     <div class="Group">
       <label>{{ 'email' | translate }} </label>
-      <input formControlName="clientEmail" placeholder="📧  {{ 'email' | translate }}" />
+      <input formControlName="clientEmail" type="email" autocomplete="email" placeholder="{{ 'email' | translate }}" />
       <div class="wrapper-error">
         <small class="error-message" *ngIf="
             getControlName('clientEmail')?.errors?.['required'] &&
@@ -28,7 +28,7 @@
 
     <div class="Group">
       <label> {{ 'name' | translate }}</label>
-      <input formControlName="name" placeholder="👤 {{ 'name' | translate }}" />
+      <input formControlName="name" autocomplete="name" placeholder="{{ 'name' | translate }}" />
       <div class="wrapper-error">
         <small class="error-message" *ngIf="getControlName('name')?.invalid && getControlName('name')?.touched">{{
           'filed_reqierd' | translate }}</small>

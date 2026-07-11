@@ -1,81 +1,186 @@
+/* ============================================================================
+   GLOBAL STYLES — Saad Al-Bugami Law Firm
+   Fix Pass 1: Single source of truth for design tokens.
+   Palette derived from the Stitch "2026 Premium Law Firm Redesign" +
+   "Elite Booking Interface Redesign" renders (obsidian navy + refined gold).
+   Legacy token names are preserved as aliases (bottom of :root) so existing
+   components keep rendering while they are migrated onto the new scale.
+   ========================================================================== */
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-@font-face {
-  font-family: 'Cairo';
-  font-display: swap;
-}
-
-[class^="fa-"], [class*=" fa-"] {
-  font-display: swap !important;
-}
-
-body {
-  user-select: none;
-  overflow-x: hidden;
-  font-family: 'Cairo', sans-serif;
-}
-
-::placeholder {
-  font-family: 'Cairo', sans-serif;
-}
-
+/* ---- Design tokens -------------------------------------------------------- */
 :root {
-  --black-color: black;
-  --white-color: white;
-  --blue-color: blue;
-  --green-color: green;
-  --vivid-green: #00bb09;
-  --red-color: red;
-  --golden-bronze: rgb(150, 122, 62);
-  --deep-purple: #1a0033;
-  --primary-dark: #1a1a1a;
-  --secondary-color: #888;
-  --tertiary-color: #666;
-  --soft-gray: #eee;
-  --Platinum: #dadadabf;
-  --muted-gold: #dadada59;
-  --primary-navy: #14143a;
-  --dark-navy-deep: #0a0a1d;
-  --accent-gold: #93853f;
-  --medium-gray: #a9a9a9;
-  --bg-cream-light: #f4f2e9;
-  --Pale-Gold: #e3d597;
+  /* --- Color primitives: obsidian navy (dark surfaces / landing) --- */
+  --obsidian-950: #070a16;
+  --obsidian-900: #0a0e1f; /* deepest page background */
+  --obsidian-850: #0f1429;
+  --obsidian-800: #14143a; /* brand navy */
+  --obsidian-700: #1b2145;
+  --navy-surface: #1a1f3a; /* card surface on dark */
+  --navy-surface-2: #232a4d; /* raised card / hover */
+  --navy-border: rgba(255, 255, 255, 0.08);
+
+  /* --- Color primitives: refined gold (single source; was 4+ literals) --- */
+  --gold-100: #f3e7c4;
+  --gold-300: #e4c878; /* bright highlight */
+  --gold-500: #c6a15b; /* THE brand gold */
+  --gold-600: #ad8b47;
+  --gold-700: #8b7a3a; /* deep gold */
+  --gold-rgb: 198, 161, 91; /* fixes undefined --accent-gold-rgb shadows */
+
+  /* --- Color primitives: warm neutrals (light surfaces / booking) --- */
+  --cream-50: #faf8f2;
+  --cream-100: #f3f1ea; /* light page background */
+  --cream-200: #e9e5d8;
+  --ink-900: #14143a; /* headings on light */
+  --ink-700: #33384a;
+  --ink-600: #4a4f63;
+  --ink-400: #8a8fa3;
+  --ink-300: #b8bcca;
+
+  /* --- Semantic roles --- */
+  --color-bg-dark: var(--obsidian-900);
+  --color-bg-light: var(--cream-100);
+  --color-surface-dark: var(--navy-surface);
+  --color-surface-light: #ffffff;
+  --color-primary: var(--obsidian-800);
+  --color-accent: var(--gold-500);
+  --color-accent-strong: var(--gold-300);
+  --color-on-dark: #ffffff;
+  --color-on-dark-muted: #a8aec2;
+  --color-on-light: var(--ink-900);
+  --color-on-light-muted: var(--ink-600);
+  --color-border-light: #e4e0d4;
+
+  /* --- Status --- */
   --color-success-main: #2e7d32;
   --color-success-light: rgba(46, 125, 50, 0.1);
-  --overlay-bg: rgba(19, 18, 18, 0.532);
-  --soft-pink: #f16d6de0;
-  --golden-yellow: #ffb50259;
-  --bright-gold: #ffb502;
   --color-danger-main: #d32f2f;
   --color-danger-light: rgba(211, 47, 47, 0.1);
+  --color-warning-main: #d97706;
+
+  /* --- Typography --- */
+  --font-body: 'Cairo', 'Segoe UI', system-ui, sans-serif;
+  /* Sora for Latin display; Cairo picks up Arabic headings via fallback */
+  --font-display: 'Sora', 'Cairo', 'Segoe UI', sans-serif;
+
+  --fs-display: clamp(2.5rem, 5.5vw, 4.5rem);
+  --fs-h1: clamp(2rem, 4vw, 3.25rem);
+  --fs-h2: clamp(1.6rem, 3vw, 2.5rem);
+  --fs-h3: clamp(1.25rem, 2.2vw, 1.6rem);
+  --fs-h4: 1.25rem;
+  --fs-lg: 1.125rem;
+  --fs-body: 1rem;
+  --fs-sm: 0.875rem;
+  --fs-caption: 0.75rem;
+
+  --lh-tight: 1.1;
+  --lh-heading: 1.2;
+  --lh-body: 1.65;
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fw-extrabold: 800;
+
+  /* --- Spacing scale (4px base) --- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 40px;
+  --space-8: 48px;
+  --space-10: 64px;
+  --space-12: 96px;
+  --section-y: clamp(4rem, 8vw, 7rem);
+
+  /* --- Radii --- */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-xl: 32px;
+  --radius-pill: 999px;
+
+  /* --- Shadows / glows --- */
+  --shadow-sm: 0 1px 3px rgba(10, 14, 31, 0.08);
+  --shadow-md: 0 8px 24px rgba(10, 14, 31, 0.1);
+  --shadow-lg: 0 20px 48px rgba(10, 14, 31, 0.16);
+  --shadow-card-dark: 0 18px 40px rgba(0, 0, 0, 0.45);
+  --shadow-gold: 0 0 0 1px rgba(var(--gold-rgb), 0.35),
+    0 12px 32px rgba(var(--gold-rgb), 0.22);
+  --glow-gold: 0 0 24px rgba(var(--gold-rgb), 0.45);
+
+  /* --- Gradients --- */
+  --gradient-gold: linear-gradient(135deg, var(--gold-300), var(--gold-600));
+  --gradient-navy: linear-gradient(160deg, var(--obsidian-800), var(--obsidian-950));
+  --gradient-gold-text: linear-gradient(120deg, var(--gold-300) 0%, var(--gold-500) 60%);
+
+  /* --- Motion --- */
+  --dur-fast: 0.2s;
+  --dur: 0.4s;
+  --dur-slow: 0.7s;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* --- Z-index scale (documented ladder; replaces ad-hoc values) --- */
+  --z-base: 1;
+  --z-raised: 10;
+  --z-sticky-header: 1000;
+  --z-overlay: 5000;
+  --z-chat: 6000;
+  --z-modal: 10000;
+
+  /* ==========================================================================
+     LEGACY ALIASES — keep existing components working; map onto the new palette.
+     These consolidate the 4+ historical "gold" values into --gold-500.
+     ======================================================================== */
+  --black-color: #000;
+  --white-color: #fff;
+  --pure-white: #fff;
+  --cloud-white: #fafafa;
+  --frost-gray: #f0f0f0;
+  --red-color: var(--color-danger-main);
+  --green-color: var(--color-success-main);
+  --vivid-green: #00bb09;
+  --golden-bronze: var(--gold-700);
+  --deep-purple: #1a0033;
+  --primary-dark: #1a1a1a;
+  --secondary-color: var(--ink-400);
+  --tertiary-color: var(--ink-600);
+  --soft-gray: #eee;
+  --Platinum: #dadadabf;
+  --muted-gold: rgba(var(--gold-rgb), 0.35);
+  --primary-navy: var(--obsidian-800);
+  --dark-navy-deep: var(--obsidian-950);
+  --accent-gold: var(--gold-500);
+  --accent-gold-rgb: var(--gold-rgb); /* was undefined → broke shadows */
+  --medium-gray: #a9a9a9;
+  --bg-cream-light: var(--cream-100);
+  --Pale-Gold: var(--gold-100);
+  --overlay-bg: rgba(10, 14, 31, 0.55);
+  --soft-pink: #f16d6de0;
+  --golden-yellow: rgba(var(--gold-rgb), 0.35);
+  --bright-gold: var(--gold-300);
   --Cloudy-Sky: #8c9bb0;
   --silver-frost: #f1f4f9;
---pearl-gray: #e9e9eb;
+  --pearl-gray: #e9e9eb;
   --mint-whisper: #f0faf5;
   --seafoam-green: #5bae7f;
-  --golden-sun: #fbc02d;
-  --amber-honey: #f59e0b;
+  --golden-sun: var(--gold-500);
+  --amber-honey: var(--gold-600);
   --ice-blue: #e3f2fd;
   --royal-azure: #2196f3;
   --storm-slate: #4a556c;
   --dusty-stone: #777;
   --rose-petal: #ffebee;
   --soft-crimson: #ef5350;
-  --pure-white: #fff;
-  --cloud-white: #fafafa;
-  --frost-gray: #f0f0f0;
-
   --state-positive-soft: #d1f5d3;
   --state-positive: #72f1b8;
-
   --state-attention-soft: #fffbeb;
-  --state-attention: #d97706;
-  --state-attention-border: #fff9c4;
+  --state-attention: var(--color-warning-main);
+  --state-attention-border: var(--gold-100);
   --surface-base: #f8f9fa;
   --color-mint-light: #f2fbf8;
   --color-forest-dark: #155724;
@@ -83,9 +188,76 @@ body {
   --color-info-text: #004085;
 }
 
-.Group {
-  position: relative;
-  margin-top: 15px;
+/* ---- Reset ---------------------------------------------------------------- */
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  overflow-x: hidden;
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--color-on-light);
+  background: var(--color-bg-light);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::placeholder {
+  font-family: var(--font-body);
+  color: var(--ink-400);
+}
+
+/* ---- Typography scale (Fix Pass 2 utility classes) ------------------------ */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  line-height: var(--lh-heading);
+  font-weight: var(--fw-bold);
+}
+
+.t-display {
+  font-family: var(--font-display);
+  font-size: var(--fs-display);
+  line-height: var(--lh-tight);
+  font-weight: var(--fw-extrabold);
+}
+.t-h1 { font-size: var(--fs-h1); line-height: var(--lh-heading); font-weight: var(--fw-bold); }
+.t-h2 { font-size: var(--fs-h2); line-height: var(--lh-heading); font-weight: var(--fw-bold); }
+.t-h3 { font-size: var(--fs-h3); line-height: var(--lh-heading); font-weight: var(--fw-semibold); }
+.t-h4 { font-size: var(--fs-h4); font-weight: var(--fw-semibold); }
+.t-lead { font-size: var(--fs-lg); line-height: var(--lh-body); }
+.t-body { font-size: var(--fs-body); line-height: var(--lh-body); }
+.t-sm { font-size: var(--fs-sm); }
+.t-caption { font-size: var(--fs-caption); letter-spacing: 0.04em; }
+
+.text-gold {
+  background: var(--gradient-gold-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--gold-500); /* fallback */
+}
+
+/* ---- Elements ------------------------------------------------------------- */
+[class^='fa-'],
+[class*=' fa-'] {
+  font-display: swap !important;
+}
+
+li {
+  list-style: none;
 }
 
 input,
@@ -94,33 +266,43 @@ select {
   width: 100%;
   padding: 10px;
   outline: none;
-  border: 1px solid var(--golden-bronze);
-  border-radius: 7px;
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-sm);
   background-color: transparent;
-}
-
-li {
-  list-style: none;
+  font-family: var(--font-body);
 }
 
 button {
   border: 0;
   background-color: transparent;
   padding: 10px;
-  border-radius: 5px;
-  font-family: 'Cairo', sans-serif;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: opacity var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out);
 
   &:hover {
-    opacity: 0.7;
+    opacity: 0.9;
   }
+}
 
-  cursor: pointer;
+/* ---- Global focus-visible ring (Fix Pass 8: was missing everywhere) ------- */
+:focus-visible {
+  outline: 2px solid var(--gold-500);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+/* Do not show the ring for mouse users on non-keyboard focus */
+:focus:not(:focus-visible) {
+  outline: none;
 }
 
 .error-message {
-  color: var(--red-color);
+  color: var(--color-danger-main);
   text-align: center;
-  font-weight: bold;
+  font-weight: var(--fw-bold);
   position: relative;
 }
 
@@ -131,52 +313,67 @@ input:-webkit-autofill:active {
   -webkit-transition: background-color 5000s ease-in-out 0s;
 }
 
-
-
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: var(--accent-gold) !important;
-  border-radius: 10px;
+  background-color: var(--gold-500);
+  border-radius: var(--radius-pill);
 }
 
-
+/* ---- Layout helpers ------------------------------------------------------- */
+.Group {
+  position: relative;
+  margin-top: 15px;
+}
 
 .container {
-  width: 75%;
+  width: min(75%, 1200px);
   margin: auto;
 }
 
 @mixin button($width: auto) {
   width: $width;
-  padding: 10px 20px;
-  border-radius: 5px;
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-sm);
 }
 
-@mixin section-header($text-color: var(--accent-gold)) {
+@mixin section-header($text-color: var(--gold-500)) {
   .section-title {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 20px;
-    background-color: #f0efe8;
-    border-radius: 50px;
-    padding: 10px 30px;
+    margin-bottom: var(--space-5);
+    background-color: rgba(var(--gold-rgb), 0.12);
+    border-radius: var(--radius-pill);
+    padding: var(--space-3) var(--space-6);
 
     h1,
     h2,
     h3 {
       margin: 0;
       color: $text-color;
-      font-weight: bold;
-      font-size: 1rem;
+      font-weight: var(--fw-bold);
+      font-size: var(--fs-body);
     }
   }
 }
 
+/* ---- Reduced motion (Fix Pass 6: global safety net) ----------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---- Responsive container ------------------------------------------------- */
 @media (max-width: 1200px) {
   .container {
     width: 90%;
@@ -185,27 +382,29 @@ input:-webkit-autofill:active {
 
 @media (max-width: 576px) {
   .container {
-    width: 95%;
+    width: 92%;
   }
 }
 
 @media (max-width: 768px) {
   .section-title {
-    padding: 8px 20px !important;
+    padding: var(--space-2) var(--space-5) !important;
 
-    h2, h3, h1 {
-      font-size: 14px !important;
+    h1,
+    h2,
+    h3 {
+      font-size: var(--fs-sm) !important;
       text-align: center;
       white-space: nowrap;
     }
   }
 }
 
-// Fix navigation scroll offset for sticky header
+/* Fix navigation scroll offset for sticky header */
 app-hero-section,
 app-about,
 app-how-it-work,
 app-servies {
   scroll-margin-top: 100px;
-  display: block; // Ensure they respect margin/padding
+  display: block;
 }

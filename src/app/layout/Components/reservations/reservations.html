@@ -13,7 +13,75 @@
       <p class="confirm-booking">{{ 'steps_guide' | translate }}</p>
     </div>
     <div class="container">
-      <p-stepper [value]="bookingService.currentStep()" class="basis-[50rem]">
+      @let fv = bookingService.formValue(); @let svc = bookingService.detailsservies(); @let step =
+      bookingService.currentStep();
+      <div class="booking-layout">
+        <aside class="summary-sidebar">
+          <h2 class="summary-title">{{ 'BOOKING_SUMMARY' | translate }}</h2>
+
+          <div class="summary-progress">
+            <span [class.filled]="step >= 1"></span>
+            <span [class.filled]="step >= 2"></span>
+            <span [class.filled]="step >= 3"></span>
+          </div>
+
+          <!-- 1. Service -->
+          <div class="summary-block">
+            <h3><span class="num">1.</span> {{ 'summary_service' | translate }}</h3>
+            <div class="summary-row" [class.done]="!!svc?.id">
+              <i class="fa-solid fa-circle-check"></i>
+              <div class="summary-row-text">
+                <p class="val">
+                  {{
+                    svc?.id
+                      ? (bookingService.getCurrentLanguage() === 'ar' ? svc.name_ar : svc.name_en)
+                      : ('summary_service' | translate)
+                  }}
+                </p>
+                <p class="sub">{{ 'servies' | translate }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Date & Time -->
+          <div class="summary-block">
+            <h3><span class="num">2.</span> {{ 'DATE_TIME' | translate }}</h3>
+            <div class="summary-row" [class.done]="!!fv.date && !!fv.startTime">
+              <i class="fa-solid fa-circle-check"></i>
+              <div class="summary-row-text">
+                <p class="val">
+                  {{ fv.date ? (fv.date | date: 'dd/MM/yyyy') : ('DATE_TIME' | translate) }}
+                </p>
+                <p class="sub" *ngIf="fv.startTime">{{ fv.startTime }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Details -->
+          <div class="summary-block">
+            <h3><span class="num">3.</span> {{ 'summary_details' | translate }}</h3>
+            <div class="summary-item" [class.done]="!!fv.name">
+              <i class="fa-solid fa-circle-check"></i>
+              <span>{{ 'full_name' | translate }}<ng-container *ngIf="fv.name">: {{ fv.name }}</ng-container></span>
+            </div>
+            <div class="summary-item" [class.done]="!!fv.clientEmail">
+              <i class="fa-solid fa-circle-check"></i>
+              <span>{{ 'email' | translate }}<ng-container *ngIf="fv.clientEmail">: {{ fv.clientEmail }}</ng-container></span>
+            </div>
+            <div class="summary-item" [class.done]="!!fv.phone_number">
+              <i class="fa-solid fa-circle-check"></i>
+              <span>{{ 'phone' | translate }}<ng-container *ngIf="fv.phone_number">: {{ fv.phone_number }}</ng-container></span>
+            </div>
+          </div>
+
+          <div class="summary-total">
+            <span>{{ 'TOTAL' | translate }}</span>
+            <span class="amount">{{ (svc?.price || 0) }} ﷼</span>
+          </div>
+        </aside>
+
+        <div class="booking-main">
+          <p-stepper [value]="bookingService.currentStep()" class="basis-[50rem]">
         <p-step-list>
           <p-step [value]="1">{{ 'data_information' | translate }} & {{ 'NAV_SERVICES' | translate }}</p-step>
           <p-step
@@ -78,6 +146,8 @@
           </p-step-panel>
         </p-step-panels>
       </p-stepper>
+        </div>
+      </div>
     </div>
   </section>
 </main>

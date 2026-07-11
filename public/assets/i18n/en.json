@@ -1,5 +1,11 @@
 {
   "HOME_META_DESCRIPTION": "Saad Al-Buqami Law Firm & Legal Consultations provides professional and specialized legal services covering all aspects of Saudi law. With over 15 years of experience, we offer precise legal solutions crafted with solid expertise and implemented professionally to achieve the best results for our clients.",
+  "prev": "Previous",
+  "next": "Next",
+  "BOOKING_SUMMARY": "Booking Summary",
+  "summary_service": "Service",
+  "summary_details": "Details",
+  "TOTAL": "Total",
   "SUBTITLE": "Choose your preferred payment method to complete booking",
   "Close_Menu": "Close Menu",
   "TWITTER": "Twitter",
@@ -748,7 +754,6 @@
   "session_hijri_date": "Session date (Hijri)",
   "session_hijri_date_hint": "Format: year-month-day (e.g. 1447-12-15)",
   "meeting_hijri_date": "Meeting date",
-  "session_time": "Session time",
   "save_session_date": "Save session date",
   "session_reminders_scheduled": "Session reminders scheduled",
   "reject_reason_prompt": "Please provide a reason for rejecting the assignment:",
@@ -774,5 +779,8 @@
   "sent_by": "Sent By",
   "sent_at": "Sent At",
   "open_case": "Open Case",
-  "reminder_type_memo_request": "Memo request for assigned consultant"
+  "reminder_type_memo_request": "Memo request for assigned consultant",
+  "BRAND_NAME": "Saad Al-Bugami · Legal Excellence",
+  "jeddah_saudi_arabia": "Jeddah, Saudi Arabia",
+  "SCROLL_TO_TOP": "Scroll to top"
 }

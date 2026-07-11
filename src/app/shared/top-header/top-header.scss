@@ -1,39 +1,57 @@
+/* Slim obsidian strip with gold accents (Stitch redesign) */
 .section-top-header {
-  background: linear-gradient(to left, var(--primary-navy), var(--accent-gold));
+  background: var(--obsidian-950);
+  border-bottom: 1px solid var(--navy-border);
 }
 
 .content-top-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: var(--white-color);
+  color: var(--color-on-dark-muted);
+  font-size: var(--fs-sm);
 }
 
 .links-top-header {
   display: flex;
   align-items: center;
-  padding: 10px 0;
-  gap: 15px;
+  padding: var(--space-2) 0;
+  gap: var(--space-4);
 
   li {
-    padding: 0 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: 0 var(--space-2);
+
+    i {
+      color: var(--gold-300);
+    }
   }
 }
 
 .icon-contact {
   display: flex;
   align-items: center;
-  padding: 10px 0;
-  gap: 10px;
-  transition: scale 0.3s ease-in-out;
+  padding: var(--space-2) 0;
+  gap: var(--space-1);
 
-  li {
-    padding: 0 10px;
-    cursor: pointer;
+  li a {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: var(--color-on-dark-muted);
+    transition: color var(--dur-fast) var(--ease-out),
+      background var(--dur-fast) var(--ease-out),
+      transform var(--dur-fast) var(--ease-out);
 
-    &:hover {
-      color: var(--primary-navy);
-      transform: scale(1.1);
+    &:hover,
+    &:focus-visible {
+      color: var(--obsidian-900);
+      background: var(--gradient-gold);
+      transform: translateY(-2px);
     }
   }
 }
@@ -45,15 +63,9 @@
 }
 
 @media (min-width: 767px) and (max-width: 1200px) {
-  .content-top-header{
-flex-direction: column;
-justify-content: center;
-  }
-  .icon-contact {
-    padding: 0;
-    gap: 0;
-    li {
-      padding: 5px;
-    }
+  .content-top-header {
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-1);
   }
 }

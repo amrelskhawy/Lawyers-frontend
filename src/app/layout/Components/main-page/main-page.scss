@@ -1,19 +1,18 @@
+/* Landing page is a dark obsidian canvas end-to-end (Stitch redesign) */
+:host {
+  display: block;
+  background: var(--obsidian-900);
+  color: var(--color-on-dark);
+}
 
 .content-main-page {
   display: flex;
   flex-direction: column;
-  gap: 100px;
-  margin-top: 100px;
+  gap: var(--space-12);
+  margin-top: var(--space-12);
 
   @media (max-width: 768px) {
-    gap: 50px;
-    margin-top: 50px;
+    gap: var(--space-8);
+    margin-top: var(--space-8);
   }
 }
-
-
-
-
-
-
-

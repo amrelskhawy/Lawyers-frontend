@@ -1,12 +1,24 @@
 
 .section-footer {
-  background-color: var(--primary-navy);
+  /* full-width dark surround — the rounded card floats inside it */
+  background-color: var(--dark-navy-deep);
   color: var(--white-color);
-  padding: 100px 0 0;
+  padding: var(--space-6) var(--space-6) var(--space-8);
+}
+
+/* the floating, rounded footer card */
+.footer-shell {
   position: relative;
   overflow: hidden;
-  
-  // Decorative radial glows
+  width: min(1360px, 100%);
+  margin: 0 auto;
+  padding: 90px 0 0;
+  background-color: var(--primary-navy);
+  border: 1px solid var(--navy-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card-dark);
+
+  // Decorative radial glow, clipped to the card
   &::after {
     content: '';
     position: absolute;
@@ -18,6 +30,7 @@
     pointer-events: none;
   }
 
+  // gold accent line along the card's top edge
   &::before {
     content: '';
     position: absolute;
@@ -171,16 +184,47 @@
         opacity: 0.8;
       }
 
-      a {
+      a,
+      .footer-nav {
         color: rgba(255, 255, 255, 0.7);
         text-decoration: none;
         cursor: pointer;
         font-size: 1rem;
         transition: all 0.4s ease;
+        background: transparent;
+        border: 0;
+        padding: 0;
+        font-family: inherit;
+        display: inline-flex;
+        align-items: center;
+        gap: 14px;
 
-        &:hover {
+        /* animated gold hover-underline — matches the header nav */
+        span {
+          position: relative;
+
+          &::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -4px;
+            height: 2px;
+            width: 0;
+            background: var(--gradient-gold);
+            border-radius: 2px;
+            transform: translateX(-50%);
+            transition: width var(--dur-fast) var(--ease-out);
+          }
+        }
+
+        &:hover,
+        &:focus-visible {
           color: var(--accent-gold);
-          transform: translateX(-5px); // RTL slide
+        }
+
+        &:hover span::after,
+        &:focus-visible span::after {
+          width: 100%;
         }
       }
       
@@ -233,13 +277,13 @@
       font-weight: 600;
       
       &.closed-status {
-        color: #ef4444;
+        color: var(--soft-crimson);
         font-weight: 700;
         font-size: 0.8rem;
-        background: rgba(239, 68, 68, 0.1);
+        background: var(--color-danger-light);
         padding: 6px 12px;
         border-radius: 6px;
-        border: 1px solid rgba(239, 68, 68, 0.1);
+        border: 1px solid var(--color-danger-light);
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -318,7 +362,12 @@
 
 @media (max-width: 768px) {
   .section-footer {
-    padding: 50px 0 0;
+    padding: var(--space-3) var(--space-3) var(--space-5);
+  }
+
+  .footer-shell {
+    padding-top: 50px;
+    border-radius: var(--radius-lg);
   }
 
   .Content-footer {

@@ -1,7 +1,7 @@
-// Variables
-$primary-navy: #1a2b4b;
-$accent-gold: var(--accent-gold, #c5a059);
-$accent-gold-dark: color-mix(in srgb, var(--accent-gold, #c5a059), black 15%);
+// Variables — aligned to the brand token system
+$primary-navy: var(--primary-navy, #14143a);
+$accent-gold: var(--accent-gold, #c6a15b);
+$accent-gold-dark: color-mix(in srgb, var(--accent-gold, #c6a15b), black 15%);
 $bg-light: #f8fafc;
 $white: #ffffff;
 $gray-border: #e2e8f0;

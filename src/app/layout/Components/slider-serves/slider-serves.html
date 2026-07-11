@@ -2,33 +2,40 @@
 <div [dir]="getcuurentLangauage() === 'ar' ? 'rtl' : 'ltr'">
   <p-carousel [value]="data()" [numVisible]="3" [numScroll]="1" [responsiveOptions]="responsiveOptions">
     <ng-template let-service #item>
-      <div (click)="showData(service)" class="card animation-duration-1000" pAnimateOnScroll enterClass="my-enter-zoom"
+      <div (click)="showData(service)"
+        (keydown.enter)="showData(service)"
+        (keydown.space)="showData(service); $event.preventDefault()"
+        role="button" tabindex="0"
+        [attr.aria-label]="getcuurentLangauage() == 'ar' ? service.name_ar : service.name_en"
+        class="card animation-duration-1000" pAnimateOnScroll enterClass="my-enter-zoom"
         leaveClass="my-leave-animation">
-        <div class="card-price-badge">
-          <span class="price-value">{{ service.price }}</span>
-          <span class="price-currency">﷼</span>
+        <div class="card-band">
+          <div class="card-icon">
+            <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
+          </div>
+          <div class="card-price-badge">
+            <span class="price-value">{{ service.price }}</span>
+            <span class="price-currency">﷼</span>
+          </div>
         </div>
-        <div class="card-icon">
-          <i class="fa-solid fa-gavel"></i>
-        </div>
+
         <div class="card-content">
-          <h3 class="mb-2 font-bold text-xl">
+          <h3 class="card-title">
             {{ getcuurentLangauage() == 'ar' ? service.name_ar : service.name_en }}
           </h3>
-          <p class="text-gray-600 mb-4 text-sm leading-relaxed">
+          <p class="card-desc">
             {{ getServiceDescription(service) }}
           </p>
 
-          <div class="card-actions">
-            <div class="read-more-wrapper" >
-              <a class="font-semibold text-sm">{{ 'read_more' | translate }}</a>
-              <i class="fa-solid fa-arrow-left"></i>
-            </div>
-            <button class="book-now-btn" (click)="bookService($event, service)">
-              {{ 'book_now' | translate }}
-              <i class="fa-solid fa-calendar-check"></i>
-            </button>
-          </div>
+          <span class="read-more-wrapper">
+            <span class="read-more">{{ 'read_more' | translate }}</span>
+            <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+          </span>
+
+          <button type="button" class="book-now-btn" (click)="bookService($event, service)">
+            <i class="fa-solid fa-check" aria-hidden="true"></i>
+            {{ 'book_now' | translate }}
+          </button>
         </div>
       </div>
     </ng-template>

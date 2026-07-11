@@ -1,124 +1,224 @@
 @use '../../../../styles' as *;
 @use '../../Anmitions.scss' as *;
 
-// Variables / Mixins for easier updates
-$border-radius-lg: 150px;
-$border-radius-sm: 80px;
+/* Hero — obsidian navy + refined gold (Stitch "2026 Premium Law Firm Redesign") */
+.hero {
+  position: relative;
+  overflow: clip;
+  max-width: 100%;
+  isolation: isolate;
+  color: var(--color-on-dark);
+
+  /* Background sampled to match the Stitch render (deep obsidian navy,
+     lifting toward the scale on the reading-end side). */
+  background: radial-gradient(
+    92% 82% at 72% 42%,
+    #101a34 0%,
+    #0a1123 44%,
+    #060b1a 100%
+  );
+
+  /* subtle gold bloom behind the scale — the hard ray lives in the image */
+  .hero__glow {
+    position: absolute;
+    inset-inline-end: 2%;
+    top: 46%;
+    transform: translateY(-50%);
+    width: 46vw;
+    height: 46vw;
+    max-width: 620px;
+    max-height: 620px;
+    background: radial-gradient(
+      circle,
+      rgba(var(--gold-rgb), 0.14) 0%,
+      rgba(var(--gold-rgb), 0.05) 38%,
+      transparent 66%
+    );
+    filter: blur(14px);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  /* very faint diagonal light continuation to blend the image ray */
+  .hero__rays {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      115deg,
+      transparent 58%,
+      rgba(var(--gold-rgb), 0.06) 64%,
+      transparent 70%
+    );
+    z-index: -1;
+    pointer-events: none;
+  }
+}
+
+/* RTL: mirror the wrapper so the light-ray reads from the reading-start side
+   (on the wrapper, not the img, to avoid clobbering the float animation) */
+:host-context([dir='rtl']) .hero .img-hero-section .imges {
+  transform: scaleX(-1);
+}
 
 .hero-section {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  // height: 80vh;
-   max-height: 1000px;
-  font-size: 30px;
-  color: var(--white-color);
-  min-height: 80vh;
+  gap: var(--space-8);
+  min-height: 88vh;
+  max-height: 1040px;
+  padding-block: var(--space-10);
 
-  // Tablet & Mobile combined logic
   @media (max-width: 1200px) {
     flex-direction: column-reverse;
     justify-content: center;
-    height: auto;
-    padding: 40px 0;
+    min-height: auto;
+    padding-block: var(--space-8);
     text-align: center;
-    font-size: 20px;
-  }
-
-  @media (max-width: 767px) {
-    font-size: 10px;
-  }
-}
-
-.overlay {
-  position: relative;
-  z-index: 1;
-  overflow: hidden;
-  background: url('/assets/Img/court-justice-scales-gavel-generative-ai_74760-4832.avif') center/cover no-repeat;
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0; // Shorthand for top/left/right/bottom: 0
-    background-color: rgb(47 45 45 / 50%);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    z-index: -1;
+    gap: var(--space-6);
   }
 }
 
 .title-hero-section {
-  h2 {
-    margin-bottom: 20px;
-    @media (max-width: 1200px) { font-size: 2rem; }
-    @media (max-width: 767px) { font-size: 20px; }
+  width: 100%;
+  max-width: 620px;
+
+  @media (max-width: 1200px) {
+    margin-inline: auto;
   }
 
-  .title_span {
-    color: var(--accent-gold);
+  .hero-eyebrow {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-semibold);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold-300);
+    margin-bottom: var(--space-4);
+
+    @media (max-width: 1200px) {
+      margin-inline: auto;
+    }
   }
 
-  button, a.btn-hero-section {
-    @include button(240px);
-    background: linear-gradient(90deg, #b5a863 0%, #8b7a3a 100%);
-    color: var(--white-color);
-    border-radius: 40px;
-    font-size: 15px;
-    margin-top: 20px;
-    text-decoration: none;
+  .hero-heading {
+    font-family: var(--font-display);
+    font-size: var(--fs-display);
+    font-weight: var(--fw-extrabold);
+    line-height: var(--lh-tight);
+    text-wrap: balance;
+    margin-bottom: var(--space-5);
+
+    /* two-tone gold → white, RTL-safe (starts on the reading-start side) */
+    background: linear-gradient(
+      110deg,
+      var(--gold-300) 0%,
+      var(--gold-500) 22%,
+      #ffffff 55%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: var(--gold-300); /* fallback */
+  }
+
+  .hero-lead {
+    font-size: var(--fs-lg);
+    font-weight: var(--fw-medium);
+    color: var(--color-on-dark);
+    margin-bottom: var(--space-3);
+  }
+
+  .hero-sub {
+    font-size: var(--fs-body);
+    color: var(--color-on-dark-muted);
+    line-height: var(--lh-body);
+    margin-bottom: var(--space-6);
+    max-width: 52ch;
+
+    @media (max-width: 1200px) {
+      margin-inline: auto;
+    }
+  }
+
+  a.btn-hero-section {
+    @include button(auto);
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-7);
+    background: var(--gradient-gold);
+    color: var(--obsidian-900);
+    font-weight: var(--fw-bold);
+    font-size: var(--fs-body);
+    border-radius: var(--radius-pill);
+    text-decoration: none;
+    box-shadow: var(--shadow-gold);
+
+    i {
+      transition: transform var(--dur-fast) var(--ease-out);
+    }
+
+    &:hover {
+      opacity: 1;
+      transform: translateY(-2px);
+      box-shadow: var(--glow-gold), var(--shadow-gold);
+
+      i {
+        transform: translateX(4px);
+      }
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+
+    /* RTL: arrow points toward the reading direction */
+    :host-context([dir='rtl']) & i {
+      transform: scaleX(-1);
+    }
 
     @media (max-width: 1200px) {
       width: 100%;
-      max-width: 280px;
+      max-width: 300px;
     }
   }
-}
-
-h6 {
-  font-size: 18px;
-  @media (max-width: 767px) { font-size: 15px; }
 }
 
 .img-hero-section {
   position: relative;
-  margin-bottom: 30px;
+  flex-shrink: 0;
 
-  img {
-    height: 350px;
-    width: 350px;
-    border-top-right-radius: $border-radius-lg;
-    border-bottom-left-radius: $border-radius-lg;
-    object-fit: cover;
-
-    @media (max-width: 1200px) {
-      width: 230px;
-      height: 230px;
-      border-top-right-radius: $border-radius-sm;
-      border-bottom-left-radius: $border-radius-sm;
-      margin: 0 auto;
-      display: block;
-    }
+  .imges {
+    position: relative;
+    display: grid;
+    place-items: center;
   }
 
-  &::before {
-    content: '';
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    width: 100%;
-    height: 95%;
-    border: 4px solid var(--accent-gold);
-    border-top-right-radius: $border-radius-lg;
-    border-bottom-left-radius: $border-radius-lg;
-    z-index: -1;
+  img {
+    width: clamp(260px, 38vw, 480px);
+    height: auto;
+    aspect-ratio: 346 / 358;
+    object-fit: contain;
+    filter: drop-shadow(0 20px 50px rgba(0, 0, 0, 0.4));
+    animation: hero-float 6s var(--ease-in-out) infinite;
+  }
+}
 
-    @media (max-width: 1200px) {
-      border-width: 2px;
-      border-top-right-radius: $border-radius-sm;
-      border-bottom-left-radius: $border-radius-sm;
-    }
+@keyframes hero-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .img-hero-section img {
+    animation: none;
   }
 }

@@ -11,24 +11,27 @@ export class BookingService {
   workdays = signal<any[]>([]);
   detailsservies = signal<any>({});
   bookingForm = signal<FormGroup>(new FormGroup({}));
+  /** Live snapshot of the form value — drives the reactive Booking Summary sidebar in a zoneless app. */
+  formValue = signal<any>({});
 
   constructor(private fb: FormBuilder) {
     this.initForm();
   }
 
   private initForm() {
-    this.bookingForm.set(
-      this.fb.group({
-        serviceId: ['', Validators.required],
-        date: ['', Validators.required],
-        startTime: ['', Validators.required],
-        clientEmail: ['', [Validators.required, Validators.email]],
-        name: ['', Validators.required],
-        phoneCountryCode: ['+966'],
-        phone_number: ['', [Validators.required, Validators.pattern(/^\d{7,15}$/)]],
-        provider: ['PAYMOB', Validators.required],
-      }),
-    );
+    const form = this.fb.group({
+      serviceId: ['', Validators.required],
+      date: ['', Validators.required],
+      startTime: ['', Validators.required],
+      clientEmail: ['', [Validators.required, Validators.email]],
+      name: ['', Validators.required],
+      phoneCountryCode: ['+966'],
+      phone_number: ['', [Validators.required, Validators.pattern(/^\d{7,15}$/)]],
+      provider: ['PAYMOB', Validators.required],
+    });
+    this.bookingForm.set(form);
+    this.formValue.set(form.getRawValue());
+    form.valueChanges.subscribe((v) => this.formValue.set(v));
   }
 
   getCurrentLanguage() {
