@@ -44,6 +44,9 @@ export interface IDataCase {
   sessionHijriDate: string | null;
   sessionTime: string | null;
   sessionDate: string | null;
+  // Court (المحكمة) + case number (رقم القضية), edited from the reminders dialog.
+  courtName: string | null;
+  caseNumber: string | null;
 
   hasStructuredNotes: boolean;
   weaknesses: string[];
