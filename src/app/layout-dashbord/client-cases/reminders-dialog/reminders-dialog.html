@@ -87,10 +87,17 @@
                   {{ 'session_date_saved' | translate }}
                 </small>
               </div>
-              <button [disabled]="isConsultant" type="submit" class="rd-btn rd-btn-primary rd-btn-sm">
-                <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
-                {{ 'save' | translate }}
-              </button>
+              <div class="rd-card-actions">
+                <button *ngIf="hasSessionDate" [disabled]="isConsultant" type="button"
+                  class="rd-btn rd-btn-ghost rd-btn-sm" (click)="clearSessionDate()">
+                  <i class="fa-solid fa-eraser" aria-hidden="true"></i>
+                  {{ 'session_date_clear' | translate }}
+                </button>
+                <button [disabled]="isConsultant" type="submit" class="rd-btn rd-btn-primary rd-btn-sm">
+                  <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
+                  {{ 'save' | translate }}
+                </button>
+              </div>
             </div>
           </form>
 

@@ -750,6 +750,7 @@
   "reminder_status_cancelled": "ملغي",
   "session_date": "موعد الجلسة القادمة",
   "session_date_saved": "تم حفظ موعد الجلسة",
+  "session_date_clear": "حذف الموعد",
   "session_date_required_hint": "يجب تحديد موعد الجلسة القادمة قبل إضافة التذكيرات",
   "session_hijri_date": "تاريخ الجلسة (هجري)",
   "session_hijri_date_hint": "الصيغة: سنة-شهر-يوم (مثال: 1447-12-15)",

@@ -750,6 +750,7 @@
   "reminder_status_cancelled": "Cancelled",
   "session_date": "Next session date",
   "session_date_saved": "Session date saved",
+  "session_date_clear": "Remove date",
   "session_date_required_hint": "Set the next session date before adding reminders",
   "session_hijri_date": "Session date (Hijri)",
   "session_hijri_date_hint": "Format: year-month-day (e.g. 1447-12-15)",

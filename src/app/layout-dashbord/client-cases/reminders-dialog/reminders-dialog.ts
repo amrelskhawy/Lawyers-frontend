@@ -203,6 +203,26 @@ export class RemindersDialog {
       });
   }
 
+  /** Remove the next-session date/time (e.g. entered by mistake). Clears both
+   *  fields via the same endpoint with `null`s — the backend also cancels the
+   *  auto-scheduled session reminders. */
+  clearSessionDate() {
+    const caseId = this.caseItem()?.id;
+    if (!caseId || this.isConsultant || !this.hasSessionDate) return;
+
+    this.data
+      .patch<{ data: IDataCase }>(`cases/${caseId}/session`, {
+        sessionHijriDate: null,
+        sessionTime: null,
+      })
+      .subscribe((res) => {
+        this.caseItem.set(res.data);
+        this.prefillSessionForm(res.data);
+        this.sessionSaved.set(false);
+        this.loadReminders(caseId);
+      });
+  }
+
   get selectedDegreeColor(): string {
     const d = this.selectedDegree();
     return this.degreeOptions.find((o) => o.value === d)?.color ?? '#cbd5e1';

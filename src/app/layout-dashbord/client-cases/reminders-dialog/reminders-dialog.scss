@@ -416,6 +416,13 @@ $wa-green: #25D366;
   flex: 1;
 }
 
+.rd-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
 // ── Hints ─────────────────────────────────────────────────────────────────────
 .rd-hint {
   display: inline-flex;
