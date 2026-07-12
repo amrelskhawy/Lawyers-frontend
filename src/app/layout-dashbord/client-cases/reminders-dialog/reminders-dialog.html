@@ -87,7 +87,61 @@
                   {{ 'session_date_saved' | translate }}
                 </small>
               </div>
-              <button [disabled]="isConsultant" type="submit" class="rd-btn rd-btn-primary rd-btn-sm">
+              <div class="rd-card-actions">
+                <button *ngIf="hasSessionDate" [disabled]="isConsultant" type="button"
+                  class="rd-btn rd-btn-ghost rd-btn-sm" (click)="clearSessionDate()">
+                  <i class="fa-solid fa-eraser" aria-hidden="true"></i>
+                  {{ 'session_date_clear' | translate }}
+                </button>
+                <button [disabled]="isConsultant" type="submit" class="rd-btn rd-btn-primary rd-btn-sm">
+                  <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
+                  {{ 'save' | translate }}
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <!-- Case details card (court + case number) -->
+          <form (ngSubmit)="saveCourtInfo()" class="rd-card">
+            <div class="rd-card-title">
+              <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
+              {{ 'case_info_title' | translate }}
+            </div>
+            <div class="rd-field-row">
+              <div class="rd-field">
+                <label>{{ 'court_label' | translate }}</label>
+                <div class="rd-input-wrap">
+                  <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
+                  <input type="text" [disabled]="isConsultant" [ngModel]="courtName()"
+                    (ngModelChange)="courtName.set($event); courtInfoSaved.set(false)"
+                    [ngModelOptions]="{ standalone: true }"
+                    [placeholder]="'court_label' | translate" />
+                </div>
+              </div>
+              <div class="rd-field">
+                <label>{{ 'case_number_label' | translate }}</label>
+                <div class="rd-input-wrap">
+                  <i class="fa-solid fa-hashtag" aria-hidden="true"></i>
+                  <input type="text" [disabled]="isConsultant" [ngModel]="caseNumber()"
+                    (ngModelChange)="caseNumber.set($event); courtInfoSaved.set(false)"
+                    [ngModelOptions]="{ standalone: true }"
+                    [placeholder]="'case_number_label' | translate" />
+                </div>
+              </div>
+            </div>
+            <div class="rd-card-footer">
+              <div class="rd-hints">
+                <small class="rd-hint warn" *ngIf="!hasCaseInfo">
+                  <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+                  {{ 'case_info_required_hint' | translate }}
+                </small>
+                <small class="rd-hint success" *ngIf="courtInfoSaved()">
+                  <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
+                  {{ 'case_info_saved' | translate }}
+                </small>
+              </div>
+              <button [disabled]="isConsultant || courtInfoSaving()" type="submit"
+                class="rd-btn rd-btn-primary rd-btn-sm">
                 <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
                 {{ 'save' | translate }}
               </button>
@@ -260,11 +314,16 @@
                   </div>
                 </div>
 
+                <small class="rd-hint warn" *ngIf="!hasCaseInfo">
+                  <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+                  {{ 'case_info_required_hint' | translate }}
+                </small>
+
                 <div class="rd-form-actions">
                   <button type="button" class="rd-btn rd-btn-ghost" (click)="cancelAdd()">
                     {{ 'close' | translate }}
                   </button>
-                  <button type="submit" class="rd-btn rd-btn-primary">
+                  <button type="submit" class="rd-btn rd-btn-primary" [disabled]="!hasCaseInfo">
                     <i class="fa-solid" [ngClass]="editingId() ? 'fa-check' : 'fa-plus'" aria-hidden="true"></i>
                     {{ (editingId() ? 'save' : 'add_reminder') | translate }}
                   </button>

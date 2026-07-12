@@ -29,6 +29,11 @@ export class RemindersDialog {
   showAddForm = signal<boolean>(false);
 
   caseItem = signal<IDataCase | null>(null);
+  // Court + case number editor (bound to the inputs; persisted state lives on caseItem).
+  courtName = signal<string>('');
+  caseNumber = signal<string>('');
+  courtInfoSaving = signal<boolean>(false);
+  courtInfoSaved = signal<boolean>(false);
   reminders = signal<IReminder[]>([]);
   types = signal<IReminderTypeOption[]>([]);
   editingId = signal<string | null>(null);
@@ -132,6 +137,9 @@ export class RemindersDialog {
     this.selectedDegree.set(value?.caseDegree ?? '');
     this.otherDegreeText.set(value?.otherDegreeText ?? '');
     this.degreeSaved.set(false);
+    this.courtName.set(value?.courtName ?? '');
+    this.caseNumber.set(value?.caseNumber ?? '');
+    this.courtInfoSaved.set(false);
     this.prefillSessionForm(value);
     // Initialise memo section from the case's persisted state.
     this.needsMemo.set(value?.needsMemo ?? false);
@@ -200,6 +208,56 @@ export class RemindersDialog {
         this.prefillSessionForm(res.data);
         this.sessionSaved.set(true);
         this.loadReminders(caseId);
+      });
+  }
+
+  /** Remove the next-session date/time (e.g. entered by mistake). Clears both
+   *  fields via the same endpoint with `null`s — the backend also cancels the
+   *  auto-scheduled session reminders. */
+  clearSessionDate() {
+    const caseId = this.caseItem()?.id;
+    if (!caseId || this.isConsultant || !this.hasSessionDate) return;
+
+    this.data
+      .patch<{ data: IDataCase }>(`cases/${caseId}/session`, {
+        sessionHijriDate: null,
+        sessionTime: null,
+      })
+      .subscribe((res) => {
+        this.caseItem.set(res.data);
+        this.prefillSessionForm(res.data);
+        this.sessionSaved.set(false);
+        this.loadReminders(caseId);
+      });
+  }
+
+  /** True once the case has both a court and a case number persisted — the
+   *  precondition for creating any reminder (enforced again on the backend). */
+  get hasCaseInfo(): boolean {
+    const c = this.caseItem();
+    return !!c?.courtName?.trim() && !!c?.caseNumber?.trim();
+  }
+
+  /** Persist the court + case number entered inline in the reminders dialog. */
+  saveCourtInfo() {
+    const caseId = this.caseItem()?.id;
+    if (!caseId || this.isConsultant) return;
+
+    this.courtInfoSaving.set(true);
+    this.data
+      .patch<{ data: IDataCase }>(`cases/${caseId}/court-info`, {
+        courtName: this.courtName().trim() || null,
+        caseNumber: this.caseNumber().trim() || null,
+      })
+      .subscribe({
+        next: (res) => {
+          this.caseItem.set(res.data);
+          this.courtName.set(res.data.courtName ?? '');
+          this.caseNumber.set(res.data.caseNumber ?? '');
+          this.courtInfoSaving.set(false);
+          this.courtInfoSaved.set(true);
+        },
+        error: () => this.courtInfoSaving.set(false),
       });
   }
 
@@ -370,6 +428,8 @@ export class RemindersDialog {
 
   onSubmit() {
     if (this.isCompleted) return;
+    // Court + case number must exist before any reminder can be created.
+    if (!this.hasCaseInfo) return;
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;

@@ -124,11 +124,12 @@ export class ConsultantReminders implements OnInit {
   // ── Decoration ────────────────────────────────────────────────────────────
   private decorate(r: IConsultantReminder): CalendarMemo {
     const report = r.case?.sessionReports?.[0];
+    // Court + case number are owned by the Case; the session report is a legacy fallback.
     return {
       reminder: r,
-      caseNumber: report?.caseNumber ?? r.case?.agencyNumber ?? '—',
+      caseNumber: r.case?.caseNumber ?? report?.caseNumber ?? r.case?.agencyNumber ?? '—',
       clientName: r.case?.customer?.fullName ?? '—',
-      courtName: report?.courtName ?? '—',
+      courtName: r.case?.courtName ?? report?.courtName ?? '—',
       consultantName: r.case?.consultant?.nameAr ?? r.case?.consultant?.name ?? '—',
       memoType: r.case?.memoType ?? '—',
       deadlineFormatted: this.formatDeadline(r.memoDeadline ?? r.case?.memoDeadline),

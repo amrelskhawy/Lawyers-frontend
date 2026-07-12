@@ -32,6 +32,8 @@ export interface IConsultantReminder extends IReminder {
   case?: {
     id: string;
     agencyNumber: string | null;
+    courtName?: string | null;
+    caseNumber?: string | null;
     needsMemo: boolean;
     memoDeadline: string | null;
     memoType: string | null;

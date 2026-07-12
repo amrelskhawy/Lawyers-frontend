@@ -268,7 +268,7 @@
 
 @media (max-width: 767px) {
   .team-intro .main-title {
-    font-size: 25px;
+    font-size: var(--fs-h2);
   }
 
   .nav-btn {

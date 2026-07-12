@@ -63,12 +63,13 @@
   /* Sora for Latin display; Cairo picks up Arabic headings via fallback */
   --font-display: 'Sora', 'Cairo', 'Segoe UI', sans-serif;
 
-  --fs-display: clamp(2.5rem, 5.5vw, 4.5rem);
-  --fs-h1: clamp(2rem, 4vw, 3.25rem);
-  --fs-h2: clamp(1.6rem, 3vw, 2.5rem);
-  --fs-h3: clamp(1.25rem, 2.2vw, 1.6rem);
-  --fs-h4: 1.25rem;
-  --fs-lg: 1.125rem;
+  /* clamp MIN = mobile size (vw collapses on narrow screens), MAX = desktop cap */
+  --fs-display: clamp(1.75rem, 6vw, 3.75rem);
+  --fs-h1: clamp(1.4rem, 5vw, 2.75rem);
+  --fs-h2: clamp(1.2rem, 4vw, 2.1rem);
+  --fs-h3: clamp(1.05rem, 3vw, 1.5rem);
+  --fs-h4: 1.15rem;
+  --fs-lg: 1.0625rem;
   --fs-body: 1rem;
   --fs-sm: 0.875rem;
   --fs-caption: 0.75rem;
@@ -197,6 +198,23 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  /* Global type scale: 15px base calms oversized rem/token typography site-wide.
+     Everything rem-based (body, headings, most components) shrinks proportionally. */
+  font-size: 93.75%; /* 15px */
+}
+
+/* Tablet: nudge the base down a touch */
+@media (max-width: 900px) {
+  html {
+    font-size: 90.625%; /* ~14.5px */
+  }
+}
+
+/* Mobile: smaller, more comfortable reading size */
+@media (max-width: 600px) {
+  html {
+    font-size: 85%; /* ~13.6px */
+  }
 }
 
 body {
