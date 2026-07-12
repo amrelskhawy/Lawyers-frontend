@@ -11,12 +11,10 @@
 
   /* Background sampled to match the Stitch render (deep obsidian navy,
      lifting toward the scale on the reading-end side). */
-  background: radial-gradient(
-    92% 82% at 72% 42%,
-    #101a34 0%,
-    #0a1123 44%,
-    #060b1a 100%
-  );
+  background: radial-gradient(92% 82% at 72% 42%,
+      #101a34 0%,
+      #0a1123 44%,
+      #060b1a 100%);
 
   /* subtle gold bloom behind the scale — the hard ray lives in the image */
   .hero__glow {
@@ -28,12 +26,10 @@
     height: 46vw;
     max-width: 620px;
     max-height: 620px;
-    background: radial-gradient(
-      circle,
-      rgba(var(--gold-rgb), 0.14) 0%,
-      rgba(var(--gold-rgb), 0.05) 38%,
-      transparent 66%
-    );
+    background: radial-gradient(circle,
+        rgba(var(--gold-rgb), 0.14) 0%,
+        rgba(var(--gold-rgb), 0.05) 38%,
+        transparent 66%);
     filter: blur(14px);
     z-index: -1;
     pointer-events: none;
@@ -43,12 +39,10 @@
   .hero__rays {
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-      115deg,
-      transparent 58%,
-      rgba(var(--gold-rgb), 0.06) 64%,
-      transparent 70%
-    );
+    background: linear-gradient(115deg,
+        transparent 58%,
+        rgba(var(--gold-rgb), 0.06) 64%,
+        transparent 70%);
     z-index: -1;
     pointer-events: none;
   }
@@ -111,16 +105,15 @@
     margin-bottom: var(--space-5);
 
     /* two-tone gold → white, RTL-safe (starts on the reading-start side) */
-    background: linear-gradient(
-      110deg,
-      var(--gold-300) 0%,
-      var(--gold-500) 22%,
-      #ffffff 55%
-    );
+    background: linear-gradient(110deg,
+        var(--gold-300) 0%,
+        var(--gold-500) 22%,
+        #ffffff 55%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    color: var(--gold-300); /* fallback */
+    color: var(--gold-300);
+    /* fallback */
   }
 
   .hero-lead {
@@ -198,7 +191,7 @@
   }
 
   img {
-    width: clamp(260px, 38vw, 480px);
+    width: clamp(380px, 42vw, 530px);
     height: auto;
     aspect-ratio: 346 / 358;
     object-fit: contain;
@@ -208,10 +201,12 @@
 }
 
 @keyframes hero-float {
+
   0%,
   100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-14px);
   }

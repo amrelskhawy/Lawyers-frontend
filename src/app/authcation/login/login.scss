@@ -45,11 +45,6 @@ $error-red: #ef4444;
   background: $white;
   border-radius: 1.5rem;
   animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-
-  // Optional: Add card shadow if not full screen on mobile
-  @media (min-width: 901px) {
-    // box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  }
 }
 
 .login-card .brand-header {
@@ -59,8 +54,8 @@ $error-red: #ef4444;
 }
 
 .home-nav {
-display: flex;
-justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .btn-home {
@@ -68,7 +63,6 @@ justify-content: space-between;
   align-items: center !important;
   justify-content: center !important;
   width: 45px;
-  /* Slightly larger for easier click */
   height: 45px;
   border-radius: 50%;
   background-color: #f3f4f6;
@@ -80,15 +74,12 @@ justify-content: space-between;
 
   i {
     font-size: 1.25rem;
-    /* Ensure icon is visible and sized */
     line-height: 1;
-    /* Prevent line-height issues */
   }
 
   &:hover {
     background-color: var(--accent-gold)/40;
     color: #ffffff !important;
-    /* Force white icon on hover */
     transform: scale(1.1);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
@@ -97,8 +88,8 @@ justify-content: space-between;
 
 .login-card .brand-header .app-logo {
   width: 120px;
-  height: auto; // Ensure aspect ratio
-  max-width: 100%; // Prevent overflow
+  height: auto;
+  max-width: 100%;
   margin-bottom: 10px;
   display: block;
   margin-left: auto;
@@ -130,6 +121,7 @@ justify-content: space-between;
   color: $text-dark;
 }
 
+// ---- Original input-container look, now wrapping PrimeNG controls ----
 .modern-form .form-group .input-container {
   position: relative;
   display: flex;
@@ -143,7 +135,7 @@ justify-content: space-between;
   &:focus-within {
     border-color: $primary-navy;
     background-color: $white;
-    box-shadow: 0 0 0 4px rgba($primary-navy, 0.1);
+    box-shadow: 0 0 0 4px rgba(30, 58, 92, 0.1);
 
     .icon {
       color: $primary-navy;
@@ -152,48 +144,77 @@ justify-content: space-between;
 
   &.error {
     border-color: $error-red;
-    background-color: rgba($error-red, 0.02);
+    background-color: rgba(239, 68, 68, 0.02);
 
     .icon {
       color: $error-red;
     }
   }
-}
 
-.modern-form .form-group .input-container .icon {
-  color: $text-light;
-  margin-right: 0.75rem;
-  font-size: 1.1rem;
-  transition: color 0.3s ease;
-}
-
-.modern-form .form-group .input-container input {
-  flex: 1;
-  border: none;
-  outline: none;
-  background: transparent;
-  font-size: 16px; // Prevents iOS auto-zoom on focus (must be >= 16px)
-  color: $text-dark;
-  width: 100%;
-  padding: 0;
-  touch-action: manipulation;
-  -webkit-user-select: text;
-  user-select: text;
-
-  &::placeholder {
-    color: #9ca3af;
+  .icon {
+    color: $text-light;
+    margin-right: 0.75rem;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
   }
-}
 
-.modern-form .form-group .input-container .toggle-password {
-  cursor: pointer;
-  color: $text-light;
-  margin-left: 0.5rem;
-  padding: 0.25rem;
-  transition: color 0.2s;
+  // Bare inputs — the container provides the border/background, so the
+  // PrimeNG input (email) and password inner input stay transparent.
+  .bare-input {
+    flex: 1;
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    box-shadow: none;
+    font-size: 16px; // Prevents iOS auto-zoom on focus (must be >= 16px)
+    color: $text-dark;
+    padding: 0;
 
-  &:hover {
-    color: $primary-navy;
+    &::placeholder {
+      color: #9ca3af;
+    }
+  }
+
+  // p-password is a custom element wrapping an input + toggle button.
+  // Its inner nodes are rendered outside this component's view encapsulation,
+  // so ::ng-deep is required to reach them.
+  p-password,
+  ::ng-deep .p-password {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+  }
+
+  ::ng-deep .p-password .p-password-input {
+    flex: 1;
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+    padding-right: 1.75rem; // room for the toggle icon
+    font-size: 16px;
+    color: $text-dark;
+
+    &::placeholder {
+      color: #9ca3af;
+    }
+  }
+
+  // Password show/hide toggle icon
+  ::ng-deep .p-password-toggle-mask-icon,
+  ::ng-deep .p-password .p-icon {
+    color: $text-light;
+    cursor: pointer;
+    transition: color 0.2s;
+
+    &:hover {
+      color: $primary-navy;
+    }
   }
 }
 
@@ -210,8 +231,35 @@ justify-content: space-between;
 
 .modern-form .form-actions {
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
   margin-bottom: 1.5rem;
+}
+
+.modern-form .form-actions .remember-me {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: $text-dark;
+    cursor: pointer;
+    user-select: none;
+  }
+}
+
+// Checkbox accent → navy
+.modern-form .p-checkbox-checked .p-checkbox-box {
+  background: $primary-navy;
+  border-color: $primary-navy;
+}
+
+.modern-form .p-checkbox-box:focus-visible,
+.modern-form .p-checkbox-input:focus-visible + .p-checkbox-box {
+  box-shadow: 0 0 0 4px rgba(30, 58, 92, 0.15);
 }
 
 .modern-form .form-actions .forgot-password {
@@ -220,6 +268,7 @@ justify-content: space-between;
   font-weight: 600;
   text-decoration: none;
   transition: color 0.2s;
+  white-space: nowrap;
 
   &:hover {
     color: $accent-gold;
@@ -227,13 +276,14 @@ justify-content: space-between;
   }
 }
 
+// Submit button (pButton directive + custom content)
 .modern-form .btn-primary {
   width: 100%;
   padding: 1rem;
   background-color: $primary-navy;
-  color: $white;
   border: none;
   border-radius: 12px;
+  color: $white;
   font-size: 1rem;
   font-weight: 700;
   cursor: pointer;
@@ -244,39 +294,21 @@ justify-content: space-between;
   gap: 0.5rem;
 
   &:hover:not(:disabled) {
-    // background-color: lighten($primary-navy, 5%); // Cannot use lighten on variable
     background-color: $primary-navy;
-    filter: brightness(1.2); // CSS native way to lighten
+    filter: brightness(1.2);
     transform: translateY(-2px);
-    box-shadow: 0 10px 20px -10px rgba($primary-navy, 0.5);
+    box-shadow: 0 10px 20px -10px rgba(30, 58, 92, 0.5);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(30, 58, 92, 0.25);
   }
 
   &:disabled {
     opacity: 0.7;
     cursor: not-allowed;
     transform: none;
-  }
-}
-
-.modern-form .register-link {
-  margin-top: 1.5rem;
-  text-align: center;
-}
-
-.modern-form .register-link p {
-  color: $text-light;
-  font-size: 0.95rem;
-}
-
-.modern-form .register-link p a {
-  color: $primary-navy;
-  font-weight: 700;
-  text-decoration: none;
-  margin-left: 0.25rem;
-
-  &:hover {
-    text-decoration: underline;
-    color: $accent-gold;
   }
 }
 
@@ -327,10 +359,24 @@ justify-content: space-between;
   }
 }
 
+// Respect users who prefer reduced motion
+@media (prefers-reduced-motion: reduce) {
+
+  .login-card,
+  .modern-form .form-group .error-msg small,
+  .modern-form .btn-primary {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .modern-form .btn-primary:hover:not(:disabled) {
+    transform: none;
+  }
+}
+
 // Adjust side panel visibility
 @media (max-width: 900px) {
   .login-container {
-
     grid-template-columns: 1fr
   }
 
@@ -357,17 +403,20 @@ justify-content: space-between;
       font-size: 1.75rem;
     }
   }
-}
 
+  .modern-form .form-actions {
+    flex-wrap: wrap;
+  }
+}
 
 
 .side-panel {
   position: relative;
   background-color: $primary-navy;
   overflow: hidden;
-  display: flex; // Center content
-  align-items: center; // Center content
-  justify-content: center; // Center content
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .side-panel::before {
@@ -378,9 +427,9 @@ justify-content: space-between;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  opacity: 0.4; // Darken slightly for better contrast
+  opacity: 0.4;
   filter: blur(4px);
-  transform: scale(1.05); // Avoid blur edges
+  transform: scale(1.05);
   z-index: 0;
 }
 
@@ -396,7 +445,7 @@ justify-content: space-between;
 
   img {
     filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2));
-    width: 400px; // Ensure explicit width matches HTML or design intent
+    width: 400px;
     position: relative;
     height: auto;
   }

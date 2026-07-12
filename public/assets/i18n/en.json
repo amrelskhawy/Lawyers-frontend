@@ -179,6 +179,7 @@
   "return_main": "Return to Home",
   "Welcome_back": "Welcome Back",
   "please_login": "Please Log In To Your Account",
+  "remember_me": "Remember me",
   "vaild_email": "Please enter a valid email address",
   "Admins": "Admins",
   "password": "Password",
@@ -787,7 +788,7 @@
   "sent_at": "Sent At",
   "open_case": "Open Case",
   "reminder_type_memo_request": "Memo request for assigned consultant",
-  "BRAND_NAME": "Saad Al-Bugami · Legal Excellence",
+  "BRAND_NAME": "Saad Al-Baqmi Law Firm and Legal Consultations",
   "jeddah_saudi_arabia": "Jeddah, Saudi Arabia",
   "SCROLL_TO_TOP": "Scroll to top"
 }

@@ -47,7 +47,10 @@
 
 
             <li class="nav-item">
-              <a routerLink="/auth/login" (click)="visible = false" class="drawer-link">
+              <a class="drawer-link" role="button" tabindex="0"
+                (click)="closeThenNavigate('/auth/login')"
+                (keydown.enter)="closeThenNavigate('/auth/login')"
+                (keydown.space)="closeThenNavigate('/auth/login')">
                 <i class="fa-solid fa-right-to-bracket"></i>
                 <span>{{ 'LOGIN' | translate }}</span>
               </a>
