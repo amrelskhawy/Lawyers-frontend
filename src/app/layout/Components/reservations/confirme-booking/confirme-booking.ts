@@ -28,13 +28,16 @@ export class ConfirmeBooking {
 
   onSubmit() {
     const formValue = this.bookingService.bookingForm().value;
-    const date = new Date(formValue.date);
-    const formattedDate = date.toLocaleDateString('en-CA');
 
-    const payload = {
-      ...formValue,
-      date: formattedDate,
-    };
+    let payload: any = { ...formValue };
+    if (this.bookingService.isInstallment()) {
+      // Installment plans are booked without a date/time.
+      delete payload.date;
+      delete payload.startTime;
+    } else {
+      const date = new Date(formValue.date);
+      payload.date = date.toLocaleDateString('en-CA');
+    }
 
     this.dataService.post('bookings', payload).subscribe((res: any) => {
       this.bookingService.resetBooking();

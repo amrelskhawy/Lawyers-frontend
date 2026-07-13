@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 
 @Component({
   selector: 'app-servies',
@@ -7,4 +7,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrl: './servies.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Servies {}
+export class Servies {
+  activeTab = signal<'normal' | 'installment'>('normal');
+}

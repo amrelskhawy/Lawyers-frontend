@@ -11,8 +11,13 @@ export class ServiesBooking {
   constructor(private bookingService: BookingService) {}
   servise = signal<any[]>([]);
   selectServies = signal<any>({});
+  /** Active filter tab: normal services vs. installment plans. */
+  activeTab = signal<'normal' | 'installment'>('normal');
 
-  filteredServices = computed(() => this.servise().filter((s: any) => !s.isInstallmentPlans));
+  filteredServices = computed(() => {
+    const installment = this.activeTab() === 'installment';
+    return this.servise().filter((s: any) => !!s.isInstallmentPlans === installment);
+  });
   @Input()
   set dataservies(value: any) {
     this.servise.set(value);
@@ -22,6 +27,9 @@ export class ServiesBooking {
   set selectedService(value: any) {
     if (value) {
       this.selectServies.set(value);
+      // Show the tab that contains the pre-selected service (e.g. deep-linked
+      // from the home page's Installment Plans tab).
+      this.activeTab.set(value.isInstallmentPlans ? 'installment' : 'normal');
     }
   }
 
@@ -32,6 +40,11 @@ export class ServiesBooking {
   }
   onSelctServies(item: any) {
     this.selectServies.set(item);
+    // Reflect the selection in the shared booking state immediately so the
+    // summary sidebar (service name + total) updates live, before Next.
+    this.bookingService.detailsservies.set(item);
+    this.bookingService.getControl('serviceId')?.patchValue(item.id);
+    this.bookingService.applyDateTimeRequirement(!!item.isInstallmentPlans);
   }
 
   onNextStep() {

@@ -258,7 +258,7 @@ $error-red: #ef4444;
 }
 
 .modern-form .p-checkbox-box:focus-visible,
-.modern-form .p-checkbox-input:focus-visible + .p-checkbox-box {
+.modern-form .p-checkbox-input:focus-visible+.p-checkbox-box {
   box-shadow: 0 0 0 4px rgba(30, 58, 92, 0.15);
 }
 
@@ -445,8 +445,30 @@ $error-red: #ef4444;
 
   img {
     filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2));
-    width: 400px;
+    width: 520px;
+    max-width: 85%;
     position: relative;
     height: auto;
+    transform-origin: center;
+    animation: side-logo-float 4s ease-in-out infinite;
+    will-change: transform;
+  }
+}
+
+@keyframes side-logo-float {
+
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    transform: translateY(-16px) scale(1.05);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-wrapper img {
+    animation: none;
   }
 }

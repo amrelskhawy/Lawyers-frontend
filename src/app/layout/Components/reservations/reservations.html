@@ -43,7 +43,8 @@
             </div>
           </div>
 
-          <!-- 2. Date & Time -->
+          <!-- 2. Date & Time (hidden for installment plans) -->
+          @if (!bookingService.isInstallment()) {
           <div class="summary-block">
             <h3><span class="num">2.</span> {{ 'DATE_TIME' | translate }}</h3>
             <div class="summary-row" [class.done]="!!fv.date && !!fv.startTime">
@@ -56,6 +57,7 @@
               </div>
             </div>
           </div>
+          }
 
           <!-- 3. Details -->
           <div class="summary-block">
@@ -127,11 +129,13 @@
           <p-step-panel [value]="2">
             <ng-template #content let-activateCallback="activateCallback">
               <div class="booking-grid">
+                @if (!bookingService.isInstallment()) {
                 <app-meeting-booking
                   [initialData]="bookingService.bookingForm().value"
                   (DateClient)="EventDateClient($event)"
                   [disabledDates]="bookingService.disabledDates()"
                 ></app-meeting-booking>
+                }
                 <app-payment (payment)="onPayment($event)"></app-payment>
               </div>
             </ng-template>

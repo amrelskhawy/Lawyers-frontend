@@ -79,6 +79,8 @@ export class Reservations implements OnInit {
     if (!event || !event.id) return;
     this.bookingService.detailsservies.set(event);
     this.bookingService.getControl('serviceId')?.patchValue(event.id);
+    // Installment plans skip the date/time step — adjust validators accordingly.
+    this.bookingService.applyDateTimeRequirement(!!event.isInstallmentPlans);
 
     const infoControls = ['clientEmail', 'name', 'phone_number'];
     let infoValid = true;
@@ -98,12 +100,15 @@ export class Reservations implements OnInit {
   onPayment(valuepayment: string) {
     this.bookingService.getControl('provider')?.patchValue(valuepayment);
 
-    const dateCtrl = this.bookingService.getControl('date');
-    const timeCtrl = this.bookingService.getControl('startTime');
-    if (dateCtrl?.invalid || timeCtrl?.invalid) {
-      dateCtrl?.markAsTouched();
-      timeCtrl?.markAsTouched();
-      return;
+    // Installment plans have no date/time to validate.
+    if (!this.bookingService.isInstallment()) {
+      const dateCtrl = this.bookingService.getControl('date');
+      const timeCtrl = this.bookingService.getControl('startTime');
+      if (dateCtrl?.invalid || timeCtrl?.invalid) {
+        dateCtrl?.markAsTouched();
+        timeCtrl?.markAsTouched();
+        return;
+      }
     }
 
     this.bookingService.currentStep.set(3);
