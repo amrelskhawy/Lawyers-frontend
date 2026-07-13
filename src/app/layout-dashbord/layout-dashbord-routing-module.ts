@@ -18,6 +18,7 @@ import { ActivityLogs } from './activity-logs/activity-logs';
 import { CasesCalendar } from './cases-calendar/cases-calendar';
 import { ConsultantReminders } from './consultant-reminders/consultant-reminders';
 import { UnscheduledCases } from './unscheduled-cases/unscheduled-cases';
+import { DocumentSigner } from './document-signer/document-signer';
 
 const routes: Routes = [
   {
@@ -56,6 +57,13 @@ const routes: Routes = [
       {
         path: 'Holidays',
         component: Holidays,
+        canActivate: [roleGuard('ADMIN', 'MODERATOR')],
+      },
+
+      // ── Admin + Moderator: client-side document signer ───────────────────
+      {
+        path: 'document-signer',
+        component: DocumentSigner,
         canActivate: [roleGuard('ADMIN', 'MODERATOR')],
       },
 

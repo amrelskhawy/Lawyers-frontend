@@ -1,0 +1,99 @@
+<div class="document-signer-page" dir="rtl">
+
+  <!-- ── Toolbar ─────────────────────────────────────────────────────────── -->
+  <div class="ds-toolbar">
+    <div class="ds-toolbar-group">
+      <label class="ds-btn ds-btn-primary">
+        <i class="fa-solid fa-file-arrow-up"></i>
+        <span>{{ 'ds_upload_document' | translate }}</span>
+        <input type="file" accept="application/pdf,image/*" (change)="onDocumentSelected($event)" hidden />
+      </label>
+
+      <label class="ds-btn" [class.ds-disabled]="!pages().length">
+        <i class="fa-solid fa-signature"></i>
+        <span>{{ 'ds_upload_signature' | translate }}</span>
+        <input type="file" accept="image/*" (change)="onSignatureSelected($event)" hidden
+          [disabled]="!pages().length" />
+      </label>
+
+      <div class="ds-sig-preview" *ngIf="activeSignature()">
+        <span class="ds-sig-label">{{ 'ds_active_signature' | translate }}</span>
+        <img [src]="activeSignature()" alt="signature" />
+      </div>
+    </div>
+
+    <div class="ds-toolbar-group">
+      <button class="ds-btn ds-btn-download" type="button"
+        [disabled]="!pages().length || exporting()" (click)="download()">
+        <i class="fa-solid" [class.fa-download]="!exporting()" [class.fa-spinner]="exporting()"
+          [class.fa-spin]="exporting()"></i>
+        <span>{{ 'ds_download' | translate }}</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ── Hint bar ────────────────────────────────────────────────────────── -->
+  <div class="ds-hint" *ngIf="pages().length && activeSignature()">
+    <i class="fa-solid fa-circle-info"></i>
+    {{ 'ds_hint_place' | translate }}
+  </div>
+
+  <!-- ── Messages ────────────────────────────────────────────────────────── -->
+  <div class="ds-error" *ngIf="errorMsg()">
+    <i class="fa-solid fa-triangle-exclamation"></i> {{ errorMsg() | translate }}
+  </div>
+
+  <div class="ds-loading" *ngIf="loading()">
+    <i class="fa-solid fa-spinner fa-spin"></i> {{ 'ds_loading' | translate }}
+  </div>
+
+  <!-- ── Empty state ─────────────────────────────────────────────────────── -->
+  <div class="ds-empty" *ngIf="!pages().length && !loading()">
+    <i class="fa-solid fa-file-circle-plus"></i>
+    <p>{{ 'ds_empty' | translate }}</p>
+  </div>
+
+  <!-- ── Pages ───────────────────────────────────────────────────────────── -->
+  <div class="ds-pages" *ngIf="pages().length">
+    <div class="ds-page" *ngFor="let page of pages(); let i = index">
+
+      <div class="ds-page-toolbar">
+        <span class="ds-page-num">{{ 'ds_page' | translate }} {{ i + 1 }}</span>
+        <button class="ds-btn ds-btn-small" type="button"
+          [disabled]="!activeSignature()" (click)="addSignatureToPage(i)">
+          <i class="fa-solid fa-plus"></i> {{ 'ds_add_signature' | translate }}
+        </button>
+      </div>
+
+      <div class="ds-page-wrap" #wrapper [style.aspect-ratio]="page.width + ' / ' + page.height"
+        (pointerdown)="selectedId.set(null)">
+        <img class="ds-page-img" [src]="page.src" alt="page" draggable="false" />
+
+        <ng-container *ngFor="let sig of placed()">
+          <div class="ds-sig" *ngIf="sig.pageIndex === i"
+            [class.ds-sig-selected]="selectedId() === sig.id"
+            [style.left.%]="sig.xFrac * 100"
+            [style.top.%]="sig.yFrac * 100"
+            [style.width.%]="sig.wFrac * 100"
+            [style.height.%]="heightFrac(sig, page) * 100"
+            (pointerdown)="startDrag($event, sig, wrapper)">
+            <img [src]="sig.src" alt="placed signature" draggable="false" />
+
+            <button class="ds-sig-delete" type="button"
+              (pointerdown)="$event.stopPropagation()" (click)="removeSignature(sig.id)">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+            <button class="ds-sig-clone" type="button" *ngIf="pages().length > 1"
+              [pTooltip]="'ds_apply_all' | translate" tooltipPosition="top"
+              (pointerdown)="$event.stopPropagation()" (click)="applyToAllPages(sig)">
+              <i class="fa-solid fa-clone"></i>
+            </button>
+            <span class="ds-sig-resize"
+              (pointerdown)="startResize($event, sig, wrapper, page)"></span>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+</div>

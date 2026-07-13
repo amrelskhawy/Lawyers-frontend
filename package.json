@@ -37,6 +37,8 @@
     "angular-google-tag-manager": "^1.13.0",
     "jwt-decode": "^4.0.0",
     "moment-hijri": "^3.0.0",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^6.1.200",
     "primeicons": "^7.0.0",
     "primeng": "^20.4.0",
     "quill": "^2.0.3",

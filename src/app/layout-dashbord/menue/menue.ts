@@ -170,6 +170,13 @@ export class Menue implements OnInit {
         route: '/dashboard/content/Holidays',
       }] : []),
 
+      // ── Admin + Moderator: client-side document signer ───────
+      ...(isAdmin || isModerator ? [{
+        name: 'document_signer',
+        icon: 'fa-solid fa-file-signature',
+        route: '/dashboard/content/document-signer',
+      }] : []),
+
     ]);
   }
 
