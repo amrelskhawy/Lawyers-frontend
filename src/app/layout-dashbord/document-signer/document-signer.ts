@@ -3,10 +3,38 @@ import * as pdfjsLib from 'pdfjs-dist';
 import { PDFDocument, degrees } from 'pdf-lib';
 
 // Run pdf.js in a real worker. The worker file is copied verbatim into
-// `assets/` by an angular.json asset rule (see the "pdfjs-dist" glob), and we
-// point pdf.js at that served path. Bundling it via `new URL(...)` is
-// unreliable here because the specifier lives in node_modules.
-pdfjsLib.GlobalWorkerOptions.workerSrc = 'assets/pdf.worker.min.mjs';
+// `assets/` by an angular.json asset rule (see the "pdfjs-dist" glob).
+//
+// pdf.js v6 spawns the worker as an ES module (`new Worker(url, { type: 'module' })`)
+// and browsers enforce strict MIME checking on module scripts. Our production
+// host (Nginx) serves `.mjs` as `application/octet-stream` with
+// `X-Content-Type-Options: nosniff`, so pointing pdf.js straight at the served
+// path makes the browser refuse the worker and every PDF load fails with
+// "document_load_failed". Dev servers serve `.mjs` as JS, which is why this only
+// broke in production.
+//
+// Fix: fetch the worker ourselves (fetch ignores Content-Type) and hand pdf.js a
+// same-origin Blob URL tagged `text/javascript`. The Blob's own type is
+// authoritative, so worker loading no longer depends on the server's `.mjs` MIME
+// mapping. Done once, lazily, and cached.
+let pdfWorkerReady: Promise<void> | null = null;
+function ensurePdfWorker(): Promise<void> {
+  if (!pdfWorkerReady) {
+    pdfWorkerReady = (async () => {
+      const url = new URL('assets/pdf.worker.min.mjs', document.baseURI).href;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`pdf worker fetch failed: ${res.status}`);
+      const code = await res.text();
+      const blob = new Blob([code], { type: 'text/javascript' });
+      pdfjsLib.GlobalWorkerOptions.workerSrc = URL.createObjectURL(blob);
+    })().catch((err) => {
+      // Reset so a transient failure can be retried on the next document load.
+      pdfWorkerReady = null;
+      throw err;
+    });
+  }
+  return pdfWorkerReady;
+}
 
 /** A page rendered for on-screen display. */
 interface RenderedPage {
@@ -105,6 +133,7 @@ export class DocumentSigner implements OnDestroy {
   }
 
   private async loadPdf(file: File): Promise<void> {
+    await ensurePdfWorker();
     const buffer = await file.arrayBuffer();
     this.pdfBytes = new Uint8Array(buffer.slice(0)); // keep a copy for pdf-lib
 
@@ -361,6 +390,7 @@ export class DocumentSigner implements OnDestroy {
     sigs: PlacedSignature[],
     embed: (src: string) => Promise<any>,
   ): Promise<void> {
+    await ensurePdfWorker();
     const doc = await pdfjsLib.getDocument({ data: new Uint8Array(this.pdfBytes!.slice(0)) })
       .promise;
     const jsPage = await doc.getPage(pageIndex + 1);
