@@ -352,3 +352,47 @@
 .ds-sig-selected .ds-sig-resize {
   display: flex;
 }
+
+/* ── Mobile: stack the toolbar controls into a clean single column ───────── */
+@media (max-width: 600px) {
+  .document-signer-page {
+    padding: 0.75rem;
+  }
+
+  .ds-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.6rem;
+    padding: 0.75rem;
+  }
+
+  .ds-toolbar-group {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  /* Buttons + the file-upload labels go full width and centre their content. */
+  .ds-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Customer picker fills the row (overrides the 220px min-width). */
+  .ds-client-select {
+    width: 100%;
+    min-width: 0;
+
+    ::ng-deep .p-select {
+      width: 100%;
+    }
+  }
+
+  .ds-sig-preview {
+    justify-content: center;
+  }
+
+  .ds-saved {
+    justify-content: center;
+  }
+}
