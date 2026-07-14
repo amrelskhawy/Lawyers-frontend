@@ -1,6 +1,11 @@
-import { Component, OnDestroy, signal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { TranslateService } from '@ngx-translate/core';
+import { firstValueFrom } from 'rxjs';
 import * as pdfjsLib from 'pdfjs-dist';
 import { PDFDocument, degrees } from 'pdf-lib';
+import { Data } from '../../core/Servies/data';
+import { Core } from '../../core/Servies/core';
 
 // Run pdf.js in a real worker. The worker file is copied verbatim into
 // `assets/` by an angular.json asset rule (see the "pdfjs-dist" glob).
@@ -63,13 +68,25 @@ interface PlacedSignature {
 
 type DocType = 'pdf' | 'image';
 
+/** A signature persisted on the backend (Drive) for reuse across sessions. */
+interface SavedSignature {
+  id: string;
+  /** `data:<mime>;base64,...` — used directly as an <img> src and stamp source. */
+  dataUrl: string;
+  fileName: string;
+}
+
 @Component({
   selector: 'app-document-signer',
   standalone: false,
   templateUrl: './document-signer.html',
   styleUrl: './document-signer.scss',
 })
-export class DocumentSigner implements OnDestroy {
+export class DocumentSigner implements OnInit, OnDestroy {
+  private data = inject(Data);
+  private core = inject(Core);
+  private translate = inject(TranslateService);
+
   // ── Document state ─────────────────────────────────────────────────────
   docType = signal<DocType | null>(null);
   fileName = signal<string>('');
@@ -77,6 +94,12 @@ export class DocumentSigner implements OnDestroy {
   loading = signal<boolean>(false);
   errorMsg = signal<string>('');
   exporting = signal<boolean>(false);
+
+  // ── WhatsApp send state ────────────────────────────────────────────────
+  /** Saved customers as select options; `phone` kept for the no-number check. */
+  customerOptions = signal<{ label: string; value: string; phone: string }[]>([]);
+  selectedCustomerId = signal<string | null>(null);
+  sending = signal<boolean>(false);
 
   /** Pristine PDF bytes, kept for vector stamping on export (pdf.js detaches
    *  its own copy, so this is a separate slice). */
@@ -86,6 +109,8 @@ export class DocumentSigner implements OnDestroy {
   /** Currently-uploaded signature PNG, ready to drop onto a page. */
   activeSignature = signal<string>('');
   private activeAspect = 1;
+  /** Signatures saved to Drive, loaded on init and reusable across sessions. */
+  savedSignatures = signal<SavedSignature[]>([]);
   placed = signal<PlacedSignature[]>([]);
   selectedId = signal<number | null>(null);
   private nextId = 1;
@@ -97,8 +122,33 @@ export class DocumentSigner implements OnDestroy {
 
   private dragCleanup: (() => void) | null = null;
 
+  ngOnInit(): void {
+    this.loadCustomers();
+    this.loadSignatures();
+  }
+
+  /** Load the operator's saved signatures so they can be reused without re-uploading. */
+  private loadSignatures(): void {
+    this.data.get<any>('signatures').subscribe((res) => {
+      this.savedSignatures.set((res.data as SavedSignature[]) ?? []);
+    });
+  }
+
   ngOnDestroy(): void {
     this.dragCleanup?.();
+  }
+
+  /** Load saved customers for the "send to client" picker. */
+  private loadCustomers(): void {
+    this.data.get<any>('customers').subscribe((res) => {
+      this.customerOptions.set(
+        (res.data as any[]).map((c) => ({
+          label: c.phone ? `${c.fullName} — ${c.phone}` : c.fullName,
+          value: c.id,
+          phone: c.phone ?? '',
+        })),
+      );
+    });
   }
 
   // ─────────────────────────────────────────────────────────────────────────
@@ -179,6 +229,41 @@ export class DocumentSigner implements OnDestroy {
     const img = await this.loadHtmlImage(src);
     this.activeAspect = img.naturalHeight / img.naturalWidth || 1;
     this.activeSignature.set(src);
+    // Persist for reuse next time (best-effort; errors toast via interceptor).
+    this.persistSignature(file, src);
+  }
+
+  /** Save an uploaded signature to the backend (Drive) so it survives sessions. */
+  private persistSignature(file: File, src: string): void {
+    const form = new FormData();
+    form.append('file', file, file.name);
+    this.data.post<any>('signatures', form).subscribe({
+      next: (res) => {
+        const saved = res?.data;
+        if (!saved?.id) return;
+        this.savedSignatures.update((list) => [
+          { id: saved.id, dataUrl: saved.dataUrl ?? src, fileName: saved.fileName ?? file.name },
+          ...list,
+        ]);
+      },
+      error: () => {}, // error interceptor already surfaces a toast
+    });
+  }
+
+  /** Re-activate a previously saved signature so it can be placed again. */
+  async selectSavedSignature(sig: SavedSignature): Promise<void> {
+    const img = await this.loadHtmlImage(sig.dataUrl);
+    this.activeAspect = img.naturalHeight / img.naturalWidth || 1;
+    this.activeSignature.set(sig.dataUrl);
+  }
+
+  /** Delete a saved signature from Drive; keeps any already-placed copies. */
+  deleteSavedSignature(sig: SavedSignature, event: Event): void {
+    event.stopPropagation();
+    this.data.delete(`signatures/${sig.id}`).subscribe({
+      next: () => this.savedSignatures.update((list) => list.filter((s) => s.id !== sig.id)),
+      error: () => {},
+    });
   }
 
   /** Drop the active signature onto a page, centred. */
@@ -320,11 +405,8 @@ export class DocumentSigner implements OnDestroy {
     this.exporting.set(true);
     this.errorMsg.set('');
     try {
-      if (this.docType() === 'pdf') {
-        await this.exportPdf();
-      } else {
-        await this.exportImage();
-      }
+      const { blob, ext } = await this.buildSignedBlob();
+      this.triggerDownload(blob, ext);
     } catch (err) {
       console.error('[document-signer] export failed', err);
       this.errorMsg.set('export_failed');
@@ -333,7 +415,52 @@ export class DocumentSigner implements OnDestroy {
     }
   }
 
-  private async exportPdf(): Promise<void> {
+  /**
+   * Send the signed document to the selected saved client over WhatsApp.
+   * No number on the client → toast error and stop (no request). The backend
+   * hosts the file only ephemerally, so nothing is persisted to a bucket.
+   * Success/HTTP errors surface as toasts automatically via the interceptors.
+   */
+  async sendWhatsApp(): Promise<void> {
+    if (!this.pages().length || this.sending()) return;
+    const customer = this.customerOptions().find((c) => c.value === this.selectedCustomerId());
+    if (!customer) return;
+
+    if (!customer.phone.trim()) {
+      this.core._Error.next(this.translate.instant('ds_no_client_phone'));
+      return;
+    }
+
+    this.sending.set(true);
+    this.errorMsg.set('');
+    try {
+      const { blob, ext } = await this.buildSignedBlob();
+      const base = this.fileName().replace(/\.[^.]+$/, '') || 'document';
+      const form = new FormData();
+      form.append('file', blob, `${base}-signed${ext}`);
+      await firstValueFrom(this.data.post(`customers/${customer.value}/send-document`, form));
+    } catch (err) {
+      // HTTP failures are already toasted by the error interceptor; only build
+      // (client-side export) failures need their own message.
+      if (!(err instanceof HttpErrorResponse)) {
+        console.error('[document-signer] send failed', err);
+        this.core._Error.next(this.translate.instant('export_failed'));
+      }
+    } finally {
+      this.sending.set(false);
+    }
+  }
+
+  /** Render the placed signatures onto the document and return it as a Blob. */
+  private async buildSignedBlob(): Promise<{ blob: Blob; ext: string }> {
+    if (this.docType() === 'pdf') {
+      const bytes = await this.exportPdf();
+      return { blob: new Blob([bytes as BlobPart], { type: 'application/pdf' }), ext: '.pdf' };
+    }
+    return { blob: await this.exportImage(), ext: '.png' };
+  }
+
+  private async exportPdf(): Promise<Uint8Array> {
     const pdfDoc = await PDFDocument.load(this.pdfBytes!);
     const pdfPages = pdfDoc.getPages();
 
@@ -377,8 +504,7 @@ export class DocumentSigner implements OnDestroy {
       }
     }
 
-    const bytes = await pdfDoc.save();
-    this.triggerDownload(new Blob([bytes as BlobPart], { type: 'application/pdf' }), '.pdf');
+    return pdfDoc.save();
   }
 
   /** Re-render a rotated page via pdf.js (rotation baked in), replace its
@@ -420,7 +546,7 @@ export class DocumentSigner implements OnDestroy {
     }
   }
 
-  private async exportImage(): Promise<void> {
+  private async exportImage(): Promise<Blob> {
     const page = this.pages()[0];
     const base = await this.loadHtmlImage(page.src);
     const canvas = document.createElement('canvas');
@@ -438,10 +564,10 @@ export class DocumentSigner implements OnDestroy {
       ctx.drawImage(sig, x, y, w, h);
     }
 
-    await new Promise<void>((resolve) =>
+    return new Promise<Blob>((resolve, reject) =>
       canvas.toBlob((blob) => {
-        if (blob) this.triggerDownload(blob, '.png');
-        resolve();
+        if (blob) resolve(blob);
+        else reject(new Error('image export produced no blob'));
       }, 'image/png'),
     );
   }

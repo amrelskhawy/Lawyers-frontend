@@ -23,12 +23,41 @@
     </div>
 
     <div class="ds-toolbar-group">
+      <p-select class="ds-client-select" [options]="customerOptions()"
+        [ngModel]="selectedCustomerId()" (ngModelChange)="selectedCustomerId.set($event)"
+        optionLabel="label" optionValue="value" [filter]="true" filterBy="label" [showClear]="true"
+        appendTo="body" [disabled]="!pages().length"
+        [placeholder]="'ds_select_client' | translate"></p-select>
+
+      <button class="ds-btn ds-btn-whatsapp" type="button"
+        [disabled]="!pages().length || !selectedCustomerId() || sending()" (click)="sendWhatsApp()">
+        <i class="fa-solid fa-spinner fa-spin" *ngIf="sending()"></i>
+        <i class="fa-brands fa-whatsapp" *ngIf="!sending()"></i>
+        <span>{{ 'ds_send_whatsapp' | translate }}</span>
+      </button>
+
       <button class="ds-btn ds-btn-download" type="button"
         [disabled]="!pages().length || exporting()" (click)="download()">
         <i class="fa-solid" [class.fa-download]="!exporting()" [class.fa-spinner]="exporting()"
           [class.fa-spin]="exporting()"></i>
         <span>{{ 'ds_download' | translate }}</span>
       </button>
+    </div>
+  </div>
+
+  <!-- ── Saved signatures ────────────────────────────────────────────────── -->
+  <div class="ds-saved" *ngIf="savedSignatures().length">
+    <span class="ds-saved-label">{{ 'ds_saved_signatures' | translate }}</span>
+    <div class="ds-saved-list">
+      <div class="ds-saved-item" *ngFor="let sig of savedSignatures()"
+        [class.ds-saved-active]="activeSignature() === sig.dataUrl"
+        (click)="selectSavedSignature(sig)">
+        <img [src]="sig.dataUrl" alt="saved signature" draggable="false" />
+        <button class="ds-saved-del" type="button" [pTooltip]="'ds_delete_signature' | translate"
+          tooltipPosition="top" (click)="deleteSavedSignature(sig, $event)">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
     </div>
   </div>
 
