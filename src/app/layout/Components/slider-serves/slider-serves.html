@@ -1,6 +1,7 @@
 @if (data().length > 0) {
 <div [dir]="getcuurentLangauage() === 'ar' ? 'rtl' : 'ltr'">
-  <p-carousel [value]="data()" [numVisible]="3" [numScroll]="1" [responsiveOptions]="responsiveOptions">
+  <p-carousel [value]="data()" [numVisible]="3" [numScroll]="1" [showIndicators]="false"
+    [responsiveOptions]="responsiveOptions">
     <ng-template let-service #item>
       <div (click)="showData(service)"
         (keydown.enter)="showData(service)"
