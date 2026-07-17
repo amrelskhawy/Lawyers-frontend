@@ -136,12 +136,17 @@ export class ClientCases implements OnInit {
   }
 
   ngOnInit() {
+    // Fixed server-side filter carried on the route data — splits this same table
+    // into "Client Cases" (isRealCustomer=true) and "Customer Meetings" (=false).
+    // Always applied, and merged under any user filter picked up below.
+    const fixedFilter: { [key: string]: any } = this.route.snapshot.data['fixedFilter'] ?? {};
+
     // Pick up a user filter handed over from the Users page (?lawyerId=…). Read
     // synchronously here (parent ngOnInit runs before the crud-page child's first
     // fetch) so the very first load is already scoped to that user.
     const lawyerId = this.route.snapshot.queryParamMap.get('lawyerId');
     if (lawyerId) {
-      const filter: { [key: string]: any } = { lawyerId };
+      const filter: { [key: string]: any } = { ...fixedFilter, lawyerId };
       // Optional degree scope, e.g. when a per-degree badge was clicked.
       const caseDegree = this.route.snapshot.queryParamMap.get('caseDegree');
       if (caseDegree) {
@@ -154,6 +159,8 @@ export class ClientCases implements OnInit {
       }
       this.casesFilter.set(filter);
       this.filterAssigneeName.set(this.route.snapshot.queryParamMap.get('assigneeName') ?? '');
+    } else if (Object.keys(fixedFilter).length) {
+      this.casesFilter.set({ ...fixedFilter });
     }
 
     this.columns = [
@@ -257,9 +264,11 @@ export class ClientCases implements OnInit {
     this.router.navigate(['/dashboard/content/users']);
   }
 
-  /** Drop all active filters (user + degree) and reload the full cases list. */
+  /** Drop the user/degree filters and reload — but keep the route's fixed
+   *  split filter (isRealCustomer) so the list stays on its own view. */
   clearUserFilter() {
-    this.casesFilter.set({});
+    const fixedFilter: { [key: string]: any } = this.route.snapshot.data['fixedFilter'] ?? {};
+    this.casesFilter.set({ ...fixedFilter });
     this.filterAssigneeName.set('');
     this.filterDegreeLabel.set('');
     // (onlyClosed is inside casesFilter, cleared by the reset above)

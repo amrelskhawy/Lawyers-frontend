@@ -23,6 +23,8 @@ export interface IDataCase {
   caseDate: string;
   hijriDate: string | null;
   agencyNumber: string | null;
+  // true → shown in "Client Cases"; false (default) → shown in "Customer Meetings".
+  isRealCustomer: boolean;
 
   // Lawyer slot
   wantsSpecificLawyer: boolean;

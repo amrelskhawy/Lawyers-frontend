@@ -561,6 +561,9 @@
     "CASE_NOT_ASSIGNED": "No lawyer is assigned to this case"
   },
   "client_cases": "Client Cases",
+  "customer_meetings": "Customer Meetings",
+  "is_real_customer_label": "Verififed Customer?",
+  "is_real_customer_hint": "When enabled the case appears in Client Cases; otherwise it stays in Customer Meetings",
   "unscheduled_cases": "Unscheduled Cases",
   "unscheduled_cases_hint": "Cases that have no session date set yet.",
   "cases_calendar": "Cases Calendar",

@@ -80,6 +80,16 @@
                    [placeholder]="'agency_number_placeholder' | translate" />
           </div>
 
+          <div class="input-group">
+            <label>{{ 'is_real_customer_label' | translate }}</label>
+            <div class="input-wrapper" style="align-items: center; gap: 0.75rem;">
+              <p-toggleswitch formControlName="isRealCustomer"></p-toggleswitch>
+              <span style="font-size: 0.85rem; color: var(--text-muted, #6b7280);">
+                {{ 'is_real_customer_hint' | translate }}
+              </span>
+            </div>
+          </div>
+
         </div>
 
         <div class="form-actions">

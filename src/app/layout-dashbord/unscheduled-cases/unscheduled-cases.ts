@@ -47,8 +47,10 @@ export class UnscheduledCases implements OnInit {
   visibelReminders = signal<boolean>(false);
   selectedCase = signal<IDataCase | null>(null);
 
-  /** Server-side filters merged into every unscheduled-cases request (e.g. ?caseDegree=…). */
-  casesFilter = signal<{ [key: string]: any }>({});
+  /** Server-side filters merged into every unscheduled-cases request (e.g. ?caseDegree=…).
+   *  Seeded with isRealCustomer=true so this list mirrors Client Cases — Customer
+   *  Meetings (isRealCustomer=false) are excluded. Kept via spread in toggleDegreeFilter. */
+  casesFilter = signal<{ [key: string]: any }>({ isRealCustomer: 'true' });
 
   /** Neutral "card" for cases that have no degree set yet. */
   private static readonly UNASSIGNED_DEGREE = {

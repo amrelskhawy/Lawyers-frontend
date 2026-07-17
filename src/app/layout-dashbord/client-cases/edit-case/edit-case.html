@@ -348,6 +348,18 @@
           </div>
         </div>
 
+        <div class="row">
+          <div class="input-group">
+            <label>{{ 'is_real_customer_label' | translate }}</label>
+            <div class="input-wrapper" style="align-items: center; gap: 0.75rem;">
+              <p-toggleswitch formControlName="isRealCustomer" [disabled]="!canEdit"></p-toggleswitch>
+              <span style="font-size: 0.85rem; color: var(--text-muted, #6b7280);">
+                {{ 'is_real_customer_hint' | translate }}
+              </span>
+            </div>
+          </div>
+        </div>
+
         <ng-container *ngIf="role !== 'RECEPTIONIST'">
           <h3 class="section-title">{{ 'session_notes' | translate }}</h3>
 

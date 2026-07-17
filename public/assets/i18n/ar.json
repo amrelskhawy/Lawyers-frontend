@@ -561,6 +561,9 @@
     "CASE_NOT_ASSIGNED": "لا يوجد محامٍ مكلف على هذه القضية"
   },
   "client_cases": "قضايا العملاء",
+  "customer_meetings": "مقابلات العملاء",
+  "is_real_customer_label": "عميل مؤكد",
+  "is_real_customer_hint": "عند التفعيل تظهر القضية في قضايا العملاء، وإلا تظهر في مقابلات العملاء",
   "unscheduled_cases": "القضايا غير المجدولة",
   "unscheduled_cases_hint": "القضايا التي لم يُحدَّد لها موعد جلسة بعد.",
   "cases_calendar": "تقويم القضايا",

@@ -79,6 +79,15 @@ const routes: Routes = [
       {
         path: 'client-cases',
         component: ClientCases,
+        data: { fixedFilter: { isRealCustomer: 'true' } },
+        canActivate: [roleGuard('ADMIN', 'MODERATOR', 'RECEPTIONIST', 'LAWYER', 'CONSULTANT')],
+      },
+      // ── Customer Meetings: cases not (yet) flagged as real customers ──────
+      // Same Client-Cases table/component, filtered to isRealCustomer = false.
+      {
+        path: 'customer-meetings',
+        component: ClientCases,
+        data: { fixedFilter: { isRealCustomer: 'false' } },
         canActivate: [roleGuard('ADMIN', 'MODERATOR', 'RECEPTIONIST', 'LAWYER', 'CONSULTANT')],
       },
       {

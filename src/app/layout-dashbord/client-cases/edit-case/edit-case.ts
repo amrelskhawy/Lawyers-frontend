@@ -128,6 +128,7 @@ export class EditCase implements OnInit, OnDestroy {
       caseDate: [new Date(), Validators.required],
       hijriDate: [null],
       agencyNumber: [''],
+      isRealCustomer: [false],
 
       sessionReceiverId: [null],
       // Court session after the client meeting — saved via /cases/:id/session on main save.
@@ -204,6 +205,7 @@ export class EditCase implements OnInit, OnDestroy {
           caseDate: c.caseDate ? new Date(c.caseDate) : null,
           hijriDate: c.hijriDate ?? null,
           agencyNumber: c.agencyNumber ?? '',
+          isRealCustomer: c.isRealCustomer ?? false,
           sessionReceiverId: sessionReceiverFormId,
           sessionHijriDate: this.resolveSessionHijriDate(c),
           hasStructuredNotes: c.hasStructuredNotes,
@@ -306,6 +308,7 @@ export class EditCase implements OnInit, OnDestroy {
       freeNotes: value.freeNotes ?? null,
       hijriDate: value.hijriDate || null,
       agencyNumber: value.agencyNumber || null,
+      isRealCustomer: !!value.isRealCustomer,
     };
   }
 

@@ -36,6 +36,7 @@ export class FormCreateCase implements OnInit {
         caseDate: [new Date(), Validators.required],
         hijriDate: [null],
         agencyNumber: [''],
+        isRealCustomer: [false],
       }),
     );
   }
@@ -49,7 +50,7 @@ export class FormCreateCase implements OnInit {
   closeDialog() {
     this.visible = false;
     this.visibleChange.emit(false);
-    this.Form().reset({ caseType: 'LABOR', otherCaseType: '', caseDate: new Date(), agencyNumber: '' });
+    this.Form().reset({ caseType: 'LABOR', otherCaseType: '', caseDate: new Date(), agencyNumber: '', isRealCustomer: false });
   }
 
   onSubmit() {
@@ -62,6 +63,7 @@ export class FormCreateCase implements OnInit {
       customerId: v.customerId,
       caseType: v.caseType,
       caseDate: (v.caseDate instanceof Date ? v.caseDate : new Date(v.caseDate)).toISOString(),
+      isRealCustomer: !!v.isRealCustomer,
     };
     if (v.caseType === 'OTHER' && v.otherCaseType) {
       payload.otherCaseType = v.otherCaseType;

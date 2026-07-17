@@ -135,6 +135,13 @@ export class Menue implements OnInit {
         route: '/dashboard/content/client-cases',
       },
 
+      // ── Customer Meetings — cases not flagged as real customers ─
+      {
+        name: 'customer_meetings',
+        icon: 'fa-solid fa-handshake',
+        route: '/dashboard/content/customer-meetings',
+      },
+
       // ── Unscheduled cases (no session date) — admin, moderator, lawyer, consultant ─
       ...(isAdmin || isModerator || isLawyer ? [{
         name: 'unscheduled_cases',
