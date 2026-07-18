@@ -92,7 +92,6 @@
     font-family: var(--font-display);
     font-size: var(--fs-sm);
     font-weight: var(--fw-semibold);
-    letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--gold-300);
     margin-bottom: var(--space-4);
@@ -222,6 +221,11 @@
 
   .hero-video {
     width: clamp(380px, 42vw, 530px);
+    /* The 380px floor keeps the scale readable on phones, but it must never
+       win over the container: at a narrow layout viewport (Safari page zoom,
+       split view) it otherwise renders 380px wide inside a ~160px column and
+       hangs off both edges, where `.hero`'s overflow:clip cuts it. */
+    max-width: 100%;
     height: auto;
     aspect-ratio: 1;
     object-fit: contain;
