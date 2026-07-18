@@ -52,6 +52,12 @@
    (on the wrapper, not the img, to avoid clobbering the float animation) */
 :host-context([dir='rtl']) .hero .img-hero-section .imges {
   transform: scaleX(-1);
+
+  /* Flip back: the clip's shield carries a readable "SB" monogram, which the
+     mirror above would otherwise render backwards. */
+  .hero-video {
+    transform: scaleX(-1);
+  }
 }
 
 .hero-section {
@@ -188,32 +194,39 @@
     position: relative;
     display: grid;
     place-items: center;
+
+    /* Continues the clip's baked background colour outwards so the masked edge
+       has something to fade into — without this the feather ends on the much
+       darker page and reads as a grey disc. */
+    &::before {
+      content: '';
+      position: absolute;
+      z-index: -1;
+      width: 128%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      /* Matches .hero-video's offset so the glow stays under the subject. */
+      margin-block-start: var(--space-8);
+      background: radial-gradient(circle closest-side,
+          #292b3b 0%,
+          rgba(41, 43, 59, 0.55) 46%,
+          rgba(41, 43, 59, 0) 72%);
+      pointer-events: none;
+    }
   }
 
-  img {
+  .hero-video {
     width: clamp(380px, 42vw, 530px);
     height: auto;
-    aspect-ratio: 346 / 358;
+    aspect-ratio: 1;
     object-fit: contain;
-    filter: drop-shadow(0 20px 50px rgba(0, 0, 0, 0.4));
-    animation: hero-float 6s var(--ease-in-out) infinite;
-  }
-}
+    /* Drops the scale down so it optically centres against the copy — the clip
+       carries more empty headroom above the subject than below it. */
+    margin-block-start: var(--space-8);
 
-@keyframes hero-float {
-
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-14px);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .img-hero-section img {
-    animation: none;
+    /* Feathers the square frame away. Solid out to 42% keeps the whole scale
+       intact (its furthest extent from centre is ~31%). */
+    -webkit-mask-image: radial-gradient(circle closest-side, #000 42%, transparent 72%);
+    mask-image: radial-gradient(circle closest-side, #000 42%, transparent 72%);
   }
 }

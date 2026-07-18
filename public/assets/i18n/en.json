@@ -563,7 +563,7 @@
   "client_cases": "Client Cases",
   "customer_meetings": "Prospective Clients",
   "is_real_customer_label": "Verififed Customer?",
-  "is_real_customer_hint": "When enabled the case appears in Client Cases; otherwise it stays in Customer Meetings",
+  "is_real_customer_hint": "When enabled the case appears in Client Cases; otherwise it stays in Prospective Clients",
   "unscheduled_cases": "Unscheduled Cases",
   "unscheduled_cases_hint": "Cases with no session date set yet, or whose session date has already passed.",
   "cases_calendar": "Cases Calendar",

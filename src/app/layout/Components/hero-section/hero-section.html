@@ -25,8 +25,16 @@
 
     <div class="img-hero-section" pAnimateOnScroll enterClass="my-enter-top" leaveClass="my-leave-animation">
       <div class="imges">
-        <img fetchpriority="high" src="/assets/Img/hero-scale.png" width="346" height="358"
-          alt="{{ 'EXCEPTIONAL_SERVICE' | translate }}" />
+        <!-- The clip has a baked flat #292B3B background (no alpha, and the scale's
+             own column sits ~7/255 away from it, so it can't be keyed). Instead the
+             edges are feathered with a radial mask and the same colour is continued
+             behind it by .imges::before, so the square dissolves into the hero.
+             The PNG stays as the poster: it shows until the first frame decodes and
+             remains if the browser can't play HEVC. -->
+        <video class="hero-video" poster="/assets/Img/hero-scale.png" width="1080" height="1080" autoplay muted loop
+          playsinline disablepictureinpicture aria-hidden="true">
+          <source src="/assets/Img/hero-scale.mp4" type="video/mp4" />
+        </video>
       </div>
     </div>
   </div>
