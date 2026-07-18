@@ -442,16 +442,55 @@ $error-red: #ef4444;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 
-  img {
+  /* Same treatment as the hero: the artwork has a flat #292b3b background
+     baked in (no alpha), so instead of keying it out the edges are feathered
+     and a translucent halo tinted to the panel's own navy is continued behind
+     it — the square dissolves into the panel instead of sitting on a grey plate. */
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    /* Sized off the panel, not the viewport — `vw` overshoots because the panel
+       is only half the screen, which pushed the pans past the masked edge. */
+    width: min(88%, 720px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle closest-side,
+        rgba(27, 33, 69, 0.75) 0 50%,
+        rgba(21, 26, 58, 0.35) 76%,
+        rgba(20, 20, 58, 0) 100%);
+    pointer-events: none;
+  }
+
+  .side-logo {
+    /* The global `img` rule in Design.scss doesn't reach a <video>. */
+    display: block;
+    margin: auto;
     filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2));
-    width: 520px;
-    max-width: 85%;
+    /* Sized off the panel, not the viewport — `vw` overshoots because the panel
+       is only half the screen, which pushed the pans past the masked edge. */
+    width: min(88%, 720px);
     position: relative;
+    z-index: 1;
     height: auto;
+    aspect-ratio: 1;
+    object-fit: contain;
     transform-origin: center;
     animation: side-logo-float 4s ease-in-out infinite;
     will-change: transform;
+
+    /* Fade starts at 70% (just clear of the subject) and runs long so the
+       baked plate thins out gradually instead of ending in a ring. */
+    -webkit-mask-image: radial-gradient(circle closest-side,
+        #000 0 70%,
+        rgba(0, 0, 0, 0.45) 86%,
+        transparent 100%);
+    mask-image: radial-gradient(circle closest-side,
+        #000 0 70%,
+        rgba(0, 0, 0, 0.45) 86%,
+        transparent 100%);
   }
 }
 
@@ -468,7 +507,7 @@ $error-red: #ef4444;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .logo-wrapper img {
+  .logo-wrapper .side-logo {
     animation: none;
   }
 }

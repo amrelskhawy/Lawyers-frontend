@@ -1,7 +1,12 @@
 <section class="login-container">
   <div class="side-panel">
     <div class="logo-wrapper">
-      <img src="/assets/Img/hero-scale.png" alt="Law Firm Logo" width="200" height="auto" />
+      <!-- Same clip as the hero. The PNG stays as the poster: it shows until the
+           first frame decodes and remains if the browser can't play the codec. -->
+      <video class="side-logo" poster="/assets/Img/hero-scale.png" width="1080" height="1080" autoplay muted loop
+        playsinline disablepictureinpicture aria-label="Law Firm Logo">
+        <source src="/assets/Img/hero-scale.mp4" type="video/mp4" />
+      </video>
     </div>
   </div>
 

@@ -20,8 +20,9 @@
       </div>
 
       <!-- Coverflow carousel (infinite, geometry always LTR) -->
-      <div class="team-carousel">
-        <button type="button" class="nav-btn prev" (click)="prev()"
+      <div class="team-carousel" (mouseenter)="pauseAutoplay()" (mouseleave)="resumeAutoplay()"
+        (focusin)="pauseAutoplay()" (focusout)="resumeAutoplay()">
+        <button type="button" class="nav-btn prev" (click)="onPrev()"
           [attr.aria-label]="'prev' | translate">
           <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
         </button>
@@ -30,9 +31,9 @@
           @for (member of teamMembers; track $index) {
             <div class="member-card" [class.is-active]="offset($index) === 0"
               [ngStyle]="cardStyle($index)"
-              (click)="setActive($index)"
-              (keydown.enter)="setActive($index)"
-              (keydown.space)="setActive($index); $event.preventDefault()"
+              (click)="onSetActive($index)"
+              (keydown.enter)="onSetActive($index)"
+              (keydown.space)="onSetActive($index); $event.preventDefault()"
               role="button" tabindex="0"
               [attr.aria-label]="currentLang === 'ar' ? member.name_ar : member.name_en">
               <div class="card-photo">
@@ -57,7 +58,7 @@
           }
         </div>
 
-        <button type="button" class="nav-btn next" (click)="next()"
+        <button type="button" class="nav-btn next" (click)="onNext()"
           [attr.aria-label]="'next' | translate">
           <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
         </button>

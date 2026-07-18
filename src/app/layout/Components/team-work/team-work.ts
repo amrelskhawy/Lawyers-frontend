@@ -1,5 +1,5 @@
 import { TranslateService } from '@ngx-translate/core';
-import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { TEAM_MEMBERS } from '../../../core/Models/team-members';
 
 @Component({
@@ -9,16 +9,57 @@ import { TEAM_MEMBERS } from '../../../core/Models/team-members';
   styleUrl: './team-work.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TeamWork implements OnInit {
+export class TeamWork implements OnInit, OnDestroy {
   currentLang: string = 'en';
 
-  constructor(private translate: TranslateService) {}
+  constructor(private translate: TranslateService) { }
 
   ngOnInit() {
     this.currentLang = this.translate.currentLang || this.translate.defaultLang || 'en';
     this.translate.onLangChange.subscribe((event) => {
       this.currentLang = event.lang;
     });
+    this.startAutoplay();
+  }
+
+  ngOnDestroy() {
+    this.stopAutoplay();
+  }
+
+  /* --- Autoplay: rotates the coverflow forever until the user interacts --- */
+
+  /** Dwell time on each member before advancing. */
+  private readonly AUTOPLAY_MS = 1000;
+  private timer: ReturnType<typeof setInterval> | null = null;
+
+  private startAutoplay() {
+    // Honour the OS "reduce motion" setting — an endlessly moving carousel is
+    // exactly the kind of animation that setting exists to suppress.
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+    this.stopAutoplay();
+    this.timer = setInterval(() => this.next(), this.AUTOPLAY_MS);
+  }
+
+  private stopAutoplay() {
+    if (this.timer !== null) {
+      clearInterval(this.timer);
+      this.timer = null;
+    }
+  }
+
+  /** Hovering/focusing the carousel holds the current card so it can be read. */
+  pauseAutoplay() {
+    this.stopAutoplay();
+  }
+
+  resumeAutoplay() {
+    this.startAutoplay();
+  }
+
+  /** Restarts the dwell timer after a manual move, so the next auto-advance
+      isn't a leftover partial tick firing immediately after the click. */
+  private restartAutoplay() {
+    if (this.timer !== null) this.startAutoplay();
   }
 
   teamMembers = TEAM_MEMBERS;
@@ -70,5 +111,21 @@ export class TeamWork implements OnInit {
 
   setActive(i: number) {
     this.activeIndex.set(i);
+  }
+
+  /** Arrow-button / card-click handlers: move, then reset the dwell timer. */
+  onNext() {
+    this.next();
+    this.restartAutoplay();
+  }
+
+  onPrev() {
+    this.prev();
+    this.restartAutoplay();
+  }
+
+  onSetActive(i: number) {
+    this.setActive(i);
+    this.restartAutoplay();
   }
 }

@@ -202,15 +202,20 @@
       content: '';
       position: absolute;
       z-index: -1;
-      width: 128%;
+      width: 150%;
       aspect-ratio: 1;
       border-radius: 50%;
       /* Matches .hero-video's offset so the glow stays under the subject. */
       margin-block-start: var(--space-8);
+      /* Holds full colour out to where the video's own mask is still opaque,
+         then falls off past the video's edge so the two blend without a ring. */
+      /* Tinted to the hero's own navy (and kept translucent) rather than the
+         clip's grey #292b3b, so the halo reads as page background lifting
+         behind the subject instead of a grey plate sitting on top of it. */
       background: radial-gradient(circle closest-side,
-          #292b3b 0%,
-          rgba(41, 43, 59, 0.55) 46%,
-          rgba(41, 43, 59, 0) 72%);
+          rgba(26, 35, 62, 0.75) 0 50%,
+          rgba(20, 29, 54, 0.35) 76%,
+          rgba(16, 26, 52, 0) 100%);
       pointer-events: none;
     }
   }
@@ -224,9 +229,20 @@
        carries more empty headroom above the subject than below it. */
     margin-block-start: var(--space-8);
 
-    /* Feathers the square frame away. Solid out to 42% keeps the whole scale
-       intact (its furthest extent from centre is ~31%). */
-    -webkit-mask-image: radial-gradient(circle closest-side, #000 42%, transparent 72%);
-    mask-image: radial-gradient(circle closest-side, #000 42%, transparent 72%);
+    /* Feathers the square frame away. Stops are a fraction of the gradient
+       radius (= half the box for closest-side), NOT of the box: the subject
+       reaches 69% of that radius, so the solid area has to clear 69% before
+       the fade may start, or the feather eats the pans and base. */
+    /* Fade starts at 70% (just clear of the subject) and runs long, with a
+       weighted mid-stop, so the baked plate thins out gradually instead of
+       ending in a hard-ish ring at 82%. */
+    -webkit-mask-image: radial-gradient(circle closest-side,
+        #000 0 70%,
+        rgba(0, 0, 0, 0.45) 86%,
+        transparent 100%);
+    mask-image: radial-gradient(circle closest-side,
+        #000 0 70%,
+        rgba(0, 0, 0, 0.45) 86%,
+        transparent 100%);
   }
 }
