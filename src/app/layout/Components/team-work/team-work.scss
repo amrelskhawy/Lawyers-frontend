@@ -57,14 +57,15 @@
   align-items: center;
 }
 
+/* Shared gold-tinted pill badge — same mixin the services/counter/about
+   sections use, so every section eyebrow reads identically. */
+@include section-header();
+
 .team-intro {
   .section-title {
     margin-bottom: var(--space-4);
 
     h2 {
-      color: var(--gold-300);
-      font-weight: var(--fw-bold);
-      font-size: var(--fs-body);
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }

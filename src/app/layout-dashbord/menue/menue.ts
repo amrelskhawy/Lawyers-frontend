@@ -90,21 +90,15 @@ export class Menue implements OnInit {
 
     this.canManageWorkDay.set(isAdmin || isModerator);
 
+    // Order below is the agreed sidebar order — day-to-day case work first,
+    // configuration and administration last. Keep it when adding entries.
     this.ListMenue.set([
-
 
       // ── Admin-only: activity logs & insights ─────────────────
       ...(isAdmin ? [{
         name: 'activity_logs',
         icon: 'fa-solid fa-timeline',
         route: '/dashboard/content/activity-logs',
-      }] : []),
-
-      // ── Bookings dashboard (not for lawyers) ────────────────
-      ...(isAdmin || isModerator || isReceptionist ? [{
-        name: 'Reservations',
-        icon: 'fa-solid fa-business-time',
-        route: '/dashboard/content',
       }] : []),
 
       // ── Customers (not for lawyers) ─────────────────────────
@@ -114,19 +108,12 @@ export class Menue implements OnInit {
         route: '/dashboard/content/customers',
       }] : []),
 
-      // ── Admin-only: user management ─────────────────────────
-      ...(isAdmin ? [{
-        name: 'users',
-        icon: 'fa-solid fa-users-gear',
-        route: '/dashboard/content/users',
-      }] : []),
-
-      // ── Admin + Moderator: services management ───────────────
-      ...(isAdmin || isModerator ? [{
-        name: 'services',
-        icon: 'fa-solid fa-gear',
-        route: '/dashboard/content/addservies',
-      }] : []),
+      // ── Prospective clients — cases not flagged as real customers ─
+      {
+        name: 'customer_meetings',
+        icon: 'fa-solid fa-handshake',
+        route: '/dashboard/content/customer-meetings',
+      },
 
       // ── Cases — all roles ────────────────────────────────────
       {
@@ -135,18 +122,11 @@ export class Menue implements OnInit {
         route: '/dashboard/content/client-cases',
       },
 
-      // ── Customer Meetings — cases not flagged as real customers ─
-      {
-        name: 'customer_meetings',
-        icon: 'fa-solid fa-handshake',
-        route: '/dashboard/content/customer-meetings',
-      },
-
-      // ── Unscheduled cases (no session date) — admin, moderator, lawyer, consultant ─
-      ...(isAdmin || isModerator || isLawyer ? [{
-        name: 'unscheduled_cases',
-        icon: 'fa-solid fa-calendar-xmark',
-        route: '/dashboard/content/unscheduled-cases',
+      // ── Reports — admin, moderator, lawyer (not receptionist) ─
+      ...(isAdmin || isModerator ? [{
+        name: 'lawyer_fees_contracts',
+        icon: 'fa-solid fa-file-signature',
+        route: '/dashboard/content/lawyer-fees-contracts',
       }] : []),
 
       // ── Cases calendar — admin, moderator, lawyer/consultant ─
@@ -163,11 +143,25 @@ export class Menue implements OnInit {
         route: '/dashboard/content/consultant-reminders',
       }] : []),
 
-      // ── Reports — admin, moderator, lawyer (not receptionist) ─
+      // ── Unscheduled cases (no session date) — admin, moderator, lawyer, consultant ─
+      ...(isAdmin || isModerator || isLawyer ? [{
+        name: 'unscheduled_cases',
+        icon: 'fa-solid fa-calendar-xmark',
+        route: '/dashboard/content/unscheduled-cases',
+      }] : []),
+
+      // ── Admin + Moderator: client-side document signer ───────
       ...(isAdmin || isModerator ? [{
-        name: 'lawyer_fees_contracts',
+        name: 'document_signer',
         icon: 'fa-solid fa-file-signature',
-        route: '/dashboard/content/lawyer-fees-contracts',
+        route: '/dashboard/content/document-signer',
+      }] : []),
+
+      // ── Admin + Moderator: services management ───────────────
+      ...(isAdmin || isModerator ? [{
+        name: 'services',
+        icon: 'fa-solid fa-gear',
+        route: '/dashboard/content/addservies',
       }] : []),
 
       // ── Admin + Moderator: holidays ──────────────────────────
@@ -177,11 +171,18 @@ export class Menue implements OnInit {
         route: '/dashboard/content/Holidays',
       }] : []),
 
-      // ── Admin + Moderator: client-side document signer ───────
-      ...(isAdmin || isModerator ? [{
-        name: 'document_signer',
-        icon: 'fa-solid fa-file-signature',
-        route: '/dashboard/content/document-signer',
+      // ── Bookings dashboard (not for lawyers) ────────────────
+      ...(isAdmin || isModerator || isReceptionist ? [{
+        name: 'Reservations',
+        icon: 'fa-solid fa-business-time',
+        route: '/dashboard/content',
+      }] : []),
+
+      // ── Admin-only: user management ─────────────────────────
+      ...(isAdmin ? [{
+        name: 'users',
+        icon: 'fa-solid fa-users-gear',
+        route: '/dashboard/content/users',
       }] : []),
 
     ]);
