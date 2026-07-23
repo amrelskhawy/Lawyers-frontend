@@ -1,0 +1,390 @@
+// Brand tokens (shared with the dashboard dialogs)
+$primary-navy: #1a2b4b;
+$accent-gold: #c5a059;
+$error-red: #ef4444;
+$success-green: #16a34a;
+$gray-border: #e2e8f0;
+$gray-text: #64748b;
+$white: #ffffff;
+
+.financials-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  padding: 1.25rem;
+}
+
+// ---------- Header ----------
+.page-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  .title-block {
+    h2 {
+      margin: 0;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: $primary-navy;
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+
+      i { color: $accent-gold; }
+    }
+
+    .subtitle {
+      margin: 0.25rem 0 0;
+      font-size: 0.85rem;
+      color: $gray-text;
+    }
+  }
+
+  .scope-tabs {
+    display: flex;
+    gap: 0.5rem;
+    background: #eef2f7;
+    padding: 0.3rem;
+    border-radius: 50px;
+
+    .scope-tab {
+      border: none;
+      background: transparent;
+      padding: 0.55rem 1.1rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: $gray-text;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: all 0.25s;
+
+      &.active {
+        background: $primary-navy;
+        color: $white;
+        box-shadow: 0 4px 12px rgba($primary-navy, 0.25);
+
+        i { color: $accent-gold; }
+      }
+    }
+  }
+}
+
+// ---------- Chips ----------
+.chip {
+  border: 1px solid $gray-border;
+  background: $white;
+  color: $primary-navy;
+  border-radius: 50px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.2s;
+
+  &:hover:not(:disabled) { border-color: $accent-gold; }
+  &.active {
+    background: $accent-gold;
+    border-color: $accent-gold;
+    color: $white;
+  }
+  &:disabled { opacity: 0.45; cursor: not-allowed; }
+
+  .chip-amount {
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 0.1rem 0.4rem;
+    border-radius: 50px;
+    background: rgba($gray-text, 0.12);
+
+    &.owed { background: rgba($error-red, 0.14); color: $error-red; }
+  }
+
+  &.active .chip-amount { background: rgba(255, 255, 255, 0.25); color: $white; }
+}
+
+.lawyer-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+
+  .chips-empty { margin: 0; font-size: 0.82rem; color: $gray-text; }
+}
+
+// ---------- Period ----------
+.period-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  align-items: center;
+  background: $white;
+  border: 1px solid $gray-border;
+  border-radius: 14px;
+  padding: 0.8rem 1rem;
+
+  .year-picker {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    label { font-size: 0.82rem; font-weight: 700; color: $primary-navy; }
+
+    select {
+      border: 1px solid $gray-border;
+      border-radius: 10px;
+      padding: 0.4rem 0.7rem;
+      font-family: inherit;
+      font-size: 0.85rem;
+      color: $primary-navy;
+      background: $white;
+    }
+  }
+
+  .month-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    flex: 1;
+
+    &.disabled { opacity: 0.6; }
+  }
+
+  .search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    i {
+      position: absolute;
+      inset-inline-start: 0.7rem;
+      color: $gray-text;
+      font-size: 0.8rem;
+    }
+
+    input {
+      border: 1px solid $gray-border;
+      border-radius: 50px;
+      padding: 0.45rem 0.9rem;
+      padding-inline-start: 2rem;
+      font-family: inherit;
+      font-size: 0.85rem;
+      color: $primary-navy;
+      min-width: 190px;
+
+      &:focus {
+        outline: none;
+        border-color: $accent-gold;
+        box-shadow: 0 0 0 3px rgba($accent-gold, 0.15);
+      }
+    }
+  }
+}
+
+// ---------- KPI cards ----------
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.9rem;
+
+  .kpi-card {
+    background: $white;
+    border: 1px solid $gray-border;
+    border-radius: 16px;
+    padding: 1rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset-inline-start: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: $accent-gold;
+    }
+
+    .kpi-head {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: $gray-text;
+
+      i { color: $accent-gold; }
+    }
+
+    .kpi-value {
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: $primary-navy;
+      line-height: 1.2;
+    }
+
+    .kpi-note { font-size: 0.72rem; color: $gray-text; }
+
+    &.paid {
+      &::before { background: $success-green; }
+      .kpi-head i { color: $success-green; }
+      .kpi-value { color: $success-green; }
+    }
+
+    &.owed {
+      &::before { background: $error-red; }
+      background: rgba($error-red, 0.04);
+      .kpi-head i { color: $error-red; }
+      .kpi-value { color: $error-red; }
+    }
+  }
+}
+
+.collected-bar {
+  position: relative;
+  height: 26px;
+  border-radius: 50px;
+  background: $gray-border;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+
+  .collected-fill {
+    position: absolute;
+    inset-inline-start: 0;
+    top: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, $accent-gold, $success-green);
+    transition: width 0.35s ease;
+  }
+
+  .collected-label {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: $primary-navy;
+  }
+}
+
+// ---------- Table ----------
+.table-card {
+  background: $white;
+  border: 1px solid $gray-border;
+  border-radius: 16px;
+  overflow: hidden;
+
+  .table-scroll { overflow-x: auto; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    min-width: 860px;
+
+    thead th {
+      background: #f1f5f9;
+      color: $primary-navy;
+      font-weight: 700;
+      padding: 0.75rem 0.9rem;
+      text-align: start;
+      white-space: nowrap;
+    }
+
+    tbody td {
+      padding: 0.7rem 0.9rem;
+      border-top: 1px solid $gray-border;
+      color: $primary-navy;
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+
+    tbody tr:hover td { background: #fafbfd; }
+
+    .strong { font-weight: 700; }
+
+    .paid-cell {
+      color: $success-green;
+      font-weight: 700;
+      min-width: 130px;
+
+      .row-progress {
+        margin-top: 0.3rem;
+        height: 5px;
+        border-radius: 50px;
+        background: $gray-border;
+        overflow: hidden;
+
+        .row-progress-fill {
+          height: 100%;
+          background: $success-green;
+        }
+      }
+    }
+
+    .remaining-cell {
+      font-weight: 800;
+
+      &.owed { color: $error-red; }
+    }
+
+    .empty-row {
+      text-align: center;
+      color: $gray-text;
+      padding: 1.5rem;
+      white-space: normal;
+    }
+
+    .pay-btn {
+      border: none;
+      background: rgba($accent-gold, 0.15);
+      color: darken($accent-gold, 12%);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover {
+        background: $accent-gold;
+        color: $white;
+        transform: translateY(-1px);
+      }
+    }
+  }
+
+  .pager {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.9rem;
+    padding: 0.75rem;
+    border-top: 1px solid $gray-border;
+    font-size: 0.85rem;
+    color: $primary-navy;
+
+    button {
+      border: 1px solid $gray-border;
+      background: $white;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      color: $primary-navy;
+
+      &:hover:not(:disabled) { border-color: $accent-gold; color: $accent-gold; }
+      &:disabled { opacity: 0.4; cursor: not-allowed; }
+    }
+  }
+}

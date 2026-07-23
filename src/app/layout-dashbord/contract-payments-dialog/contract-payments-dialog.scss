@@ -1,0 +1,339 @@
+// Brand tokens (shared with the reminders / reject dialogs)
+$primary-navy: #1a2b4b;
+$accent-gold: #c5a059;
+$error-red: #ef4444;
+$success-green: #16a34a;
+$gray-border: #e2e8f0;
+$gray-text: #64748b;
+$white: #ffffff;
+
+.payments-container {
+  display: flex;
+  flex-direction: column;
+  background-color: $white;
+  font-family: inherit;
+  overflow: hidden;
+
+  // ---------- Header ----------
+  .form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $primary-navy;
+    padding: 1.4rem 1.5rem;
+    color: $white;
+    position: relative;
+    flex-shrink: 0;
+
+    .header-content h3 {
+      margin: 0;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: $accent-gold;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .header-logo { height: 38px; width: auto; }
+
+    .close-icon-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: $white;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      :host-context([dir="rtl"]) & { right: auto; left: 1rem; }
+      &:hover { background: rgba(255, 255, 255, 0.2); transform: rotate(90deg); }
+    }
+  }
+
+  // ---------- Body ----------
+  .payments-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    background: #f8fafc;
+    max-height: 72vh;
+    overflow-y: auto;
+  }
+
+  .state-msg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1.25rem;
+    color: $gray-text;
+    font-size: 0.9rem;
+
+    &.empty { color: $gray-text; }
+    &.settled-msg { color: $success-green; font-weight: 600; }
+  }
+
+  // ---------- Totals ----------
+  .totals-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+
+    .total-box {
+      background: $white;
+      border: 1px solid $gray-border;
+      border-radius: 14px;
+      padding: 0.85rem 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      text-align: center;
+
+      .total-label { font-size: 0.75rem; color: $gray-text; font-weight: 600; }
+      .total-value { font-size: 1.15rem; font-weight: 800; color: $primary-navy; }
+
+      &.paid .total-value { color: $success-green; }
+      &.owed {
+        border-color: rgba($error-red, 0.35);
+        background: rgba($error-red, 0.05);
+        .total-value { color: $error-red; }
+      }
+      &.settled .total-value { color: $success-green; }
+    }
+  }
+
+  .progress-track {
+    height: 8px;
+    border-radius: 50px;
+    background: $gray-border;
+    overflow: hidden;
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, $accent-gold, $success-green);
+      transition: width 0.3s ease;
+    }
+  }
+
+  .link-btn {
+    align-self: flex-start;
+    background: none;
+    border: none;
+    color: $primary-navy;
+    font-weight: 600;
+    font-size: 0.82rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0;
+
+    &:hover { color: $accent-gold; }
+  }
+
+  // ---------- Contract picker ----------
+  .choice-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+
+    .choice-hint { margin: 0; font-size: 0.85rem; color: $gray-text; }
+
+    .choice-row {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.25rem;
+      background: $white;
+      border: 1px solid $gray-border;
+      border-radius: 12px;
+      padding: 0.8rem 1rem;
+      cursor: pointer;
+      text-align: start;
+      transition: all 0.2s;
+
+      &:hover { border-color: $accent-gold; transform: translateY(-1px); }
+
+      .choice-title { font-weight: 700; color: $primary-navy; font-size: 0.92rem; }
+      .choice-meta { font-size: 0.78rem; color: $gray-text; }
+    }
+  }
+
+  // ---------- Add payment ----------
+  .add-payment {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    background: $white;
+    border: 1px solid $gray-border;
+    border-radius: 14px;
+    padding: 1rem;
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.9rem;
+
+      @media (max-width: 560px) { grid-template-columns: 1fr; }
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+
+      label { font-size: 0.85rem; font-weight: 600; color: $primary-navy; }
+
+      input {
+        width: 100%;
+        padding: 0.65rem 0.85rem;
+        border: 1px solid $gray-border;
+        border-radius: 10px;
+        font-family: inherit;
+        font-size: 0.9rem;
+        color: $primary-navy;
+
+        &:focus {
+          outline: none;
+          border-color: $accent-gold;
+          box-shadow: 0 0 0 3px rgba($accent-gold, 0.15);
+        }
+      }
+
+      .error-msg {
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-size: 0.76rem;
+        color: $error-red;
+      }
+    }
+
+    .preview {
+      margin: 0;
+      font-size: 0.85rem;
+      color: $gray-text;
+
+      strong { color: $primary-navy; }
+      strong.negative { color: $error-red; }
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+
+      .btn-primary {
+        padding: 0.65rem 1.5rem;
+        border-radius: 50px;
+        border: none;
+        font-weight: 600;
+        font-size: 0.88rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.45rem;
+        color: $white;
+        background: linear-gradient(135deg, $accent-gold 0%, darken($accent-gold, 12%) 100%);
+        box-shadow: 0 4px 15px rgba($accent-gold, 0.35);
+        transition: all 0.3s;
+
+        &:hover:not(:disabled) { transform: translateY(-2px); }
+        &:disabled { opacity: 0.6; cursor: not-allowed; }
+      }
+    }
+  }
+
+  // ---------- History ----------
+  .section-title {
+    margin: 0.3rem 0 0;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: $primary-navy;
+  }
+
+  .payment-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+
+    li {
+      position: relative;
+      background: $white;
+      border: 1px solid $gray-border;
+      border-radius: 12px;
+      padding: 0.7rem 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+
+      .payment-main {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.75rem;
+
+        .payment-amount { font-weight: 800; color: $success-green; font-size: 0.95rem; }
+        .payment-date { font-size: 0.8rem; color: $gray-text; }
+      }
+
+      .payment-sub {
+        display: flex;
+        justify-content: space-between;
+        gap: 0.75rem;
+        font-size: 0.78rem;
+        color: $gray-text;
+      }
+
+      .delete-payment {
+        position: absolute;
+        inset-inline-end: 0.5rem;
+        bottom: 0.5rem;
+        background: none;
+        border: none;
+        color: $error-red;
+        cursor: pointer;
+        opacity: 0.65;
+        padding: 0.25rem;
+
+        &:hover { opacity: 1; }
+        &:disabled { opacity: 0.3; cursor: not-allowed; }
+      }
+    }
+  }
+
+  .error-banner {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 0.9rem;
+    border-radius: 12px;
+    background: rgba($error-red, 0.08);
+    border: 1px solid rgba($error-red, 0.3);
+    color: $error-red;
+    font-size: 0.85rem;
+  }
+}
+
+// Dialog shell (matches the other modals)
+::ng-deep .modern-modal .p-dialog-content {
+  padding: 0 !important;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+::ng-deep .modern-modal .p-dialog-header {
+  display: none;
+}

@@ -1,0 +1,145 @@
+<p-dialog maskStyleClass="backdrop-blur-sm" [visible]="isVisible()" (onHide)="close()" [modal]="true"
+  [baseZIndex]="10000" styleClass="modern-modal" [style]="{ width: '94vw', maxWidth: '640px' }">
+  <ng-template pTemplate="headless">
+    <div class="payments-container">
+
+      <!-- Header -->
+      <div class="form-header">
+        <div class="header-content">
+          <h3><i class="fa-solid fa-money-bill-wave"></i> {{ 'contract_payments' | translate }}</h3>
+        </div>
+        <img src="/assets/Img/LOGO-GOLD.svg" alt="logo" class="header-logo" />
+        <button class="close-icon-btn" (click)="close()" [attr.aria-label]="'close' | translate">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="payments-body">
+
+        <div *ngIf="loading()" class="state-msg">
+          <i class="fa-solid fa-spinner fa-spin"></i> {{ 'loading' | translate }}
+        </div>
+
+        <!-- No contract on this case: nothing to collect against -->
+        <div *ngIf="!loading() && !summary() && !choices().length" class="state-msg empty">
+          <i class="fa-solid fa-file-circle-question"></i>
+          {{ 'contract_payments_no_contract' | translate }}
+        </div>
+
+        <!-- Several contracts on the case: pick one -->
+        <div *ngIf="!loading() && !summary() && choices().length > 1" class="choice-list">
+          <p class="choice-hint">{{ 'contract_payments_pick_contract' | translate }}</p>
+          <button type="button" class="choice-row" *ngFor="let c of choices()"
+            (click)="loadContract(c.id)">
+            <span class="choice-title">
+              {{ c.contractNumber || ('contract_without_number' | translate) }}
+            </span>
+            <span class="choice-meta">
+              {{ 'contract_total' | translate }}: {{ c.totalFees | number: '1.0-2' }}
+              · {{ 'remaining' | translate }}: {{ c.remaining | number: '1.0-2' }}
+            </span>
+          </button>
+        </div>
+
+        <!-- Contract selected: totals, add form, history -->
+        <ng-container *ngIf="!loading()">
+        <ng-container *ngIf="summary() as s">
+
+          <div class="totals-strip">
+            <div class="total-box">
+              <span class="total-label">{{ 'contract_total' | translate }}</span>
+              <span class="total-value">{{ s.totalFees | number: '1.0-2' }}</span>
+            </div>
+            <div class="total-box paid">
+              <span class="total-label">{{ 'total_paid' | translate }}</span>
+              <span class="total-value">{{ s.paidTotal | number: '1.0-2' }}</span>
+            </div>
+            <div class="total-box" [class.owed]="s.remaining > 0" [class.settled]="s.remaining <= 0">
+              <span class="total-label">{{ 'remaining' | translate }}</span>
+              <span class="total-value">{{ s.remaining | number: '1.0-2' }}</span>
+            </div>
+          </div>
+
+          <div class="progress-track" [attr.aria-label]="'total_paid' | translate">
+            <div class="progress-fill"
+              [style.width.%]="s.totalFees > 0 ? (s.paidTotal / s.totalFees) * 100 : 0"></div>
+          </div>
+
+          <button type="button" class="link-btn" *ngIf="choices().length > 1" (click)="backToChoices()">
+            <i class="fa-solid fa-arrow-right-long"></i> {{ 'contract_payments_pick_contract' | translate }}
+          </button>
+
+          <!-- Record a payment -->
+          <form [formGroup]="form" (ngSubmit)="submit()" class="add-payment" *ngIf="s.remaining > 0">
+            <div class="row">
+              <div class="input-group">
+                <label>{{ 'payment_amount' | translate }}</label>
+                <input type="number" pInputText formControlName="amount" min="0.01" step="0.01"
+                  [placeholder]="'payment_amount' | translate" />
+                <small class="error-msg"
+                  *ngIf="form.get('amount')!.invalid && form.get('amount')!.touched">
+                  <i class="fa-solid fa-triangle-exclamation"></i> {{ 'payment_amount_required' | translate }}
+                </small>
+              </div>
+              <div class="input-group">
+                <label>{{ 'payment_date' | translate }}</label>
+                <p-datepicker formControlName="paidAt" [showIcon]="true" dateFormat="yy-mm-dd"
+                  styleClass="w-full" appendTo="body"></p-datepicker>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label>{{ 'payment_note' | translate }}</label>
+              <input type="text" pInputText formControlName="note"
+                [placeholder]="'payment_note_placeholder' | translate" />
+            </div>
+
+            <p class="preview" *ngIf="form.get('amount')!.value">
+              {{ 'remaining_after_payment' | translate }}:
+              <strong [class.negative]="remainingAfterInput() < 0">
+                {{ remainingAfterInput() | number: '1.0-2' }}
+              </strong>
+            </p>
+
+            <div class="form-actions">
+              <button type="submit" class="btn-primary" [disabled]="saving()">
+                <i class="fa-solid fa-plus"></i> {{ 'record_payment' | translate }}
+              </button>
+            </div>
+          </form>
+
+          <p class="state-msg settled-msg" *ngIf="s.remaining <= 0 && s.totalFees > 0">
+            <i class="fa-solid fa-circle-check"></i> {{ 'contract_fully_paid' | translate }}
+          </p>
+
+          <!-- History -->
+          <h4 class="section-title">{{ 'payments_history' | translate }}</h4>
+          <p class="state-msg empty" *ngIf="!s.payments.length">
+            {{ 'no_payments_yet' | translate }}
+          </p>
+          <ul class="payment-list" *ngIf="s.payments.length">
+            <li *ngFor="let p of s.payments">
+              <div class="payment-main">
+                <span class="payment-amount">{{ p.amount | number: '1.0-2' }} {{ currency }}</span>
+                <span class="payment-date">{{ p.paidAt | date: 'yyyy-MM-dd' }}</span>
+              </div>
+              <div class="payment-sub">
+                <span *ngIf="p.note" class="payment-note">{{ p.note }}</span>
+                <span class="payment-by" *ngIf="p.recordedBy">{{ p.recordedBy.name }}</span>
+              </div>
+              <button type="button" class="delete-payment" *ngIf="isAdmin" [disabled]="saving()"
+                [pTooltip]="'delete' | translate" tooltipPosition="top" (click)="deletePayment(p.id)">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </li>
+          </ul>
+        </ng-container>
+        </ng-container>
+
+        <p class="error-banner" *ngIf="error()">
+          <i class="fa-solid fa-triangle-exclamation"></i> {{ error() | translate }}
+        </p>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>

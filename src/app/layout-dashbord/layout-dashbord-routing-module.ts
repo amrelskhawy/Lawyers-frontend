@@ -18,6 +18,7 @@ import { ActivityLogs } from './activity-logs/activity-logs';
 import { CasesCalendar } from './cases-calendar/cases-calendar';
 import { ConsultantReminders } from './consultant-reminders/consultant-reminders';
 import { UnscheduledCases } from './unscheduled-cases/unscheduled-cases';
+import { Financials } from './financials/financials';
 import { DocumentSigner } from './document-signer/document-signer';
 
 const routes: Routes = [
@@ -165,6 +166,12 @@ const routes: Routes = [
         path: 'lawyer-fees-contract/:id',
         component: LawyerFeesContract,
         canActivate: [roleGuard('ADMIN', 'MODERATOR', 'LAWYER', 'CONSULTANT')],
+      },
+
+      {
+        path: 'financials',
+        component: Financials,
+        canActivate: [roleGuard('ADMIN', 'MODERATOR')],
       },
 
       { path: '**', redirectTo: '', pathMatch: 'full' },

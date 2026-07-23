@@ -79,6 +79,8 @@ export class ClientCases implements OnInit {
   visibelform = signal<boolean>(false);
   visibelReminders = signal<boolean>(false);
   visibelReject = signal<boolean>(false);
+  visibelPayments = signal<boolean>(false);
+  paymentsCaseId = signal<string | null>(null);
   selectedCase = signal<IDataCase | null>(null);
   rejectTarget = signal<IDataCase | null>(null);
 
@@ -299,6 +301,15 @@ export class ClientCases implements OnInit {
   onManageReminders(item: IDataCase) {
     this.selectedCase.set(item);
     this.visibelReminders.set(true);
+  }
+
+  /**
+   * Open collections for this case. The dialog resolves the case's fees
+   * contracts itself — one opens directly, several offer a pick, none says so.
+   */
+  onManagePayments(item: IDataCase) {
+    this.paymentsCaseId.set(item.id);
+    this.visibelPayments.set(true);
   }
 
   /** The reminders dialog changed the case (e.g. degree saved) — refresh the table. */

@@ -27,6 +27,11 @@
     </div>
 
     <div class="right">
+      <!-- Collections stay available after signing — that is when they happen. -->
+      <button class="btn-secondary" *ngIf="contractId()" (click)="paymentsVisible.set(true)">
+        <i class="fa-solid fa-money-bill-wave"></i>
+        {{ 'contract_payments' | translate }}
+      </button>
       @if (isSigned()) {
         <span class="signed-pill">
           <i class="fa-solid fa-lock"></i>
@@ -261,6 +266,10 @@
     </aside>
 
   </div>
+
+  <app-contract-payments-dialog [visible]="paymentsVisible()"
+    (visibleChange)="paymentsVisible.set($event)" [contractId]="contractId() || null">
+  </app-contract-payments-dialog>
 
   <ng-template #loadingTpl>
     <div class="loading-state">
