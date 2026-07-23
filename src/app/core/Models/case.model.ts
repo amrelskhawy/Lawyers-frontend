@@ -25,6 +25,13 @@ export interface IDataCase {
   agencyNumber: string | null;
   // true → shown in "Client Cases"; false (default) → shown in "Customer Meetings".
   isRealCustomer: boolean;
+  // true (default) → the client came through the company;
+  // false → a lawyer brought the client to the company.
+  isCompany: boolean;
+  // Set only when isCompany is false: the lawyer who brought the client in.
+  // Attribution only — unrelated to the assignment slots below.
+  sourceLawyerId: string | null;
+  sourceLawyer?: { id: string; name: string } | null;
 
   // Lawyer slot
   wantsSpecificLawyer: boolean;

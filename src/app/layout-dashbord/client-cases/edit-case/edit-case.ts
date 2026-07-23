@@ -112,6 +112,7 @@ export class EditCase implements OnInit, OnDestroy {
     this.buildAssignForm();
     this.loadDropdowns();
     this.loadCase(id);
+    this.wireSourceLawyer();
     this.wireDirtyTracking();
   }
 
@@ -129,6 +130,8 @@ export class EditCase implements OnInit, OnDestroy {
       hijriDate: [null],
       agencyNumber: [''],
       isRealCustomer: [false],
+      isCompany: [true],
+      sourceLawyerId: [null],
 
       sessionReceiverId: [null],
       // Court session after the client meeting — saved via /cases/:id/session on main save.
@@ -206,6 +209,9 @@ export class EditCase implements OnInit, OnDestroy {
           hijriDate: c.hijriDate ?? null,
           agencyNumber: c.agencyNumber ?? '',
           isRealCustomer: c.isRealCustomer ?? false,
+          isCompany: c.isCompany ?? true,
+          // Patched after isCompany so the toggle handler can't clear it.
+          sourceLawyerId: c.sourceLawyerId ?? null,
           sessionReceiverId: sessionReceiverFormId,
           sessionHijriDate: this.resolveSessionHijriDate(c),
           hasStructuredNotes: c.hasStructuredNotes,
@@ -224,6 +230,25 @@ export class EditCase implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * The source lawyer only applies to lawyer-sourced clients: required while
+   * `isCompany` is off, cleared the moment it goes back on.
+   */
+  private wireSourceLawyer() {
+    this.Form.get('isCompany')!
+      .valueChanges.pipe(takeUntil(this.destroy$))
+      .subscribe((isCompany: boolean) => {
+        const ctrl = this.Form.get('sourceLawyerId')!;
+        if (isCompany) {
+          ctrl.clearValidators();
+          ctrl.setValue(null, { emitEvent: false });
+        } else {
+          ctrl.setValidators(Validators.required);
+        }
+        ctrl.updateValueAndValidity({ emitEvent: false });
+      });
+  }
+
   private wireDirtyTracking() {
     this.Form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
       if (this.skipNextDirty) {
@@ -237,6 +262,11 @@ export class EditCase implements OnInit, OnDestroy {
 
   save() {
     if (!this.canEdit || this.saveStatus() === 'saving') return;
+    if (this.Form.invalid) {
+      this.Form.markAllAsTouched();
+      this.saveStatus.set('error');
+      return;
+    }
     this.saveStatus.set('saving');
     const raw = this.Form.getRawValue();
     const sessionPicker = (raw.sessionHijriDate ?? '').trim();
@@ -309,6 +339,8 @@ export class EditCase implements OnInit, OnDestroy {
       hijriDate: value.hijriDate || null,
       agencyNumber: value.agencyNumber || null,
       isRealCustomer: !!value.isRealCustomer,
+      isCompany: !!value.isCompany,
+      sourceLawyerId: value.isCompany ? null : (value.sourceLawyerId || null),
     };
   }
 

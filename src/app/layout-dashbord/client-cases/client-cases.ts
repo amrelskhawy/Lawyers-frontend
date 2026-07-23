@@ -69,6 +69,7 @@ export class ClientCases implements OnInit {
     'customerName',
     'assignedConsultantName',
     'assignedLawyerName',
+    'sourceLawyerName',
     'caseTypeLabel',
     'caseDegreeLabel',
     'caseDate',
@@ -120,6 +121,8 @@ export class ClientCases implements OnInit {
     nextSessionDateFormatted: this.formatNextSessionDate(item),
     assignedLawyerName: item.preferredLawyerName ?? item.preferredLawyer?.name ?? '',
     assignedConsultantName: item.consultantName ?? item.consultant?.name ?? '',
+    // Empty for company-sourced clients — they have no bringing lawyer.
+    sourceLawyerName: item.sourceLawyer?.name ?? '',
     // A case is "closed" once it's marked fully completed (completedAt set).
     isClosed: !!item.completedAt,
   });
@@ -174,6 +177,7 @@ export class ClientCases implements OnInit {
       { key: this.translate.instant('next_session'), value: 'nextSessionDateFormatted' },
       { key: this.translate.instant('assigned_consultant'), value: 'assignedConsultantName' },
       { key: this.translate.instant('assigned_lawyer'), value: 'assignedLawyerName' },
+      { key: this.translate.instant('source_lawyer'), value: 'sourceLawyerName' },
       { key: this.translate.instant('case_state'), value: 'isClosed' },
       { key: this.translate.instant('created_by'), value: 'createdBy.name' },
     ];
