@@ -1,5 +1,6 @@
-import { Component, OnInit, computed, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { Data } from '../../core/Servies/data';
+import { Auth } from '../../core/Servies/auth';
 import {
   FinancialsScope,
   IFinancialsLawyerTotals,
@@ -9,6 +10,9 @@ import {
 import { CASE_TYPE_OPTIONS } from '../../core/Models/case.model';
 
 const MONTHS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
+/** Roles the backend narrows to their own sourced clients. */
+const SELF_SCOPED_ROLES = ['LAWYER', 'CONSULTANT'];
 
 /**
  * Money view over the lawyer fees contracts, split by where the client came
@@ -23,11 +27,21 @@ const MONTHS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   styleUrl: './financials.scss',
 })
 export class Financials implements OnInit {
+  private readonly auth = inject(Auth);
+
   constructor(private data: Data) {}
 
   readonly months = MONTHS;
 
-  scope = signal<FinancialsScope>('COMPANY');
+  /**
+   * A lawyer/consultant only ever sees the clients they personally sourced —
+   * the backend forces that from the token. The scope tabs, the lawyer picker
+   * and the collections dialog would all be inert (or 403) for them, so they
+   * are dropped from the page rather than shown disabled.
+   */
+  readonly selfScoped = SELF_SCOPED_ROLES.includes(this.auth.currentUser()?.role);
+
+  scope = signal<FinancialsScope>(this.selfScoped ? 'LAWYER' : 'COMPANY');
   /** null = the whole year. */
   month = signal<number | null>(null);
   year = signal<number | null>(null);
@@ -61,6 +75,14 @@ export class Financials implements OnInit {
     if (!s || s.contractsTotal <= 0) return 0;
     return Math.min(100, (s.paidTotal / s.contractsTotal) * 100);
   });
+
+  /** Naming who sourced a contract is noise when every row is the viewer's own. */
+  showSourceLawyer = computed(() => this.scope() === 'LAWYER' && !this.selfScoped);
+
+  /** Seven fixed columns, plus the source-lawyer and actions ones when shown. */
+  tableColumns = computed(
+    () => 7 + (this.showSourceLawyer() ? 1 : 0) + (this.selfScoped ? 0 : 1),
+  );
 
   ngOnInit() {
     this.loadYears();
@@ -98,7 +120,7 @@ export class Financials implements OnInit {
         this.summary.set(res.data);
         // Chips come from the unnarrowed call below; only adopt these when
         // no lawyer is selected, so a single request covers the common case.
-        if (this.scope() === 'LAWYER' && !this.sourceLawyerId()) {
+        if (this.scope() === 'LAWYER' && !this.selfScoped && !this.sourceLawyerId()) {
           this.lawyerTotals.set(res.data.byLawyer ?? []);
         }
       },

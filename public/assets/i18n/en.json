@@ -835,6 +835,8 @@
   "SCROLL_TO_TOP": "Scroll to top",
   "financials": "Financials",
   "financials_subtitle": "Contract totals, collections and outstanding money, split by client source",
+  "my_financials": "My Financials",
+  "my_financials_subtitle": "Contract totals, collections and outstanding money for the clients you brought in",
   "company_contracts": "Company contracts",
   "lawyer_contracts": "Lawyer contracts",
   "no_lawyer_contracts": "No lawyer-sourced contracts in this period",

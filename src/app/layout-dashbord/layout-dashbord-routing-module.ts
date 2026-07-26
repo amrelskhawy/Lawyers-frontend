@@ -171,7 +171,9 @@ const routes: Routes = [
       {
         path: 'financials',
         component: Financials,
-        canActivate: [roleGuard('ADMIN', 'MODERATOR')],
+        // A lawyer/consultant reaches the same page, but the backend narrows it
+        // to the clients they sourced — they never see company or peer money.
+        canActivate: [roleGuard('ADMIN', 'MODERATOR', 'LAWYER', 'CONSULTANT')],
       },
 
       { path: '**', redirectTo: '', pathMatch: 'full' },

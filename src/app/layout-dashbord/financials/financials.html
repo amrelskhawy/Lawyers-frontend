@@ -3,11 +3,16 @@
   <!-- ── Header: scope + period ─────────────────────────────────────────── -->
   <header class="page-head">
     <div class="title-block">
-      <h2><i class="fa-solid fa-sack-dollar"></i> {{ 'financials' | translate }}</h2>
-      <p class="subtitle">{{ 'financials_subtitle' | translate }}</p>
+      <h2>
+        <i class="fa-solid fa-sack-dollar"></i>
+        {{ (selfScoped ? 'my_financials' : 'financials') | translate }}
+      </h2>
+      <p class="subtitle">
+        {{ (selfScoped ? 'my_financials_subtitle' : 'financials_subtitle') | translate }}
+      </p>
     </div>
 
-    <div class="scope-tabs" role="tablist">
+    <div class="scope-tabs" role="tablist" *ngIf="!selfScoped">
       <button type="button" role="tab" class="scope-tab" [class.active]="scope() === 'COMPANY'"
         [attr.aria-selected]="scope() === 'COMPANY'" (click)="setScope('COMPANY')">
         <i class="fa-solid fa-building-columns"></i> {{ 'company_contracts' | translate }}
@@ -20,7 +25,7 @@
   </header>
 
   <!-- Lawyer chips — each carries its own outstanding amount -->
-  <div class="lawyer-chips" *ngIf="scope() === 'LAWYER'">
+  <div class="lawyer-chips" *ngIf="showSourceLawyer()">
     <button type="button" class="chip" [class.active]="!sourceLawyerId()" (click)="setLawyer(null)">
       {{ 'all_lawyers' | translate }}
     </button>
@@ -118,12 +123,12 @@
             <th>{{ 'contract_number' | translate }}</th>
             <th>{{ 'case_customer' | translate }}</th>
             <th>{{ 'case_type' | translate }}</th>
-            <th *ngIf="scope() === 'LAWYER'">{{ 'source_lawyer' | translate }}</th>
+            <th *ngIf="showSourceLawyer()">{{ 'source_lawyer' | translate }}</th>
             <th>{{ 'contract_date' | translate }}</th>
             <th>{{ 'contract_total' | translate }}</th>
             <th>{{ 'total_paid' | translate }}</th>
             <th>{{ 'remaining' | translate }}</th>
-            <th>{{ 'actions' | translate }}</th>
+            <th class="actions-cell" *ngIf="!selfScoped">{{ 'actions' | translate }}</th>
           </tr>
         </thead>
         <tbody>
@@ -131,7 +136,7 @@
             <td>{{ r.contractNumber || '—' }}</td>
             <td class="strong">{{ r.clientName || '—' }}</td>
             <td>{{ caseTypeLabel(r) }}</td>
-            <td *ngIf="scope() === 'LAWYER'">{{ r.sourceLawyerName || '—' }}</td>
+            <td *ngIf="showSourceLawyer()">{{ r.sourceLawyerName || '—' }}</td>
             <td>{{ r.contractDate ? (r.contractDate | date: 'yyyy-MM-dd') : '—' }}</td>
             <td>{{ r.totalFees | number: '1.0-2' }}</td>
             <td class="paid-cell">
@@ -144,7 +149,9 @@
             <td class="remaining-cell" [class.owed]="r.remaining > 0">
               {{ r.remaining | number: '1.0-2' }}
             </td>
-            <td>
+            <!-- Recording collections is staff work; the backend rejects it for
+                 lawyers, so the action is not offered to them. -->
+            <td class="actions-cell" *ngIf="!selfScoped">
               <button type="button" class="pay-btn" (click)="openPayments(r)"
                 [pTooltip]="'contract_payments' | translate" tooltipPosition="top">
                 <i class="fa-solid fa-money-bill-wave"></i>
@@ -153,12 +160,12 @@
           </tr>
 
           <tr *ngIf="!loading() && !rows().length">
-            <td [attr.colspan]="scope() === 'LAWYER' ? 9 : 8" class="empty-row">
+            <td [attr.colspan]="tableColumns()" class="empty-row">
               {{ 'no_contracts_in_period' | translate }}
             </td>
           </tr>
           <tr *ngIf="loading()">
-            <td [attr.colspan]="scope() === 'LAWYER' ? 9 : 8" class="empty-row">
+            <td [attr.colspan]="tableColumns()" class="empty-row">
               <i class="fa-solid fa-spinner fa-spin"></i> {{ 'loading' | translate }}
             </td>
           </tr>

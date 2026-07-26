@@ -129,9 +129,10 @@ export class Menue implements OnInit {
         route: '/dashboard/content/lawyer-fees-contracts',
       }] : []),
 
-      // ── Financials — money across contracts; admin + moderator only ─
-      ...(isAdmin || isModerator ? [{
-        name: 'financials',
+      // ── Financials — all contracts for admin/moderator; a lawyer or
+      //    consultant gets the same entry narrowed to their own clients ─
+      ...(isAdmin || isModerator || isLawyer ? [{
+        name: isLawyer ? 'my_financials' : 'financials',
         icon: 'fa-solid fa-sack-dollar',
         route: '/dashboard/content/financials',
       }] : []),

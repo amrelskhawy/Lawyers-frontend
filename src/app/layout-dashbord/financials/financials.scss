@@ -346,7 +346,21 @@ $white: #ffffff;
       white-space: normal;
     }
 
+    // Keep the header and the button on the same axis — a `start`-aligned
+    // header over a centred glyph reads as a misaligned column.
+    .actions-cell {
+      text-align: center;
+      width: 1%;
+    }
+
     .pay-btn {
+      // The circle is fixed-size, so the glyph has to be centred by the box
+      // itself: a button's default padding/line-height pushes it off-centre.
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      line-height: 1;
       border: none;
       background: rgba($accent-gold, 0.15);
       color: darken($accent-gold, 12%);
@@ -355,6 +369,8 @@ $white: #ffffff;
       border-radius: 50%;
       cursor: pointer;
       transition: all 0.2s;
+
+      i { font-size: 0.85rem; line-height: 1; }
 
       &:hover {
         background: $accent-gold;
@@ -374,7 +390,20 @@ $white: #ffffff;
     font-size: 0.85rem;
     color: $primary-navy;
 
+    // "1 / 7" is a numeric run around a neutral slash — in an RTL page bidi
+    // reorders it to "7 / 1". Isolate it so it always reads page-of-total.
+    span {
+      direction: ltr;
+      unicode-bidi: isolate;
+    }
+
     button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+      padding: 0;
+      line-height: 1;
       border: 1px solid $gray-border;
       background: $white;
       width: 32px;
@@ -382,6 +411,8 @@ $white: #ffffff;
       border-radius: 50%;
       cursor: pointer;
       color: $primary-navy;
+
+      i { font-size: 0.8rem; line-height: 1; }
 
       &:hover:not(:disabled) { border-color: $accent-gold; color: $accent-gold; }
       &:disabled { opacity: 0.4; cursor: not-allowed; }
