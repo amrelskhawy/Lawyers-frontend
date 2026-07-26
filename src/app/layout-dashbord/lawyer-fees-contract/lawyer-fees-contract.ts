@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, forkJoin, takeUntil } from 'rxjs';
 import { Data } from '../../core/Servies/data';
 import { IDataCustomer } from '../../core/Models/customers.model';
-import { IDataCase } from '../../core/Models/case.model';
+import { CASE_TYPE_OPTIONS, IDataCase } from '../../core/Models/case.model';
 import { ILawyerFeesContract } from '../../core/Models/lawyer-fees-contract.model';
 import { LawyerFeesContractPreviewData } from '../../shared/lawyer-fees-contract-preview/lawyer-fees-contract-preview';
 import { COUNTRIES, Country } from '../../core/Models/countries.model';
@@ -38,6 +38,18 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
   paymentsVisible = signal<boolean>(false);
   loadedCase = signal<IDataCase | null>(null);
   customers = signal<IDataCustomer[]>([]);
+  /** Cases of the currently linked customer — options for the case picker. */
+  customerCases = signal<IDataCase[]>([]);
+  loadingCases = signal<boolean>(false);
+
+  /**
+   * The case link decides which financial bucket the contract's money lands in
+   * (company vs. the case's source lawyer), so it is offered whenever the
+   * contract was not opened from a case in the first place.
+   */
+  caseOptions = computed(() =>
+    this.customerCases().map((c) => ({ id: c.id, label: this.caseLabel(c) })),
+  );
 
   countries = COUNTRIES;
   selectedCountry: Country = COUNTRIES[0];
@@ -75,6 +87,7 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
   private buildForm() {
     this.Form = this.fb.group({
       customerId:        [null],
+      caseId:            [null],
 
       contractNumber:    [''],
       contractDay:       [''],
@@ -174,8 +187,10 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
     const rawPhone = c.clientPhone ?? c.customer?.phone ?? this.loadedCase()?.customer?.phone ?? '';
     const detected = this.detectCountry(rawPhone);
     this.selectedCountry = detected.country;
+    this.loadCustomerCases(c.customerId ?? null);
     this.Form.patchValue({
       customerId:        c.customerId,
+      caseId:            c.caseId || this.caseId() || null,
       contractNumber:    c.contractNumber ?? '',
       contractDay:       c.contractDay ?? '',
       contractDate:      c.contractDate ? new Date(c.contractDate) : null,
@@ -263,6 +278,10 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
   }
 
   onCustomerChange(customerId: string | null) {
+    // The old customer's cases are no longer valid options — and neither is a
+    // case link pointing at one of them.
+    this.Form.patchValue({ caseId: null });
+    this.loadCustomerCases(customerId);
     if (!customerId) return;
     const c = this.customers().find((x) => x.id === customerId);
     if (!c) return;
@@ -272,6 +291,37 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
       clientName:  c.fullName ?? '',
       clientPhone: detected.localNumber,
     });
+  }
+
+  /** Options for the case picker. Cleared when no customer is linked. */
+  private loadCustomerCases(customerId: string | null) {
+    if (!customerId) {
+      this.customerCases.set([]);
+      return;
+    }
+    this.loadingCases.set(true);
+    this.data
+      .get<{ data: IDataCase[] }>(`cases?customerId=${customerId}`)
+      .subscribe({
+        next: (res) => {
+          this.customerCases.set(res.data ?? []);
+          this.loadingCases.set(false);
+        },
+        error: () => {
+          this.customerCases.set([]);
+          this.loadingCases.set(false);
+        },
+      });
+  }
+
+  private caseLabel(c: IDataCase): string {
+    const type =
+      c.caseType === 'OTHER' && c.otherCaseType
+        ? c.otherCaseType
+        : (CASE_TYPE_OPTIONS.find((o) => o.value === c.caseType)?.label ?? c.caseType);
+    const date = c.hijriDate || (c.caseDate ? c.caseDate.slice(0, 10) : '');
+    const agency = c.agencyNumber ? ` — ${c.agencyNumber}` : '';
+    return date ? `${type}${agency} (${date})` : `${type}${agency}`;
   }
 
   private detectCountry(phone: string): { country: Country; localNumber: string } {
@@ -352,6 +402,8 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
   private toPayload(v: any) {
     return {
       customerId:        v.customerId || null,
+      // Drives the financials bucket: an unlinked contract counts as company money.
+      caseId:            v.caseId || null,
 
       contractNumber:    v.contractNumber || null,
       contractDay:       v.contractDay || null,

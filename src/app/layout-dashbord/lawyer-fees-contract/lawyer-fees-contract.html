@@ -131,6 +131,17 @@
 
         <div class="row">
           <div class="input-group">
+            <label>{{ 'link_case' | translate }}</label>
+            <p-select formControlName="caseId" [options]="caseOptions()" optionLabel="label" optionValue="id"
+              [placeholder]="'select_case' | translate" [showClear]="true" [loading]="loadingCases()"
+              [disabled]="!Form.get('customerId')?.value" styleClass="w-full" appendTo="body">
+            </p-select>
+            <small class="hint">{{ 'link_case_hint' | translate }}</small>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-group">
             <label>{{ 'client_id_number' | translate }}</label>
             <input type="text" formControlName="clientIdNumber" />
           </div>
