@@ -61,6 +61,40 @@ export const isAdminGuard: CanActivateFn = (route, state) => {
   return false;
 };
 
+/** Temporary extra lock on the money pages: everyone allowed in by role must
+ *  still type a shared passcode once per browser session. Remove this guard
+ *  (and its route usages) when the client asks for it to go away. */
+const FINANCIALS_PASSCODE = '334455';
+const FINANCIALS_PASSCODE_KEY = 'financialsPasscodeOk';
+
+export const passcodeGuard: CanActivateFn = (route, state) => {
+  const router = inject(Router);
+
+  if (sessionStorage.getItem(FINANCIALS_PASSCODE_KEY) === 'true') {
+    return true;
+  }
+
+  const entered = window.prompt('الرجاء إدخال رمز الدخول للشؤون المالية');
+  if (entered === FINANCIALS_PASSCODE) {
+    sessionStorage.setItem(FINANCIALS_PASSCODE_KEY, 'true');
+    return true;
+  }
+
+  if (entered !== null) {
+    window.alert('رمز الدخول غير صحيح');
+  }
+
+  // Cancelled or wrong code — bounce back to a page the user can actually use.
+  const userData = sessionStorage.getItem('user');
+  const role = userData ? JSON.parse(userData).role : null;
+  if (role === 'LAWYER' || role === 'CONSULTANT') {
+    router.navigate(['/dashboard/content/client-cases']);
+  } else {
+    router.navigate(['/dashboard/content']);
+  }
+  return false;
+};
+
 export const roleGuard = (...roles: string[]): CanActivateFn => (route, state) => {
   const router = inject(Router);
   const userData = sessionStorage.getItem('user');

@@ -1,4 +1,4 @@
-import { securityAuthGuard, roleGuard } from './../core/guards/auth-guard';
+import { securityAuthGuard, roleGuard, passcodeGuard } from './../core/guards/auth-guard';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Content } from './content/content';
@@ -173,7 +173,8 @@ const routes: Routes = [
         component: Financials,
         // A lawyer/consultant reaches the same page, but the backend narrows it
         // to the clients they sourced — they never see company or peer money.
-        canActivate: [roleGuard('ADMIN', 'MODERATOR', 'LAWYER', 'CONSULTANT')],
+        // Temporary shared passcode on top of the role check.
+        canActivate: [roleGuard('ADMIN', 'MODERATOR', 'LAWYER', 'CONSULTANT'), passcodeGuard],
       },
 
       { path: '**', redirectTo: '', pathMatch: 'full' },
