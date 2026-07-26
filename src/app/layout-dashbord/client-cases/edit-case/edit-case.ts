@@ -98,6 +98,12 @@ export class EditCase implements OnInit, OnDestroy {
   get previewShowPage1(): boolean { return !this.isLawyer; }
   get previewShowPage2(): boolean { return !['RECEPTIONIST'].includes(this.role); }
 
+  /**
+   * Who brought the client in is attribution used for the financial split, so
+   * it stays with the staff who own that split — assignees don't see it.
+   */
+  get canViewSourceLawyer(): boolean { return ['ADMIN', 'MODERATOR'].includes(this.role); }
+
   // RECEPTIONIST can only assign a lawyer — cannot edit case data or notes
   get canEdit(): boolean {
     if (this.isLawyer) return this.isAcceptedByMe;

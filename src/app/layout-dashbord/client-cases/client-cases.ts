@@ -108,6 +108,11 @@ export class ClientCases implements OnInit {
   get canAssign(): boolean { return ['ADMIN', 'MODERATOR', 'RECEPTIONIST'].includes(this.role); }
   get canViewReports(): boolean { return ['ADMIN', 'MODERATOR', 'LAWYER', 'CONSULTANT'].includes(this.role); }
   get canManageFeesContract(): boolean { return ['ADMIN', 'MODERATOR'].includes(this.role); }
+  /**
+   * Who brought the client in is attribution used for the financial split, so
+   * it stays with the staff who own that split — assignees don't see it.
+   */
+  get canViewSourceLawyer(): boolean { return ['ADMIN', 'MODERATOR'].includes(this.role); }
 
   dataMapper = (item: IDataCase, index: number) => ({
     ...item,
@@ -179,10 +184,16 @@ export class ClientCases implements OnInit {
       { key: this.translate.instant('next_session'), value: 'nextSessionDateFormatted' },
       { key: this.translate.instant('assigned_consultant'), value: 'assignedConsultantName' },
       { key: this.translate.instant('assigned_lawyer'), value: 'assignedLawyerName' },
-      { key: this.translate.instant('source_lawyer'), value: 'sourceLawyerName' },
+      ...(this.canViewSourceLawyer
+        ? [{ key: this.translate.instant('source_lawyer'), value: 'sourceLawyerName' }]
+        : []),
       { key: this.translate.instant('case_state'), value: 'isClosed' },
       { key: this.translate.instant('created_by'), value: 'createdBy.name' },
     ];
+    // Searching a hidden column would leak it back, so drop the field too.
+    if (!this.canViewSourceLawyer) {
+      this.searchFields = this.searchFields.filter((f) => f !== 'sourceLawyerName');
+    }
     // Render the consultant/lawyer columns as "name + own-status badge" cells.
     this.columnTemplates = {
       assignedConsultantName: this.consultantCell,

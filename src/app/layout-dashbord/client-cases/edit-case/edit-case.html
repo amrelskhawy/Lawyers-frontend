@@ -358,7 +358,9 @@
               </span>
             </div>
           </div>
-          <div class="input-group">
+          <!-- Same attribution concept as the source lawyer below: hiding one without
+               the other would leave an assignee able to clear a link they can't see. -->
+          <div class="input-group" *ngIf="canViewSourceLawyer">
             <label>{{ 'is_company_label' | translate }}</label>
             <div class="input-wrapper" style="align-items: center; gap: 0.75rem;">
               <p-toggleswitch formControlName="isCompany" [disabled]="!canEdit"></p-toggleswitch>
@@ -370,7 +372,7 @@
         </div>
 
         <!-- Lawyer-sourced clients must name the lawyer who brought them in. -->
-        <div class="row" *ngIf="!Form.get('isCompany')?.value">
+        <div class="row" *ngIf="!Form.get('isCompany')?.value && canViewSourceLawyer">
           <div class="input-group">
             <label>{{ 'source_lawyer' | translate }}</label>
             <p-select
