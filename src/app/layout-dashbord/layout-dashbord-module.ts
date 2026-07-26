@@ -57,6 +57,8 @@ import { CasesCalendar } from './cases-calendar/cases-calendar';
 import { ConsultantReminders } from './consultant-reminders/consultant-reminders';
 import { UnscheduledCases } from './unscheduled-cases/unscheduled-cases';
 import { DocumentSigner } from './document-signer/document-signer';
+import { Financials } from './financials/financials';
+import { ContractPaymentsDialog } from './contract-payments-dialog/contract-payments-dialog';
 
 @NgModule({
   declarations: [
@@ -101,6 +103,8 @@ import { DocumentSigner } from './document-signer/document-signer';
     ConsultantReminders,
     UnscheduledCases,
     DocumentSigner,
+    Financials,
+    ContractPaymentsDialog,
   ],
   imports: [
     CommonModule,

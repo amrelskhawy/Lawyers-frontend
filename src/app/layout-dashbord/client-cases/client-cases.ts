@@ -69,6 +69,7 @@ export class ClientCases implements OnInit {
     'customerName',
     'assignedConsultantName',
     'assignedLawyerName',
+    'sourceLawyerName',
     'caseTypeLabel',
     'caseDegreeLabel',
     'caseDate',
@@ -78,6 +79,8 @@ export class ClientCases implements OnInit {
   visibelform = signal<boolean>(false);
   visibelReminders = signal<boolean>(false);
   visibelReject = signal<boolean>(false);
+  visibelPayments = signal<boolean>(false);
+  paymentsCaseId = signal<string | null>(null);
   selectedCase = signal<IDataCase | null>(null);
   rejectTarget = signal<IDataCase | null>(null);
 
@@ -120,6 +123,8 @@ export class ClientCases implements OnInit {
     nextSessionDateFormatted: this.formatNextSessionDate(item),
     assignedLawyerName: item.preferredLawyerName ?? item.preferredLawyer?.name ?? '',
     assignedConsultantName: item.consultantName ?? item.consultant?.name ?? '',
+    // Empty for company-sourced clients — they have no bringing lawyer.
+    sourceLawyerName: item.sourceLawyer?.name ?? '',
     // A case is "closed" once it's marked fully completed (completedAt set).
     isClosed: !!item.completedAt,
   });
@@ -174,6 +179,7 @@ export class ClientCases implements OnInit {
       { key: this.translate.instant('next_session'), value: 'nextSessionDateFormatted' },
       { key: this.translate.instant('assigned_consultant'), value: 'assignedConsultantName' },
       { key: this.translate.instant('assigned_lawyer'), value: 'assignedLawyerName' },
+      { key: this.translate.instant('source_lawyer'), value: 'sourceLawyerName' },
       { key: this.translate.instant('case_state'), value: 'isClosed' },
       { key: this.translate.instant('created_by'), value: 'createdBy.name' },
     ];
@@ -295,6 +301,15 @@ export class ClientCases implements OnInit {
   onManageReminders(item: IDataCase) {
     this.selectedCase.set(item);
     this.visibelReminders.set(true);
+  }
+
+  /**
+   * Open collections for this case. The dialog resolves the case's fees
+   * contracts itself — one opens directly, several offer a pick, none says so.
+   */
+  onManagePayments(item: IDataCase) {
+    this.paymentsCaseId.set(item.id);
+    this.visibelPayments.set(true);
   }
 
   /** The reminders dialog changed the case (e.g. degree saved) — refresh the table. */

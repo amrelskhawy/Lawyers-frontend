@@ -1,8 +1,15 @@
 import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { forkJoin } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 import { Data } from '../../../core/Servies/data';
-import { CASE_DEGREE_OPTIONS, CaseDegree, IDataCase } from '../../../core/Models/case.model';
+import { Core } from '../../../core/Servies/core';
+import {
+  CASE_DEGREE_OPTIONS,
+  CaseDegree,
+  ICaseBalanceNotification,
+  IDataCase,
+} from '../../../core/Models/case.model';
 import { IAttachment, IReminder, IReminderTypeOption } from '../../../core/Models/reminder.model';
 import {
   canonicalToPickerHijri,
@@ -96,7 +103,12 @@ export class RemindersDialog {
     return ['ADMIN', 'MODERATOR', 'LAWYER'].includes(this.role);
   }
 
-  constructor(private fb: FormBuilder, private data: Data) {
+  constructor(
+    private fb: FormBuilder,
+    private data: Data,
+    private core: Core,
+    private translate: TranslateService,
+  ) {
     this.form = this.fb.group({
       type: ['SESSION_DETAILS_REVIEW', Validators.required],
       content: [''],
@@ -423,7 +435,34 @@ export class RemindersDialog {
         this.caseItem.set(res.data);
         this.applyCompletionState();
         this.loadReminders(caseId);
+        this.announceBalanceNotification(res.data.balanceNotification);
       });
+  }
+
+  /**
+   * Report what happened to the automatic outstanding-balance WhatsApp message,
+   * on top of the generic "case closed" toast the success interceptor raises.
+   * A fully-paid case says nothing — there was no message to send.
+   */
+  private announceBalanceNotification(n: ICaseBalanceNotification | undefined) {
+    if (!n || n.skippedReason === 'NO_BALANCE') return;
+
+    const params = { amount: this.formatAmount(n.remaining), phone: n.phone ?? '' };
+    if (n.sent) {
+      this.core._Sussess.next(this.translate.instant('case_balance_sms_sent', params));
+    } else if (n.skippedReason === 'NO_PHONE') {
+      this.core._Error.next(this.translate.instant('case_balance_sms_no_phone', params));
+    } else {
+      this.core._Error.next(this.translate.instant('case_balance_sms_failed', params));
+    }
+  }
+
+  /** Money as it reads in a toast: grouped, no trailing ".00". Mirrors the backend. */
+  private formatAmount(amount: number): string {
+    return new Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2,
+    }).format(amount);
   }
 
   onSubmit() {

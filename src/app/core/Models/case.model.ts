@@ -13,6 +13,24 @@ export type CaseType =
 /** Litigation degree (درجة التقاضي) — each degree has a fixed display color. */
 export type CaseDegree = 'FIRST_INSTANCE' | 'APPEAL' | 'CASSATION' | 'PETITION' | 'OTHER';
 
+/**
+ * Outcome of the automatic "you still owe X" WhatsApp message the backend sends
+ * when a case is closed. Returned only by `PATCH cases/:id/completion` with
+ * `completed: true`; sending is best-effort, so `sent: false` never means the
+ * case failed to close.
+ */
+export interface ICaseBalanceNotification {
+  /** Money still owed across the case's fees contracts. 0 when fully paid. */
+  remaining: number;
+  sent: boolean;
+  /** The number the message went to (or would have gone to). */
+  phone?: string;
+  /** Why nothing was sent, when the send was never attempted. */
+  skippedReason?: 'NO_BALANCE' | 'NO_PHONE';
+  /** WhatsApp provider failure, when the send was attempted and failed. */
+  error?: string;
+}
+
 export interface IDataCase {
   id: string;
   customerId: string;
@@ -25,6 +43,13 @@ export interface IDataCase {
   agencyNumber: string | null;
   // true → shown in "Client Cases"; false (default) → shown in "Customer Meetings".
   isRealCustomer: boolean;
+  // true (default) → the client came through the company;
+  // false → a lawyer brought the client to the company.
+  isCompany: boolean;
+  // Set only when isCompany is false: the lawyer who brought the client in.
+  // Attribution only — unrelated to the assignment slots below.
+  sourceLawyerId: string | null;
+  sourceLawyer?: { id: string; name: string } | null;
 
   // Lawyer slot
   wantsSpecificLawyer: boolean;
@@ -63,6 +88,8 @@ export interface IDataCase {
   // Set when the case is marked "fully completed" from the reminders dialog.
   completedAt: string | null;
   completedById?: string | null;
+  // Only present on the response to closing a case — see ICaseBalanceNotification.
+  balanceNotification?: ICaseBalanceNotification;
 
   // Whether a consultant memo has been requested for this case.
   needsMemo?: boolean;

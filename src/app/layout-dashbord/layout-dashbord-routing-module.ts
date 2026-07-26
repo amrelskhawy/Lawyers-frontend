@@ -1,4 +1,4 @@
-import { securityAuthGuard, roleGuard } from './../core/guards/auth-guard';
+import { securityAuthGuard, roleGuard, passcodeGuard } from './../core/guards/auth-guard';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Content } from './content/content';
@@ -18,6 +18,7 @@ import { ActivityLogs } from './activity-logs/activity-logs';
 import { CasesCalendar } from './cases-calendar/cases-calendar';
 import { ConsultantReminders } from './consultant-reminders/consultant-reminders';
 import { UnscheduledCases } from './unscheduled-cases/unscheduled-cases';
+import { Financials } from './financials/financials';
 import { DocumentSigner } from './document-signer/document-signer';
 
 const routes: Routes = [
@@ -165,6 +166,15 @@ const routes: Routes = [
         path: 'lawyer-fees-contract/:id',
         component: LawyerFeesContract,
         canActivate: [roleGuard('ADMIN', 'MODERATOR', 'LAWYER', 'CONSULTANT')],
+      },
+
+      {
+        path: 'financials',
+        component: Financials,
+        // A lawyer/consultant reaches the same page, but the backend narrows it
+        // to the clients they sourced — they never see company or peer money.
+        // Temporary shared passcode on top of the role check.
+        canActivate: [roleGuard('ADMIN', 'MODERATOR', 'LAWYER', 'CONSULTANT'), passcodeGuard],
       },
 
       { path: '**', redirectTo: '', pathMatch: 'full' },

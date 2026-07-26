@@ -35,6 +35,7 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
   saveStatus = signal<SaveStatus>('idle');
   generating = signal<boolean>(false);
   loaded = signal<ILawyerFeesContract | null>(null);
+  paymentsVisible = signal<boolean>(false);
   loadedCase = signal<IDataCase | null>(null);
   customers = signal<IDataCustomer[]>([]);
 

@@ -90,6 +90,39 @@
             </div>
           </div>
 
+          <div class="input-group">
+            <label>{{ 'is_company_label' | translate }}</label>
+            <div class="input-wrapper" style="align-items: center; gap: 0.75rem;">
+              <p-toggleswitch formControlName="isCompany"></p-toggleswitch>
+              <span style="font-size: 0.85rem; color: var(--text-muted, #6b7280);">
+                {{ 'is_company_hint' | translate }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Lawyer-sourced clients must name the lawyer who brought them in. -->
+          <div class="input-group" *ngIf="!getControlName('isCompany')?.value">
+            <label>{{ 'source_lawyer' | translate }}</label>
+            <p-select
+              formControlName="sourceLawyerId"
+              [options]="lawyerOptions()"
+              optionLabel="name"
+              optionValue="id"
+              [filter]="true"
+              filterBy="name,email"
+              [placeholder]="'select_source_lawyer' | translate"
+              [showClear]="true"
+              styleClass="w-full"
+            >
+            </p-select>
+            <small
+              class="error-msg"
+              *ngIf="getControlName('sourceLawyerId')?.invalid && getControlName('sourceLawyerId')?.touched"
+            >
+              {{ 'source_lawyer_required' | translate }}
+            </small>
+          </div>
+
         </div>
 
         <div class="form-actions">

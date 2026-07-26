@@ -88,6 +88,12 @@
         tooltipPosition="top" (click)="onCreateLawyerFeesContract(item)" class="fees-contract-btn">
         <i class="fa-solid fa-file-signature"></i>
       </button>
+      <!-- Collections against this case's fees contract -->
+      <button *ngIf="canManageFeesContract" [attr.aria-label]="'contract_payments' | translate"
+        [pTooltip]="'contract_payments' | translate"
+        tooltipPosition="top" (click)="onManagePayments(item)" class="payments-btn">
+        <i class="fa-solid fa-money-bill-wave"></i>
+      </button>
       <button [attr.aria-label]="'reminders_title' | translate" [pTooltip]="'reminders_title' | translate"
         tooltipPosition="top" (click)="onManageReminders(item)" class="reminder-btn">
         <i class="fa-solid fa-bell"></i>
@@ -200,6 +206,9 @@
   </app-form-create-case>
   <app-reminders-dialog [(visible)]="visibelReminders" [objCase]="selectedCase()"
     (caseUpdated)="onCaseUpdated()"></app-reminders-dialog>
+  <app-contract-payments-dialog [visible]="visibelPayments()"
+    (visibleChange)="visibelPayments.set($event)" [caseId]="paymentsCaseId()">
+  </app-contract-payments-dialog>
   <app-reject-assignment-dialog [visible]="visibelReject()"
     (visibleChange)="visibelReject.set($event)"
     (confirmReason)="onRejectConfirmed($event)"></app-reject-assignment-dialog>

@@ -1,0 +1,191 @@
+<div class="financials-page">
+
+  <!-- ── Header: scope + period ─────────────────────────────────────────── -->
+  <header class="page-head">
+    <div class="title-block">
+      <h2>
+        <i class="fa-solid fa-sack-dollar"></i>
+        {{ (selfScoped ? 'my_financials' : 'financials') | translate }}
+      </h2>
+      <p class="subtitle">
+        {{ (selfScoped ? 'my_financials_subtitle' : 'financials_subtitle') | translate }}
+      </p>
+    </div>
+
+    <div class="scope-tabs" role="tablist" *ngIf="!selfScoped">
+      <button type="button" role="tab" class="scope-tab" [class.active]="scope() === 'COMPANY'"
+        [attr.aria-selected]="scope() === 'COMPANY'" (click)="setScope('COMPANY')">
+        <i class="fa-solid fa-building-columns"></i> {{ 'company_contracts' | translate }}
+      </button>
+      <button type="button" role="tab" class="scope-tab" [class.active]="scope() === 'LAWYER'"
+        [attr.aria-selected]="scope() === 'LAWYER'" (click)="setScope('LAWYER')">
+        <i class="fa-solid fa-user-tie"></i> {{ 'lawyer_contracts' | translate }}
+      </button>
+    </div>
+  </header>
+
+  <!-- Lawyer chips — each carries its own outstanding amount -->
+  <div class="lawyer-chips" *ngIf="showSourceLawyer()">
+    <button type="button" class="chip" [class.active]="!sourceLawyerId()" (click)="setLawyer(null)">
+      {{ 'all_lawyers' | translate }}
+    </button>
+    <button type="button" class="chip" *ngFor="let l of lawyerTotals()"
+      [class.active]="sourceLawyerId() === l.lawyerId" (click)="setLawyer(l.lawyerId)">
+      {{ l.name }}
+      <span class="chip-amount" [class.owed]="l.remainingTotal > 0">
+        {{ l.remainingTotal | number: '1.0-0' }}
+      </span>
+    </button>
+    <p class="chips-empty" *ngIf="!lawyerTotals().length">
+      {{ 'no_lawyer_contracts' | translate }}
+    </p>
+  </div>
+
+  <!-- Period bar -->
+  <div class="period-bar">
+    <div class="year-picker">
+      <label>{{ 'year' | translate }}</label>
+      <select [value]="year() ?? ''" (change)="setYear($any($event.target).value ? +$any($event.target).value : null)">
+        <option value="">{{ 'all_years' | translate }}</option>
+        <option *ngFor="let y of years()" [value]="y">{{ y }}</option>
+      </select>
+    </div>
+
+    <div class="month-chips" [class.disabled]="!year()">
+      <button type="button" class="chip" [class.active]="!month()" (click)="setMonth(null)">
+        {{ 'whole_year' | translate }}
+      </button>
+      <button type="button" class="chip" *ngFor="let m of months" [class.active]="month() === m"
+        [disabled]="!year()" (click)="setMonth(m)">
+        {{ m }}
+      </button>
+    </div>
+
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" [placeholder]="'search' | translate"
+        (change)="onSearch($any($event.target).value)" />
+    </div>
+  </div>
+
+  <!-- ── KPI cards ──────────────────────────────────────────────────────── -->
+  <section class="kpi-grid" *ngIf="summary() as s">
+    <article class="kpi-card">
+      <div class="kpi-head">
+        <i class="fa-solid fa-file-signature"></i>
+        <span>{{ 'contracts_total' | translate }}</span>
+      </div>
+      <strong class="kpi-value">{{ s.contractsTotal | number: '1.0-2' }}</strong>
+      <span class="kpi-note">{{ 'contracts_total_note' | translate }}</span>
+    </article>
+
+    <article class="kpi-card paid">
+      <div class="kpi-head">
+        <i class="fa-solid fa-hand-holding-dollar"></i>
+        <span>{{ 'collected_total' | translate }}</span>
+      </div>
+      <strong class="kpi-value">{{ s.paidInPeriod | number: '1.0-2' }}</strong>
+      <span class="kpi-note">{{ 'collected_total_note' | translate }}</span>
+    </article>
+
+    <article class="kpi-card" [class.owed]="s.remainingTotal > 0">
+      <div class="kpi-head">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        <span>{{ 'remaining_total' | translate }}</span>
+      </div>
+      <strong class="kpi-value">{{ s.remainingTotal | number: '1.0-2' }}</strong>
+      <span class="kpi-note">{{ 'remaining_total_note' | translate }}</span>
+    </article>
+
+    <article class="kpi-card">
+      <div class="kpi-head">
+        <i class="fa-solid fa-folder-open"></i>
+        <span>{{ 'contracts_count' | translate }}</span>
+      </div>
+      <strong class="kpi-value">{{ s.contractsCount }}</strong>
+      <span class="kpi-note">{{ 'contracts_count_note' | translate }}</span>
+    </article>
+  </section>
+
+  <div class="collected-bar" *ngIf="summary() as s">
+    <div class="collected-fill" [style.width.%]="collectedRatio()"></div>
+    <span class="collected-label">
+      {{ 'collected_of_contracts' | translate }}: {{ collectedRatio() | number: '1.0-0' }}%
+    </span>
+  </div>
+
+  <!-- ── Contracts table ───────────────────────────────────────────────── -->
+  <section class="table-card">
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>{{ 'contract_number' | translate }}</th>
+            <th>{{ 'case_customer' | translate }}</th>
+            <th>{{ 'case_type' | translate }}</th>
+            <th *ngIf="showSourceLawyer()">{{ 'source_lawyer' | translate }}</th>
+            <th>{{ 'contract_date' | translate }}</th>
+            <th>{{ 'contract_total' | translate }}</th>
+            <th>{{ 'total_paid' | translate }}</th>
+            <th>{{ 'remaining' | translate }}</th>
+            <th class="actions-cell" *ngIf="!selfScoped">{{ 'actions' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let r of rows()">
+            <td>{{ r.contractNumber || '—' }}</td>
+            <td class="strong">{{ r.clientName || '—' }}</td>
+            <td>{{ caseTypeLabel(r) }}</td>
+            <td *ngIf="showSourceLawyer()">{{ r.sourceLawyerName || '—' }}</td>
+            <td>{{ r.contractDate ? (r.contractDate | date: 'yyyy-MM-dd') : '—' }}</td>
+            <td>{{ r.totalFees | number: '1.0-2' }}</td>
+            <td class="paid-cell">
+              {{ r.paidTotal | number: '1.0-2' }}
+              <div class="row-progress">
+                <div class="row-progress-fill"
+                  [style.width.%]="r.totalFees > 0 ? (r.paidTotal / r.totalFees) * 100 : 0"></div>
+              </div>
+            </td>
+            <td class="remaining-cell" [class.owed]="r.remaining > 0">
+              {{ r.remaining | number: '1.0-2' }}
+            </td>
+            <!-- Recording collections is staff work; the backend rejects it for
+                 lawyers, so the action is not offered to them. -->
+            <td class="actions-cell" *ngIf="!selfScoped">
+              <button type="button" class="pay-btn" (click)="openPayments(r)"
+                [pTooltip]="'contract_payments' | translate" tooltipPosition="top">
+                <i class="fa-solid fa-money-bill-wave"></i>
+              </button>
+            </td>
+          </tr>
+
+          <tr *ngIf="!loading() && !rows().length">
+            <td [attr.colspan]="tableColumns()" class="empty-row">
+              {{ 'no_contracts_in_period' | translate }}
+            </td>
+          </tr>
+          <tr *ngIf="loading()">
+            <td [attr.colspan]="tableColumns()" class="empty-row">
+              <i class="fa-solid fa-spinner fa-spin"></i> {{ 'loading' | translate }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pager" *ngIf="totalPages > 1">
+      <button type="button" [disabled]="page() === 1" (click)="goToPage(page() - 1)">
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+      <span>{{ page() }} / {{ totalPages }}</span>
+      <button type="button" [disabled]="page() === totalPages" (click)="goToPage(page() + 1)">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+    </div>
+  </section>
+
+  <app-contract-payments-dialog [visible]="paymentsVisible()"
+    (visibleChange)="paymentsVisible.set($event)" [contractId]="activeContractId()"
+    [currency]="currency()" (paymentsChanged)="onPaymentsChanged()">
+  </app-contract-payments-dialog>
+</div>
