@@ -7,29 +7,63 @@
   </div>
 </ng-template>
 
-<div class="consulting-filters">
-  <div class="date-filter">
-    <label>{{ 'date_from' | translate }}</label>
-    <input type="date" (change)="onDateFromChange($any($event.target).value)" />
+<div class="consulting-page">
+  <!-- Period bar -->
+  <div class="period-bar">
+    <div class="year-picker">
+      <label>{{ 'year' | translate }}</label>
+      <select [value]="year() ?? ''" (change)="setYear($any($event.target).value ? +$any($event.target).value : null)">
+        <option value="">{{ 'all_years' | translate }}</option>
+        <option *ngFor="let y of years()" [value]="y">{{ y }}</option>
+      </select>
+    </div>
+
+    <div class="month-chips" [class.disabled]="!year()">
+      <button type="button" class="chip" [class.active]="!month()" (click)="setMonth(null)">
+        {{ 'whole_year' | translate }}
+      </button>
+      <button type="button" class="chip" *ngFor="let m of months" [class.active]="month() === m"
+        [disabled]="!year()" (click)="setMonth(m)">
+        {{ m }}
+      </button>
+    </div>
   </div>
-  <div class="date-filter">
-    <label>{{ 'date_to' | translate }}</label>
-    <input type="date" (change)="onDateToChange($any($event.target).value)" />
-  </div>
+
+  <!-- KPI cards -->
+  <section class="kpi-grid" *ngIf="summary() as s">
+    <article class="kpi-card">
+      <div class="kpi-head">
+        <i class="fa-solid fa-folder-open"></i>
+        <span>{{ 'consulting_count' | translate }}</span>
+      </div>
+      <strong class="kpi-value">{{ s.count }}</strong>
+      <span class="kpi-note">{{ 'consulting_count_note' | translate }}</span>
+    </article>
+
+    <article class="kpi-card paid">
+      <div class="kpi-head">
+        <i class="fa-solid fa-sack-dollar"></i>
+        <span>{{ 'consulting_total' | translate }}</span>
+      </div>
+      <strong class="kpi-value">{{ s.total | number: '1.0-2' }}</strong>
+      <span class="kpi-note">{{ 'consulting_total_note' | translate }}</span>
+    </article>
+  </section>
+
+  <app-dashboard-crud-page
+    endpoint="consulting"
+    deleteEndpoint="consulting"
+    bulkDeleteEndpoint="consulting/many"
+    [columns]="columns"
+    [searchFields]="searchFields"
+    [selectable]="true"
+    [dataMapper]="dataMapper"
+    [actionsTemplate]="actions"
+    [extraParams]="extraParams()"
+    (addNew)="onAddNew()"
+    (loaded)="loadSummary()">
+
+    <app-form-consulting (ResSuccess)="onHandelRespnseProccing()" [objdata]="objdata()"
+      [(visible)]="visibelform"></app-form-consulting>
+  </app-dashboard-crud-page>
 </div>
-
-<app-dashboard-crud-page
-  endpoint="consulting"
-  deleteEndpoint="consulting"
-  bulkDeleteEndpoint="consulting/many"
-  [columns]="columns"
-  [searchFields]="searchFields"
-  [selectable]="true"
-  [dataMapper]="dataMapper"
-  [actionsTemplate]="actions"
-  [extraParams]="extraParams()"
-  (addNew)="onAddNew()">
-
-  <app-form-consulting (ResSuccess)="onHandelRespnseProccing()" [objdata]="objdata()"
-    [(visible)]="visibelform"></app-form-consulting>
-</app-dashboard-crud-page>

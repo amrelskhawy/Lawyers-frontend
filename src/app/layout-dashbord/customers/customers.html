@@ -5,6 +5,8 @@
     </button>
     <button [attr.aria-label]="'delete'|translate" (click)="onDelete(item)" class="delete-btn"><i class="fa-solid fa-trash"></i></button>
     <button [attr.aria-label]="'view'|translate" (click)="onViewData(item)" class="show_data"><i class="fa-solid fa-eye"></i></button>
+    <button [attr.aria-label]="'add_consulting'|translate" [pTooltip]="'add_consulting' | translate" tooltipPosition="top"
+      (click)="onAddConsulting(item)" class="edit-btn"><i class="fa-solid fa-comments-dollar"></i></button>
   </div>
 </ng-template>
 
@@ -21,4 +23,6 @@
   <app-form-customer (ResSuccess)="onHandelRespnseProccing()" [objdata]="objdata()"
     [(visible)]="visibelform"></app-form-customer>
   <app-show-customer-data (visibleChange)="ResetForm()" [(visible)]="visibelAllData" [objdata]="objdata()"></app-show-customer-data>
+  <app-form-consulting (ResSuccess)="onConsultingSuccess()" [objdata]="consultingObjdata()"
+    [(visible)]="visibelConsultingForm"></app-form-consulting>
 </app-dashboard-crud-page>

@@ -21,6 +21,9 @@ export class Customers implements OnInit {
   visibelform = signal<boolean>(false);
   visibelAllData = signal<boolean>(false);
 
+  consultingObjdata = signal<any>(null);
+  visibelConsultingForm = signal<boolean>(false);
+
   ngOnInit() {
     this.columns = [
       { key: '#', value: 'index' },
@@ -50,5 +53,15 @@ export class Customers implements OnInit {
 
   ResetForm() {
     this.objdata.set(null);
+  }
+
+  onAddConsulting(item: IDataCustomer) {
+    this.consultingObjdata.set({ customerId: item.id });
+    this.visibelConsultingForm.set(true);
+  }
+
+  onConsultingSuccess() {
+    this.visibelConsultingForm.set(false);
+    this.consultingObjdata.set(null);
   }
 }

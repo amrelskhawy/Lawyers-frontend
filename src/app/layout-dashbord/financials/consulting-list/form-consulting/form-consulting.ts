@@ -1,6 +1,7 @@
 import { Data } from '../../../../core/Servies/data';
-import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { IDataCustomer } from '../../../../core/Models/customers.model';
 
 @Component({
   selector: 'app-form-consulting',
@@ -8,7 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: './form-consulting.html',
   styleUrl: './form-consulting.scss',
 })
-export class FormConsulting {
+export class FormConsulting implements OnInit {
   constructor(
     private FB: FormBuilder,
     private Data: Data,
@@ -19,6 +20,7 @@ export class FormConsulting {
   @Output() ResSuccess = new EventEmitter<boolean>();
   Form = signal<FormGroup>(new FormGroup({}));
   objData = signal<any>(null);
+  customers = signal<IDataCustomer[]>([]);
 
   @Input()
   set objdata(value: any) {
@@ -28,15 +30,22 @@ export class FormConsulting {
     }
     this.objData.set(value);
     this.Form().patchValue({
-      clientName: value.clientName,
+      customerId: value.customerId ?? null,
       date: value.date ? value.date.slice(0, 10) : '',
-      value: +value.value,
-      type: value.type,
+      value: value.value !== undefined ? +value.value : 0,
+      type: value.type ?? '',
     });
   }
 
   ngOnInit(): void {
     this.createForm();
+    this.loadCustomers();
+  }
+
+  loadCustomers() {
+    this.Data.get<{ data: IDataCustomer[] }>('customers').subscribe((res) => {
+      this.customers.set(res.data ?? []);
+    });
   }
 
   onClose() {
@@ -55,7 +64,7 @@ export class FormConsulting {
   createForm() {
     this.Form.set(
       this.FB.group({
-        clientName: ['', Validators.required],
+        customerId: [null, Validators.required],
         date: ['', Validators.required],
         value: [0, [Validators.required, Validators.min(0)]],
         type: ['', Validators.required],

@@ -22,11 +22,10 @@
         <div class="inputs-wrapper">
           <div class="input-group">
             <label>{{ 'client_name' | translate }}</label>
-            <div class="input-wrapper">
-              <i class="fa-regular fa-user input-icon"></i>
-              <input formControlName="clientName" placeholder="{{ 'client_name' | translate }}" type="text" />
-            </div>
-            <small class="error-msg" *ngIf="getControlName('clientName')?.invalid && getControlName('clientName')?.touched">
+            <p-select formControlName="customerId" [options]="customers()" optionLabel="fullName" optionValue="id"
+              [filter]="true" filterBy="fullName,phone,email" [placeholder]="'select_customer' | translate"
+              appendTo="body" styleClass="w-full"></p-select>
+            <small class="error-msg" *ngIf="getControlName('customerId')?.invalid && getControlName('customerId')?.touched">
               {{ 'filed_reqierd' | translate }}
             </small>
           </div>
