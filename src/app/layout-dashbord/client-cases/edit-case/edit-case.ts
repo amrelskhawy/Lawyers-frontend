@@ -46,6 +46,11 @@ export class EditCase implements OnInit, OnDestroy {
   // Split views for the two assign dropdowns.
   lawyerOptions = computed(() => this.lawyers().filter((l) => l.role === 'LAWYER'));
   consultantOptions = computed(() => this.lawyers().filter((l) => l.role === 'CONSULTANT'));
+  // Every staff member (any role) — feeds the "source" picker, ADMIN/MODERATOR only.
+  staff = signal<ILawyerOption[]>([]);
+  staffOptions = computed(() =>
+    this.staff().map((s) => ({ ...s, name: `${s.name} (${s.role})` })),
+  );
 
   Form!: FormGroup;
   assignForm!: FormGroup;
@@ -178,6 +183,13 @@ export class EditCase implements OnInit, OnDestroy {
         (res.data ?? []).map((u) => ({ id: u.id, name: u.nameAr || u.name, email: u.email, role: u.role })),
       );
     });
+    if (this.canViewSourceLawyer) {
+      this.data.get<{ data: IUser[] }>('cases/staff').subscribe((res) => {
+        this.staff.set(
+          (res.data ?? []).map((u) => ({ id: u.id, name: u.nameAr || u.name, email: u.email, role: u.role })),
+        );
+      });
+    }
   }
 
   private loadCase(id: string) {

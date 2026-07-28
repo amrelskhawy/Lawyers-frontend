@@ -171,10 +171,13 @@ const routes: Routes = [
       {
         path: 'financials',
         component: Financials,
-        // A lawyer/consultant reaches the same page, but the backend narrows it
-        // to the clients they sourced — they never see company or peer money.
-        // Temporary shared passcode on top of the role check.
-        canActivate: [roleGuard('ADMIN', 'MODERATOR', 'LAWYER', 'CONSULTANT'), passcodeGuard],
+        // Any staff role reaches the same page, but the backend narrows non
+        // ADMIN/MODERATOR viewers to the clients they sourced — they never see
+        // company or peer money. Temporary shared passcode on top of the role check.
+        canActivate: [
+          roleGuard('ADMIN', 'MODERATOR', 'RECEPTIONIST', 'LAWYER', 'CONSULTANT'),
+          passcodeGuard,
+        ],
       },
 
       { path: '**', redirectTo: '', pathMatch: 'full' },

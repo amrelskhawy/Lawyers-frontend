@@ -11,8 +11,8 @@ import { CASE_TYPE_OPTIONS } from '../../core/Models/case.model';
 
 const MONTHS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-/** Roles the backend narrows to their own sourced clients. */
-const SELF_SCOPED_ROLES = ['LAWYER', 'CONSULTANT'];
+/** Roles the backend narrows to their own sourced clients — everyone except ADMIN/MODERATOR. */
+const SELF_SCOPED_ROLES = ['RECEPTIONIST', 'LAWYER', 'CONSULTANT'];
 
 /**
  * Money view over the lawyer fees contracts, split by where the client came
@@ -34,10 +34,10 @@ export class Financials implements OnInit {
   readonly months = MONTHS;
 
   /**
-   * A lawyer/consultant only ever sees the clients they personally sourced —
-   * the backend forces that from the token. The scope tabs, the lawyer picker
-   * and the collections dialog would all be inert (or 403) for them, so they
-   * are dropped from the page rather than shown disabled.
+   * A self-scoped role (anyone but ADMIN/MODERATOR) only ever sees the clients
+   * they personally sourced — the backend forces that from the token. The scope
+   * tabs, the lawyer picker and the collections dialog would all be inert (or
+   * 403) for them, so they are dropped from the page rather than shown disabled.
    */
   readonly selfScoped = SELF_SCOPED_ROLES.includes(this.auth.currentUser()?.role);
 
