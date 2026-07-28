@@ -1,6 +1,9 @@
 /** Money bucket: clients that came through the company vs. clients a lawyer brought in. */
 export type FinancialsScope = 'COMPANY' | 'LAWYER';
 
+/** Tabs shown on the Financials page — the report scopes plus the Consulting CRUD tab (admin/moderator only). */
+export type FinancialsTab = FinancialsScope | 'CONSULTING';
+
 /** One collection recorded against a fees contract. */
 export interface IContractPayment {
   id: string;

@@ -1,0 +1,25 @@
+@use "../../glopalstyles.scss";
+
+.consulting-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+
+  .date-filter {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+
+    label {
+      font-size: 0.85rem;
+      color: var(--text-muted, #888);
+    }
+
+    input {
+      padding: 0.45rem 0.6rem;
+      border: 1px solid var(--border-color, #d9d9d9);
+      border-radius: 6px;
+    }
+  }
+}

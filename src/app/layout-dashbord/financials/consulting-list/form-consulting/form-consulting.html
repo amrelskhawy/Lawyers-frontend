@@ -1,0 +1,82 @@
+<p-dialog maskStyleClass="backdrop-blur-sm" [(visible)]="visible" (onHide)="onClose()" [modal]="true"
+  [baseZIndex]="10000" styleClass="modern-modal" [style]="{ width: '90vw', maxWidth: '500px' }">
+
+  <ng-template pTemplate="headless">
+    <div class="modern-form-container">
+
+      <!-- Header -->
+      <div class="form-header">
+        <div class="header-content">
+          <h3>{{ (objData() ? 'edit_consulting' : 'add_consulting') | translate }}</h3>
+          <p class="subtitle">{{ 'consulting_details' | translate }}</p>
+        </div>
+        <img src="/assets/Img/LOGO-GOLD.svg" alt="logo" class="header-logo" />
+        <button class="close-icon-btn" (click)="closeDialog()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Form -->
+      <form [formGroup]="Form()" (ngSubmit)="onSubmitData()" class="form-body">
+
+        <div class="inputs-wrapper">
+          <div class="input-group">
+            <label>{{ 'client_name' | translate }}</label>
+            <div class="input-wrapper">
+              <i class="fa-regular fa-user input-icon"></i>
+              <input formControlName="clientName" placeholder="{{ 'client_name' | translate }}" type="text" />
+            </div>
+            <small class="error-msg" *ngIf="getControlName('clientName')?.invalid && getControlName('clientName')?.touched">
+              {{ 'filed_reqierd' | translate }}
+            </small>
+          </div>
+
+          <div class="input-group">
+            <label>{{ 'consulting_date' | translate }}</label>
+            <div class="input-wrapper">
+              <i class="fa-regular fa-calendar input-icon"></i>
+              <input formControlName="date" type="date" />
+            </div>
+            <small class="error-msg" *ngIf="getControlName('date')?.invalid && getControlName('date')?.touched">
+              {{ 'filed_reqierd' | translate }}
+            </small>
+          </div>
+
+          <div class="input-group">
+            <label>{{ 'consulting_value' | translate }}</label>
+            <div class="input-wrapper">
+              <i class="fa-solid fa-tag input-icon"></i>
+              <input formControlName="value" placeholder="0.00" type="number" />
+              <span class="currency-suffix">SAR</span>
+            </div>
+            <small class="error-msg" *ngIf="getControlName('value')?.invalid && getControlName('value')?.touched">
+              {{ 'filed_reqierd' | translate }}
+            </small>
+          </div>
+
+          <div class="input-group">
+            <label>{{ 'consulting_type' | translate }}</label>
+            <div class="input-wrapper">
+              <i class="fa-regular fa-keyboard input-icon"></i>
+              <input formControlName="type" placeholder="{{ 'consulting_type' | translate }}" type="text" />
+            </div>
+            <small class="error-msg" *ngIf="getControlName('type')?.invalid && getControlName('type')?.touched">
+              {{ 'filed_reqierd' | translate }}
+            </small>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" (click)="closeDialog()">
+            {{ 'close' | translate }}
+          </button>
+          <button type="submit" class="btn-primary">
+            {{ 'submit' | translate }} <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </ng-template>
+</p-dialog>

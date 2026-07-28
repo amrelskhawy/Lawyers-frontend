@@ -21,9 +21,16 @@
         [attr.aria-selected]="scope() === 'LAWYER'" (click)="setScope('LAWYER')">
         <i class="fa-solid fa-user-tie"></i> {{ 'lawyer_contracts' | translate }}
       </button>
+      <button type="button" role="tab" class="scope-tab" [class.active]="activeTab() === 'CONSULTING'"
+        [attr.aria-selected]="activeTab() === 'CONSULTING'" (click)="setConsultingTab()">
+        <i class="fa-solid fa-comments-dollar"></i> {{ 'consulting' | translate }}
+      </button>
     </div>
   </header>
 
+  <app-consulting-list *ngIf="activeTab() === 'CONSULTING'"></app-consulting-list>
+
+  <ng-container *ngIf="activeTab() !== 'CONSULTING'">
   <!-- Lawyer chips — each carries its own outstanding amount -->
   <div class="lawyer-chips" *ngIf="showSourceLawyer()">
     <button type="button" class="chip" [class.active]="!sourceLawyerId()" (click)="setLawyer(null)">
@@ -188,4 +195,5 @@
     (visibleChange)="paymentsVisible.set($event)" [contractId]="activeContractId()"
     [currency]="currency()" (paymentsChanged)="onPaymentsChanged()">
   </app-contract-payments-dialog>
+  </ng-container>
 </div>

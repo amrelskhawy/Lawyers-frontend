@@ -1,0 +1,35 @@
+<ng-template #actions let-item let-onDelete="delete">
+  <div class="action-btn">
+    <button [attr.aria-label]="'edit'|translate" (click)="onEditData(item)" class="edit-btn">
+      <i class="fa-solid fa-pen-to-square"></i>
+    </button>
+    <button [attr.aria-label]="'delete'|translate" (click)="onDelete(item)" class="delete-btn"><i class="fa-solid fa-trash"></i></button>
+  </div>
+</ng-template>
+
+<div class="consulting-filters">
+  <div class="date-filter">
+    <label>{{ 'date_from' | translate }}</label>
+    <input type="date" (change)="onDateFromChange($any($event.target).value)" />
+  </div>
+  <div class="date-filter">
+    <label>{{ 'date_to' | translate }}</label>
+    <input type="date" (change)="onDateToChange($any($event.target).value)" />
+  </div>
+</div>
+
+<app-dashboard-crud-page
+  endpoint="consulting"
+  deleteEndpoint="consulting"
+  bulkDeleteEndpoint="consulting/many"
+  [columns]="columns"
+  [searchFields]="searchFields"
+  [selectable]="true"
+  [dataMapper]="dataMapper"
+  [actionsTemplate]="actions"
+  [extraParams]="extraParams()"
+  (addNew)="onAddNew()">
+
+  <app-form-consulting (ResSuccess)="onHandelRespnseProccing()" [objdata]="objdata()"
+    [(visible)]="visibelform"></app-form-consulting>
+</app-dashboard-crud-page>

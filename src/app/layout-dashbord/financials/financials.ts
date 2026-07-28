@@ -3,6 +3,7 @@ import { Data } from '../../core/Servies/data';
 import { Auth } from '../../core/Servies/auth';
 import {
   FinancialsScope,
+  FinancialsTab,
   IFinancialsLawyerTotals,
   IFinancialsRow,
   IFinancialsSummary,
@@ -42,6 +43,8 @@ export class Financials implements OnInit {
   readonly selfScoped = SELF_SCOPED_ROLES.includes(this.auth.currentUser()?.role);
 
   scope = signal<FinancialsScope>(this.selfScoped ? 'LAWYER' : 'COMPANY');
+  /** Which tab is shown — the two report scopes, or the Consulting CRUD tab (admin/moderator only). */
+  activeTab = signal<FinancialsTab>(this.scope());
   /** null = the whole year. */
   month = signal<number | null>(null);
   year = signal<number | null>(null);
@@ -162,10 +165,15 @@ export class Financials implements OnInit {
   }
 
   setScope(scope: FinancialsScope) {
+    this.activeTab.set(scope);
     if (this.scope() === scope) return;
     this.scope.set(scope);
     this.sourceLawyerId.set(null);
     this.refilter();
+  }
+
+  setConsultingTab() {
+    this.activeTab.set('CONSULTING');
   }
 
   setLawyer(lawyerId: string | null) {
