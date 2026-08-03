@@ -14,6 +14,16 @@
           [class.fa-eye]="item.secondPartySignedAt"
           [class.fa-pen-to-square]="!item.secondPartySignedAt"></i>
       </button>
+      <!-- Collections against this contract, without leaving the list. -->
+      <button
+        *ngIf="canManagePayments"
+        [attr.aria-label]="'contract_payments' | translate"
+        [pTooltip]="'contract_payments' | translate"
+        tooltipPosition="top"
+        (click)="onManagePayments(item)"
+        class="payments-btn">
+        <i class="fa-solid fa-money-bill-wave"></i>
+      </button>
       <button
         *ngIf="item.customer?.caseReportsFolderId"
         [attr.aria-label]="'open_drive_folder' | translate"
@@ -40,4 +50,11 @@
     [dataMapper]="dataMapper"
     (addNew)="onAddNew()">
   </app-dashboard-crud-page>
+
+  <app-contract-payments-dialog
+    [visible]="paymentsVisible()"
+    (visibleChange)="paymentsVisible.set($event)"
+    [contractId]="activeContractId()"
+    (paymentsChanged)="onPaymentsChanged()">
+  </app-contract-payments-dialog>
 </div>

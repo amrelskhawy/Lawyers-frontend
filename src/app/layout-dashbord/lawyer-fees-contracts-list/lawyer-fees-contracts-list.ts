@@ -20,6 +20,16 @@ export class LawyerFeesContractsList implements OnInit {
   columns: IColumn[] = [];
   searchFields = ['contractNumber', 'clientName', 'clientIdNumber'];
 
+  /** Contract the payments dialog is currently opened on. */
+  activeContractId = signal<string | null>(null);
+  paymentsVisible = signal<boolean>(false);
+
+  /** Same rule as the cases list — collections stay with the staff who own them. */
+  get canManagePayments(): boolean {
+    const raw = sessionStorage.getItem('user');
+    return ['ADMIN', 'MODERATOR'].includes(raw ? JSON.parse(raw)?.role : '');
+  }
+
   dataMapper = (item: ILawyerFeesContract, index: number) => ({
     ...item,
     index: index + 1,
@@ -62,6 +72,17 @@ export class LawyerFeesContractsList implements OnInit {
 
   onAddNew() {
     this.router.navigate(['/dashboard/content/lawyer-fees-contract', 'new']);
+  }
+
+  onManagePayments(item: ILawyerFeesContract) {
+    if (!item.id) return;
+    this.activeContractId.set(item.id);
+    this.paymentsVisible.set(true);
+  }
+
+  /** Totals shown in the table move with the collections, so reload the page. */
+  onPaymentsChanged() {
+    this.crudPage?.refresh();
   }
 
   onOpenDriveFolder(item: ILawyerFeesContract) {
