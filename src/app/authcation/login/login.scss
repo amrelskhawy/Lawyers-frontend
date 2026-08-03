@@ -412,25 +412,15 @@ $error-red: #ef4444;
 
 .side-panel {
   position: relative;
-  background-color: $primary-navy;
+  // Site primary navy with a soft gradient instead of a photo background.
+  background: linear-gradient(160deg,
+      var(--obsidian-700) 0%,
+      var(--obsidian-800) 45%,
+      var(--obsidian-950) 100%);
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.side-panel::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url('/assets/Img/login-bg.avif');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  opacity: 0.4;
-  filter: blur(4px);
-  transform: scale(1.05);
-  z-index: 0;
 }
 
 .side-panel>* {
@@ -477,9 +467,6 @@ $error-red: #ef4444;
     height: auto;
     aspect-ratio: 1;
     object-fit: contain;
-    transform-origin: center;
-    animation: side-logo-float 4s ease-in-out infinite;
-    will-change: transform;
 
     /* Fade starts at 70% (just clear of the subject) and runs long so the
        baked plate thins out gradually instead of ending in a ring. */
@@ -494,20 +481,3 @@ $error-red: #ef4444;
   }
 }
 
-@keyframes side-logo-float {
-
-  0%,
-  100% {
-    transform: translateY(0) scale(1);
-  }
-
-  50% {
-    transform: translateY(-16px) scale(1.05);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .logo-wrapper .side-logo {
-    animation: none;
-  }
-}
