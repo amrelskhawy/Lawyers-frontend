@@ -110,12 +110,16 @@
   <!-- ── DAY (agenda) ────────────────────────────────────────────────── -->
   <div class="cal-day-view" *ngIf="view() === 'day'">
     <ng-container *ngIf="dayCases().length > 0; else noDay">
+      <div class="agenda-count">
+        {{ 'sessions_count' | translate }}: <b>{{ dayCases().length }}</b>
+      </div>
       <button
-        *ngFor="let item of dayCases()"
+        *ngFor="let item of dayCases(); let i = index"
         type="button"
         class="agenda-row"
         (click)="openCase(item, $event)"
       >
+        <span class="agenda-index">{{ i + 1 }}</span>
         <span class="agenda-time">{{ (item.time | time12) || '—' }}</span>
         <span class="agenda-degree-dot" [style.background]="item.color"></span>
         <span class="agenda-main">

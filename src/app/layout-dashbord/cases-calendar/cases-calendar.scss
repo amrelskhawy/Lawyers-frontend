@@ -315,6 +315,18 @@
     background: #fff;
   }
 
+  .agenda-count {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #64748b;
+    padding: 0 0.2rem 0.15rem;
+
+    b {
+      color: #0f766e;
+      font-variant-numeric: tabular-nums;
+    }
+  }
+
   .agenda-row {
     display: flex;
     align-items: center;
@@ -330,8 +342,28 @@
     &:hover {
       border-color: #0f766e;
       background: #f0fdfa;
+
+      .agenda-index {
+        background: #0f766e;
+        color: #fff;
+      }
     }
 
+    .agenda-index {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 1.6rem;
+      height: 1.6rem;
+      padding: 0 0.35rem;
+      border-radius: 50%;
+      background: #e2e8f0;
+      color: #475569;
+      font-size: 0.78rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
     .agenda-time {
       font-weight: 700;
       font-variant-numeric: tabular-nums;
