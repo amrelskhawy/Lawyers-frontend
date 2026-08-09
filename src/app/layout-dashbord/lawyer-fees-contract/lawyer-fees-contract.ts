@@ -13,7 +13,7 @@ type SaveStatus = 'idle' | 'unsaved' | 'saving' | 'saved' | 'error';
 
 const PAGE2_DEFAULT = `<p>2 . جميع الأتعاب المدفوعة تعتبر مقابل الأعمال المنجزة وغير قابلة للاسترداد.</p><p>3 . يتحمل الطرف الثاني الرسوم القضائية، والمصاريف الحكومية، ورسوم الغرف التجارية، وأي مصاريف إدارية لازمة لسير الإجراءات.</p><p>4 . في حال كانت القضية خارج المنطقة الغربية، يتحمل الطرف الثاني تكاليف الإقامة والمعيشة والانتقالات الخاصة بالمحامي أو فريق العمل الميداني، على أن يتم إخطار الطرف الثاني بالمبالغ التقديرية قبل الانتقال وذلك وفق اتفاق منفصل.</p><p>5 . يتحمل الطرف الثاني رسوم الترجمة المعتمدة لأي مستندات أو مراسلات تستلزم ذلك.</p><p>6 . في حال إحالة القضية إلى الخبراء من قبل الجهة القضائية أو بناءً على مقتضى الإجراءات النظامية، يلتزم الطرف الثاني، بدفع كامل تكاليف ومصاريف الخبراء المعتمدين فور طلبها، ويشمل ذلك أتعاب الخبرة، وتكاليف الانتقال إن وجدت، وأي رسوم إدارية ذات صلة، دون أن يتحمل الطرف الأول أي مسؤولية مالية عنها.</p><p><strong>البند الثالث - التزامات الطرف الأول -:</strong></p><p>1. تقديم الخدمات القانونية المتفق عليها بكفاءة واحترافية.</p><p>2. اطلاع الطرف الثاني على أهم المستجدات القانونية.</p><p>3. الحفاظ على سرية جميع المعلومات.</p><p>4. العمل لمصلحة الطرف الثاني في كافة أنواع الدعاوى المتفق عليها، وكذلك مراجعة الجهات الحكومية والشرطية والنيابة العامة والجهات التي تستلزم الأعمال مراجعتها كافة.</p><p>5. بذل عناية الرجل الحريص لتحقيق مصلحة الطرف الثاني، كذلك مطالب ببذل عناية وليس تحقيق غاية وله في ذلك أن يسلك الطرق النظامية من إقامة دعاوى وتقديم بلاغات أو تواصل مع الخصم ... الخ.</p>`;
 
-const PAGE3_DEFAULT = `<p><strong>البند الرابع – التزامات الطرف الثاني-:</strong></p><p>1. تزويد الطرف الأول بجميع المستندات والبيانات المطلوبة بدقة وفي الوقت المحدد.</p><p>أ- يقر الطرف الثاني الموكل بأن المعلومات التي قدمها للطرف الأول صحيحة ويتحمل كافة مسؤوليتها القانونية بما في ذلك العناوين والأرقام والأسماء والموقع ويتحمل ما يترتب على عدم دقة البيانات من تأخير لسير العمل وهدر الجهد والوقت.</p><p>ب- يقر الطرف الثاني بأن كافة الأوراق والمستندات التي يقدمها عبارة عن صور لا يطالب الطرف الأول بردها للموكل وأن اية صورة للمستندات والوثائق التي يلزم تقديمها للجهات المختصة سيقوم بإحضارها ولا يتحمل الطرف الأول مسؤوليتها.</p><p>2. التعاون التام مع الطرف الأول، وعدم تعيين أي محامٍ آخر في نفس القضية دون موافقة خطية منه.</p><p>3. في حالة قيام الطرف الثاني بالغاء الوكالة الممنوحة لطرف الأول في أي مرحلة من مراحل الدعوى بالإرادة المنفردة تعتبر جميع اتعاب الطرف الأول المالية حاله وواجبة السداد في حينه.</p><p><strong>البند الخامس</strong></p><p>يتكون هذا العقد من ورقتين، يتضمن خمسة بنود رئيسية بالإضافة إلى التمهيد، ويُعتبر كل منها مكملاً ومفسراً للآخر، وقع من نسختين أصليتين، ولا يُعتد بأي تعديل أو إضافة ما لم يكن مكتوباً وموقعاً من الطرفين.</p>`;
+const PAGE3_DEFAULT = `<p><strong>البند الرابع – التزامات الطرف الثاني-:</strong></p><p>1. تزويد الطرف الأول بجميع المستندات والبيانات المطلوبة بدقة وفي الوقت المحدد.</p><p>أ- يقر الطرف الثاني الموكل بأن المعلومات التي قدمها للطرف الأول صحيحة ويتحمل كافة مسؤوليتها القانونية بما في ذلك العناوين والأرقام والأسماء والموقع ويتحمل ما يترتب على عدم دقة البيانات من تأخير لسير العمل وهدر الجهد والوقت.</p><p>ب- يقر الطرف الثاني بأن كافة الأوراق والمستندات التي يقدمها عبارة عن صور لا يطالب الطرف الأول بردها للموكل وأن اية صورة للمستندات والوثائق التي يلزم تقديمها للجهات المختصة سيقوم بإحضارها ولا يتحمل الطرف الأول مسؤوليتها.</p><p>2. التعاون التام مع الطرف الأول، وعدم تعيين أي محامٍ آخر في نفس القضية دون موافقة خطية منه.</p><p>3. في حالة قيام الطرف الثاني بالغاء الوكالة الممنوحة لطرف الأول في أي مرحلة من مراحل الدعوى بالإرادة المنفردة تعتبر جميع اتعاب الطرف الأول المالية حاله وواجبة السداد في حينه.</p><p><strong>البند الخامس</strong></p><p>يتكون هذا العقد من 3 ورقات، يتضمن خمسة بنود رئيسية بالإضافة إلى التمهيد، ويُعتبر كل منها مكملاً ومفسراً للآخر، وقع من نسختين أصليتين، ولا يُعتد بأي تعديل أو إضافة ما لم يكن مكتوباً وموقعاً من الطرفين.</p>`;
 
 @Component({
   selector: 'app-lawyer-fees-contract',
@@ -27,7 +27,7 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
     private data: Data,
     private route: ActivatedRoute,
     private router: Router,
-  ) {}
+  ) { }
 
   caseId = signal<string>('');
   contractId = signal<string>('');
@@ -55,13 +55,13 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
   selectedCountry: Country = COUNTRIES[0];
 
   weekdayOptions = [
-    { label: 'السبت',    value: 'السبت' },
-    { label: 'الأحد',    value: 'الأحد' },
-    { label: 'الإثنين',  value: 'الإثنين' },
+    { label: 'السبت', value: 'السبت' },
+    { label: 'الأحد', value: 'الأحد' },
+    { label: 'الإثنين', value: 'الإثنين' },
     { label: 'الثلاثاء', value: 'الثلاثاء' },
     { label: 'الأربعاء', value: 'الأربعاء' },
-    { label: 'الخميس',   value: 'الخميس' },
-    { label: 'الجمعة',   value: 'الجمعة' },
+    { label: 'الخميس', value: 'الخميس' },
+    { label: 'الجمعة', value: 'الجمعة' },
   ];
 
   Form!: FormGroup;
@@ -71,8 +71,8 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
 
   ngOnInit() {
     const caseId = this.route.snapshot.paramMap.get('caseId') ?? '';
-    const rawId  = this.route.snapshot.paramMap.get('id') ?? '';
-    const id     = rawId === 'new' ? '' : rawId;
+    const rawId = this.route.snapshot.paramMap.get('id') ?? '';
+    const id = rawId === 'new' ? '' : rawId;
     this.caseId.set(caseId);
     this.buildForm();
     this.wireDirtyTracking();
@@ -86,28 +86,28 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
 
   private buildForm() {
     this.Form = this.fb.group({
-      customerId:        [null],
-      caseId:            [null],
+      customerId: [null],
+      caseId: [null],
 
-      contractNumber:    [''],
-      contractDay:       [''],
-      contractDate:      [null],
-      hijriDate:         [''],
+      contractNumber: [''],
+      contractDay: [''],
+      contractDate: [null],
+      hijriDate: [''],
 
-      clientName:        [''],
-      clientIdNumber:    [''],
-      clientPhone:       [''],
+      clientName: [''],
+      clientIdNumber: [''],
+      clientPhone: [''],
 
       serviceDescription: [''],
 
-      totalFees:         [null],
-      firstInstallment:      [null],
-      firstInstallmentNote:  [null],
-      secondInstallment:     [null],
-      otherFees:         [null],
+      totalFees: [null],
+      firstInstallment: [null],
+      firstInstallmentNote: [null],
+      secondInstallment: [null],
+      otherFees: [null],
 
-      page2Content:      [PAGE2_DEFAULT],
-      page3Content:      [PAGE3_DEFAULT],
+      page2Content: [PAGE2_DEFAULT],
+      page3Content: [PAGE3_DEFAULT],
     });
   }
 
@@ -117,7 +117,7 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
     if (caseId) {
       // Case-bound mode: load case + customers, then find-or-create the draft contract for this case
       forkJoin({
-        caseRes:   this.data.get<{ data: IDataCase }>(`cases/${caseId}`),
+        caseRes: this.data.get<{ data: IDataCase }>(`cases/${caseId}`),
         customers: this.data.get<{ data: IDataCustomer[] }>('customers'),
       }).subscribe({
         next: ({ caseRes, customers }) => {
@@ -168,7 +168,7 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
               caseId,
               customerId: c?.customerId ?? null,
               prefill: {
-                clientName:  c?.customer?.fullName ?? '',
+                clientName: c?.customer?.fullName ?? '',
                 clientPhone: c?.customer?.phone ?? '',
               },
             });
@@ -189,24 +189,24 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
     this.selectedCountry = detected.country;
     this.loadCustomerCases(c.customerId ?? null);
     this.Form.patchValue({
-      customerId:        c.customerId,
-      caseId:            c.caseId || this.caseId() || null,
-      contractNumber:    c.contractNumber ?? '',
-      contractDay:       c.contractDay ?? '',
-      contractDate:      c.contractDate ? new Date(c.contractDate) : null,
-      hijriDate:         c.hijriDate ?? '',
-      clientName:        c.clientName ?? c.customer?.fullName ?? this.loadedCase()?.customer?.fullName ?? '',
-      clientIdNumber:    c.clientIdNumber ?? '',
-      clientPhone:       detected.localNumber,
+      customerId: c.customerId,
+      caseId: c.caseId || this.caseId() || null,
+      contractNumber: c.contractNumber ?? '',
+      contractDay: c.contractDay ?? '',
+      contractDate: c.contractDate ? new Date(c.contractDate) : null,
+      hijriDate: c.hijriDate ?? '',
+      clientName: c.clientName ?? c.customer?.fullName ?? this.loadedCase()?.customer?.fullName ?? '',
+      clientIdNumber: c.clientIdNumber ?? '',
+      clientPhone: detected.localNumber,
       serviceDescription: c.serviceDescription ?? '',
-      totalFees:         c.totalFees ?? null,
-      firstInstallment:      c.firstInstallment ?? null,
-      firstInstallmentNote:  c.firstInstallmentNote ?? null,
-      secondInstallment:     c.secondInstallment ?? null,
-      otherFees:         c.otherFees ?? null,
+      totalFees: c.totalFees ?? null,
+      firstInstallment: c.firstInstallment ?? null,
+      firstInstallmentNote: c.firstInstallmentNote ?? null,
+      secondInstallment: c.secondInstallment ?? null,
+      otherFees: c.otherFees ?? null,
 
-      page2Content:      this.ensureHtml(c.page2Content ?? PAGE2_DEFAULT),
-      page3Content:      this.ensureHtml(c.page3Content ?? PAGE3_DEFAULT),
+      page2Content: this.ensureHtml(c.page2Content ?? PAGE2_DEFAULT),
+      page3Content: this.ensureHtml(c.page3Content ?? PAGE3_DEFAULT),
     }, { emitEvent: true });
     this.loading.set(false);
     this.saveStatus.set('saved');
@@ -237,13 +237,13 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
           this.skipNextDirty = true;
           this.Form.patchValue({
             contractNumber: contract.contractNumber ?? '',
-            contractDay:    contract.contractDay ?? '',
-            contractDate:   contract.contractDate ? new Date(contract.contractDate) : null,
-            hijriDate:      contract.hijriDate ?? '',
+            contractDay: contract.contractDay ?? '',
+            contractDate: contract.contractDate ? new Date(contract.contractDate) : null,
+            hijriDate: contract.hijriDate ?? '',
             ...(opts.prefill ? {
-              clientName:  opts.prefill.clientName ?? '',
+              clientName: opts.prefill.clientName ?? '',
               clientPhone: opts.prefill.clientPhone ?? '',
-              customerId:  opts.customerId ?? null,
+              customerId: opts.customerId ?? null,
             } : {}),
           });
 
@@ -288,7 +288,7 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
     const detected = this.detectCountry(c.phone ?? '');
     this.selectedCountry = detected.country;
     this.Form.patchValue({
-      clientName:  c.fullName ?? '',
+      clientName: c.fullName ?? '',
       clientPhone: detected.localNumber,
     });
   }
@@ -343,24 +343,24 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
     const v = this.Form?.value ?? {};
     const c = this.loaded();
     return {
-      contractNumber:    v.contractNumber,
-      contractDay:       v.contractDay,
-      contractDate:      v.contractDate,
-      hijriDate:         v.hijriDate,
-      clientName:        v.clientName,
-      clientIdNumber:    v.clientIdNumber,
-      clientPhone:       v.clientPhone,
+      contractNumber: v.contractNumber,
+      contractDay: v.contractDay,
+      contractDate: v.contractDate,
+      hijriDate: v.hijriDate,
+      clientName: v.clientName,
+      clientIdNumber: v.clientIdNumber,
+      clientPhone: v.clientPhone,
       serviceDescription: v.serviceDescription,
-      totalFees:         v.totalFees,
-      firstInstallment:      v.firstInstallment,
-      firstInstallmentNote:  v.firstInstallmentNote,
-      secondInstallment:     v.secondInstallment,
-      otherFees:             v.otherFees,
-      page2Content:          v.page2Content,
-      page3Content:      v.page3Content,
-      firstPartySignature:  c?.firstPartySignature ?? null,
+      totalFees: v.totalFees,
+      firstInstallment: v.firstInstallment,
+      firstInstallmentNote: v.firstInstallmentNote,
+      secondInstallment: v.secondInstallment,
+      otherFees: v.otherFees,
+      page2Content: v.page2Content,
+      page3Content: v.page3Content,
+      firstPartySignature: c?.firstPartySignature ?? null,
       secondPartySignature: c?.secondPartySignature ?? null,
-      secondPartySignedAt:  c?.secondPartySignedAt ?? null,
+      secondPartySignedAt: c?.secondPartySignedAt ?? null,
     };
   });
 
@@ -378,9 +378,18 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
       });
   }
 
+  /**
+   * Quill 2's getSemanticHTML() (what p-editor emits) escapes every space as &nbsp;, which
+   * makes a paragraph one unbreakable word — it then refuses to wrap at spaces, stranding
+   * markers like "أ-" on their own line and splitting words mid-word in the preview/PDF.
+   */
+  private normalizeSpaces(html: string): string {
+    return html.replace(/&nbsp;/gi, ' ').replace(/\u00a0/g, ' ');
+  }
+
   private ensureHtml(text: string | null | undefined): string {
     if (!text) return '';
-    if (/<[a-zA-Z]/.test(text)) return text;
+    if (/<[a-zA-Z]/.test(text)) return this.normalizeSpaces(text);
     return text
       .split('\n')
       .map((line) => (line ? `<p>${line}</p>` : '<p><br></p>'))
@@ -401,29 +410,29 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
 
   private toPayload(v: any) {
     return {
-      customerId:        v.customerId || null,
+      customerId: v.customerId || null,
       // Drives the financials bucket: an unlinked contract counts as company money.
-      caseId:            v.caseId || null,
+      caseId: v.caseId || null,
 
-      contractNumber:    v.contractNumber || null,
-      contractDay:       v.contractDay || null,
-      contractDate:      this.toIsoOrNull(v.contractDate),
-      hijriDate:         v.hijriDate || null,
+      contractNumber: v.contractNumber || null,
+      contractDay: v.contractDay || null,
+      contractDate: this.toIsoOrNull(v.contractDate),
+      hijriDate: v.hijriDate || null,
 
-      clientName:        v.clientName || null,
-      clientIdNumber:    v.clientIdNumber || null,
-      clientPhone:       v.clientPhone ? this.selectedCountry.code + v.clientPhone : null,
+      clientName: v.clientName || null,
+      clientIdNumber: v.clientIdNumber || null,
+      clientPhone: v.clientPhone ? this.selectedCountry.code + v.clientPhone : null,
 
       serviceDescription: v.serviceDescription || null,
 
-      totalFees:         this.numOrNull(v.totalFees),
-      firstInstallment:      this.numOrNull(v.firstInstallment),
-      firstInstallmentNote:  v.firstInstallmentNote || null,
-      secondInstallment:     this.numOrNull(v.secondInstallment),
-      otherFees:         v.otherFees || null,
+      totalFees: this.numOrNull(v.totalFees),
+      firstInstallment: this.numOrNull(v.firstInstallment),
+      firstInstallmentNote: v.firstInstallmentNote || null,
+      secondInstallment: this.numOrNull(v.secondInstallment),
+      otherFees: v.otherFees || null,
 
-      page2Content:      v.page2Content || null,
-      page3Content:      v.page3Content || null,
+      page2Content: v.page2Content ? this.normalizeSpaces(v.page2Content) : null,
+      page3Content: v.page3Content ? this.normalizeSpaces(v.page3Content) : null,
     };
   }
 
