@@ -63,6 +63,7 @@ export const COUNTRIES: Country[] = [
   { name: 'جنوب أفريقيا', code: '27', flag: '🇿🇦', example: '6XXXXXXXX' },
   { name: 'نيجيريا', code: '234', flag: '🇳🇬', example: '8XXXXXXXXX' },
   { name: 'كينيا', code: '254', flag: '🇰🇪', example: '7XXXXXXXX' },
+  { name: 'أوغندا', code: '256', flag: '🇺🇬', example: '7XXXXXXXX' },
   { name: 'إثيوبيا', code: '251', flag: '🇪🇹', example: '9XXXXXXXX' },
   { name: 'غانا', code: '233', flag: '🇬🇭', example: '2XXXXXXXXX' },
   { name: 'اليابان', code: '81', flag: '🇯🇵', example: '9XXXXXXXXX' },
