@@ -61,6 +61,11 @@ export class Tasks implements OnInit {
     return this.auth.currentUser()?.id ?? '';
   }
 
+  private get isManager(): boolean {
+    const role = this.auth.currentUser()?.role;
+    return role === 'ADMIN' || role === 'MODERATOR';
+  }
+
   dataMapper = (item: any, index: number) => {
     const due = item.dueDate ? new Date(item.dueDate) : null;
     return {
@@ -75,11 +80,19 @@ export class Tasks implements OnInit {
       // Overdue only matters while there is still work left on the task.
       isOverdue: !!due && due.getTime() < Date.now() && item.status !== 'DONE',
       isMine: item.createdById === this.myId,
-      canChangeStatus:
-        item.createdById === this.myId ||
-        (item.assignees ?? []).some((a: any) => a.userId === this.myId),
+      canChangeStatus: this.isParticipant(item),
+      // Deleting is the creator's, plus an ADMIN/MODERATOR assigned to the task.
+      canDelete:
+        item.createdById === this.myId || (this.isManager && this.isParticipant(item)),
     };
   };
+
+  private isParticipant(item: any): boolean {
+    return (
+      item.createdById === this.myId ||
+      (item.assignees ?? []).some((a: any) => a.userId === this.myId)
+    );
+  }
 
   setScope(scope: 'all' | 'created' | 'assigned') {
     this.activeScope.set(scope);
@@ -104,9 +117,14 @@ export class Tasks implements OnInit {
   /** Assignees can advance a task without being allowed to edit it. */
   onStatusChange(item: any, status: string) {
     if (!status || status === item.status) return;
-    this.Data.patch(`tasks/${item.id}/status`, { status }).subscribe(() =>
+    this.Data.patch(`tasks/${item.id}/progress`, { status }).subscribe(() =>
       this.crudPage.loadData(),
     );
+  }
+
+  /** Progress notes are saved from the details dialog by creator or assignee. */
+  onNotesSaved() {
+    this.crudPage.loadData();
   }
 
   HandelResponseSuccess() {

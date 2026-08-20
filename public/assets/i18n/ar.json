@@ -567,12 +567,13 @@
     "TASK_ASSIGNABLE_USERS_RETRIEVED_SUCCESS": "تم جلب المستخدمين بنجاح",
     "TASK_CREATED_SUCCESS": "تم إنشاء المهمة بنجاح",
     "TASK_UPDATED_SUCCESS": "تم تعديل المهمة بنجاح",
-    "TASK_STATUS_UPDATED_SUCCESS": "تم تحديث حالة المهمة بنجاح",
     "TASK_DELETED_SUCCESS": "تم حذف المهمة بنجاح",
     "TASKS_DELETED_SUCCESS": "تم حذف المهام بنجاح",
     "TASK_NOT_FOUND": "المهمة غير موجودة",
     "TASK_FORBIDDEN": "لا تملك صلاحية تنفيذ هذا الإجراء على المهمة",
-    "TASK_ASSIGNEE_NOT_FOUND": "أحد المستخدمين المحددين غير موجود"
+    "TASK_ASSIGNEE_NOT_FOUND": "أحد المستخدمين المحددين غير موجود",
+    "TASK_PROGRESS_UPDATED_SUCCESS": "تم تحديث المهمة بنجاح",
+    "TASK_NOTHING_TO_UPDATE": "لا يوجد ما يتم تحديثه"
   },
   "client_cases": "قضايا العملاء",
   "customer_meetings": "عملاء محتملين",
@@ -924,5 +925,8 @@
   "task_priority_HIGH": "عالية",
   "task_scope_all": "كل مهامي",
   "task_scope_assigned": "المسندة إليّ",
-  "task_scope_created": "التي أنشأتها"
+  "task_scope_created": "التي أنشأتها",
+  "task_notes": "ملاحظات التنفيذ",
+  "task_notes_placeholder": "اكتب ملاحظاتك عن سير المهمة",
+  "save_notes": "حفظ الملاحظات"
 }

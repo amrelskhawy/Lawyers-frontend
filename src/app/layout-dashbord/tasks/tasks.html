@@ -38,11 +38,14 @@
       </p-select>
     }
 
-    <!-- Editing and deleting belong to the creator; the server enforces it too. -->
+    <!-- Editing is the creator's alone; deleting extends to a manager on the
+         task. The server enforces both. -->
     @if (item.isMine) {
       <button [attr.aria-label]="'edit' | translate" (click)="onEdit(item)" class="edit-btn">
         <i class="fa-solid fa-pen"></i>
       </button>
+    }
+    @if (item.canDelete) {
       <button [attr.aria-label]="'delete' | translate" (click)="onDelete(item)" class="delete-btn">
         <i class="fa-solid fa-trash"></i>
       </button>
@@ -85,6 +88,7 @@
   <app-show-task-data
     [visible]="visibelShow()"
     [objdata]="selectedTask()"
-    (visibleChange)="visibelShow.set($event)">
+    (visibleChange)="visibelShow.set($event)"
+    (notesSaved)="onNotesSaved()">
   </app-show-task-data>
 </app-dashboard-crud-page>

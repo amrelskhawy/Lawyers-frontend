@@ -49,3 +49,29 @@
     color: #b91c1c;
   }
 }
+
+.notes-textarea {
+  width: 100%;
+  margin-top: 0.4rem;
+  padding: 0.6rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.btn-save-notes {
+  align-self: flex-end;
+  margin-top: 0.5rem;
+  border: none;
+  background: var(--accent-gold);
+  color: var(--white-color);
+  border-radius: 6px;
+  padding: 0.4rem 1.2rem;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+}

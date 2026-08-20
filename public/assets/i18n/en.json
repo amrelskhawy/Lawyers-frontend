@@ -567,12 +567,13 @@
     "TASK_ASSIGNABLE_USERS_RETRIEVED_SUCCESS": "Users retrieved successfully",
     "TASK_CREATED_SUCCESS": "Task created successfully",
     "TASK_UPDATED_SUCCESS": "Task updated successfully",
-    "TASK_STATUS_UPDATED_SUCCESS": "Task status updated successfully",
     "TASK_DELETED_SUCCESS": "Task deleted successfully",
     "TASKS_DELETED_SUCCESS": "Tasks deleted successfully",
     "TASK_NOT_FOUND": "Task not found",
     "TASK_FORBIDDEN": "You are not allowed to perform this action on the task",
-    "TASK_ASSIGNEE_NOT_FOUND": "One of the selected users does not exist"
+    "TASK_ASSIGNEE_NOT_FOUND": "One of the selected users does not exist",
+    "TASK_PROGRESS_UPDATED_SUCCESS": "Task updated successfully",
+    "TASK_NOTHING_TO_UPDATE": "Nothing to update"
   },
   "client_cases": "Client Cases",
   "customer_meetings": "Prospective Clients",
@@ -923,5 +924,8 @@
   "task_priority_HIGH": "High",
   "task_scope_all": "All my tasks",
   "task_scope_assigned": "Assigned to me",
-  "task_scope_created": "Created by me"
+  "task_scope_created": "Created by me",
+  "task_notes": "Progress notes",
+  "task_notes_placeholder": "Write your notes on how the task is going",
+  "save_notes": "Save notes"
 }

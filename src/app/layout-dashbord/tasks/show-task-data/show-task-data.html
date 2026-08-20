@@ -11,7 +11,7 @@
     <div class="Header-Popup-Task">
       <div>
         <h3>{{ 'tasks' | translate }}</h3>
-        <p>{{ objdata?.title }}</p>
+        <p>{{ task()?.title }}</p>
       </div>
       <img height="100" width="100" src="/assets/Img/LOGO-GOLD.svg" alt="logo" class="header-logo" />
     </div>
@@ -19,33 +19,50 @@
     <div class="content-view">
       <div class="row">
         <span class="label">{{ 'task_status' | translate }}</span>
-        <span class="value">{{ objdata?.statusLabel }}</span>
+        <span class="value">{{ task()?.statusLabel }}</span>
       </div>
       <div class="row">
         <span class="label">{{ 'task_priority' | translate }}</span>
-        <span class="value">{{ objdata?.priorityLabel }}</span>
+        <span class="value">{{ task()?.priorityLabel }}</span>
       </div>
       <div class="row">
         <span class="label">{{ 'task_due_date' | translate }}</span>
-        <span class="value" [class.overdue]="objdata?.isOverdue">{{ objdata?.dueDateLabel }}</span>
+        <span class="value" [class.overdue]="task()?.isOverdue">{{ task()?.dueDateLabel }}</span>
       </div>
       <div class="row">
         <span class="label">{{ 'task_created_by' | translate }}</span>
-        <span class="value">{{ objdata?.createdByName }}</span>
+        <span class="value">{{ task()?.createdByName }}</span>
       </div>
       <div class="row">
         <span class="label">{{ 'task_assignees' | translate }}</span>
-        <span class="value">{{ objdata?.assigneeNames || '—' }}</span>
+        <span class="value">{{ task()?.assigneeNames || '—' }}</span>
       </div>
-      @if (objdata?.case) {
+      @if (task()?.case) {
         <div class="row">
           <span class="label">{{ 'case' | translate }}</span>
-          <span class="value">{{ objdata?.case?.customer?.fullName }}</span>
+          <span class="value">{{ task()?.case?.customer?.fullName }}</span>
         </div>
       }
       <div class="row description">
         <span class="label">{{ 'task_description' | translate }}</span>
-        <p class="value">{{ objdata?.description || '—' }}</p>
+        <p class="value">{{ task()?.description || '—' }}</p>
+      </div>
+
+      <div class="row description notes">
+        <span class="label">{{ 'task_notes' | translate }}</span>
+        @if (canEditNotes) {
+          <textarea
+            rows="3"
+            class="notes-textarea"
+            [ngModel]="notes()"
+            (ngModelChange)="notes.set($event)"
+            placeholder="{{ 'task_notes_placeholder' | translate }}"></textarea>
+          <button type="button" class="btn-save-notes" [disabled]="saving()" (click)="saveNotes()">
+            {{ (saving() ? 'saving' : 'save_notes') | translate }}
+          </button>
+        } @else {
+          <p class="value">{{ task()?.notes || '—' }}</p>
+        }
       </div>
 
       <button type="button" class="btn-close-dilog" (click)="closeDialog()">
