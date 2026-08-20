@@ -1,0 +1,52 @@
+@use "../../glopalstyles.scss";
+
+.Header-Popup-Task {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--primary-navy);
+  color: var(--white-color);
+  padding: 10px 20px;
+
+  h3 {
+    color: var(--accent-gold);
+  }
+}
+
+.content-form {
+  padding: 1.5rem;
+}
+
+.Group-row {
+  display: flex;
+  gap: 1rem;
+
+  .Group {
+    flex: 1;
+  }
+}
+
+.task-textarea {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.hint {
+  display: block;
+  margin-top: 0.35rem;
+  color: #6b7280;
+  font-size: 0.78rem;
+}
+
+/* The pill replaces the plain label inside the trigger, so the trigger needs to
+   centre it rather than align a bare text run. */
+.tag-select {
+  ::ng-deep .p-select-label {
+    display: flex;
+    align-items: center;
+  }
+}

@@ -61,6 +61,10 @@ import { Financials } from './financials/financials';
 import { ContractPaymentsDialog } from './contract-payments-dialog/contract-payments-dialog';
 import { ConsultingList } from './financials/consulting-list/consulting-list';
 import { FormConsulting } from './financials/consulting-list/form-consulting/form-consulting';
+import { Tasks } from './tasks/tasks';
+import { FormTask } from './tasks/form-task/form-task';
+import { ShowTaskData } from './tasks/show-task-data/show-task-data';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @NgModule({
   declarations: [
@@ -109,6 +113,9 @@ import { FormConsulting } from './financials/consulting-list/form-consulting/for
     ContractPaymentsDialog,
     ConsultingList,
     FormConsulting,
+    Tasks,
+    FormTask,
+    ShowTaskData,
   ],
   imports: [
     CommonModule,
@@ -129,6 +136,7 @@ import { FormConsulting } from './financials/consulting-list/form-consulting/for
     LawyerFeesContractPreviewModule,
     EditorModule,
     PaginatorModule,
+    MultiSelectModule,
   ],
 })
 export class LayoutDashbordModule { }

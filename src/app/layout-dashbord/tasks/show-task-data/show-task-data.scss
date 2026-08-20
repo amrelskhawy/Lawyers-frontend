@@ -1,0 +1,51 @@
+@use "../../glopalstyles.scss";
+
+.Header-Popup-Task {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--primary-navy);
+  color: var(--white-color);
+  padding: 10px 20px;
+
+  h3 {
+    color: var(--accent-gold);
+  }
+}
+
+.content-view {
+  padding: 1.5rem;
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.55rem 0;
+    border-bottom: 1px solid #eef0f3;
+
+    .label {
+      color: #6b7280;
+      font-size: 0.85rem;
+    }
+
+    .value {
+      font-weight: 600;
+      text-align: end;
+    }
+
+    &.description {
+      flex-direction: column;
+      align-items: flex-start;
+
+      .value {
+        text-align: start;
+        font-weight: 400;
+        white-space: pre-wrap;
+      }
+    }
+  }
+
+  .overdue {
+    color: #b91c1c;
+  }
+}

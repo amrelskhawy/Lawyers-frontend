@@ -1,0 +1,42 @@
+@use "../glopalstyles.scss";
+
+.scope-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+
+  button {
+    border: 1px solid var(--accent-gold);
+    background: transparent;
+    color: var(--primary-navy);
+    border-radius: 999px;
+    padding: 0.35rem 1.1rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+
+    &.active {
+      background: var(--accent-gold);
+      color: var(--white-color);
+    }
+  }
+}
+
+.overdue {
+  color: #b91c1c;
+  font-weight: 600;
+}
+
+.action-btn {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+/* The status pill replaces the plain label inside the inline select trigger. */
+.tag-select {
+  ::ng-deep .p-select-label {
+    display: flex;
+    align-items: center;
+  }
+}

@@ -240,3 +240,21 @@ form {
   }
 }
 
+
+/* Status / priority pills. Shared by the tasks table and the task form so the
+   same value reads the same colour in the list and in the dropdown. */
+.tag {
+  display: inline-block;
+  padding: 0.15rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+
+  &.status-TODO { background: #e5e7eb; color: #374151; }
+  &.status-IN_PROGRESS { background: #dbeafe; color: #1d4ed8; }
+  &.status-DONE { background: #dcfce7; color: #15803d; }
+
+  &.priority-LOW { background: #f1f5f9; color: #475569; }
+  &.priority-MEDIUM { background: #fef3c7; color: #b45309; }
+  &.priority-HIGH { background: #fee2e2; color: #b91c1c; }
+}

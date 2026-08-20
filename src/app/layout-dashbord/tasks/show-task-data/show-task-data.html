@@ -1,0 +1,56 @@
+<p-dialog
+  maskStyleClass="backdrop-blur-sm"
+  [(visible)]="visible"
+  (onHide)="closeDialog()"
+  [modal]="true"
+  [baseZIndex]="10000"
+  styleClass="modern-modal"
+  [style]="{ width: '90vw', maxWidth: '560px' }"
+>
+  <ng-template pTemplate="headless">
+    <div class="Header-Popup-Task">
+      <div>
+        <h3>{{ 'tasks' | translate }}</h3>
+        <p>{{ objdata?.title }}</p>
+      </div>
+      <img height="100" width="100" src="/assets/Img/LOGO-GOLD.svg" alt="logo" class="header-logo" />
+    </div>
+
+    <div class="content-view">
+      <div class="row">
+        <span class="label">{{ 'task_status' | translate }}</span>
+        <span class="value">{{ objdata?.statusLabel }}</span>
+      </div>
+      <div class="row">
+        <span class="label">{{ 'task_priority' | translate }}</span>
+        <span class="value">{{ objdata?.priorityLabel }}</span>
+      </div>
+      <div class="row">
+        <span class="label">{{ 'task_due_date' | translate }}</span>
+        <span class="value" [class.overdue]="objdata?.isOverdue">{{ objdata?.dueDateLabel }}</span>
+      </div>
+      <div class="row">
+        <span class="label">{{ 'task_created_by' | translate }}</span>
+        <span class="value">{{ objdata?.createdByName }}</span>
+      </div>
+      <div class="row">
+        <span class="label">{{ 'task_assignees' | translate }}</span>
+        <span class="value">{{ objdata?.assigneeNames || '—' }}</span>
+      </div>
+      @if (objdata?.case) {
+        <div class="row">
+          <span class="label">{{ 'case' | translate }}</span>
+          <span class="value">{{ objdata?.case?.customer?.fullName }}</span>
+        </div>
+      }
+      <div class="row description">
+        <span class="label">{{ 'task_description' | translate }}</span>
+        <p class="value">{{ objdata?.description || '—' }}</p>
+      </div>
+
+      <button type="button" class="btn-close-dilog" (click)="closeDialog()">
+        {{ 'close' | translate }}
+      </button>
+    </div>
+  </ng-template>
+</p-dialog>

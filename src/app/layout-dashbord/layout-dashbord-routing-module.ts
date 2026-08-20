@@ -20,6 +20,7 @@ import { ConsultantReminders } from './consultant-reminders/consultant-reminders
 import { UnscheduledCases } from './unscheduled-cases/unscheduled-cases';
 import { Financials } from './financials/financials';
 import { DocumentSigner } from './document-signer/document-signer';
+import { Tasks } from './tasks/tasks';
 
 const routes: Routes = [
   {
@@ -178,6 +179,13 @@ const routes: Routes = [
           roleGuard('ADMIN', 'MODERATOR', 'RECEPTIONIST', 'LAWYER', 'CONSULTANT'),
           passcodeGuard,
         ],
+      },
+
+      // ── Tasks — every role. Deliberately no roleGuard: a task is visible
+      // only to its creator and assignees, so there is no role to gate on.
+      {
+        path: 'tasks',
+        component: Tasks,
       },
 
       { path: '**', redirectTo: '', pathMatch: 'full' },

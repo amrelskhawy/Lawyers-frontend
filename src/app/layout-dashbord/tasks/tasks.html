@@ -1,0 +1,90 @@
+<ng-template #statusCell let-item>
+  <span class="tag" [ngClass]="'status-' + item.status">
+    {{ 'task_status_' + item.status | translate }}
+  </span>
+</ng-template>
+
+<ng-template #priorityCell let-item>
+  <span class="tag" [ngClass]="'priority-' + item.priority">
+    {{ 'task_priority_' + item.priority | translate }}
+  </span>
+</ng-template>
+
+<ng-template #dueCell let-item>
+  <span [class.overdue]="item.isOverdue">{{ item.dueDateLabel }}</span>
+</ng-template>
+
+<ng-template #actions let-item let-onDelete="delete">
+  <div class="action-btn">
+    <button [attr.aria-label]="'show' | translate" (click)="onView(item)" class="show-btn">
+      <i class="fa-solid fa-eye"></i>
+    </button>
+
+    @if (item.canChangeStatus) {
+      <p-select
+        [ngModel]="item.status"
+        [options]="statusOptions"
+        optionValue="value"
+        appendTo="body"
+        styleClass="tag-select"
+        [style]="{ minWidth: '9rem' }"
+        (onChange)="onStatusChange(item, $event.value)">
+        <ng-template let-opt pTemplate="item">
+          <span class="tag" [ngClass]="'status-' + opt.value">{{ opt.label | translate }}</span>
+        </ng-template>
+        <ng-template let-opt pTemplate="selectedItem">
+          <span class="tag" [ngClass]="'status-' + opt.value">{{ opt.label | translate }}</span>
+        </ng-template>
+      </p-select>
+    }
+
+    <!-- Editing and deleting belong to the creator; the server enforces it too. -->
+    @if (item.isMine) {
+      <button [attr.aria-label]="'edit' | translate" (click)="onEdit(item)" class="edit-btn">
+        <i class="fa-solid fa-pen"></i>
+      </button>
+      <button [attr.aria-label]="'delete' | translate" (click)="onDelete(item)" class="delete-btn">
+        <i class="fa-solid fa-trash"></i>
+      </button>
+    }
+  </div>
+</ng-template>
+
+<div class="scope-tabs">
+  <button [class.active]="activeScope() === 'all'" (click)="setScope('all')">
+    {{ 'task_scope_all' | translate }}
+  </button>
+  <button [class.active]="activeScope() === 'assigned'" (click)="setScope('assigned')">
+    {{ 'task_scope_assigned' | translate }}
+  </button>
+  <button [class.active]="activeScope() === 'created'" (click)="setScope('created')">
+    {{ 'task_scope_created' | translate }}
+  </button>
+</div>
+
+<app-dashboard-crud-page
+  endpoint="tasks"
+  deleteEndpoint="tasks"
+  bulkDeleteEndpoint="tasks/many"
+  [columns]="columns"
+  [searchFields]="searchFields"
+  [selectable]="true"
+  [dataMapper]="dataMapper"
+  [actionsTemplate]="actions"
+  [extraParams]="extraParams()"
+  [columnTemplates]="{ statusLabel: statusCell, priorityLabel: priorityCell, dueDateLabel: dueCell }"
+  (addNew)="onAdd()">
+
+  <app-form-task
+    [visible]="visibelform()"
+    [objdata]="selectedTask()"
+    (visibleChange)="visibelform.set($event)"
+    (success)="HandelResponseSuccess()">
+  </app-form-task>
+
+  <app-show-task-data
+    [visible]="visibelShow()"
+    [objdata]="selectedTask()"
+    (visibleChange)="visibelShow.set($event)">
+  </app-show-task-data>
+</app-dashboard-crud-page>

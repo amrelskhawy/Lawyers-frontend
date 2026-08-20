@@ -115,6 +115,14 @@ export class Menue implements OnInit {
         route: '/dashboard/content/customer-meetings',
       },
 
+      // ── Tasks — every role, no gating: the list is already narrowed to
+      //    tasks the user created or was assigned to. ─────────────
+      {
+        name: 'tasks',
+        icon: 'fa-solid fa-list-check',
+        route: '/dashboard/content/tasks',
+      },
+
       // ── Cases — all roles ────────────────────────────────────
       {
         name: 'client_cases',

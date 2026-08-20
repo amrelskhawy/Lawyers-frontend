@@ -1,0 +1,112 @@
+<p-dialog
+  maskStyleClass="backdrop-blur-sm"
+  [(visible)]="visible"
+  (onHide)="onClose()"
+  [modal]="true"
+  [baseZIndex]="10000"
+  styleClass="modern-modal"
+  [style]="{ width: '90vw', maxWidth: '620px' }"
+>
+  <ng-template pTemplate="headless">
+    <div class="Header-Popup-Task">
+      <div>
+        <h3>{{ 'tasks' | translate }}</h3>
+        <p>{{ (editing() ? 'edit_task' : 'add_task') | translate }}</p>
+      </div>
+
+      <img height="100" width="100" src="/assets/Img/LOGO-GOLD.svg" alt="logo" class="header-logo" />
+    </div>
+
+    <div class="content-form">
+      <form [formGroup]="Form()" (ngSubmit)="onSubmit()">
+        <div class="Group">
+          <label>{{ 'task_title' | translate }}</label>
+          <input type="text" pInputText formControlName="title" [style]="{ width: '100%' }" />
+          <div class="wrapper-error">
+            <small class="error-message" *ngIf="getControlName('title')?.invalid && getControlName('title')?.touched">
+              {{ 'filed_reqierd' | translate }}
+            </small>
+          </div>
+        </div>
+
+        <div class="Group">
+          <label>{{ 'task_description' | translate }}</label>
+          <textarea rows="3" formControlName="description" class="task-textarea"></textarea>
+        </div>
+
+        <div class="Group-row">
+          <div class="Group">
+            <label>{{ 'task_status' | translate }}</label>
+            <p-select
+              formControlName="status"
+              [options]="statusOptions"
+              optionValue="value"
+              appendTo="body"
+              styleClass="tag-select"
+              [style]="{ width: '100%' }">
+              <ng-template let-opt pTemplate="item">
+                <span class="tag" [ngClass]="'status-' + opt.value">{{ opt.label | translate }}</span>
+              </ng-template>
+              <ng-template let-opt pTemplate="selectedItem">
+                <span class="tag" [ngClass]="'status-' + opt.value">{{ opt.label | translate }}</span>
+              </ng-template>
+            </p-select>
+          </div>
+
+          <div class="Group">
+            <label>{{ 'task_priority' | translate }}</label>
+            <p-select
+              formControlName="priority"
+              [options]="priorityOptions"
+              optionValue="value"
+              appendTo="body"
+              styleClass="tag-select"
+              [style]="{ width: '100%' }">
+              <ng-template let-opt pTemplate="item">
+                <span class="tag" [ngClass]="'priority-' + opt.value">{{ opt.label | translate }}</span>
+              </ng-template>
+              <ng-template let-opt pTemplate="selectedItem">
+                <span class="tag" [ngClass]="'priority-' + opt.value">{{ opt.label | translate }}</span>
+              </ng-template>
+            </p-select>
+          </div>
+        </div>
+
+        <div class="Group">
+          <label>{{ 'task_due_date' | translate }}</label>
+          <p-datepicker
+            formControlName="dueDate"
+            dateFormat="dd/mm/yy"
+            appendTo="body"
+            [showIcon]="true"
+            [style]="{ width: '100%' }">
+          </p-datepicker>
+        </div>
+
+        <div class="Group">
+          <label>{{ 'task_assignees' | translate }}</label>
+          <p-multiselect
+            formControlName="assigneeIds"
+            [options]="users()"
+            optionLabel="label"
+            optionValue="value"
+            [filter]="true"
+            filterBy="label"
+            appendTo="body"
+            placeholder="{{ 'task_select_assignees' | translate }}"
+            [style]="{ width: '100%' }">
+          </p-multiselect>
+          <small class="hint">{{ 'task_visibility_hint' | translate }}</small>
+        </div>
+
+        <div class="Group">
+          <button class="btn-submit" type="submit">{{ 'submit' | translate }}</button>
+        </div>
+      </form>
+
+      <button type="button" class="btn-close-dilog" (click)="closeDialog()">
+        {{ 'close' | translate }}
+      </button>
+    </div>
+  </ng-template>
+</p-dialog>
