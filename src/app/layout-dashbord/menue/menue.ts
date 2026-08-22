@@ -4,12 +4,14 @@ import {
   HostListener,
   inject,
   Input,
+  OnDestroy,
   OnInit,
   Output,
   signal,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { PwaInstallService } from '../../shared/pwa-install/pwa-install.service';
+import { TaskCount } from '../../core/Servies/task-count';
 
 @Component({
   selector: 'app-menue',
@@ -17,19 +19,27 @@ import { PwaInstallService } from '../../shared/pwa-install/pwa-install.service'
   templateUrl: './menue.html',
   styleUrl: './menue.scss',
 })
-export class Menue implements OnInit {
+export class Menue implements OnInit, OnDestroy {
   ngOnInit(): void {
     // Seed the mobile flag from the current viewport. Without this it stays
     // `false` until a resize event fires, so a fresh mobile load renders the
     // open drawer as a squeezed icon-only rail with no labels.
     this.widthScreen.set(window.innerWidth < 768);
     this.GetDataMenue();
+    this.taskCount.startPolling();
+  }
+
+  ngOnDestroy(): void {
+    this.taskCount.stopPolling();
   }
 
   constructor(private router: Router) { }
 
   /** Backs the "install app" button in the sidebar footer. */
   readonly pwa = inject(PwaInstallService);
+
+  /** Unfinished-task count shown as a badge next to the Tasks entry. */
+  readonly taskCount = inject(TaskCount);
 
   openWorkDay() {
     this.visibelform.set(true);
@@ -51,6 +61,8 @@ export class Menue implements OnInit {
       name: string;
       icon: string;
       route: string;
+      /** Show the open-task badge on this entry. */
+      badge?: boolean;
     }[]
   >([]);
   visibelform = signal<boolean>(false);
@@ -121,6 +133,7 @@ export class Menue implements OnInit {
         name: 'tasks',
         icon: 'fa-solid fa-list-check',
         route: '/dashboard/content/tasks',
+        badge: true,
       },
 
       // ── Cases — all roles ────────────────────────────────────

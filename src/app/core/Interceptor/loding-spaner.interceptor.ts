@@ -6,7 +6,10 @@ import { Core } from '../Servies/core';
 export class LoaderInterceptor implements HttpInterceptor {
   constructor(private Core: Core) { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (req.url.includes('chat')) {
+    // The chat poll and the sidebar task badge both run in the background —
+    // showing the blocking loader for them would flash over whatever the user
+    // is actually doing.
+    if (req.url.includes('chat') || req.url.includes('tasks/open-count')) {
       return next.handle(req);
     }
 

@@ -24,12 +24,16 @@ export class ErrorInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
+        // The sidebar task badge polls in the background — a failed poll must
+        // not pop a toast over whatever the user is doing. A 401 still logs out
+        // below, same as any other request.
+        const isSilent = req.url.includes('tasks/open-count');
         let apiMessage = 'Something went wrong';
         if (error.error && error.error.message) {
           const mainCode = error.error.message;
           apiMessage = this.translate.instant(`API_MESSAGES.${mainCode}`);
         }
-        this.core._Error.next(apiMessage);
+        if (!isSilent) this.core._Error.next(apiMessage);
 
         // Session expired or token invalid — force a logout, but not for a
         // failed login attempt (the user is already on the login page).

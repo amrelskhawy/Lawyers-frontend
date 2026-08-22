@@ -75,3 +75,52 @@
     cursor: default;
   }
 }
+
+/* Assignee rings — one gold circle per person, mirroring the avatar used on a
+   case's assigned lawyer/consultant card. */
+.assignee-rings {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+
+  .assignee-ring {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--bg-cream-light, #f7f3ea);
+    border: 2px solid var(--accent-gold, #b99a4b);
+    color: var(--accent-gold, #b99a4b);
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1;
+    cursor: default;
+    user-select: none;
+    flex: 0 0 auto;
+
+    /* A stand-in, not an owner — dashed and muted so the difference is
+       readable at a glance. */
+    &.temp {
+      border-style: dashed;
+      background: transparent;
+      color: #8b733d;
+      opacity: 0.85;
+    }
+  }
+
+
+  /* Separates the owners from the stand-ins in the table cell. */
+  .ring-divider {
+    width: 1px;
+    height: 20px;
+    background: #d9d2c2;
+    margin: 0 2px;
+  }
+
+  .no-assignees {
+    color: #6b7280;
+  }
+}

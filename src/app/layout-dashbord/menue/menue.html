@@ -18,9 +18,19 @@
       <li class="nav-item" (click)="onCloselMenue()" routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }" [routerLink]="item.route"
         [ngClass]="{ collpasedMenue: statusMenue() && !widthScreen() }">
-        <span class="nav-icon"><i [class]="item.icon"></i></span>
+        <span class="nav-icon">
+          <i [class]="item.icon"></i>
+          <!-- Collapsed rail has no room for the label, so the count rides the
+               icon itself — same cue, smaller footprint. -->
+          @if (item.badge && taskCount.openCount() > 0 && statusMenue() && !widthScreen()) {
+          <span class="nav-badge nav-badge-dot">{{ taskCount.openCount() }}</span>
+          }
+        </span>
         @if (widthScreen() || !statusMenue()) {
         <span class="nav-text">{{ item.name | translate }}</span>
+        @if (item.badge && taskCount.openCount() > 0) {
+        <span class="nav-badge">{{ taskCount.openCount() }}</span>
+        }
         }
       </li>
       }

@@ -4,6 +4,17 @@ import { DashboardCrudPage } from '../dashboard-crud-page/dashboard-crud-page';
 import { IColumn } from '../types/shared';
 import { Auth } from '../../core/Servies/auth';
 import { Data } from '../../core/Servies/data';
+import { TaskCount } from '../../core/Servies/task-count';
+
+/** Two letters at most — an Arabic name's first two words read best. */
+function initialsOf(name: string): string {
+  return (name ?? '')
+    .trim()
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((part) => part.charAt(0))
+    .join('');
+}
 
 /**
  * Tasks list. The server already limits the response to tasks the signed-in
@@ -35,6 +46,8 @@ export class Tasks implements OnInit {
     private translate: TranslateService,
     private auth: Auth,
     private Data: Data,
+    /** Read by the template so the sidebar badge follows this list. */
+    public taskCount: TaskCount,
   ) {}
 
   ngOnInit() {
@@ -75,6 +88,11 @@ export class Tasks implements OnInit {
       statusLabel: this.translate.instant(`task_status_${item.status}`),
       priorityLabel: this.translate.instant(`task_priority_${item.priority}`),
       assigneeNames: (item.assignees ?? []).map((a: any) => a.user?.name).filter(Boolean).join('، '),
+      // Rings rendered in the cell; the joined names above stay for search.
+      // Owners first, stand-ins after — the cell reads as "who owns it, then who
+      // covers for them".
+      ownerAvatars: this.toAvatars(item, false),
+      tempAvatars: item.hasTempAssignee ? this.toAvatars(item, true) : [],
       createdByName: item.createdBy?.name ?? '',
       dueDateLabel: due ? due.toLocaleDateString() : '—',
       // Overdue only matters while there is still work left on the task.
@@ -86,6 +104,23 @@ export class Tasks implements OnInit {
         item.createdById === this.myId || (this.isManager && this.isParticipant(item)),
     };
   };
+
+  /** One ring per person on the task, on the side of the roster asked for. */
+  private toAvatars(item: any, isTemp: boolean) {
+    return (item.assignees ?? [])
+      .filter((a: any) => !!a.user && !!a.isTemp === isTemp)
+      .map((a: any) => ({
+        id: a.user.id,
+        name: a.user.name,
+        isTemp,
+        // Precomputed like the other labels here — the pipe cannot reach inside
+        // a mapped row.
+        tooltip: isTemp
+          ? `${a.user.name} · ${this.translate.instant('task_temp_assignee_tag')}`
+          : a.user.name,
+        initials: initialsOf(a.user.name),
+      }));
+  }
 
   private isParticipant(item: any): boolean {
     return (

@@ -1,3 +1,26 @@
+<!-- Assignees as rings — same visual language as a case's assignee avatar.
+     Owners are solid gold; a stand-in (who performs the task while an owner is
+     away) gets a dashed ring so the two never read as the same thing. -->
+<ng-template #assigneesCell let-item>
+  <div class="assignee-rings">
+    @for (person of item.ownerAvatars; track person.id) {
+      <span class="assignee-ring" [pTooltip]="person.tooltip" tooltipPosition="top">
+        {{ person.initials }}
+      </span>
+    } @empty {
+      <span class="no-assignees">—</span>
+    }
+    @if (item.tempAvatars.length) {
+      <span class="ring-divider" aria-hidden="true"></span>
+      @for (person of item.tempAvatars; track person.id) {
+        <span class="assignee-ring temp" [pTooltip]="person.tooltip" tooltipPosition="top">
+          {{ person.initials }}
+        </span>
+      }
+    }
+  </div>
+</ng-template>
+
 <ng-template #statusCell let-item>
   <span class="tag" [ngClass]="'status-' + item.status">
     {{ 'task_status_' + item.status | translate }}
@@ -75,8 +98,14 @@
   [dataMapper]="dataMapper"
   [actionsTemplate]="actions"
   [extraParams]="extraParams()"
-  [columnTemplates]="{ statusLabel: statusCell, priorityLabel: priorityCell, dueDateLabel: dueCell }"
-  (addNew)="onAdd()">
+  [columnTemplates]="{
+    statusLabel: statusCell,
+    priorityLabel: priorityCell,
+    dueDateLabel: dueCell,
+    assigneeNames: assigneesCell
+  }"
+  (addNew)="onAdd()"
+  (loaded)="taskCount.refresh()">
 
   <app-form-task
     [visible]="visibelform()"

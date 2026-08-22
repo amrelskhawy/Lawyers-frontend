@@ -123,6 +123,38 @@
     text-overflow: ellipsis;
   }
 
+  // Unfinished-task counter — reads as a notification pill next to the label.
+  .nav-badge {
+    flex: 0 0 auto;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 6px;
+    border-radius: 999px;
+    background: #d13b3b;
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 22px;
+    text-align: center;
+  }
+
+  // Collapsed rail: the same pill, pinned to the icon's corner.
+  .nav-icon {
+    position: relative;
+
+    .nav-badge-dot {
+      position: absolute;
+      top: -6px;
+      inset-inline-end: -6px;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 4px;
+      font-size: 0.65rem;
+      line-height: 18px;
+      box-shadow: 0 0 0 2px var(--white-color, #fff);
+    }
+  }
+
   &:hover {
     background-color: var(--bg-cream-light);
     color: var(--accent-gold);
