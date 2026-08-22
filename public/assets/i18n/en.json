@@ -949,9 +949,9 @@
   "task_priority_LOW": "Low",
   "task_priority_MEDIUM": "Medium",
   "task_priority_HIGH": "High",
-  "task_scope_all": "All my tasks",
+  "task_scope_all": "All Tasks",
   "task_scope_assigned": "Assigned to me",
-  "task_scope_created": "Created by me",
+  "task_scope_created": "My Tasks",
   "task_notes": "Progress notes",
   "task_notes_placeholder": "Write your notes on how the task is going",
   "save_notes": "Save notes"

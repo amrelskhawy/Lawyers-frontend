@@ -950,9 +950,9 @@
   "task_priority_LOW": "منخفضة",
   "task_priority_MEDIUM": "متوسطة",
   "task_priority_HIGH": "عالية",
-  "task_scope_all": "كل مهامي",
+  "task_scope_all": "كل المهام",
   "task_scope_assigned": "المسندة إليّ",
-  "task_scope_created": "التي أنشأتها",
+  "task_scope_created": "مهامي",
   "task_notes": "ملاحظات التنفيذ",
   "task_notes_placeholder": "اكتب ملاحظاتك عن سير المهمة",
   "save_notes": "حفظ الملاحظات"
