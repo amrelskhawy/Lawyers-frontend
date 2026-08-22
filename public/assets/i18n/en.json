@@ -941,6 +941,8 @@
   "task_created_by": "Created by",
   "task_select_assignees": "Select assignees",
   "task_visibility_hint": "This task is visible only to its creator and the selected assignees.",
+  "task_share_with_managers": "Visible to other admins/moderators",
+  "task_share_with_managers_hint": "Lets other admins and moderators see this task to track it, even if they are not assigned.",
   "task_status_TODO": "To do",
   "task_status_IN_PROGRESS": "In progress",
   "task_status_DONE": "Done",

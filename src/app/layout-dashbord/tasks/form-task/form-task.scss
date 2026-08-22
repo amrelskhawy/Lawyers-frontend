@@ -35,6 +35,24 @@
   resize: vertical;
 }
 
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  .toggle-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+
+    span {
+      font-size: 0.78rem;
+      color: #6b7280;
+    }
+  }
+}
+
 .hint {
   display: block;
   margin-top: 0.35rem;

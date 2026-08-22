@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Data } from '../../../core/Servies/data';
+import { Auth } from '../../../core/Servies/auth';
 
 /** Create/edit dialog. Any staff member may create a task and assign it to anyone. */
 @Component({
@@ -38,7 +39,14 @@ export class FormTask implements OnInit {
   constructor(
     private FB: FormBuilder,
     private Data: Data,
+    private auth: Auth,
   ) {}
+
+  /** Only an ADMIN/MODERATOR may share a task with other managers. */
+  get canShareWithManagers(): boolean {
+    const role = this.auth.currentUser()?.role;
+    return role === 'ADMIN' || role === 'MODERATOR';
+  }
 
   ngOnInit(): void {
     this.createForm();
@@ -55,13 +63,14 @@ export class FormTask implements OnInit {
         priority: ['MEDIUM', Validators.required],
         dueDate: [null],
         assigneeIds: [[]],
+        isVisibleForOtherAdmins: [false],
       }),
     );
   }
 
   private patchForm(task: any) {
     if (!task) {
-      this.Form().reset({ status: 'TODO', priority: 'MEDIUM', assigneeIds: [] });
+      this.Form().reset({ status: 'TODO', priority: 'MEDIUM', assigneeIds: [], isVisibleForOtherAdmins: false });
       return;
     }
     this.Form().patchValue({
@@ -71,6 +80,7 @@ export class FormTask implements OnInit {
       priority: task.priority ?? 'MEDIUM',
       dueDate: task.dueDate ? new Date(task.dueDate) : null,
       assigneeIds: (task.assignees ?? []).map((a: any) => a.userId),
+      isVisibleForOtherAdmins: task.isVisibleForOtherAdmins ?? false,
     });
   }
 
@@ -103,7 +113,7 @@ export class FormTask implements OnInit {
   }
 
   handelResponseSuccess() {
-    this.Form().reset({ status: 'TODO', priority: 'MEDIUM', assigneeIds: [] });
+    this.Form().reset({ status: 'TODO', priority: 'MEDIUM', assigneeIds: [], isVisibleForOtherAdmins: false });
     this.editing.set(null);
     this.success.emit(true);
   }

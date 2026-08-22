@@ -942,6 +942,8 @@
   "task_created_by": "أنشأها",
   "task_select_assignees": "اختر المسؤولين",
   "task_visibility_hint": "المهمة تظهر فقط لمن أنشأها وللمسؤولين المحددين.",
+  "task_share_with_managers": "إظهارها لباقي المسؤولين والمشرفين",
+  "task_share_with_managers_hint": "تتيح لباقي المسؤولين والمشرفين متابعة هذه المهمة حتى لو لم يتم تعيينهم عليها.",
   "task_status_TODO": "قيد الانتظار",
   "task_status_IN_PROGRESS": "قيد التنفيذ",
   "task_status_DONE": "مكتملة",

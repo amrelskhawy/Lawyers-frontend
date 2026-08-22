@@ -99,6 +99,16 @@
           <small class="hint">{{ 'task_visibility_hint' | translate }}</small>
         </div>
 
+        <div class="Group" *ngIf="canShareWithManagers">
+          <div class="checkbox-row">
+            <div class="toggle-text">
+              <label>{{ 'task_share_with_managers' | translate }}</label>
+              <span>{{ 'task_share_with_managers_hint' | translate }}</span>
+            </div>
+            <p-toggleswitch formControlName="isVisibleForOtherAdmins"></p-toggleswitch>
+          </div>
+        </div>
+
         <div class="Group">
           <button class="btn-submit" type="submit">{{ 'submit' | translate }}</button>
         </div>
