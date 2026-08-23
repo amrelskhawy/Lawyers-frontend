@@ -37,6 +37,7 @@ export class EditCase implements OnInit, OnDestroy {
   sending = signal<boolean>(false);
   assigning = signal<boolean>(false);
   unassigning = signal<boolean>(false);
+  savingStandIn = signal<boolean>(false);
   assignmentActioning = signal<boolean>(false);
   loadedCase = signal<IDataCase | null>(null);
 
@@ -84,6 +85,23 @@ export class EditCase implements OnInit, OnDestroy {
     const c = this.loadedCase();
     return c?.consultantName ?? c?.consultant?.name ?? '';
   }
+
+  // --- Stand-ins: who covers a slot while its holder is away ---
+  get standInLawyerName(): string {
+    const c = this.loadedCase();
+    return c?.tempLawyerName ?? c?.tempLawyer?.name ?? '';
+  }
+  get standInConsultantName(): string {
+    const c = this.loadedCase();
+    return c?.tempConsultantName ?? c?.tempConsultant?.name ?? '';
+  }
+  /** Nobody stands in for themselves — the slot's holder drops out of the list. */
+  standInLawyerOptions = computed(() =>
+    this.lawyerOptions().filter((l) => l.id !== this.loadedCase()?.preferredLawyerId),
+  );
+  standInConsultantOptions = computed(() =>
+    this.consultantOptions().filter((l) => l.id !== this.loadedCase()?.consultantId),
+  );
 
   // --- "My slot" view (the logged-in lawyer or consultant) ---
   get isConsultantRole(): boolean { return this.role === 'CONSULTANT'; }
@@ -160,6 +178,8 @@ export class EditCase implements OnInit, OnDestroy {
     this.assignForm = this.fb.group({
       lawyerId: [null],
       consultantId: [null],
+      tempLawyerId: [null],
+      tempConsultantId: [null],
     });
   }
 
@@ -367,6 +387,8 @@ export class EditCase implements OnInit, OnDestroy {
     this.assignForm.patchValue({
       lawyerId: c.preferredLawyerId ?? null,
       consultantId: c.consultantId ?? null,
+      tempLawyerId: c.tempLawyerId ?? null,
+      tempConsultantId: c.tempConsultantId ?? null,
     });
   }
 
@@ -408,6 +430,30 @@ export class EditCase implements OnInit, OnDestroy {
           this.unassigning.set(false);
         },
         error: () => this.unassigning.set(false),
+      });
+  }
+
+  /**
+   * Name — or clear — the stand-in covering a slot. Unlike an assignment this
+   * takes effect at once: a stand-in has no accept/reject step of their own.
+   * `clear` sends null regardless of what the picker currently shows.
+   */
+  setStandIn(kind: AssignmentKind, clear = false) {
+    const active = kind === 'CONSULTANT' ? this.hasActiveConsultant : this.hasActiveLawyer;
+    if (!this.canAssign || this.savingStandIn() || !active) return;
+    const ctrl = kind === 'CONSULTANT' ? 'tempConsultantId' : 'tempLawyerId';
+    const userId: string | null = clear ? null : this.assignForm.value[ctrl] || null;
+
+    this.savingStandIn.set(true);
+    this.data
+      .patch<{ data: IDataCase }>(`cases/${this.caseId()}/stand-in`, { kind, userId })
+      .subscribe({
+        next: (res) => {
+          this.loadedCase.set(res.data);
+          this.syncAssignForm(res.data);
+          this.savingStandIn.set(false);
+        },
+        error: () => this.savingStandIn.set(false),
       });
   }
 

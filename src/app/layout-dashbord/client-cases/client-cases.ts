@@ -128,6 +128,9 @@ export class ClientCases implements OnInit {
     nextSessionDateFormatted: this.formatNextSessionDate(item),
     assignedLawyerName: item.preferredLawyerName ?? item.preferredLawyer?.name ?? '',
     assignedConsultantName: item.consultantName ?? item.consultant?.name ?? '',
+    // Who covers each slot while its holder is away — shown under the name.
+    standInLawyerName: item.tempLawyerName ?? item.tempLawyer?.name ?? '',
+    standInConsultantName: item.tempConsultantName ?? item.tempConsultant?.name ?? '',
     // Empty for company-sourced clients — they have no bringing lawyer.
     sourceLawyerName: item.sourceLawyer?.name ?? '',
     // A case is "closed" once it's marked fully completed (completedAt set).

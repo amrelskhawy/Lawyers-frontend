@@ -148,6 +148,47 @@
             <i class="fa-solid fa-user-minus"></i>
             {{ (unassigning() ? 'unassigning' : 'unassign_lawyer') | translate }}
           </button>
+
+        <!-- Stand-in for this slot: only meaningful once someone holds it. -->
+        <div class="stand-in-row">
+          <div class="input-group assign-select">
+            <label>{{ 'case_stand_in_lawyer' | translate }}</label>
+            <p-select
+              formControlName="tempLawyerId"
+              [options]="standInLawyerOptions()"
+              optionLabel="name"
+              optionValue="id"
+              [filter]="true"
+              filterBy="name,email"
+              [showClear]="true"
+              [placeholder]="'case_select_stand_in' | translate"
+              styleClass="w-full"
+            >
+            </p-select>
+            <small class="hint">{{ 'case_stand_in_hint' | translate }}</small>
+          </div>
+          <div class="stand-in-actions">
+            <button
+              type="button"
+              class="btn-assign"
+              (click)="setStandIn('LAWYER')"
+              [disabled]="savingStandIn() || !assignForm.value.tempLawyerId"
+            >
+              <i class="fa-solid fa-user-clock"></i>
+              {{ 'case_save_stand_in' | translate }}
+            </button>
+            <button
+              type="button"
+              class="btn-unassign"
+              *ngIf="standInLawyerName"
+              (click)="setStandIn('LAWYER', true)"
+              [disabled]="savingStandIn()"
+            >
+              <i class="fa-solid fa-user-xmark"></i>
+              {{ 'case_clear_stand_in' | translate }}
+            </button>
+          </div>
+        </div>
         </div>
 
         <!-- No active lawyer: pick + assign -->
@@ -228,6 +269,47 @@
             <i class="fa-solid fa-user-minus"></i>
             {{ (unassigning() ? 'unassigning' : 'unassign_consultant') | translate }}
           </button>
+
+        <!-- Stand-in for this slot: only meaningful once someone holds it. -->
+        <div class="stand-in-row">
+          <div class="input-group assign-select">
+            <label>{{ 'case_stand_in_consultant' | translate }}</label>
+            <p-select
+              formControlName="tempConsultantId"
+              [options]="standInConsultantOptions()"
+              optionLabel="name"
+              optionValue="id"
+              [filter]="true"
+              filterBy="name,email"
+              [showClear]="true"
+              [placeholder]="'case_select_stand_in' | translate"
+              styleClass="w-full"
+            >
+            </p-select>
+            <small class="hint">{{ 'case_stand_in_hint' | translate }}</small>
+          </div>
+          <div class="stand-in-actions">
+            <button
+              type="button"
+              class="btn-assign"
+              (click)="setStandIn('CONSULTANT')"
+              [disabled]="savingStandIn() || !assignForm.value.tempConsultantId"
+            >
+              <i class="fa-solid fa-user-clock"></i>
+              {{ 'case_save_stand_in' | translate }}
+            </button>
+            <button
+              type="button"
+              class="btn-unassign"
+              *ngIf="standInConsultantName"
+              (click)="setStandIn('CONSULTANT', true)"
+              [disabled]="savingStandIn()"
+            >
+              <i class="fa-solid fa-user-xmark"></i>
+              {{ 'case_clear_stand_in' | translate }}
+            </button>
+          </div>
+        </div>
         </div>
 
         <!-- No active consultant: pick + assign -->

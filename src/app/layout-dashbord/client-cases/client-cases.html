@@ -22,6 +22,12 @@
       tooltipPosition="top">
       <i class="fa-solid fa-circle"></i>
     </span>
+    <!-- Who is covering the slot, when someone is. -->
+    <span *ngIf="item.standInConsultantName" class="stand-in-name"
+      [pTooltip]="'case_stand_in' | translate" tooltipPosition="top">
+      <i class="fa-solid fa-user-clock"></i>
+      {{ item.standInConsultantName }}
+    </span>
   </div>
 </ng-template>
 
@@ -37,6 +43,12 @@
       [pTooltip]="('assignment_status_' + (item.assignmentStatus ?? 'unassigned').toLowerCase()) | translate"
       tooltipPosition="top">
       <i class="fa-solid fa-circle"></i>
+    </span>
+    <!-- Who is covering the slot, when someone is. -->
+    <span *ngIf="item.standInLawyerName" class="stand-in-name"
+      [pTooltip]="'case_stand_in' | translate" tooltipPosition="top">
+      <i class="fa-solid fa-user-clock"></i>
+      {{ item.standInLawyerName }}
     </span>
   </div>
 </ng-template>

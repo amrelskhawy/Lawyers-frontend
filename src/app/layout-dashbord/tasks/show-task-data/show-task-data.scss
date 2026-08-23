@@ -116,24 +116,6 @@
     cursor: default;
     user-select: none;
     flex: 0 0 auto;
-
-    /* A stand-in, not an owner — dashed and muted so the difference is
-       readable at a glance. */
-    &.temp {
-      border-style: dashed;
-      background: transparent;
-      color: #8b733d;
-      opacity: 0.85;
-    }
-  }
-
-
-  /* Separates the owners from the stand-ins in the table cell. */
-  .ring-divider {
-    width: 1px;
-    height: 20px;
-    background: #d9d2c2;
-    margin: 0 2px;
   }
 
   .no-assignees {

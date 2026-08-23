@@ -605,7 +605,32 @@ $white: #ffffff;
 }
 
 
-.assign-form-row {
+/* The stand-in picker sits inside a filled slot's card and reuses the assign
+   row's shapes — same controls, one step down in emphasis. */
+.stand-in-row {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px dashed rgba($accent-gold, 0.35);
+
+  .hint {
+    display: block;
+    margin-top: 6px;
+    color: #6b7280;
+    font-size: 0.78rem;
+    line-height: 1.5;
+  }
+
+  .stand-in-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+  }
+}
+
+.assign-form-row,
+.stand-in-row {
   display: flex;
   align-items: flex-end;
   gap: 12px;

@@ -94,44 +94,11 @@
             filterBy="label"
             appendTo="body"
             placeholder="{{ 'task_select_assignees' | translate }}"
-            [style]="{ width: '100%' }"
-            (onChange)="onOwnersChange($event.value)">
+            [style]="{ width: '100%' }">
           </p-multiselect>
           <small class="hint">{{ 'task_visibility_hint' | translate }}</small>
         </div>
 
-        <!-- Stand-ins: who performs the task while an owner is away. Off by
-             default, so the roster above stays the plain "who owns this" list. -->
-        <div class="Group">
-          <div class="checkbox-row">
-            <div class="toggle-text">
-              <label>{{ 'task_has_temp_assignee' | translate }}</label>
-              <span>{{ 'task_has_temp_assignee_hint' | translate }}</span>
-            </div>
-            <p-toggleswitch
-              formControlName="hasTempAssignee"
-              (onChange)="onHasTempAssigneeChange($event.checked)">
-            </p-toggleswitch>
-          </div>
-        </div>
-
-        @if (hasTempAssignee()) {
-          <div class="Group">
-            <label>{{ 'task_temp_assignees' | translate }}</label>
-            <p-multiselect
-              formControlName="tempAssigneeIds"
-              [options]="tempUserOptions()"
-              optionLabel="label"
-              optionValue="value"
-              [filter]="true"
-              filterBy="label"
-              appendTo="body"
-              placeholder="{{ 'task_select_temp_assignees' | translate }}"
-              [style]="{ width: '100%' }">
-            </p-multiselect>
-            <small class="hint">{{ 'task_temp_assignee_select_hint' | translate }}</small>
-          </div>
-        }
 
         <div class="Group" *ngIf="canShareWithManagers">
           <div class="checkbox-row">

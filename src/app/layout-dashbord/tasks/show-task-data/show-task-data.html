@@ -36,7 +36,7 @@
       <div class="row">
         <span class="label">{{ 'task_assignees' | translate }}</span>
         <div class="value assignee-rings">
-          @for (person of task()?.ownerAvatars ?? []; track person.id) {
+          @for (person of task()?.assigneeAvatars ?? []; track person.id) {
             <span class="assignee-ring" [pTooltip]="person.name" tooltipPosition="top">
               {{ person.initials }}
             </span>
@@ -45,19 +45,6 @@
           }
         </div>
       </div>
-      <!-- Only worth a row when the task actually keeps stand-ins. -->
-      @if (task()?.tempAvatars?.length) {
-        <div class="row">
-          <span class="label">{{ 'task_temp_assignees' | translate }}</span>
-          <div class="value assignee-rings">
-            @for (person of task()?.tempAvatars ?? []; track person.id) {
-              <span class="assignee-ring temp" [pTooltip]="person.name" tooltipPosition="top">
-                {{ person.initials }}
-              </span>
-            }
-          </div>
-        </div>
-      }
       @if (task()?.case) {
         <div class="row">
           <span class="label">{{ 'case' | translate }}</span>

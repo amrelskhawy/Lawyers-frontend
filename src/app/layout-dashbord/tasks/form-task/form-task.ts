@@ -1,4 +1,4 @@
-import { Component, computed, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Data } from '../../../core/Servies/data';
 import { Auth } from '../../../core/Servies/auth';
@@ -23,15 +23,6 @@ export class FormTask implements OnInit {
   Form = signal<FormGroup>(new FormGroup({}));
   editing = signal<any>(null);
   users = signal<{ label: string; value: string }[]>([]);
-
-  /** Mirrors the two roster controls so the stand-in section can react to them. */
-  ownerIds = signal<string[]>([]);
-  hasTempAssignee = signal<boolean>(false);
-
-  /** Nobody can stand in for themselves — owners drop out of the stand-in list. */
-  tempUserOptions = computed(() =>
-    this.users().filter((u) => !this.ownerIds().includes(u.value)),
-  );
 
   statusOptions = [
     { label: 'task_status_TODO', value: 'TODO' },
@@ -72,8 +63,6 @@ export class FormTask implements OnInit {
         priority: ['MEDIUM', Validators.required],
         dueDate: [null],
         assigneeIds: [[]],
-        hasTempAssignee: [false],
-        tempAssigneeIds: [[]],
         isVisibleForOtherAdmins: [false],
       }),
     );
@@ -84,46 +73,25 @@ export class FormTask implements OnInit {
       this.resetForm();
       return;
     }
-    const owners = (task.assignees ?? []).filter((a: any) => !a.isTemp).map((a: any) => a.userId);
-    this.ownerIds.set(owners);
-    this.hasTempAssignee.set(task.hasTempAssignee ?? false);
     this.Form().patchValue({
       title: task.title ?? '',
       description: task.description ?? '',
       status: task.status ?? 'TODO',
       priority: task.priority ?? 'MEDIUM',
       dueDate: task.dueDate ? new Date(task.dueDate) : null,
-      assigneeIds: owners,
-      hasTempAssignee: task.hasTempAssignee ?? false,
-      tempAssigneeIds: (task.assignees ?? []).filter((a: any) => a.isTemp).map((a: any) => a.userId),
+      assigneeIds: (task.assignees ?? []).map((a: any) => a.userId),
       isVisibleForOtherAdmins: task.isVisibleForOtherAdmins ?? false,
     });
   }
 
   /** The blank state, shared by "add" and by a successful save. */
   private resetForm() {
-    this.ownerIds.set([]);
-    this.hasTempAssignee.set(false);
     this.Form().reset({
       status: 'TODO',
       priority: 'MEDIUM',
       assigneeIds: [],
-      hasTempAssignee: false,
-      tempAssigneeIds: [],
       isVisibleForOtherAdmins: false,
     });
-  }
-
-  /** Someone promoted to owner cannot also stand in for the task. */
-  onOwnersChange(ids: string[]) {
-    this.ownerIds.set(ids ?? []);
-    const temps: string[] = this.Form().get('tempAssigneeIds')?.value ?? [];
-    const kept = temps.filter((id) => !this.ownerIds().includes(id));
-    if (kept.length !== temps.length) this.Form().patchValue({ tempAssigneeIds: kept });
-  }
-
-  onHasTempAssigneeChange(value: boolean) {
-    this.hasTempAssignee.set(value);
   }
 
   loadUsers() {
@@ -147,10 +115,6 @@ export class FormTask implements OnInit {
       // The API takes an ISO instant; the picker hands back a Date.
       dueDate: raw.dueDate ? new Date(raw.dueDate).toISOString() : null,
       assigneeIds: raw.assigneeIds ?? [],
-      hasTempAssignee: raw.hasTempAssignee ?? false,
-      // The server ignores these while the switch is off; sending [] keeps the
-      // stored roster and the form in step either way.
-      tempAssigneeIds: raw.hasTempAssignee ? raw.tempAssigneeIds ?? [] : [],
     };
 
     const task = this.editing();

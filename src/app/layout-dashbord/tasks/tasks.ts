@@ -89,10 +89,7 @@ export class Tasks implements OnInit {
       priorityLabel: this.translate.instant(`task_priority_${item.priority}`),
       assigneeNames: (item.assignees ?? []).map((a: any) => a.user?.name).filter(Boolean).join('، '),
       // Rings rendered in the cell; the joined names above stay for search.
-      // Owners first, stand-ins after — the cell reads as "who owns it, then who
-      // covers for them".
-      ownerAvatars: this.toAvatars(item, false),
-      tempAvatars: item.hasTempAssignee ? this.toAvatars(item, true) : [],
+      assigneeAvatars: this.toAvatars(item),
       createdByName: item.createdBy?.name ?? '',
       dueDateLabel: due ? due.toLocaleDateString() : '—',
       // Overdue only matters while there is still work left on the task.
@@ -105,19 +102,14 @@ export class Tasks implements OnInit {
     };
   };
 
-  /** One ring per person on the task, on the side of the roster asked for. */
-  private toAvatars(item: any, isTemp: boolean) {
+  /** One ring per person assigned to the task. */
+  private toAvatars(item: any) {
     return (item.assignees ?? [])
-      .filter((a: any) => !!a.user && !!a.isTemp === isTemp)
+      .filter((a: any) => !!a.user)
       .map((a: any) => ({
         id: a.user.id,
         name: a.user.name,
-        isTemp,
-        // Precomputed like the other labels here — the pipe cannot reach inside
-        // a mapped row.
-        tooltip: isTemp
-          ? `${a.user.name} · ${this.translate.instant('task_temp_assignee_tag')}`
-          : a.user.name,
+        tooltip: a.user.name,
         initials: initialsOf(a.user.name),
       }));
   }

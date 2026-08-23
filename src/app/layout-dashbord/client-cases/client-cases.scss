@@ -119,9 +119,23 @@
   align-items: center;
   gap: 6px;
   white-space: nowrap;
+  flex-wrap: wrap;
 
   .assignee-name {
     font-size: 0.9rem;
+  }
+
+  // The stand-in sits on its own line under the holder — secondary by weight
+  // and size, so "who owns this" still reads first.
+  .stand-in-name {
+    flex-basis: 100%;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.78rem;
+    color: #6b7280;
+
+    i { color: #b99a4b; }
   }
 }
 

@@ -64,6 +64,12 @@ export interface IDataCase {
   consultantAssignmentStatus: CaseAssignmentStatus;
   consultantAssignmentRejectedAt: string | null;
   consultantAssignmentRejectionReason: string | null;
+  // Stand-ins: who covers each slot while its holder is away. Set directly by
+  // staff (no accept/reject of their own) and cleared when the slot is emptied.
+  tempLawyerId: string | null;
+  tempLawyerName: string | null;
+  tempConsultantId: string | null;
+  tempConsultantName: string | null;
   sessionReceiverId: string | null;
   sessionReceiverName: string | null;
   // Canonical session date is Hijri (sessionHijriDate + sessionTime); sessionDate
@@ -104,6 +110,8 @@ export interface IDataCase {
   customer?: { id: string; fullName: string; email: string; phone: string; caseReportsFolderId?: string | null } | null;
   preferredLawyer?: { id: string; name: string } | null;
   consultant?: { id: string; name: string } | null;
+  tempLawyer?: { id: string; name: string } | null;
+  tempConsultant?: { id: string; name: string } | null;
   sessionReceiver?: { id: string; name: string } | null;
   createdBy?: { id: string; name: string } | null;
 }
