@@ -8,6 +8,7 @@ import { CASE_TYPE_OPTIONS, IDataCase } from '../../core/Models/case.model';
 import { ILawyerFeesContract } from '../../core/Models/lawyer-fees-contract.model';
 import { LawyerFeesContractPreviewData } from '../../shared/lawyer-fees-contract-preview/lawyer-fees-contract-preview';
 import { COUNTRIES, Country } from '../../core/Models/countries.model';
+import { toIsoCalendarDate } from '../../core/utils/date-format';
 
 type SaveStatus = 'idle' | 'unsaved' | 'saving' | 'saved' | 'error';
 
@@ -396,12 +397,6 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
       .join('');
   }
 
-  private toIsoOrNull(v: any): string | null {
-    if (!v) return null;
-    const d = v instanceof Date ? v : new Date(v);
-    return isNaN(d.getTime()) ? null : d.toISOString();
-  }
-
   private numOrNull(v: any): number | null {
     if (v === null || v === undefined || v === '') return null;
     const n = Number(v);
@@ -416,7 +411,7 @@ export class LawyerFeesContract implements OnInit, OnDestroy {
 
       contractNumber: v.contractNumber || null,
       contractDay: v.contractDay || null,
-      contractDate: this.toIsoOrNull(v.contractDate),
+      contractDate: toIsoCalendarDate(v.contractDate),
       hijriDate: v.hijriDate || null,
 
       clientName: v.clientName || null,

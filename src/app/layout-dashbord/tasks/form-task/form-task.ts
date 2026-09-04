@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, signal } from '@angular
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Data } from '../../../core/Servies/data';
 import { Auth } from '../../../core/Servies/auth';
+import { toIsoCalendarDate } from '../../../core/utils/date-format';
 
 /** Create/edit dialog. Any staff member may create a task and assign it to anyone. */
 @Component({
@@ -112,8 +113,7 @@ export class FormTask implements OnInit {
     const body = {
       ...raw,
       description: raw.description?.trim() ? raw.description.trim() : null,
-      // The API takes an ISO instant; the picker hands back a Date.
-      dueDate: raw.dueDate ? new Date(raw.dueDate).toISOString() : null,
+      dueDate: toIsoCalendarDate(raw.dueDate),
       assigneeIds: raw.assigneeIds ?? [],
     };
 

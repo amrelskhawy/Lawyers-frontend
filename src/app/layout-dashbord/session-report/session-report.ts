@@ -6,6 +6,7 @@ import { Data } from '../../core/Servies/data';
 import { IDataCase } from '../../core/Models/case.model';
 import { IDataSessionReport } from '../../core/Models/session-report.model';
 import { SessionReportPreviewData } from './session-report-template/session-report-template';
+import { toIsoCalendarDate } from '../../core/utils/date-format';
 
 type SaveStatus = 'idle' | 'unsaved' | 'saving' | 'saved' | 'error';
 
@@ -203,16 +204,10 @@ export class SessionReport implements OnInit, OnDestroy {
       });
   }
 
-  private toIsoOrNull(v: any): string | null {
-    if (!v) return null;
-    const d = v instanceof Date ? v : new Date(v);
-    return isNaN(d.getTime()) ? null : d.toISOString();
-  }
-
   private toPayload(v: any) {
     return {
       reportNumber: v.reportNumber || null,
-      sessionDate: this.toIsoOrNull(v.sessionDate),
+      sessionDate: toIsoCalendarDate(v.sessionDate),
       sessionSummary: v.sessionSummary || null,
       courtName: v.courtName || null,
       courtCircuit: v.courtCircuit || null,

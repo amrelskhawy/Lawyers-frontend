@@ -10,6 +10,7 @@ import { IDataCustomer } from '../../../core/Models/customers.model';
 import { IUser } from '../../users/users';
 import { CaseReportData } from '../case-report-template/case-report-template';
 import { canonicalToPickerHijri, gregorianToPickerHijri, pickerToCanonicalHijri } from '../../../core/utils/hijri-format';
+import { toIsoCalendarDate } from '../../../core/utils/date-format';
 
 type SaveStatus = 'idle' | 'unsaved' | 'saving' | 'saved' | 'error';
 
@@ -364,9 +365,7 @@ export class EditCase implements OnInit, OnDestroy {
       customerId: value.customerId,
       caseType: value.caseType,
       otherCaseType: value.caseType === 'OTHER' ? (value.otherCaseType || null) : null,
-      caseDate: value.caseDate
-        ? (value.caseDate instanceof Date ? value.caseDate : new Date(value.caseDate)).toISOString()
-        : undefined,
+      caseDate: toIsoCalendarDate(value.caseDate) ?? undefined,
       sessionReceiverId,
       sessionReceiverName,
       hasStructuredNotes: false,

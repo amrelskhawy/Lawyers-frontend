@@ -8,6 +8,7 @@ import { IDataCustomer } from '../../core/Models/customers.model';
 import { TEAM_MEMBERS } from '../../core/Models/team-members';
 import { IFieldVisitReport } from '../../core/Models/field-visit-report.model';
 import { FieldVisitReportPreviewData } from './field-visit-report-template/field-visit-report-template';
+import { toIsoCalendarDate } from '../../core/utils/date-format';
 
 type SaveStatus = 'idle' | 'unsaved' | 'saving' | 'saved' | 'error';
 
@@ -203,12 +204,6 @@ export class FieldVisitReport implements OnInit, OnDestroy {
       });
   }
 
-  private toIsoOrNull(v: any): string | null {
-    if (!v) return null;
-    const d = v instanceof Date ? v : new Date(v);
-    return isNaN(d.getTime()) ? null : d.toISOString();
-  }
-
   private toPayload(v: any) {
     return {
       reviewLawyer:  v.reviewLawyer  || null,
@@ -216,7 +211,7 @@ export class FieldVisitReport implements OnInit, OnDestroy {
       agencyNumber:  v.agencyNumber  || null,
       clientName:    v.clientName    || null,
       caseNumber:    v.caseNumber    || null,
-      reviewDate:    this.toIsoOrNull(v.reviewDate),
+      reviewDate:    toIsoCalendarDate(v.reviewDate),
       reportSummary: v.reportSummary || null,
     };
   }

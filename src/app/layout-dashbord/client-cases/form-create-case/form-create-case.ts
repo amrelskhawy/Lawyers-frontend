@@ -4,6 +4,7 @@ import { Data } from '../../../core/Servies/data';
 import { CASE_TYPE_OPTIONS, IDataCase, ILawyerOption } from '../../../core/Models/case.model';
 import { IDataCustomer } from '../../../core/Models/customers.model';
 import { IUser } from '../../users/users';
+import { toIsoCalendarDate } from '../../../core/utils/date-format';
 
 @Component({
   selector: 'app-form-create-case',
@@ -102,7 +103,7 @@ export class FormCreateCase implements OnInit {
     const payload: any = {
       customerId: v.customerId,
       caseType: v.caseType,
-      caseDate: (v.caseDate instanceof Date ? v.caseDate : new Date(v.caseDate)).toISOString(),
+      caseDate: toIsoCalendarDate(v.caseDate),
       isRealCustomer: !!v.isRealCustomer,
       isCompany: !!v.isCompany,
       sourceLawyerId: v.isCompany ? null : v.sourceLawyerId,

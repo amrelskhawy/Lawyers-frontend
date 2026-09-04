@@ -5,6 +5,7 @@ import {
   ICasePaymentContract,
   IContractPaymentsSummary,
 } from '../../core/Models/financials.model';
+import { toIsoCalendarDate } from '../../core/utils/date-format';
 
 /**
  * Records collections against a lawyer fees contract and shows what is still
@@ -143,14 +144,13 @@ export class ContractPaymentsDialog implements OnChanges {
     }
 
     const v = this.form.value;
-    const paidAt = v.paidAt instanceof Date ? v.paidAt : new Date(v.paidAt);
 
     this.saving.set(true);
     this.error.set('');
     this.data
       .post<{ data: IContractPaymentsSummary }>(
         `lawyer-fees-contracts/${contractId}/payments`,
-        { amount: Number(v.amount), paidAt: paidAt.toISOString(), note: v.note || null },
+        { amount: Number(v.amount), paidAt: toIsoCalendarDate(v.paidAt), note: v.note || null },
       )
       .subscribe({
         next: (res) => {
