@@ -51,13 +51,14 @@ export class ArticlesList implements OnInit {
         description,
         canonical: this.seo.url('articles'),
         type: 'website',
+        language: this.seo.uiLanguage,
         jsonLd: {
           '@context': 'https://schema.org',
           '@type': 'Blog',
           '@id': this.seo.url('articles'),
           name: this.pageTitle,
           description,
-          inLanguage: 'ar',
+          inLanguage: this.seo.uiLanguage,
           publisher: { '@type': 'Organization', name: this.seo.siteName },
           blogPost: this.articles().map((article) => ({
             '@type': 'BlogPosting',

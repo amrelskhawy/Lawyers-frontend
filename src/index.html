@@ -1,13 +1,25 @@
 <!doctype html>
-<html lang="en">
+<!--
+  Arabic is the site's primary language: it is what most visitors read, what
+  the manifest declares, and what a crawler must be told before it ever runs
+  the JavaScript. The Translation component swaps `lang`/`dir` at runtime for a
+  visitor who chooses English.
+-->
+<html lang="ar" dir="rtl">
 
 <head>
   <meta charset="utf-8">
-  <title>Saad Al-Baqami Law Firm & Legal Consultations</title>
+  <title>شركة سعد البقمي للمحاماة والاستشارات القانونية | Saad Al-Baqami Law Firm & Legal Consultations</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description"
-    content="Saad Al-Baqami Law Firm & Legal Consultations – Professional and specialized legal services covering all aspects of Saudi law with over 15 years of experience.">
+  <!--
+    Arabic description: this is the snippet Google shows for the Arabic queries
+    that bring in most of the traffic. Angular replaces it with the translated
+    string once it boots, but a crawler that does not run JavaScript keeps this
+    one — so it has to be the Arabic copy, not a placeholder.
+  -->
+  <meta name="description" content="شركة سعد البقمي للمحاماة والاستشارات القانونية تقدم خدمات قانونية احترافية ومتخصصة تغطي جميع جوانب القانون السعودي، بخبرة تمتد لأكثر من 15 عامًا في العقود والتقاضي والشركات وقضايا الأسرة.">
+  <meta name="language" content="Arabic">
   <link rel="icon" type="image/svg+xml" href="assets/Img/LOGO-GOLD.svg">
   <link rel="canonical" href="https://www.saadalboqami.com/">
 
@@ -17,19 +29,17 @@
     JavaScript — what is written here is the whole preview they will build.
   -->
   <meta name="robots" content="index, follow">
-  <meta property="og:site_name" content="Saad Al-Baqami Law Firm & Legal Consultations">
+  <meta property="og:site_name" content="شركة سعد البقمي للمحاماة والاستشارات القانونية">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Saad Al-Baqami Law Firm & Legal Consultations">
-  <meta property="og:description"
-    content="Saad Al-Baqami Law Firm & Legal Consultations – Professional and specialized legal services covering all aspects of Saudi law with over 15 years of experience.">
+  <meta property="og:title" content="شركة سعد البقمي للمحاماة والاستشارات القانونية">
+  <meta property="og:description" content="شركة سعد البقمي للمحاماة والاستشارات القانونية تقدم خدمات قانونية احترافية ومتخصصة تغطي جميع جوانب القانون السعودي، بخبرة تمتد لأكثر من 15 عامًا في العقود والتقاضي والشركات وقضايا الأسرة.">
   <meta property="og:url" content="https://www.saadalboqami.com/">
   <meta property="og:image" content="https://www.saadalboqami.com/assets/Img/LOGO-GOLD.svg">
   <meta property="og:locale" content="ar_SA">
   <meta property="og:locale:alternate" content="en_US">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Saad Al-Baqami Law Firm & Legal Consultations">
-  <meta name="twitter:description"
-    content="Saad Al-Baqami Law Firm & Legal Consultations – Professional and specialized legal services covering all aspects of Saudi law with over 15 years of experience.">
+  <meta name="twitter:title" content="شركة سعد البقمي للمحاماة والاستشارات القانونية">
+  <meta name="twitter:description" content="شركة سعد البقمي للمحاماة والاستشارات القانونية تقدم خدمات قانونية احترافية ومتخصصة تغطي جميع جوانب القانون السعودي، بخبرة تمتد لأكثر من 15 عامًا في العقود والتقاضي والشركات وقضايا الأسرة.">
   <meta name="twitter:image" content="https://www.saadalboqami.com/assets/Img/LOGO-GOLD.svg">
 
   <!--
@@ -43,12 +53,15 @@
     "@context": "https://schema.org",
     "@type": "LegalService",
     "@id": "https://www.saadalboqami.com/#organization",
-    "name": "Saad Al-Baqami Law Firm & Legal Consultations",
+    "name": "شركة سعد البقمي للمحاماة والاستشارات القانونية",
+    "alternateName": "Saad Al-Baqami Law Firm & Legal Consultations",
+    "inLanguage": ["ar", "en"],
     "url": "https://www.saadalboqami.com/",
     "logo": "https://www.saadalboqami.com/assets/Img/LOGO-GOLD.svg",
     "image": "https://www.saadalboqami.com/assets/Img/LOGO-GOLD.svg",
-    "description": "Professional and specialized legal services covering all aspects of Saudi law with over 15 years of experience.",
-    "areaServed": { "@type": "Country", "name": "Saudi Arabia" },
+    "description": "شركة سعد البقمي للمحاماة والاستشارات القانونية تقدم خدمات قانونية احترافية ومتخصصة تغطي جميع جوانب القانون السعودي، بخبرة تمتد لأكثر من 15 عامًا في العقود والتقاضي والشركات وقضايا الأسرة.",
+    "knowsLanguage": ["ar", "en"],
+    "areaServed": { "@type": "Country", "name": "المملكة العربية السعودية" },
     "address": { "@type": "PostalAddress", "addressCountry": "SA" },
     "availableLanguage": ["ar", "en"],
     "blog": {

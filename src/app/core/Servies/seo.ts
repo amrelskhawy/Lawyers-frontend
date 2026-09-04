@@ -19,21 +19,35 @@ export interface SeoConfig {
   publishedTime?: string | null;
   modifiedTime?: string | null;
   authorName?: string | null;
+  /**
+   * Language of the *content*, not of the UI chrome. Most articles here are
+   * Arabic even when a visitor has the interface set to English, and it is the
+   * content's language a crawler needs.
+   */
+  language?: 'ar' | 'en';
+  /** Open Graph locale matching `language`, e.g. `ar_SA`. */
+  locale?: string;
   /** schema.org graph for this page. Replaces whatever the last page set. */
   jsonLd?: Record<string, unknown> | Record<string, unknown>[] | null;
 }
 
-const SITE_NAME = 'Saad Al-Baqami Law Firm & Legal Consultations';
-
-/** Used on every page that does not override them. */
-const SITE_DEFAULTS: SeoConfig = {
-  title: SITE_NAME,
-  description:
-    'Saad Al-Baqami Law Firm & Legal Consultations – Professional and specialized legal services covering all aspects of Saudi law with over 15 years of experience.',
-  image: `${environment.siteUrl}/assets/Img/LOGO-GOLD.svg`,
-  type: 'website',
-  robots: 'index, follow',
+/**
+ * The firm's name in each language. Arabic first — it is what most visitors
+ * search for, and what index.html and the manifest already declare. Kept here
+ * rather than in the translation files because it has to be readable
+ * synchronously, before the i18n bundle has loaded.
+ */
+const SITE_NAME: Record<'ar' | 'en', string> = {
+  ar: 'شركة سعد البقمي للمحاماة والاستشارات القانونية',
+  en: 'Saad Al-Baqami Law Firm & Legal Consultations',
 };
+
+const SITE_DESCRIPTION: Record<'ar' | 'en', string> = {
+  ar: 'شركة سعد البقمي للمحاماة والاستشارات القانونية تقدم خدمات قانونية احترافية ومتخصصة تغطي جميع جوانب القانون السعودي، بخبرة تمتد لأكثر من 15 عامًا في العقود والتقاضي والشركات وقضايا الأسرة.',
+  en: 'Saad Al-Baqami Law Firm & Legal Consultations – professional and specialized legal services covering all aspects of Saudi law, with over 15 years of experience.',
+};
+
+const SITE_IMAGE = `${environment.siteUrl}/assets/Img/LOGO-GOLD.svg`;
 
 /**
  * The one place that writes crawler-facing tags.
@@ -52,7 +66,15 @@ export class Seo {
 
   /** Absolute origin, no trailing slash — matches the backend's SITE_URL. */
   readonly siteUrl = environment.siteUrl.replace(/\/+$/, '');
-  readonly siteName = SITE_NAME;
+  /** The firm's name in the language the visitor is currently reading. */
+  get siteName(): string {
+    return SITE_NAME[this.uiLanguage];
+  }
+
+  /** The other language's name — used as `alternateName` in structured data. */
+  get siteNameAlternate(): string {
+    return SITE_NAME[this.uiLanguage === 'ar' ? 'en' : 'ar'];
+  }
 
   /**
    * Whether the current route has published its own tags yet. Route defaults
@@ -73,7 +95,18 @@ export class Seo {
    */
   applySiteDefaults(description?: string | null): void {
     if (this.ownedByPage) return;
-    this.write({ ...SITE_DEFAULTS, description: description || SITE_DEFAULTS.description, jsonLd: null });
+    const language = this.uiLanguage;
+    this.write({
+      title: SITE_NAME[language],
+      // The translated string when i18n has loaded, otherwise the built-in copy
+      // for that language — never the English one as a stand-in for Arabic.
+      description: description || SITE_DESCRIPTION[language],
+      image: SITE_IMAGE,
+      type: 'website',
+      robots: 'index, follow',
+      language,
+      jsonLd: null,
+    });
   }
 
   /** A page claiming its own metadata. Wins over the site defaults. */
@@ -83,27 +116,34 @@ export class Seo {
   }
 
   private write(config: SeoConfig): void {
-    const description = (config.description ?? SITE_DEFAULTS.description ?? '').trim();
+    const description = (config.description ?? SITE_DESCRIPTION[this.uiLanguage]).trim();
     const canonical = this.absolute(config.canonical) ?? this.currentUrl();
-    const image = this.absolute(config.image) ?? SITE_DEFAULTS.image!;
+    const image = this.absolute(config.image) ?? SITE_IMAGE;
     const type = config.type ?? 'website';
-    const locale = this.document.documentElement.lang === 'en' ? 'en_US' : 'ar_SA';
+    // A page that knows its own content language wins; otherwise the language
+    // the visitor is browsing in.
+    const language = config.language ?? this.uiLanguage;
+    const locale = config.locale ?? (language === 'en' ? 'en_US' : 'ar_SA');
 
     this.title.setTitle(config.title);
 
     this.set('name', 'description', description);
     this.set('name', 'robots', config.robots ?? 'index, follow');
     this.set('name', 'keywords', config.keywords?.join(', ') ?? '');
-    this.set('name', 'author', config.authorName ?? SITE_NAME);
+    this.set('name', 'author', config.authorName ?? this.siteName);
 
     // Open Graph — Facebook, WhatsApp, LinkedIn, Telegram.
-    this.set('property', 'og:site_name', SITE_NAME);
+    this.set('property', 'og:site_name', this.siteName);
     this.set('property', 'og:type', type);
     this.set('property', 'og:title', config.title);
     this.set('property', 'og:description', description);
     this.set('property', 'og:url', canonical);
     this.set('property', 'og:image', image);
     this.set('property', 'og:locale', locale);
+    this.set('property', 'og:locale:alternate', language === 'ar' ? 'en_US' : 'ar_SA');
+    // Spelled out for the crawlers that read this rather than sniffing the
+    // script — the Arabic pages are the ones that must not be mislabelled.
+    this.set('name', 'language', language === 'en' ? 'English' : 'Arabic');
 
     // X/Twitter reads its own namespace; `summary_large_image` is what turns a
     // shared link into a full-width card instead of a thumbnail.
@@ -160,6 +200,16 @@ export class Seo {
     script.type = 'application/ld+json';
     script.text = JSON.stringify(data);
     this.document.head.appendChild(script);
+  }
+
+  /**
+   * The language the visitor is currently reading the site in. Read from the
+   * live `<html lang>` — index.html ships `ar`, and the Translation component
+   * rewrites it when someone switches — so this is correct from first paint
+   * without waiting on the i18n bundle.
+   */
+  get uiLanguage(): 'ar' | 'en' {
+    return this.document.documentElement.lang === 'en' ? 'en' : 'ar';
   }
 
   /** Builds an absolute site URL from a route path. */

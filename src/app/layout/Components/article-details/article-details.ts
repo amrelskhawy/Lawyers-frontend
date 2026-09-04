@@ -70,6 +70,8 @@ export class ArticleDetails implements OnInit {
       keywords: article.seo.keywords,
       publishedTime: article.seo.publishedTime,
       modifiedTime: article.seo.modifiedTime,
+      language: article.seo.language,
+      locale: article.seo.locale,
       authorName: article.createdBy?.name ?? null,
       jsonLd: this.buildJsonLd(article),
     });
@@ -91,7 +93,7 @@ export class ArticleDetails implements OnInit {
         keywords: article.seo.keywords.length ? article.seo.keywords : undefined,
         datePublished: article.seo.publishedTime ?? undefined,
         dateModified: article.seo.modifiedTime ?? article.seo.publishedTime ?? undefined,
-        inLanguage: 'ar',
+        inLanguage: article.seo.language,
         author: article.createdBy?.name
           ? { '@type': 'Person', name: article.createdBy.name }
           : { '@type': 'Organization', name: this.seo.siteName },

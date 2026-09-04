@@ -6,6 +6,11 @@ export type ArticleStatus = 'DRAFT' | 'PUBLISHED';
  * are decided server-side so the page and the sitemap can never disagree.
  */
 export interface IArticleSeo {
+  /** The article's own language, not the visitor's UI language. */
+  language: 'ar' | 'en';
+  /** Open Graph locale for that language, e.g. `ar_SA`. */
+  locale: string;
+  dir: 'rtl' | 'ltr';
   title: string;
   description: string;
   canonical: string;
@@ -29,6 +34,7 @@ export interface IArticle {
   metaDescription: string | null;
   keywords: string[];
   noIndex: boolean;
+  language: 'ar' | 'en';
   publishedAt: string | null;
   createdAt: string;
   updatedAt: string;
@@ -67,4 +73,6 @@ export interface IArticlePayload {
   metaDescription?: string | null;
   keywords?: string[];
   noIndex?: boolean;
+  /** Detected from the body server-side; sent only to override a wrong guess. */
+  language?: 'ar' | 'en';
 }
