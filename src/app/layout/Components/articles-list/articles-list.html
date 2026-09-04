@@ -1,0 +1,72 @@
+<app-top-header></app-top-header>
+<app-header></app-header>
+<app-drawer-left></app-drawer-left>
+
+<main class="articles-page">
+  <section class="articles-hero">
+    <h1>{{ 'articles_page_title' | translate }}</h1>
+    <p>{{ 'articles_page_subtitle' | translate }}</p>
+  </section>
+
+  <div class="container">
+    @if (loading()) {
+      <div class="cards-grid">
+        @for (placeholder of [1, 2, 3, 4, 5, 6]; track placeholder) {
+          <div class="card card--skeleton">
+            <div class="skeleton-cover"></div>
+            <div class="skeleton-line"></div>
+            <div class="skeleton-line short"></div>
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="cards-grid">
+        @for (article of articles(); track article.id) {
+          <a class="card" [routerLink]="['/articles', article.slug]">
+            <div class="card-cover">
+              @if (article.coverImage) {
+                <img [src]="article.coverImage" [alt]="article.title" loading="lazy" />
+              } @else {
+                <span class="cover-fallback"><i class="fa-regular fa-newspaper"></i></span>
+              }
+            </div>
+
+            <div class="card-body">
+              <h2>{{ article.title }}</h2>
+              @if (article.excerpt) {
+                <p class="card-excerpt">{{ article.excerpt }}</p>
+              }
+
+              <div class="card-meta">
+                @if (article.publishedAt) {
+                  <span>{{ article.publishedAt | date: 'mediumDate' }}</span>
+                }
+                @if (article.createdBy?.name) {
+                  <span>{{ article.createdBy?.name }}</span>
+                }
+              </div>
+
+              <span class="card-cta">
+                {{ 'article_read_more' | translate }}
+                <i class="fa-solid fa-arrow-left"></i>
+              </span>
+            </div>
+          </a>
+        } @empty {
+          <p class="empty-state">{{ 'articles_empty' | translate }}</p>
+        }
+      </div>
+
+      @if (hasMore()) {
+        <div class="load-more-wrap">
+          <button type="button" class="btn-load-more" (click)="loadMore()" [disabled]="loadingMore()">
+            <i class="fa-solid" [ngClass]="loadingMore() ? 'fa-spinner fa-spin' : 'fa-plus'"></i>
+            {{ 'more' | translate }}
+          </button>
+        </div>
+      }
+    }
+  </div>
+</main>
+
+<app-footer></app-footer>

@@ -1,0 +1,54 @@
+<p-dialog
+  maskStyleClass="backdrop-blur-sm"
+  [(visible)]="visible"
+  (onHide)="closeDialog()"
+  [modal]="true"
+  [baseZIndex]="10000"
+  styleClass="modern-modal"
+  [style]="{ width: '95vw', maxWidth: '820px' }"
+>
+  <ng-template pTemplate="headless">
+    <div class="Header-Popup-Task">
+      <div>
+        <h3>{{ 'articles' | translate }}</h3>
+        <p>{{ 'article_preview' | translate }}</p>
+      </div>
+      <img height="100" width="100" src="/assets/Img/LOGO-GOLD.svg" alt="logo" class="header-logo" />
+    </div>
+
+    <div class="content-view">
+      @if (article(); as item) {
+        @if (item.coverImage) {
+          <img class="preview-cover" [src]="item.coverImage" [alt]="item.title" />
+        }
+
+        <h2 class="preview-title">{{ item.title }}</h2>
+
+        <div class="preview-meta">
+          <span class="tag" [ngClass]="'status-' + item.status">
+            {{ 'article_status_' + item.status | translate }}
+          </span>
+          <span>{{ item.createdBy?.name }}</span>
+          @if (item.publishedAt) {
+            <span>{{ item.publishedAt | date: 'mediumDate' }}</span>
+          }
+        </div>
+
+        @if (item.status === 'PUBLISHED') {
+          <a class="preview-link" [href]="publicUrl" target="_blank" rel="noopener noreferrer">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> {{ 'article_open_public' | translate }}
+          </a>
+        }
+
+        <!-- Server-sanitised HTML — see ArticleHtmlPipe. -->
+        <div class="preview-body" [innerHTML]="item.content | articleHtml"></div>
+      }
+    </div>
+
+    <div class="footer-view">
+      <button type="button" class="btn-close-dilog" (click)="closeDialog()">
+        {{ 'close' | translate }}
+      </button>
+    </div>
+  </ng-template>
+</p-dialog>

@@ -23,6 +23,7 @@ import { Error } from './error/error';
 import { NoData } from './no-data/no-data';
 import { HijriDatepicker } from './hijri-datepicker/hijri-datepicker';
 import { Time12Pipe } from './time12-pipe';
+import { ArticleHtmlPipe } from './article-html-pipe';
 import { FormsModule } from '@angular/forms';
 import { PwaUpdate } from './pwa-update/pwa-update';
 import { PwaInstall } from './pwa-install/pwa-install';
@@ -44,6 +45,7 @@ import { PwaInstall } from './pwa-install/pwa-install';
     NoData,
     HijriDatepicker,
     Time12Pipe,
+    ArticleHtmlPipe,
     PwaUpdate,
     PwaInstall,
   ],
@@ -72,6 +74,7 @@ import { PwaInstall } from './pwa-install/pwa-install';
     NoData,
     HijriDatepicker,
     Time12Pipe,
+    ArticleHtmlPipe,
     PwaUpdate,
     PwaInstall,
   ],

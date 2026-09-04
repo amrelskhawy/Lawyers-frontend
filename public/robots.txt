@@ -1,0 +1,11 @@
+# Served from the site root — a robots.txt anywhere else is ignored by every
+# crawler, so this file must stay directly under public/.
+User-agent: *
+Allow: /
+
+# Private surfaces: nothing here should ever reach an index.
+Disallow: /dashboard
+Disallow: /auth
+Disallow: /sign-contract
+
+Sitemap: https://www.saadalboqami.com/sitemap.xml

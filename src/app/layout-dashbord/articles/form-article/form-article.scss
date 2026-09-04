@@ -1,0 +1,224 @@
+@use "../../glopalstyles.scss";
+
+.Header-Popup-Task {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--primary-navy);
+  color: var(--white-color);
+  padding: 10px 20px;
+
+  h3 {
+    color: var(--accent-gold);
+  }
+}
+
+/* Same headless-dialog treatment as the task form: the panel is the scroll
+   container, so a long article form scrolls inside the card. */
+:host ::ng-deep .p-dialog.modern-modal {
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  overflow: hidden;
+}
+
+.content-form {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 1.5rem;
+}
+
+.task-textarea {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.hint {
+  display: block;
+  margin-top: 0.35rem;
+  color: #6b7280;
+  font-size: 0.78rem;
+}
+
+.link-btn {
+  background: none;
+  border: 0;
+  color: #b91c1c;
+  cursor: pointer;
+  font-size: 0.8rem;
+  margin-top: 0.4rem;
+  padding: 0;
+}
+
+/* Cover picker — click the frame to choose, the preview replaces the prompt. */
+.cover-upload {
+  margin-top: 0.35rem;
+  width: 100%;
+  height: 180px;
+  border: 2px dashed var(--Platinum);
+  border-radius: 10px;
+  background: var(--bg-cream-light);
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s linear;
+
+  &:hover {
+    border-color: var(--accent-gold);
+  }
+
+  &.busy {
+    cursor: progress;
+    opacity: 0.7;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .cover-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--medium-gray);
+    font-size: 0.85rem;
+
+    i {
+      font-size: 1.8rem;
+    }
+  }
+}
+
+.rich-editor-wrap {
+  position: relative;
+  margin-top: 0.35rem;
+
+  /* The toolbar's own controls carry Quill's styles; only the frame is ours. */
+  ::ng-deep .p-editor-container {
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  /* Articles are written in Arabic by default — start the canvas RTL and let
+     the direction button flip individual blocks. */
+  ::ng-deep .ql-editor {
+    direction: rtl;
+    text-align: right;
+    min-height: 260px;
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+}
+
+/* Covers the canvas while an inserted picture is still uploading. */
+.editor-uploading {
+  position: absolute;
+  inset: auto 0 0 0;
+  background: rgba(0, 0, 0, 0.65);
+  color: var(--white-color);
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+
+  .btn-submit {
+    margin: 10px 0;
+  }
+
+  .btn-publish {
+    background-color: var(--primary-navy);
+    color: var(--white-color);
+    border: 0;
+    border-radius: 6px;
+    padding: 0.6rem 1.2rem;
+    cursor: pointer;
+    white-space: nowrap;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.error-message {
+  color: #b91c1c;
+  font-size: 0.78rem;
+}
+
+// ── SEO panel ──────────────────────────────────────────────────────────────
+// A <details> rather than a tab: the writer should be able to ignore it
+// entirely, and the browser handles the open/close state for free.
+.seo-panel {
+  border: 1px solid var(--surface-border, #e5e7eb);
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  background: var(--surface-50, #fafafa);
+
+  > summary {
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    list-style: none;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    i {
+      opacity: 0.7;
+    }
+  }
+
+  .seo-hint {
+    font-weight: 400;
+    font-size: 0.8rem;
+    opacity: 0.6;
+  }
+
+  > .Group {
+    margin-top: 1rem;
+  }
+
+  // The counter only shouts once the snippet would actually be truncated.
+  .hint.over {
+    color: #b45309;
+  }
+
+  .checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-weight: 500;
+
+    input {
+      width: 1rem;
+      height: 1rem;
+      accent-color: var(--primary-color, #14143a);
+    }
+  }
+}

@@ -65,6 +65,9 @@ import { Tasks } from './tasks/tasks';
 import { FormTask } from './tasks/form-task/form-task';
 import { ShowTaskData } from './tasks/show-task-data/show-task-data';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { Articles } from './articles/articles';
+import { FormArticle } from './articles/form-article/form-article';
+import { ShowArticleData } from './articles/show-article-data/show-article-data';
 
 @NgModule({
   declarations: [
@@ -116,6 +119,9 @@ import { MultiSelectModule } from 'primeng/multiselect';
     Tasks,
     FormTask,
     ShowTaskData,
+    Articles,
+    FormArticle,
+    ShowArticleData,
   ],
   imports: [
     CommonModule,

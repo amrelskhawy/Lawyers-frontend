@@ -56,6 +56,11 @@
               </a>
             </li>
 
+            <li class="nav-item" [routerLink]="['/articles']" (click)="visible = false">
+              <i class="fa-solid fa-newspaper"></i>
+              <span>{{ 'NAV_ARTICLES' | translate }}</span>
+            </li>
+
             <li class="nav-item" [routerLink]="['/booking']">
               <i class="fa-solid fa-business-time"></i>
               <span>{{ 'Book_with_us' | translate }}</span>

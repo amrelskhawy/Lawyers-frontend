@@ -1,0 +1,72 @@
+<app-top-header></app-top-header>
+<app-header></app-header>
+<app-drawer-left></app-drawer-left>
+
+<main class="article-page">
+  @if (loading()) {
+    <div class="container">
+      <div class="skeleton-title"></div>
+      <div class="skeleton-cover"></div>
+      <div class="skeleton-line"></div>
+      <div class="skeleton-line"></div>
+      <div class="skeleton-line short"></div>
+    </div>
+  } @else if (notFound() || !article()) {
+    <div class="container not-found">
+      <i class="fa-regular fa-face-frown"></i>
+      <p>{{ 'article_not_found' | translate }}</p>
+      <a class="back-link" [routerLink]="['/articles']">{{ 'article_back_to_list' | translate }}</a>
+    </div>
+  } @else if (article(); as item) {
+    <article class="container">
+      <a class="back-link" [routerLink]="['/articles']">
+        <i class="fa-solid fa-arrow-right"></i> {{ 'article_back_to_list' | translate }}
+      </a>
+
+      <h1 class="article-title">{{ item.title }}</h1>
+
+      <div class="article-meta">
+        @if (item.createdBy?.name) {
+          <span class="author">
+            @if (item.createdBy?.picture) {
+              <img [src]="item.createdBy?.picture" alt="" />
+            }
+            {{ item.createdBy?.name }}
+          </span>
+        }
+        @if (item.publishedAt) {
+          <span>{{ item.publishedAt | date: 'mediumDate' }}</span>
+        }
+      </div>
+
+      @if (item.coverImage) {
+        <img class="article-cover" [src]="item.coverImage" [alt]="item.title" />
+      }
+
+      <!-- Server-sanitised HTML — see ArticleHtmlPipe. -->
+      <div class="article-body" [innerHTML]="item.content | articleHtml"></div>
+    </article>
+
+    @if (item.related.length) {
+      <section class="related container">
+        <h2>{{ 'article_related' | translate }}</h2>
+        <div class="related-grid">
+          @for (related of item.related; track related.id) {
+            <a class="related-card" [routerLink]="['/articles', related.slug]">
+              <div class="related-cover">
+                @if (related.coverImage) {
+                  <img [src]="related.coverImage" [alt]="related.title" loading="lazy" />
+                } @else {
+                  <span class="cover-fallback"><i class="fa-regular fa-newspaper"></i></span>
+                }
+              </div>
+              <h3>{{ related.title }}</h3>
+            </a>
+          }
+        </div>
+      </section>
+    }
+  }
+</main>
+
+<app-footer></app-footer>

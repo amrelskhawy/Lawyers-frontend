@@ -1,0 +1,75 @@
+<ng-template #coverCell let-item>
+  @if (item.coverImage) {
+    <img class="cover-thumb" [src]="item.coverImage" [alt]="item.title" loading="lazy" />
+  } @else {
+    <span class="cover-thumb cover-thumb--empty"><i class="fa-regular fa-image"></i></span>
+  }
+</ng-template>
+
+<ng-template #statusCell let-item>
+  <button
+    type="button"
+    class="tag tag-toggle"
+    [ngClass]="'status-' + item.status"
+    [pTooltip]="(item.isPublished ? 'article_unpublish' : 'article_publish') | translate"
+    tooltipPosition="top"
+    (click)="onToggleStatus(item)">
+    {{ 'article_status_' + item.status | translate }}
+  </button>
+</ng-template>
+
+<ng-template #actions let-item let-onDelete="delete">
+  <div class="action-btn">
+    <button [attr.aria-label]="'show' | translate" (click)="onView(item)" class="show-btn">
+      <i class="fa-solid fa-eye"></i>
+    </button>
+    <button [attr.aria-label]="'edit' | translate" (click)="onEdit(item)" class="edit-btn">
+      <i class="fa-solid fa-pen"></i>
+    </button>
+    <button [attr.aria-label]="'delete' | translate" (click)="onDelete(item)" class="delete-btn">
+      <i class="fa-solid fa-trash"></i>
+    </button>
+  </div>
+</ng-template>
+
+<div class="scope-tabs">
+  <button [class.active]="activeScope() === 'all'" (click)="setScope('all')">
+    {{ 'article_scope_all' | translate }}
+  </button>
+  <button [class.active]="activeScope() === 'PUBLISHED'" (click)="setScope('PUBLISHED')">
+    {{ 'article_scope_published' | translate }}
+  </button>
+  <button [class.active]="activeScope() === 'DRAFT'" (click)="setScope('DRAFT')">
+    {{ 'article_scope_drafts' | translate }}
+  </button>
+</div>
+
+<app-dashboard-crud-page
+  endpoint="articles"
+  deleteEndpoint="articles"
+  bulkDeleteEndpoint="articles/many"
+  [columns]="columns"
+  [searchFields]="searchFields"
+  [selectable]="true"
+  [dataMapper]="dataMapper"
+  [actionsTemplate]="actions"
+  [extraParams]="extraParams()"
+  [columnTemplates]="{
+    coverImage: coverCell,
+    statusLabel: statusCell
+  }"
+  (addNew)="onAdd()">
+
+  <app-form-article
+    [visible]="visibelform()"
+    [objdata]="selectedArticle()"
+    (visibleChange)="visibelform.set($event)"
+    (success)="HandelResponseSuccess()">
+  </app-form-article>
+
+  <app-show-article-data
+    [visible]="visibelShow()"
+    [objdata]="selectedArticle()"
+    (visibleChange)="visibelShow.set($event)">
+  </app-show-article-data>
+</app-dashboard-crud-page>

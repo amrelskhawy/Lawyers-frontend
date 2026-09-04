@@ -193,6 +193,13 @@ export class Menue implements OnInit, OnDestroy {
         route: '/dashboard/content/addservies',
       }] : []),
 
+      // ── Admin + Moderator: blog articles ─────────────────────
+      ...(isAdmin || isModerator ? [{
+        name: 'articles',
+        icon: 'fa-solid fa-newspaper',
+        route: '/dashboard/content/articles',
+      }] : []),
+
       // ── Admin + Moderator: holidays ──────────────────────────
       ...(isAdmin || isModerator ? [{
         name: 'holidays_Day',

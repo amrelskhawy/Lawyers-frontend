@@ -21,6 +21,7 @@ import { UnscheduledCases } from './unscheduled-cases/unscheduled-cases';
 import { Financials } from './financials/financials';
 import { DocumentSigner } from './document-signer/document-signer';
 import { Tasks } from './tasks/tasks';
+import { Articles } from './articles/articles';
 
 const routes: Routes = [
   {
@@ -186,6 +187,13 @@ const routes: Routes = [
       {
         path: 'tasks',
         component: Tasks,
+      },
+
+      // ── Admin + Moderator: blog articles ─────────────────────────────────
+      {
+        path: 'articles',
+        component: Articles,
+        canActivate: [roleGuard('ADMIN', 'MODERATOR')],
       },
 
       { path: '**', redirectTo: '', pathMatch: 'full' },

@@ -27,6 +27,8 @@ import { ConfirmeBooking } from './Components/reservations/confirme-booking/conf
 import { TeamWork } from './Components/team-work/team-work';
 import { Payment } from './Components/reservations/payment/payment';
 import { Counter } from './Components/counter/counter';
+import { ArticlesList } from './Components/articles-list/articles-list';
+import { ArticleDetails } from './Components/article-details/article-details';
 @NgModule({
   declarations: [
     MainPage,
@@ -43,6 +45,8 @@ import { Counter } from './Components/counter/counter';
     TeamWork,
     Payment,
     Counter,
+    ArticlesList,
+    ArticleDetails,
   ],
   imports: [
     TranslateModule,

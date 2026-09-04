@@ -1,0 +1,200 @@
+<p-dialog
+  maskStyleClass="backdrop-blur-sm"
+  [(visible)]="visible"
+  (onHide)="onClose()"
+  [modal]="true"
+  [baseZIndex]="10000"
+  styleClass="modern-modal"
+  [style]="{ width: '95vw', maxWidth: '900px' }"
+>
+  <ng-template pTemplate="headless">
+    <div class="Header-Popup-Task">
+      <div>
+        <h3>{{ 'articles' | translate }}</h3>
+        <p>{{ (editing() ? 'edit_article' : 'add_article') | translate }}</p>
+      </div>
+
+      <img height="100" width="100" src="/assets/Img/LOGO-GOLD.svg" alt="logo" class="header-logo" />
+    </div>
+
+    <div class="content-form">
+      <form [formGroup]="Form()" (ngSubmit)="onSubmit()">
+
+        <!-- Cover image — the picture that fronts the article card and page -->
+        <div class="Group">
+          <label>{{ 'article_cover' | translate }}</label>
+          <input #coverInput type="file" accept="image/*" hidden (change)="onCoverSelected($event)" />
+
+          <div class="cover-upload" [class.busy]="uploadingCover()" role="button" tabindex="0"
+               [attr.aria-label]="'article_cover_upload' | translate"
+               (click)="!uploadingCover() && coverInput.click()"
+               (keydown.enter)="!uploadingCover() && coverInput.click()">
+            @if (getControlName('coverImage')?.value) {
+              <img [src]="getControlName('coverImage')?.value" alt="" />
+            } @else {
+              <div class="cover-placeholder">
+                <i class="fa-solid" [ngClass]="uploadingCover() ? 'fa-spinner fa-spin' : 'fa-image'"></i>
+                <span>{{ 'article_cover_upload' | translate }}</span>
+              </div>
+            }
+          </div>
+
+          @if (getControlName('coverImage')?.value && !uploadingCover()) {
+            <button type="button" class="link-btn" (click)="removeCover()">
+              <i class="fa-solid fa-trash"></i> {{ 'article_cover_remove' | translate }}
+            </button>
+          }
+        </div>
+
+        <div class="Group">
+          <label>{{ 'article_title' | translate }}</label>
+          <input type="text" pInputText formControlName="title" [style]="{ width: '100%' }" />
+          <div class="wrapper-error">
+            <small class="error-message" *ngIf="getControlName('title')?.invalid && getControlName('title')?.touched">
+              {{ 'filed_reqierd' | translate }}
+            </small>
+          </div>
+        </div>
+
+        <div class="Group">
+          <label>{{ 'article_slug' | translate }}</label>
+          <input type="text" pInputText formControlName="slug" [style]="{ width: '100%' }"
+                 placeholder="{{ 'article_slug_placeholder' | translate }}" />
+          <small class="hint">{{ 'article_slug_hint' | translate }}</small>
+        </div>
+
+        <div class="Group">
+          <label>{{ 'article_excerpt' | translate }}</label>
+          <textarea rows="2" formControlName="excerpt" class="task-textarea"
+                    placeholder="{{ 'article_excerpt_placeholder' | translate }}"></textarea>
+        </div>
+
+        <!-- Body — fonts, sizes, colours, alignment and inline images -->
+        <div class="Group">
+          <label>{{ 'article_content' | translate }}</label>
+
+          <input #bodyImageInput type="file" accept="image/*" hidden (change)="onBodyImageSelected($event)" />
+
+          <div class="rich-editor-wrap" [class.busy]="uploadingBodyImage()">
+            <p-editor formControlName="content" [style]="{ height: '340px' }" (onEditorInit)="onEditorInit($event)">
+              <ng-template pTemplate="header">
+                <span class="ql-formats">
+                  <select class="ql-font"></select>
+                  <select class="ql-size"></select>
+                  <select class="ql-header"></select>
+                </span>
+                <span class="ql-formats">
+                  <button type="button" class="ql-bold"></button>
+                  <button type="button" class="ql-italic"></button>
+                  <button type="button" class="ql-underline"></button>
+                  <button type="button" class="ql-strike"></button>
+                </span>
+                <span class="ql-formats">
+                  <select class="ql-color"></select>
+                  <select class="ql-background"></select>
+                </span>
+                <span class="ql-formats">
+                  <select class="ql-align"></select>
+                  <button type="button" class="ql-direction" value="rtl"></button>
+                </span>
+                <span class="ql-formats">
+                  <button type="button" class="ql-list" value="ordered"></button>
+                  <button type="button" class="ql-list" value="bullet"></button>
+                  <button type="button" class="ql-indent" value="-1"></button>
+                  <button type="button" class="ql-indent" value="+1"></button>
+                </span>
+                <span class="ql-formats">
+                  <button type="button" class="ql-blockquote"></button>
+                  <button type="button" class="ql-code-block"></button>
+                </span>
+                <span class="ql-formats">
+                  <button type="button" class="ql-link"></button>
+                  <button type="button" class="ql-image"></button>
+                </span>
+                <span class="ql-formats">
+                  <button type="button" class="ql-clean"></button>
+                </span>
+              </ng-template>
+            </p-editor>
+
+            @if (uploadingBodyImage()) {
+              <div class="editor-uploading">
+                <i class="fa-solid fa-spinner fa-spin"></i> {{ 'article_uploading_image' | translate }}
+              </div>
+            }
+          </div>
+
+          <div class="wrapper-error">
+            <small class="error-message" *ngIf="getControlName('content')?.invalid && getControlName('content')?.touched">
+              {{ 'filed_reqierd' | translate }}
+            </small>
+            <small class="error-message" *ngIf="imageError()">{{ imageError() }}</small>
+          </div>
+        </div>
+
+        <!--
+          SEO. Collapsed by default so it never gets between the writer and the
+          article, but always one click away — an article published with the
+          defaults is still indexable, this is for tuning the search result.
+        -->
+        <details class="Group seo-panel">
+          <summary>
+            <i class="fa-solid fa-magnifying-glass-chart"></i>
+            {{ 'article_seo_section' | translate }}
+            <span class="seo-hint">{{ 'article_seo_optional' | translate }}</span>
+          </summary>
+
+          <div class="Group">
+            <label>{{ 'article_meta_title' | translate }}</label>
+            <input type="text" pInputText formControlName="metaTitle" [style]="{ width: '100%' }"
+                   placeholder="{{ 'article_meta_title_placeholder' | translate }}" />
+            <small class="hint" [class.over]="seoOverLimit('metaTitle')">
+              {{ seoLength('metaTitle') }} / {{ SEO_TITLE_LIMIT }} — {{ 'article_meta_title_hint' | translate }}
+            </small>
+          </div>
+
+          <div class="Group">
+            <label>{{ 'article_meta_description' | translate }}</label>
+            <textarea rows="2" formControlName="metaDescription" class="task-textarea"
+                      placeholder="{{ 'article_meta_description_placeholder' | translate }}"></textarea>
+            <small class="hint" [class.over]="seoOverLimit('metaDescription')">
+              {{ seoLength('metaDescription') }} / {{ SEO_DESCRIPTION_LIMIT }} —
+              {{ 'article_meta_description_hint' | translate }}
+            </small>
+          </div>
+
+          <div class="Group">
+            <label>{{ 'article_keywords' | translate }}</label>
+            <input type="text" pInputText formControlName="keywords" [style]="{ width: '100%' }"
+                   placeholder="{{ 'article_keywords_placeholder' | translate }}" />
+            <small class="hint">{{ 'article_keywords_hint' | translate }}</small>
+          </div>
+
+          <div class="Group seo-noindex">
+            <label class="checkbox-row">
+              <input type="checkbox" formControlName="noIndex" />
+              <span>{{ 'article_noindex' | translate }}</span>
+            </label>
+            <small class="hint">{{ 'article_noindex_hint' | translate }}</small>
+          </div>
+        </details>
+
+        <div class="Group form-actions">
+          <button class="btn-submit" type="submit" [disabled]="saving()">
+            {{ (getControlName('status')?.value === 'PUBLISHED' ? 'article_save_published' : 'article_save_draft') | translate }}
+          </button>
+
+          @if (getControlName('status')?.value !== 'PUBLISHED') {
+            <button class="btn-publish" type="button" [disabled]="saving()" (click)="onPublish()">
+              <i class="fa-solid fa-upload"></i> {{ 'article_publish' | translate }}
+            </button>
+          }
+        </div>
+      </form>
+
+      <button type="button" class="btn-close-dilog" (click)="closeDialog()">
+        {{ 'close' | translate }}
+      </button>
+    </div>
+  </ng-template>
+</p-dialog>

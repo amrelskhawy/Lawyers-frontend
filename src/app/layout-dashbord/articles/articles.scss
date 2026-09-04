@@ -1,0 +1,58 @@
+@use "../glopalstyles.scss";
+
+.scope-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+
+  button {
+    border: 1px solid var(--accent-gold);
+    background: transparent;
+    color: var(--primary-navy);
+    border-radius: 999px;
+    padding: 0.35rem 1.1rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+
+    &.active {
+      background: var(--accent-gold);
+      color: var(--white-color);
+    }
+  }
+}
+
+.action-btn {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+/* Cover thumbnail in the table — fixed box so rows keep an even height. */
+.cover-thumb {
+  width: 64px;
+  height: 42px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--Platinum);
+  background: var(--bg-cream-light);
+
+  &--empty {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--medium-gray);
+  }
+}
+
+/* The status pill doubles as the publish/unpublish switch. */
+.tag-toggle {
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+
+  &.status-DRAFT { background: #e5e7eb; color: #374151; }
+  &.status-PUBLISHED { background: #dcfce7; color: #15803d; }
+
+  &:hover { filter: brightness(0.95); }
+}
