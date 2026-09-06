@@ -47,6 +47,52 @@ const SITE_DESCRIPTION: Record<'ar' | 'en', string> = {
   en: 'Saad Al-Baqami Law Firm & Legal Consultations – professional and specialized legal services covering all aspects of Saudi law, with over 15 years of experience.',
 };
 
+/**
+ * Site-wide fallback keywords — the general brand + practice-area terms from
+ * the firm's own SEO research. A page with something more specific to say
+ * (an article, a service) should still pass its own narrower list to `apply()`.
+ */
+const SITE_KEYWORDS: Record<'ar' | 'en', string[]> = {
+  ar: [
+    'شركة سعد البقمي للمحاماة',
+    'مكتب سعد البقمي للمحاماة',
+    'المحامي سعد البقمي',
+    'مكتب محاماة جدة',
+    'أفضل محامي في جدة',
+    'محامي جدة',
+    'مكتب محاماة بالقرب مني',
+    'استشارة قانونية',
+    'مستشار قانوني',
+    'محامي أحوال شخصية',
+    'محامي قضايا طلاق',
+    'محامي قضايا ميراث',
+    'محامي تقسيم تركات',
+    'محامي جنائي جدة',
+    'محامي قضايا عمالية',
+    'محامي شركات',
+    'تأسيس شركات في السعودية',
+    'محامي قضايا عقارية',
+    'محامي تنفيذ احكام',
+    'محامي ديوان المظالم',
+    'محامي أخطاء طبية',
+    'محامي قضايا إفلاس',
+    'محامي بنوك',
+    'محامي تأمين',
+    'محامي عسكري',
+    'محامي زواج اجانب',
+    'صياغة عقود تجارية',
+  ],
+  en: [
+    'Law firm in Jeddah',
+    'best lawyer in jeddah',
+    'corporate lawyer jeddah',
+    'legal services Jeddah',
+    'lawyer near me',
+    'family lawyer near me',
+    'Commercial lawyer Saudi Arabia',
+  ],
+};
+
 const SITE_IMAGE = `${environment.siteUrl}/assets/Img/LOGO-GOLD.svg`;
 
 /**
@@ -74,6 +120,11 @@ export class Seo {
   /** The other language's name — used as `alternateName` in structured data. */
   get siteNameAlternate(): string {
     return SITE_NAME[this.uiLanguage === 'ar' ? 'en' : 'ar'];
+  }
+
+  /** The firm's general brand + practice-area keywords, in the current UI language. */
+  get siteKeywords(): string[] {
+    return SITE_KEYWORDS[this.uiLanguage];
   }
 
   /**
@@ -104,6 +155,7 @@ export class Seo {
       image: SITE_IMAGE,
       type: 'website',
       robots: 'index, follow',
+      keywords: SITE_KEYWORDS[language],
       language,
       jsonLd: null,
     });

@@ -1,7 +1,28 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Data } from '../../../core/Servies/data';
+import { Seo } from '../../../core/Servies/seo';
 import { BookingService } from './booking.service';
+
+/** Booking-focused keywords — the "ready to consult a lawyer" search intent,
+ *  narrower than the general practice-area list `Seo.siteKeywords` carries. */
+const BOOKING_KEYWORDS: Record<'ar' | 'en', string[]> = {
+  ar: [
+    'استشارة قانونية',
+    'استشارة محامي',
+    'رقم محامي للاستشاره',
+    'رقم مستشار قانوني',
+    'سعر استشارة محامي',
+    'استشارة محامي طلاق مجاني',
+    'استشارات قانونية مجانية',
+    'استشاره محامي قانوني',
+    'محامي استشاره',
+    'استشارة محامي أحوال شخصية',
+    'استشارة قانونية عقارية',
+  ],
+  en: ['legal consultation jeddah'],
+};
 
 @Component({
   selector: 'app-reservations',
@@ -14,10 +35,29 @@ export class Reservations implements OnInit {
     private data: Data,
     public bookingService: BookingService,
     private route: ActivatedRoute,
+    private seo: Seo,
+    private translate: TranslateService,
   ) { }
 
   ngOnInit(): void {
     this.getData();
+    this.applyMetadata();
+  }
+
+  /** Claims this route's own metadata so it wins over the home page's. */
+  private applyMetadata() {
+    this.translate
+      .get(['BOOKING_META_TITLE', 'BOOKING_META_DESCRIPTION'])
+      .subscribe((labels: Record<string, string>) => {
+        this.seo.apply({
+          title: labels['BOOKING_META_TITLE'],
+          description: labels['BOOKING_META_DESCRIPTION'],
+          canonical: this.seo.url('booking'),
+          type: 'website',
+          keywords: BOOKING_KEYWORDS[this.seo.uiLanguage],
+          language: this.seo.uiLanguage,
+        });
+      });
   }
 
   getData() {

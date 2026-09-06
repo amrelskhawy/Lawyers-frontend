@@ -4,6 +4,12 @@ import { Data } from '../../../core/Servies/data';
 import { Seo } from '../../../core/Servies/seo';
 import { IArticleCard } from '../../../core/Models/article.model';
 
+/** Blog-index keywords — narrower than the general practice-area list on `Seo.siteKeywords`. */
+const ARTICLES_LIST_KEYWORDS: Record<'ar' | 'en', string[]> = {
+  ar: ['استشارة قانونية', 'مستشار قانوني', 'استشارات قانونية مجانية', 'البحث عن محامي', 'محامي قانوني'],
+  en: ['legal services', 'Legal', 'legal office'],
+};
+
 /** Public blog index — published articles only, newest first. */
 @Component({
   selector: 'app-articles-list',
@@ -63,6 +69,7 @@ export class ArticlesList implements OnInit {
         description,
         canonical: this.seo.url('articles'),
         type: 'website',
+        keywords: ARTICLES_LIST_KEYWORDS[this.seo.uiLanguage],
         language: this.seo.uiLanguage,
         jsonLd: {
           '@context': 'https://schema.org',
