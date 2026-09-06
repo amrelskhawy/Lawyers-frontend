@@ -21,6 +21,22 @@ export class ArticleDetails implements OnInit {
   loading = signal<boolean>(true);
   notFound = signal<boolean>(false);
 
+  // Drive's thumbnail endpoint is unofficial and occasionally blips (e.g. right
+  // after upload, before the public permission has propagated) — track failures
+  // so a broken link falls back to the same placeholder used for "no image" instead
+  // of a broken-image icon.
+  coverFailed = signal<boolean>(false);
+  authorImageFailed = signal<boolean>(false);
+  private failedRelatedCovers = signal<Set<string>>(new Set());
+
+  relatedCoverFailed(id: string): boolean {
+    return this.failedRelatedCovers().has(id);
+  }
+
+  onRelatedCoverError(id: string): void {
+    this.failedRelatedCovers.update((s) => new Set(s).add(id));
+  }
+
   constructor(
     private route: ActivatedRoute,
     private data: Data,
@@ -43,6 +59,9 @@ export class ArticleDetails implements OnInit {
         next: (res) => {
           const article: IArticleDetails | null = res?.data ?? null;
           this.article.set(article);
+          this.coverFailed.set(false);
+          this.authorImageFailed.set(false);
+          this.failedRelatedCovers.set(new Set());
           this.loading.set(false);
           if (article) this.applyMetadata(article);
           window.scrollTo({ top: 0, behavior: 'smooth' });

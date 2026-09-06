@@ -28,8 +28,8 @@
       <div class="article-meta">
         @if (item.createdBy?.name) {
           <span class="author">
-            @if (item.createdBy?.picture) {
-              <img [src]="item.createdBy?.picture" alt="" />
+            @if (item.createdBy?.picture && !authorImageFailed()) {
+              <img [src]="item.createdBy?.picture" alt="" (error)="authorImageFailed.set(true)" />
             }
             {{ item.createdBy?.name }}
           </span>
@@ -39,8 +39,8 @@
         }
       </div>
 
-      @if (item.coverImage) {
-        <img class="article-cover" [src]="item.coverImage" [alt]="item.title" />
+      @if (item.coverImage && !coverFailed()) {
+        <img class="article-cover" [src]="item.coverImage" [alt]="item.title" (error)="coverFailed.set(true)" />
       }
 
       <!-- Server-sanitised HTML — see ArticleHtmlPipe. -->
@@ -54,8 +54,9 @@
           @for (related of item.related; track related.id) {
             <a class="related-card" [routerLink]="['/articles', related.slug]">
               <div class="related-cover">
-                @if (related.coverImage) {
-                  <img [src]="related.coverImage" [alt]="related.title" loading="lazy" />
+                @if (related.coverImage && !relatedCoverFailed(related.id)) {
+                  <img [src]="related.coverImage" [alt]="related.title" loading="lazy"
+                    (error)="onRelatedCoverError(related.id)" />
                 } @else {
                   <span class="cover-fallback"><i class="fa-regular fa-newspaper"></i></span>
                 }

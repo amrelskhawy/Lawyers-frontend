@@ -24,8 +24,9 @@
         @for (article of articles(); track article.id) {
           <a class="card" [routerLink]="['/articles', article.slug]">
             <div class="card-cover">
-              @if (article.coverImage) {
-                <img [src]="article.coverImage" [alt]="article.title" loading="lazy" />
+              @if (article.coverImage && !coverFailed(article.id)) {
+                <img [src]="article.coverImage" [alt]="article.title" loading="lazy"
+                  (error)="onCoverError(article.id)" />
               } @else {
                 <span class="cover-fallback"><i class="fa-regular fa-newspaper"></i></span>
               }

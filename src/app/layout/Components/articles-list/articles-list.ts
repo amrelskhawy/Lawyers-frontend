@@ -22,6 +22,18 @@ export class ArticlesList implements OnInit {
 
   private readonly PAGE_SIZE = 9;
 
+  // Drive's thumbnail endpoint is unofficial and occasionally blips — fall back
+  // to the same placeholder used for "no image" instead of a broken-image icon.
+  private failedCovers = signal<Set<string>>(new Set());
+
+  coverFailed(id: string): boolean {
+    return this.failedCovers().has(id);
+  }
+
+  onCoverError(id: string): void {
+    this.failedCovers.update((s) => new Set(s).add(id));
+  }
+
   constructor(
     private data: Data,
     private seo: Seo,
