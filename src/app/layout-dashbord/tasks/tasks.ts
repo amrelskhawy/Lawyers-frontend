@@ -37,8 +37,8 @@ export class Tasks implements OnInit {
   selectedTask = signal<any>(null);
 
   /** Server-side filters handed to the crud page. */
-  extraParams = signal<{ [key: string]: any }>({});
-  activeScope = signal<'all' | 'created' | 'assigned'>('all');
+  extraParams = signal<{ [key: string]: any }>({ excludeStatus: 'DONE' });
+  activeScope = signal<'all' | 'created' | 'assigned' | 'completed'>('all');
 
   statusOptions: { label: string; value: string }[] = [];
 
@@ -121,9 +121,15 @@ export class Tasks implements OnInit {
     );
   }
 
-  setScope(scope: 'all' | 'created' | 'assigned') {
+  setScope(scope: 'all' | 'created' | 'assigned' | 'completed') {
     this.activeScope.set(scope);
-    this.extraParams.set(scope === 'all' ? {} : { mine: scope });
+    if (scope === 'completed') {
+      this.extraParams.set({ status: 'DONE' });
+    } else if (scope === 'all') {
+      this.extraParams.set({ excludeStatus: 'DONE' });
+    } else {
+      this.extraParams.set({ mine: scope, excludeStatus: 'DONE' });
+    }
   }
 
   onAdd() {
@@ -141,7 +147,10 @@ export class Tasks implements OnInit {
     this.visibelShow.set(true);
   }
 
-  /** Assignees can advance a task without being allowed to edit it. */
+  /**
+   * Assignees can advance a task without being allowed to edit it. Completing
+   * a task moves it off whichever tab is active, so the list must reload.
+   */
   onStatusChange(item: any, status: string) {
     if (!status || status === item.status) return;
     this.Data.patch(`tasks/${item.id}/progress`, { status }).subscribe(() =>

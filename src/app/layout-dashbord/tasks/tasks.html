@@ -76,6 +76,9 @@
   <button [class.active]="activeScope() === 'created'" (click)="setScope('created')">
     {{ 'task_scope_created' | translate }}
   </button>
+  <button [class.active]="activeScope() === 'completed'" (click)="setScope('completed')">
+    {{ 'task_scope_completed' | translate }}
+  </button>
 </div>
 
 <app-dashboard-crud-page

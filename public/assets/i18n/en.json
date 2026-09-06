@@ -973,6 +973,7 @@
   "task_scope_all": "All Tasks",
   "task_scope_assigned": "Assigned to me",
   "task_scope_created": "My Tasks",
+  "task_scope_completed": "Completed",
   "task_notes": "Progress notes",
   "task_notes_placeholder": "Write your notes on how the task is going",
   "save_notes": "Save notes",

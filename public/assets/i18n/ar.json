@@ -974,6 +974,7 @@
   "task_scope_all": "كل المهام",
   "task_scope_assigned": "المسندة إليّ",
   "task_scope_created": "مهامي",
+  "task_scope_completed": "المهام المكتملة",
   "task_notes": "ملاحظات التنفيذ",
   "task_notes_placeholder": "اكتب ملاحظاتك عن سير المهمة",
   "save_notes": "حفظ الملاحظات",
