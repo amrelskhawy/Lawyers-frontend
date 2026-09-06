@@ -165,8 +165,8 @@ export class Menue implements OnInit, OnDestroy {
         route: '/dashboard/content/cases-calendar',
       }] : []),
 
-      // ── Consultant reminders — admin, moderator, consultant ─
-      ...(isAdmin || isModerator || role === 'CONSULTANT' ? [{
+      // ── Consultant reminders — admin, moderator, lawyer/consultant ─
+      ...(isAdmin || isModerator || isLawyer ? [{
         name: 'consultant_reminders',
         icon: 'fa-solid fa-file-pen',
         route: '/dashboard/content/consultant-reminders',

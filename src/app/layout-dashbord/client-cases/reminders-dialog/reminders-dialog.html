@@ -65,14 +65,14 @@
             <div class="rd-field-row">
               <div class="rd-field">
                 <label>{{ 'session_hijri_date' | translate }}</label>
-                <app-hijri-datepicker formControlName="date" [disabled]="isConsultant" [disablePast]="true"
+                <app-hijri-datepicker formControlName="date" [disablePast]="true"
                   [placeholder]="'session_hijri_date' | translate"></app-hijri-datepicker>
               </div>
               <div class="rd-field rd-field-sm">
                 <label>{{ 'time' | translate }}</label>
                 <div class="rd-input-wrap">
                   <i class="fa-regular fa-clock" aria-hidden="true"></i>
-                  <input [disabled]="isConsultant" type="time" formControlName="time" />
+                  <input type="time" formControlName="time" />
                 </div>
               </div>
             </div>
@@ -88,12 +88,12 @@
                 </small>
               </div>
               <div class="rd-card-actions">
-                <button *ngIf="hasSessionDate" [disabled]="isConsultant" type="button"
+                <button *ngIf="hasSessionDate" type="button"
                   class="rd-btn rd-btn-ghost rd-btn-sm" (click)="clearSessionDate()">
                   <i class="fa-solid fa-eraser" aria-hidden="true"></i>
                   {{ 'session_date_clear' | translate }}
                 </button>
-                <button [disabled]="isConsultant" type="submit" class="rd-btn rd-btn-primary rd-btn-sm">
+                <button type="submit" class="rd-btn rd-btn-primary rd-btn-sm">
                   <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
                   {{ 'save' | translate }}
                 </button>
@@ -112,7 +112,7 @@
                 <label>{{ 'court_label' | translate }}</label>
                 <div class="rd-input-wrap">
                   <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
-                  <input type="text" [disabled]="isConsultant" [ngModel]="courtName()"
+                  <input type="text" [ngModel]="courtName()"
                     (ngModelChange)="courtName.set($event); courtInfoSaved.set(false)"
                     [ngModelOptions]="{ standalone: true }"
                     [placeholder]="'court_label' | translate" />
@@ -122,7 +122,7 @@
                 <label>{{ 'case_number_label' | translate }}</label>
                 <div class="rd-input-wrap">
                   <i class="fa-solid fa-hashtag" aria-hidden="true"></i>
-                  <input type="text" [disabled]="isConsultant" [ngModel]="caseNumber()"
+                  <input type="text" [ngModel]="caseNumber()"
                     (ngModelChange)="caseNumber.set($event); courtInfoSaved.set(false)"
                     [ngModelOptions]="{ standalone: true }"
                     [placeholder]="'case_number_label' | translate" />
@@ -140,7 +140,7 @@
                   {{ 'case_info_saved' | translate }}
                 </small>
               </div>
-              <button [disabled]="isConsultant || courtInfoSaving()" type="submit"
+              <button [disabled]="courtInfoSaving()" type="submit"
                 class="rd-btn rd-btn-primary rd-btn-sm">
                 <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
                 {{ 'save' | translate }}

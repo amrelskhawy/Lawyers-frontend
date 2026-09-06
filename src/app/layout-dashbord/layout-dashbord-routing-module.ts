@@ -119,7 +119,7 @@ const routes: Routes = [
       {
         path: 'consultant-reminders',
         component: ConsultantReminders,
-        canActivate: [roleGuard('ADMIN', 'MODERATOR', 'CONSULTANT')],
+        canActivate: [roleGuard('ADMIN', 'MODERATOR', 'LAWYER', 'CONSULTANT')],
       },
 
       // ── Admin + Moderator + Lawyer: reports ──────────────────────────────

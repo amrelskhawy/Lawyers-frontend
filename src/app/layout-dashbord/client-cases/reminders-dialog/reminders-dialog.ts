@@ -94,13 +94,9 @@ export class RemindersDialog {
     return false;
   }
 
-  get isConsultant(): boolean {
-    return this.role === 'CONSULTANT';
-  }
-
-  /** Only LAWYER, ADMIN, MODERATOR can trigger memo requests (consultant is the recipient). */
+  /** Consultant has the same permissions as lawyer, so both may trigger memo requests. */
   get canSendMemoRequest(): boolean {
-    return ['ADMIN', 'MODERATOR', 'LAWYER'].includes(this.role);
+    return ['ADMIN', 'MODERATOR', 'LAWYER', 'CONSULTANT'].includes(this.role);
   }
 
   constructor(
@@ -228,7 +224,7 @@ export class RemindersDialog {
    *  auto-scheduled session reminders. */
   clearSessionDate() {
     const caseId = this.caseItem()?.id;
-    if (!caseId || this.isConsultant || !this.hasSessionDate) return;
+    if (!caseId || !this.hasSessionDate) return;
 
     this.data
       .patch<{ data: IDataCase }>(`cases/${caseId}/session`, {
@@ -253,7 +249,7 @@ export class RemindersDialog {
   /** Persist the court + case number entered inline in the reminders dialog. */
   saveCourtInfo() {
     const caseId = this.caseItem()?.id;
-    if (!caseId || this.isConsultant) return;
+    if (!caseId) return;
 
     this.courtInfoSaving.set(true);
     this.data
