@@ -1,0 +1,127 @@
+// Variables — aligned to the brand token system (same as chat-boot)
+$primary-navy: var(--primary-navy, #14143a);
+$accent-gold: var(--accent-gold, #c6a15b);
+$whatsapp-green: #25d366;
+
+.contact-fab-stack {
+  position: fixed;
+  bottom: 12px;
+  right: 12px;
+  z-index: 99998; // just below the chatbot wrapper
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 20px;
+
+  :host-context([dir='rtl']) & {
+    right: auto;
+    left: 12px;
+    align-items: flex-start;
+  }
+
+  // The home page renders the chatbot FAB in the same corner: lift the stack
+  // above it and centre it over the (wider) chat button.
+  &.with-chat {
+    bottom: 97px; // 12px base + 65px chat FAB + the 20px stack gap
+    right: 17px;
+
+    :host-context([dir='rtl']) & {
+      right: auto;
+      left: 17px;
+    }
+  }
+
+  .contact-fab {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: #ffffff;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    &:hover,
+    &:focus-visible {
+      transform: scale(1.1) translateY(-4px);
+    }
+
+    &:focus-visible {
+      outline: 2px solid $accent-gold;
+      outline-offset: 3px;
+    }
+  }
+
+  // Gold on navy — stays legible over both the dark hero and light sections.
+  .call-fab {
+    background: linear-gradient(135deg, $accent-gold 0%, color-mix(in srgb, #c6a15b, black 15%) 100%);
+    color: $primary-navy;
+    box-shadow: 0 8px 24px rgba(198, 161, 91, 0.4);
+    font-size: 1.35rem;
+
+    &:hover,
+    &:focus-visible {
+      box-shadow: 0 12px 28px rgba(198, 161, 91, 0.55);
+    }
+  }
+
+  .whatsapp-fab {
+    background: $whatsapp-green;
+    box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
+    font-size: 1.6rem;
+
+    &:hover,
+    &:focus-visible {
+      box-shadow: 0 12px 28px rgba(37, 211, 102, 0.55);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .contact-fab-stack {
+    bottom: 10px;
+    right: 10px;
+    gap: 13px;
+
+    :host-context([dir='rtl']) & {
+      right: auto;
+      left: 10px;
+    }
+
+    &.with-chat {
+      bottom: 68px; // 10px base + 45px chat FAB + 13px gap
+      right: 10px;
+
+      :host-context([dir='rtl']) & {
+        right: auto;
+        left: 10px;
+      }
+    }
+
+    .contact-fab {
+      width: 45px;
+      height: 45px;
+    }
+
+    .call-fab {
+      font-size: 1.1rem;
+    }
+
+    .whatsapp-fab {
+      font-size: 1.35rem;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-fab-stack .contact-fab {
+    transition: none;
+
+    &:hover,
+    &:focus-visible {
+      transform: none;
+    }
+  }
+}

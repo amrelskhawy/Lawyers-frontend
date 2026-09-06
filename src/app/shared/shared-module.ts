@@ -27,6 +27,7 @@ import { ArticleHtmlPipe } from './article-html-pipe';
 import { FormsModule } from '@angular/forms';
 import { PwaUpdate } from './pwa-update/pwa-update';
 import { PwaInstall } from './pwa-install/pwa-install';
+import { ContactFab } from './contact-fab/contact-fab';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { PwaInstall } from './pwa-install/pwa-install';
     ArticleHtmlPipe,
     PwaUpdate,
     PwaInstall,
+    ContactFab,
   ],
   imports: [
     CommonModule,
@@ -77,6 +79,7 @@ import { PwaInstall } from './pwa-install/pwa-install';
     ArticleHtmlPipe,
     PwaUpdate,
     PwaInstall,
+    ContactFab,
   ],
 
   providers: [
